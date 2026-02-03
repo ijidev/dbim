@@ -24,7 +24,7 @@
             @foreach ($events as $event)
                 <div class="column events-list__item">
                     <h3 class="display-1 events-list__item-title">
-                        <a href="{{ route('event.single'), $event->id }}" title="">{{ $event->title }}.</a>
+                        <a href="{{ route('event.single', $event->id) }}" title="">{{ $event->title }}.</a>
                     </h3>
                     <p>
                         {{ $event->description }}

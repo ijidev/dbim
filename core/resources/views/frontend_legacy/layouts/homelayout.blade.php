@@ -31,7 +31,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('event') }}">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('calendar') }}">Calendar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('live') }}">Live Stream</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about') }}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -56,6 +73,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if(Auth::user()->role == 'admin')
+                                        <a class="dropdown-item" href="{{ route('home') }}">Admin Dashboard</a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('student.courses') }}">My Learning</a>
+                                    @endif
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

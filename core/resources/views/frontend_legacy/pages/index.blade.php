@@ -19,8 +19,8 @@
                 </h1> --}}
 
                 <div class="hero-content__buttons">
-                    {{-- <a href="{{route('event')}}" class="btn btn--stroke">Upcoming Events</a>
-                    <a href="{{route('about')}}" class="btn btn--stroke">About Us</a> --}}
+                    <a href="{{route('event')}}" class="btn btn--stroke">Upcoming Events</a>
+                    <a href="{{route('about')}}" class="btn btn--stroke">About Us</a>
                 </div>
             </div> <!-- end hero-content__text -->
 
@@ -83,12 +83,12 @@
                         </p>
                     </li>
 
-                    <li class="large-4 medium-4 tab-half mob-12">
+                    {{-- <li class="large-4 medium-4 tab-half mob-12">
                         <h4>Prophetic School</h4>
                         <p>
                         Sunday - 3:30 PM | 7:00 PM 
                         </p>
-                    </li>
+                    </li> --}}
 
                     <li class="large-4 medium-4 tab-half mob-12">
                         <h4>Communion Service</h4>
@@ -161,7 +161,7 @@
             @foreach ($events as $event)
                 <div class="column events-list__item">
                     <h3 class="display-1 events-list__item-title">
-                        <a href="{{ route('event.single'), $event->id }}" title="">{{ $event->title }}.</a>
+                        <a href="{{ route('event.single', $event->id) }}" title="">{{ $event->title }}.</a>
                     </h3>
                     <p>
                         {{ $event->description }}

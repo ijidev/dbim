@@ -60,7 +60,23 @@
                 <li class="current"><a href="{{ route('index') }}" title="Home">Home</a></li>
                 <li><a href="{{ route('about') }}" title="About">About</a></li>
                 <li><a href="{{ route('event') }}" title="Services">Events</a></li>
-                <li><a href="{{ route('contact') }}" title="Contact us">Contact</a></li>	
+                <li><a href="{{ route('calendar') }}" title="Calendar">Calendar</a></li>
+                <li><a href="{{ route('live') }}" title="Live Stream">Live</a></li>
+                <li><a href="{{ route('student.courses') }}" title="LMS">Courses</a></li>
+                <li><a href="{{ route('contact') }}" title="Contact us">Contact</a></li>
+                @auth
+                    @if(Auth::user()->role == 'admin')
+                        <li><a href="{{ route('home') }}" title="Admin">Admin</a></li>
+                    @else
+                        <li><a href="{{ route('student.courses') }}" title="My Learning">My Learning</a></li>
+                    @endif
+                    <li>
+                         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                    </li>
+                @else
+                    <li><a href="{{ route('login') }}" title="Login">Login</a></li>
+                @endauth
             </ul>
         </nav>
 
@@ -74,17 +90,15 @@
     ================================================== -->
     <footer class="s-footer" style="padding: 0 3px 3px 3px;">
 
-        {{-- <div class="row footer-top">
+        <div class="row footer-top">
             <div class="column large-4 medium-5 tab-full">
                 <div class="footer-logo">
-                    <a class="site-footer-logo" href="index.html">
+                    <a class="site-footer-logo" href="{{ route('index') }}">
                         <h2 style="color: white; margin-top:0;">DBIM</h2>
                     </a>
                 </div>  <!-- footer-logo -->
                 <p>
-                Laborum ad explicabo. Molestiae voluptates est. Quisquam labore tenetur 
-                et assumenda voluptatibus a beatae. Rerum odio ducimus reprehenderit 
-                sit animi laborum nostrum dolorum animi voluptates est voluptatibus a beatae. 
+                Destiny Blessings int'l Ministries - Raising Gods Among Men.
                 </p>
             </div>
             <div class="column large-half tab-full">
@@ -104,14 +118,14 @@
                         <ul class="footer-list">
                             <li><a href="{{ route('index') }}">Home</a></li>
                             <li><a href="{{ route('about') }}">About</a></li>
-                            
                             <li><a href="{{ route('event') }}">Upcoming Events</a></li>
+                            <li><a href="{{ route('student.courses') }}">LMS/Courses</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div> <!-- end footer-top --> --}}
+        </div> <!-- end footer-top -->
 
         <div class="row footer-bottom">
             <div class="column ss-copyright">

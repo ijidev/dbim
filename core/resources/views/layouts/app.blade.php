@@ -10,7 +10,7 @@
     <!-- Meta Tags -->
     <meta name="description" content="Divine Business Impact Ministry (DBIM) - Empowering believers for spiritual and kingdom impact.">
     <meta name="keywords" content="Church, Ministry, DBIM, Spiritual Growth, Live Stream, LMS, Christian Books">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
@@ -18,116 +18,323 @@
     <meta property="og:description" content="Divine Business Impact Ministry (DBIM) - Empowering believers for spiritual and kingdom impact.">
     <meta property="og:image" content="{{ asset('assets/images/og-image.jpg') }}">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="@yield('title', 'DBIM')">
-    <meta property="twitter:description" content="Divine Business Impact Ministry (DBIM) - Empowering believers for spiritual and kingdom impact.">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <style>
         :root {
-            --primary-color: #1754cf;
-            --font-family: 'Inter', sans-serif;
+            /* Palette */
+            --primary: #1754cf;
+            --primary-dark: #103c96;
+            --primary-light: #e0e7ff;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --success: #10b981;
+            
+            /* Backgrounds */
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.95);
+            
+            /* Text */
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            
+            /* UI */
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            --container-width: 1200px;
         }
+
+        /* Reset & Base */
+        *, *::before, *::after { box-sizing: border-box; }
         
         body {
-            font-family: var(--font-family);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #f8fafc;
-            color: #1e293b;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Basic Reset */
-        *, *::before, *::after {
-            box-sizing: inherit;
-        }
+        a { text-decoration: none; color: inherit; transition: all 0.2s ease; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        img { max-width: 100%; display: block; }
         
-        a {
-            text-decoration: none;
-            color: inherit;
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        /* Mobile Nav Toggle */
-        #nav-toggle { display: none; }
-        .mobile-toggle {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #64748b;
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
         }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            border: none;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(23, 84, 207, 0.3);
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: var(--text-main);
+        }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+        }
+        .btn-ghost:hover { background: var(--primary-light); color: var(--primary); }
+
+        /* Navigation */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            height: 72px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -24px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Live Indicator */
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--danger);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle { display: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; }
+        #nav-check { display: none; }
 
         @media (max-width: 1024px) {
-            .mobile-toggle { display: block; }
-            nav {
-                display: none !important;
-                position: absolute;
-                top: 64px;
+            .nav-links {
+                position: fixed;
+                top: 72px;
                 left: 0;
                 width: 100%;
                 background: white;
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-                z-index: 1000;
-                gap: 1.5rem !important;
+                align-items: flex-start;
+                padding: 1.5rem;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                box-shadow: var(--shadow-lg);
+                z-index: 90;
             }
-            #nav-toggle:checked ~ nav {
-                display: flex !important;
+            .mobile-toggle { display: block; }
+            #nav-check:checked ~ .nav-container .nav-links {
+                transform: translateY(0);
             }
+            .nav-link.active::after { display: none; }
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; }
+        .footer-link { display: block; margin-bottom: 0.75rem; }
+        .footer-link:hover { color: white; }
+        .copyright {
+            border-top: 1px solid #1e293b;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.875rem;
         }
     </style>
-    
     @stack('styles')
 </head>
 <body>
     <div id="app">
-        <header style="background-color: white; padding: 1rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;">
-            <div style="font-weight: 700; font-size: 1.25rem; color: var(--primary-color);">
-                DBIM
-            </div>
-            
-            <input type="checkbox" id="nav-toggle">
-            <label for="nav-toggle" class="mobile-toggle">☰</label>
-
-            <nav style="display: flex; gap: 1rem;">
-                <a href="{{ route('index') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Home</a>
-                <a href="{{ route('about') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">About</a>
-                <a href="{{ route('calendar') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Calendar</a>
-                <a href="{{ route('event') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Events</a>
-                <a href="{{ route('store.index') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Store</a>
-                <a href="{{ route('library.index') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Library</a>
-                <a href="{{ route('live') }}" style="color: #f87171; font-weight: 700; font-size: 0.875rem; transition: color 0.2s; display: flex; align-items: center; gap: 0.25rem;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#f87171'">
-                    <span style="width: 6px; height: 6px; background: currentColor; border-radius: 50%;"></span>
-                    Live
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container nav-container">
+                <a href="{{ route('index') }}" class="logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    DBIM
                 </a>
-                <a href="{{ route('contact') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Contact</a>
-                <a href="{{ route('donate') }}" style="background: linear-gradient(135deg, #f87171, #ef4444); color: white; font-weight: 700; font-size: 0.875rem; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">❤️ Give</a>
-                @guest
-                    <a href="{{ route('login') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Login</a>
-                    <a href="{{ route('register') }}" style="color: #64748b; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='#64748b'">Register</a>
-                @else
-                    <span style="color: #1e293b; font-weight: 500; font-size: 0.875rem;">{{ Auth::user()->name }}</span>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: #ef4444; font-weight: 500; font-size: 0.875rem; transition: color 0.2s;">Logout</a>
-                @endguest
-            </nav>
-        </header>
+
+                <input type="checkbox" id="nav-check">
+                
+                <div class="nav-links">
+                    <a href="{{ route('index') }}" class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">Home</a>
+                    <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a>
+                    <a href="{{ route('event') }}" class="nav-link {{ request()->routeIs('event') ? 'active' : '' }}">Events</a>
+                    <a href="{{ route('live') }}" class="nav-link {{ request()->routeIs('live') ? 'active' : '' }}">
+                        <div class="live-badge">
+                            <span class="live-dot"></span>
+                            Live
+                        </div>
+                    </a>
+                    <a href="{{ route('calendar') }}" class="nav-link {{ request()->routeIs('calendar') ? 'active' : '' }}">Calendar</a>
+                    <a href="{{ route('store.index') }}" class="nav-link {{ request()->routeIs('store.*') ? 'active' : '' }}">Store</a>
+                    <a href="{{ route('library.index') }}" class="nav-link {{ request()->routeIs('library.*') ? 'active' : '' }}">Library</a>
+                    
+                    @guest
+                        <a href="{{ route('login') }}" class="btn btn-ghost">Login</a>
+                        <a href="{{ route('donate') }}" class="btn btn-primary">
+                            <span>❤️</span> Give
+                        </a>
+                    @else
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <span style="font-weight: 500;">{{ Auth::user()->name }}</span>
+                            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-ghost" style="color: var(--danger);">Logout</button>
+                            </form>
+                        </div>
+                    @endguest
+                </div>
+
+                <label for="nav-check" class="mobile-toggle">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                </label>
+            </div>
+        </nav>
 
         <main>
             @yield('content')
         </main>
-        
-        <footer style="margin-top: 2rem; padding: 1rem; text-align: center; color: #64748b; font-size: 0.875rem;">
-            &copy; {{ date('Y') }} DBIM. All rights reserved.
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>About DBIM</h4>
+                        <p>Empowering believers for spiritual and kingdom impact through digital innovation and timeless truth.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <a href="{{ route('event') }}" class="footer-link">Upcoming Events</a>
+                        <a href="{{ route('live') }}" class="footer-link">Live Stream</a>
+                        <a href="{{ route('store.index') }}" class="footer-link">Store</a>
+                        <a href="{{ route('contact') }}" class="footer-link">Contact Us</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <a href="#" class="footer-link">Facebook</a>
+                        <a href="#" class="footer-link">YouTube</a>
+                        <a href="#" class="footer-link">Instagram</a>
+                    </div>
+                </div>
+                <div class="copyright">
+                    &copy; {{ date('Y') }} Divine Business Impact Ministry. All rights reserved.
+                </div>
+            </div>
         </footer>
     </div>
 

@@ -10,7 +10,8 @@ class FrontController extends Controller
     //
     public function index(){
         $events = Event::Where('status', 'comming')->get()->take(2);
-        return view('frontend.index', compact('events'));
+        $is_live = \App\Models\Setting::where('key', 'is_live')->first();
+        return view('frontend.index', compact('events', 'is_live'));
     }
     public function events(){
         $events = Event::orderBy('date', 'asc')->paginate(9);

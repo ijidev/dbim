@@ -1,27 +1,31 @@
 @extends('layouts.app')
 
+@section('title', 'Events Calendar')
+
 @push('styles')
 <style>
-    /* FullCalendar Overrides */
+    /* FullCalendar Customization */
     :root {
         --fc-border-color: #e2e8f0;
         --fc-button-text-color: #fff;
-        --fc-button-bg-color: var(--primary-color);
-        --fc-button-border-color: var(--primary-color);
-        --fc-button-hover-bg-color: #1a4ebd;
-        --fc-button-hover-border-color: #1a4ebd;
-        --fc-button-active-bg-color: #1a4ebd;
-        --fc-button-active-border-color: #1a4ebd;
-        --fc-event-bg-color: #3b82f6;
-        --fc-event-border-color: #3b82f6;
-        --fc-today-bg-color: #f1f5f9;
-        --fc-now-indicator-color: red;
+        --fc-button-bg-color: var(--primary);
+        --fc-button-border-color: var(--primary);
+        --fc-button-hover-bg-color: var(--primary-dark);
+        --fc-button-hover-border-color: var(--primary-dark);
+        --fc-button-active-bg-color: var(--primary-dark);
+        --fc-button-active-border-color: var(--primary-dark);
+        --fc-event-bg-color: rgba(23, 84, 207, 0.1);
+        --fc-event-border-color: transparent;
+        --fc-event-text-color: var(--primary);
+        --fc-today-bg-color: #f8fafc;
+        --fc-now-indicator-color: var(--danger);
     }
 
     .fc-toolbar-title {
-        font-size: 1.25rem !important;
-        font-weight: 700;
+        font-size: 1.5rem !important;
+        font-weight: 800;
         letter-spacing: -0.025em;
+        color: var(--text-main);
     }
 
     .fc-col-header-cell-cushion {
@@ -30,34 +34,61 @@
         text-transform: uppercase;
         font-size: 0.75rem;
         letter-spacing: 0.05em;
-        color: #64748b;
+        color: var(--text-muted);
     }
 
     .fc-daygrid-day-number {
-        font-weight: 500;
-        color: #475569;
+        font-weight: 600;
+        color: var(--text-muted);
         text-decoration: none !important;
+        padding: 0.5rem 0.5rem 0 0 !important;
     }
 
     .fc-event {
         border-radius: 4px;
-        padding: 2px 4px;
+        padding: 4px 8px;
         font-size: 0.85em;
-        font-weight: 500;
+        font-weight: 600;
         border: none;
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        margin-bottom: 2px;
+        transition: all 0.2s;
+        border-left: 3px solid var(--primary);
+    }
+
+    .fc-event:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+        background: var(--primary) !important;
+        color: white !important;
+    }
+
+    .fc-button {
+        font-weight: 600 !important;
+        text-transform: capitalize !important;
+        border-radius: 0.5rem !important;
+        padding: 0.5rem 1rem !important;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .fc-day-today {
+        background: #f8fafc !important;
     }
 </style>
 @endpush
 
 @section('content')
-<div style="background-color: #fff; border-bottom: 1px solid #e2e8f0; padding: 3rem 1rem; text-align: center;">
-    <h1 style="font-size: 2.25rem; font-weight: 800; color: #1e293b; letter-spacing: -0.05em; margin-bottom: 0.5rem;">Events Calendar</h1>
-    <p style="color: #64748b; max-width: 600px; margin: 0 auto;">Stay updated with our upcoming services, programs, and community activities.</p>
+<!-- Hero -->
+<div style="background-color: white; border-bottom: 1px solid #e2e8f0; padding: 4rem 1rem; text-align: center; position: relative; overflow: hidden;">
+    <div style="position: absolute; bottom: -50%; left: -10%; width: 50%; height: 200%; background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%); z-index: 0;"></div>
+    
+    <div class="container" style="position: relative; z-index: 1;">
+        <h1 style="font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; color: #1e293b; letter-spacing: -0.05em; margin-bottom: 1rem;">Events Calendar</h1>
+        <p style="color: #64748b; max-width: 600px; margin: 0 auto; font-size: 1.25rem;">Stay updated with our upcoming services, conferences, and community activities.</p>
+    </div>
 </div>
 
-<div style="padding: 2rem 1rem; max-width: 1200px; margin: 0 auto;">
-    <div style="background: white; padding: 1.5rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0;">
+<div class="container" style="padding: 4rem 1.5rem;">
+    <div style="background: white; padding: 2rem; border-radius: 1.5rem; box-shadow: var(--shadow-lg); border: 1px solid #e2e8f0;">
         <div id='calendar'></div>
     </div>
 </div>
@@ -77,16 +108,22 @@
       },
       events: '{{ route("calendar.events") }}',
       height: 'auto',
-      navLinks: true, // can click day/week names to navigate views
+      navLinks: true,
       editable: false,
       selectable: true,
-      dayMaxEvents: true, // allow "more" link when too many events
+      dayMaxEvents: true,
       buttonText: {
         today: 'Today',
         month: 'Month',
         week: 'Week',
         day: 'Day',
         list: 'List'
+      },
+      eventClick: function(info) {
+        if (info.event.url) {
+            window.location.href = info.event.url;
+            info.jsEvent.preventDefault();
+        }
       }
     });
     calendar.render();

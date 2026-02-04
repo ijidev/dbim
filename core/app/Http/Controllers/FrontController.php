@@ -23,17 +23,20 @@ class FrontController extends Controller
     }
 
     public function contact(){
-        return view('frontend.pages.contact');
+        return view('frontend.contact');
     }
 
     public function about(){
-        return view('frontend.pages.about');
+        return view('frontend.about');
     }
 
     public function live(){
         $live_settings = \App\Models\Setting::where('key', 'live_embed_code')->first();
         $is_live = \App\Models\Setting::where('key', 'is_live')->first();
-        return view('frontend.pages.live', compact('live_settings', 'is_live'));
+        $source_type = \App\Models\Setting::where('key', 'live_source_type')->first();
+        $playback_url = \App\Models\Setting::where('key', 'playback_url')->first();
+        
+        return view('frontend.live', compact('live_settings', 'is_live', 'source_type', 'playback_url'));
     }
 
     public function calendar()

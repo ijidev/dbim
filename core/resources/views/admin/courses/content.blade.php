@@ -1,163 +1,285 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Course Content')
+
+@push('styles')
+<style>
+    .module-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+    .module-header {
+        padding: 1.25rem 1.5rem;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+    .module-header:hover { background: #f1f5f9; }
+    .module-title {
+        font-weight: 700;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .module-content { padding: 1rem 1.5rem; }
+    .lesson-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.75rem;
+        margin-bottom: 0.5rem;
+        background: white;
+    }
+    .lesson-item:hover { background: #fafafa; }
+    .lesson-info { display: flex; align-items: center; gap: 0.75rem; }
+    .lesson-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+    .lesson-icon.video { background: #fef2f2; color: #ef4444; }
+    .lesson-icon.text { background: #eff6ff; color: #1754cf; }
+    .lesson-icon.live { background: #f0fdf4; color: #22c55e; }
+    
+    /* Modal Styles */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+        background: white;
+        border-radius: 1rem;
+        width: 100%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .modal-title { font-weight: 700; font-size: 1.125rem; }
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #64748b;
+    }
+    .modal-body { padding: 1.5rem; }
+    .modal-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+    }
+</style>
+@endpush
+
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Manage Content: {{ $course->title }}</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('courses.index') }}" class="btn btn-sm btn-outline-secondary me-2">Back to Courses</a>
-        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createModuleModal">
-            <i class="bi bi-folder-plus"></i> Add Module
-        </button>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="accordion" id="accordionModules">
-            @forelse($course->modules as $module)
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="heading{{ $module->id }}">
-                        <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $module->id }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" aria-controls="collapse{{ $module->id }}">
-                            {{ $module->title }}
-                        </button>
-                    </h2>
-                    <div id="collapse{{ $module->id }}" class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}" aria-labelledby="heading{{ $module->id }}" data-bs-parent="#accordionModules">
-                        <div class="accordion-body">
-                            <div class="d-flex justify-content-end mb-2">
-                                <button class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#createLessonModal" onclick="setModuleId({{ $module->id }})">
-                                    <i class="bi bi-file-play"></i> Add Lesson
-                                </button>
-                                <form action="{{ route('modules.destroy', $module->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete module and all lessons?')">
-                                        <i class="bi bi-trash"></i> Delete Module
-                                    </button>
-                                </form>
-                            </div>
-
-                            <ul class="list-group">
-                                @forelse($module->lessons as $lesson)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <i class="bi bi-{{ $lesson->type == 'video' ? 'play-circle' : ($lesson->type == 'live_stream' ? 'broadcast' : 'file-text') }} me-2"></i>
-                                            {{ $lesson->title }}
-                                            @if($lesson->is_free)
-                                                <span class="badge bg-success ms-2">Free Preview</span>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm text-danger border-0 bg-transparent p-0" onclick="return confirm('Delete lesson?')">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </li>
-                                @empty
-                                    <li class="list-group-item text-muted">No lessons yet.</li>
-                                @endforelse
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            @empty
-                <p class="text-center text-muted my-5">No modules found. Create one to get started!</p>
-            @endforelse
+    <div style="margin-bottom: 2rem;">
+        <a href="{{ route('courses.index') }}" style="color: #64748b; text-decoration: none; font-size: 0.875rem;">← Back to Courses</a>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+            <div>
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">{{ $course->title }}</h2>
+                <p style="color: #64748b; margin: 0.25rem 0 0;">Manage modules and lessons</p>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('moduleModal')">+ Add Module</button>
         </div>
     </div>
-</div>
 
-<!-- Create Module Modal -->
-<div class="modal fade" id="createModuleModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    @if(session('success'))
+        <div style="background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @forelse($course->modules as $module)
+        <div class="module-card">
+            <div class="module-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                <div class="module-title">
+                    <span style="font-size: 1.25rem;">📁</span>
+                    {{ $module->title }}
+                    <span class="badge badge-info">{{ $module->lessons->count() }} lessons</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;" onclick="event.stopPropagation(); currentModuleId = {{ $module->id }}; openModal('lessonModal')">+ Lesson</button>
+                    <form action="{{ route('modules.destroy', $module->id) }}" method="POST" style="display: inline;" onclick="event.stopPropagation();">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem; color: #ef4444; border-color: #fecaca;" onclick="return confirm('Delete this module and all its lessons?')">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <div class="module-content">
+                @forelse($module->lessons as $lesson)
+                    <div class="lesson-item">
+                        <div class="lesson-info">
+                            <div class="lesson-icon {{ $lesson->type == 'video' ? 'video' : ($lesson->type == 'text' ? 'text' : 'live') }}">
+                                @if($lesson->type == 'video')
+                                    ▶️
+                                @elseif($lesson->type == 'text')
+                                    📄
+                                @elseif($lesson->type == 'live_stream')
+                                    🔴
+                                @else
+                                    📹
+                                @endif
+                            </div>
+                            <div>
+                                <div style="font-weight: 600;">{{ $lesson->title }}</div>
+                                <div style="font-size: 0.8125rem; color: #64748b;">{{ ucfirst(str_replace('_', ' ', $lesson->type)) }}</div>
+                            </div>
+                            @if($lesson->is_free)
+                                <span class="badge badge-success">Free Preview</span>
+                            @endif
+                        </div>
+                        <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem; color: #ef4444; border-color: #fecaca;" onclick="return confirm('Delete this lesson?')">Delete</button>
+                        </form>
+                    </div>
+                @empty
+                    <p style="text-align: center; color: #94a3b8; padding: 1rem;">No lessons in this module yet.</p>
+                @endforelse
+            </div>
+        </div>
+    @empty
+        <div class="data-card" style="text-align: center; padding: 4rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+            <h3 style="color: #1e293b; margin-bottom: 0.5rem;">No Modules Yet</h3>
+            <p style="color: #64748b; margin-bottom: 1.5rem;">Create your first module to start adding lessons.</p>
+            <button class="btn btn-primary" onclick="openModal('moduleModal')">+ Create Module</button>
+        </div>
+    @endforelse
+
+    <!-- Module Modal -->
+    <div class="modal-overlay" id="moduleModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Create Module</div>
+                <button class="modal-close" onclick="closeModal('moduleModal')">&times;</button>
+            </div>
             <form action="{{ route('modules.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="course_id" value="{{ $course->id }}">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create Module</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="module_title" class="form-label">Module Title</label>
-                        <input type="text" class="form-control" id="module_title" name="title" required>
+                    <div class="form-group">
+                        <label class="form-label">Module Title *</label>
+                        <input type="text" name="title" class="form-input" placeholder="e.g., Getting Started" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Module</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('moduleModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Module</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
 
-<!-- Create Lesson Modal -->
-<div class="modal fade" id="createLessonModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <!-- Lesson Modal -->
+    <div class="modal-overlay" id="lessonModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Create Lesson</div>
+                <button class="modal-close" onclick="closeModal('lessonModal')">&times;</button>
+            </div>
             <form action="{{ route('lessons.store') }}" method="POST">
                 @csrf
-                <input type="hidden" id="lesson_module_id" name="module_id">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create Lesson</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                <input type="hidden" name="module_id" id="lessonModuleId">
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="lesson_title" class="form-label">Lesson Title</label>
-                        <input type="text" class="form-control" id="lesson_title" name="title" required>
+                    <div class="form-group">
+                        <label class="form-label">Lesson Title *</label>
+                        <input type="text" name="title" class="form-input" placeholder="e.g., Introduction to Prayer" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="lesson_type" class="form-label">Type</label>
-                        <select class="form-select" id="lesson_type" name="type" onchange="toggleLessonFields()">
-                            <option value="video">Video (URL)</option>
+                    <div class="form-group">
+                        <label class="form-label">Lesson Type</label>
+                        <select name="type" class="form-input" id="lessonType" onchange="toggleLessonFields()">
+                            <option value="video">Video (YouTube/URL)</option>
                             <option value="text">Text Content</option>
                             <option value="live_stream">Live Stream</option>
-                            <option value="zoom_meeting">Zoom/Meeting Link</option>
+                            <option value="zoom_meeting">Meeting Link</option>
                         </select>
                     </div>
-                    <div class="mb-3 field-video field-zoom_meeting field-live_stream">
-                        <label for="lesson_video_url" class="form-label">Video/Meeting URL</label>
-                        <input type="text" class="form-control" id="lesson_video_url" name="video_url">
-                        <small class="text-muted">YouTube link, Zoom Join URL, etc.</small>
+                    <div class="form-group" id="videoField">
+                        <label class="form-label">Video/Meeting URL</label>
+                        <input type="text" name="video_url" class="form-input" placeholder="https://www.youtube.com/watch?v=...">
                     </div>
-                    <div class="mb-3 field-text" style="display:none;">
-                        <label for="lesson_content" class="form-label">Content</label>
-                        <textarea class="form-control" id="lesson_content" name="content" rows="4"></textarea>
+                    <div class="form-group" id="textField" style="display: none;">
+                        <label class="form-label">Content</label>
+                        <textarea name="content" class="form-input" rows="4" placeholder="Lesson content..."></textarea>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="is_free" name="is_free" value="1">
-                        <label class="form-check-label" for="is_free">Free Preview?</label>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" name="is_free" value="1" style="width: 1.25rem; height: 1.25rem;">
+                            <span>Free Preview (visible without enrollment)</span>
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Lesson</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('lessonModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Lesson</button>
                 </div>
             </form>
         </div>
     </div>
-</div>
+@endsection
 
+@push('scripts')
 <script>
-    function setModuleId(id) {
-        document.getElementById('lesson_module_id').value = id;
-    }
-
-    function toggleLessonFields() {
-        const type = document.getElementById('lesson_type').value;
-        document.querySelectorAll('.field-video, .field-text').forEach(el => el.style.display = 'none');
-        
-        if (type === 'text') {
-            document.querySelector('.field-text').style.display = 'block';
-        } else {
-            document.querySelector('.field-video').style.display = 'block';
+    let currentModuleId = null;
+    
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+        if (id === 'lessonModal') {
+            document.getElementById('lessonModuleId').value = currentModuleId;
         }
     }
+    
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+    
+    function toggleLessonFields() {
+        const type = document.getElementById('lessonType').value;
+        document.getElementById('videoField').style.display = type === 'text' ? 'none' : 'block';
+        document.getElementById('textField').style.display = type === 'text' ? 'block' : 'none';
+    }
+    
+    // Close modal on outside click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
 </script>
-@endsection
+@endpush

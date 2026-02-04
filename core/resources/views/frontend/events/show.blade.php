@@ -148,6 +148,44 @@
         <div class="event-body">
             {!! nl2br(e($event->description)) !!}
         </div>
+        
+        <!-- Registration Section -->
+        <div style="padding: 2.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; color: #1e293b;">Register for this Event</h3>
+            
+            @if(session('success'))
+                <div style="background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem;">
+                    {{ session('success') }}
+                </div>
+            @endif
+            
+            @if(session('error'))
+                <div style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem;">
+                    {{ session('error') }}
+                </div>
+            @endif
+            
+            <form action="{{ route('event.register', $event->id) }}" method="POST">
+                @csrf
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.875rem;">Full Name *</label>
+                        <input type="text" name="name" required value="{{ auth()->user()?->name }}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.875rem;">Email Address *</label>
+                        <input type="email" name="email" required value="{{ auth()->user()?->email }}" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.875rem;">Phone Number</label>
+                        <input type="tel" name="phone" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;">
+                    </div>
+                </div>
+                <button type="submit" style="background: var(--primary-color); color: white; border: none; padding: 1rem 2rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer;">
+                    Register Now
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

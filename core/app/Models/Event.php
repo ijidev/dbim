@@ -24,4 +24,9 @@ class Event extends Model
         'type'
     ];
     use HasFactory;
+
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
 }

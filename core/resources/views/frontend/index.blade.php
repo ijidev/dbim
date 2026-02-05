@@ -22,8 +22,8 @@
             Empowering Believers for Kingdom Impact
         </h1>
         
-        <p style="font-size: 1.25rem; color: #cbd5e1; margin-bottom: 2.5rem; line-height: 1.6;">
-            Join a vibrant community dedicated to spiritual growth, biblical teaching, and marketplace excellence.
+        <p style="font-size: 1.5rem; font-style: italic; color: #f8fafc; margin-bottom: 2.5rem; line-height: 1.6; font-weight: 500;">
+            "Raising gods from amongst men on earth for Christ"
         </p>
         
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard Overview V3</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen transition-colors duration-200">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark/95 backdrop-blur shadow-sm">
+<div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">church</span>
+</div>
+<span class="text-xl font-bold text-gray-900 dark:text-white">Church Admin</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-semibold text-primary" href="#">Overview</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Directory</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Resources</a>
+<a class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<button class="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg text-sm font-bold border border-primary/20 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+<span>Acting as: Super Admin</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<div class="h-8 w-px bg-gray-200 dark:bg-gray-800 mx-2"></div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary/20 p-0.5 ml-2">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="User profile avatar circle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSp50hSTtvLUEAfn02aNpNDwnjvkny_-ILDGUbyyJ6F1s8XkfP8B4MbG5dR9DdFy6zaMn7QcM2YNBYK0wsYRwxv4M1ktbtU5HP7VYfZfcMfA-YkKBaFOfeyGDE094ARQonTlHECf1I6l4JjR9p8rnf-IDhEZjri4PN4ChnkI69fSQ1eyKqZ7y42ROxjfx7nyqcbJ1sDYH6gukvhJAvIlevTY4xIOiLc1wAgrpx92PHLFdzzd8iiRTg3x6xlUZVxNg52xLIaQB8iz_2");'></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-6 py-8">
+<!-- HeadlineText -->
+<div class="mb-8">
+<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Control Panel</h1>
+<p class="text-gray-500 dark:text-gray-400">Welcome back, Admin. Here's what's happening across your departments today.</p>
+</div>
+<!-- Dashboard Widgets Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+<!-- Finance Widget -->
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="p-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-green-100 dark:bg-green-900/30 text-green-600 px-2 py-1 rounded">Active</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Finance</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Total collected: $12,450.00</p>
+</div>
+<div class="mt-2 space-y-2">
+<button class="w-full py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Record Offering
+                    </button>
+<button class="w-full py-2 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-semibold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        View Statements
+                    </button>
+</div>
+</div>
+<!-- Media Widget -->
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="p-3 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg">
+<span class="material-symbols-outlined">movie</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-purple-100 dark:bg-purple-900/30 text-purple-600 px-2 py-1 rounded">3 Pending</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Media</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Storage: 85% of 1TB used</p>
+</div>
+<div class="mt-2 space-y-2">
+<button class="w-full py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+                        Upload Sermon
+                    </button>
+<button class="w-full py-2 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-semibold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        Stream Settings
+                    </button>
+</div>
+</div>
+<!-- LMS Widget -->
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="p-3 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-lg">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-orange-100 dark:bg-orange-900/30 text-orange-600 px-2 py-1 rounded">12 New</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">LMS</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">48 active students enrolled</p>
+</div>
+<div class="mt-2 space-y-2">
+<button class="w-full py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">library_add</span>
+                        New Course
+                    </button>
+<button class="w-full py-2 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-semibold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        Review Tasks
+                    </button>
+</div>
+</div>
+<!-- General Admin Widget -->
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="p-3 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 text-blue-600 px-2 py-1 rounded">System OK</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">General</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">2 events scheduled today</p>
+</div>
+<div class="mt-2 space-y-2">
+<button class="w-full py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                        Update Calendar
+                    </button>
+<button class="w-full py-2 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-semibold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        Manage Users
+                    </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Table Component (Recent Administrative Activity) -->
+<div class="lg:col-span-2 flex flex-col gap-4">
+<div class="flex items-center justify-between px-4">
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Recent Activity Log</h2>
+<button class="text-sm font-medium text-primary hover:underline">View All</button>
+</div>
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
+<table class="w-full text-left">
+<thead class="bg-gray-50 dark:bg-gray-800/50">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Admin Name</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Department</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Action</th>
+<th class="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Timestamp</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200 font-medium">John Doe</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Finance</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Recorded Offering ($2,400)</td>
+<td class="px-6 py-4 text-sm text-gray-500">2 mins ago</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200 font-medium">Sarah Smith</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">Media</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Updated Sermon Metadata</td>
+<td class="px-6 py-4 text-sm text-gray-500">15 mins ago</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200 font-medium">Mike Jones</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-xs font-medium rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">LMS</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Published "Theology 101"</td>
+<td class="px-6 py-4 text-sm text-gray-500">1 hour ago</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-200 font-medium">Admin User</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">General</span>
+</td>
+<td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">Updated Church Calendar</td>
+<td class="px-6 py-4 text-sm text-gray-500">2 hours ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Side Health & Quick Stats -->
+<div class="flex flex-col gap-6">
+<h2 class="text-xl font-bold text-gray-900 dark:text-white px-4">System Health</h2>
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm">
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">cloud_done</span>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Web Servers</span>
+</div>
+<span class="text-xs font-bold text-green-600">Online</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">database</span>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Database</span>
+</div>
+<span class="text-xs font-bold text-green-600">Healthy</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-yellow-500">dns</span>
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Media API</span>
+</div>
+<span class="text-xs font-bold text-yellow-600">Slow Response</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+<h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Quick Insights</h4>
+<div class="flex items-center gap-4 mb-4">
+<div class="w-2 h-10 bg-primary rounded-full"></div>
+<div>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">1,204</p>
+<p class="text-xs text-gray-500">Website hits today</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-2 h-10 bg-orange-400 rounded-full"></div>
+<div>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">84%</p>
+<p class="text-xs text-gray-500">Donor retention rate</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Comprehensive Footer -->
+<footer class="mt-20 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-background-dark py-12">
+<div class="max-w-[1440px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
+<div class="col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-6 h-6 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[16px]">church</span>
+</div>
+<span class="text-lg font-bold text-gray-900 dark:text-white">Church Admin Portal</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-xs">
+                    Empowering church leadership with integrated financial, media, and learning management tools.
+                </p>
+</div>
+<div>
+<h4 class="text-sm font-bold text-gray-900 dark:text-white mb-4">Core Modules</h4>
+<ul class="space-y-2">
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Financial Hub</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Media Library</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Course Builder</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Directory</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-bold text-gray-900 dark:text-white mb-4">Dev Tools</h4>
+<ul class="space-y-2">
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">API Keys</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Documentation</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Webhooks</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">System Logs</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-bold text-gray-900 dark:text-white mb-4">Support</h4>
+<ul class="space-y-2">
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Community</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Contact Devs</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Status Page</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-bold text-gray-900 dark:text-white mb-4">Legal</h4>
+<ul class="space-y-2">
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Terms</a></li>
+<li><a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Compliance</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-6 mt-12 pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-gray-400">© 2024 ChurchAdmin Pro. All rights reserved.</p>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 text-xs text-gray-400">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    Version 3.4.2 (Production)
+                </div>
+<button class="text-xs text-gray-400 hover:text-primary">Sign Out</button>
+</div>
+</div>
+</footer>
+</body></html>

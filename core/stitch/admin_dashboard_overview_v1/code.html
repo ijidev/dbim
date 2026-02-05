@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Dashboard Overview V1</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "accent-gold": "#d4af37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex-shrink-0 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark h-full flex flex-col justify-between">
+<div class="p-4 flex flex-col gap-6">
+<!-- Brand / Logo Area -->
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">church</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Grace Church</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-medium">Admin Control Panel</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-semibold">Overview</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<p class="text-sm font-medium">Finance</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<p class="text-sm font-medium">LMS</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">video_library</span>
+<p class="text-sm font-medium">Media</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">event</span>
+<p class="text-sm font-medium">Events</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium">Members</p>
+</a>
+</nav>
+</div>
+<!-- Bottom Navigation / Support -->
+<div class="p-4 border-t border-[#dcdfe5] dark:border-gray-800 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined">help_center</span>
+<p class="text-sm font-medium">Support</p>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col overflow-y-auto">
+<!-- Top Navigation Header -->
+<header class="sticky top-0 z-10 flex items-center justify-between whitespace-nowrap border-b border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark px-8 py-3">
+<div class="flex items-center gap-6 w-full max-w-xl">
+<label class="flex flex-col w-full !h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-[#dcdfe5] dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+<div class="text-[#636f88] flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:outline-0 focus:ring-0 text-[#111318] dark:text-white placeholder:text-[#636f88] px-4 text-sm font-normal" placeholder="Search members, transactions, or media..."/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 border-r border-[#dcdfe5] dark:border-gray-800 pr-4">
+<button class="relative flex items-center justify-center rounded-lg h-10 w-10 bg-gray-50 dark:bg-gray-800 text-[#111318] dark:text-white hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2.5 flex h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-gray-50 dark:bg-gray-800 text-[#111318] dark:text-white hover:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-2">
+<div class="flex flex-col items-end">
+<p class="text-sm font-bold text-[#111318] dark:text-white">Sarah Jenkins</p>
+<span class="text-[10px] font-bold uppercase tracking-wider text-accent-gold bg-accent-gold/10 px-1.5 rounded">Super Admin</span>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Headshot of Sarah Jenkins admin" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJc4vfkbeM1MYHGGH70S-MEJvxnN4GupXgBPxuexyQyFXh3obpRHmyk2VFm3fzWet_9lAR9B0ku5qAnPkFjcjAI3rxJDS5QJSmeaARVnW_mI_SC3P0rMcJtAjc41wGW2krYsqIAygYwI29TYocjtVcILIXvwlkJ9Yqtb-yjHFonYaRz42wRgzPdn45A96IF3SKpohuefONo6DBFC0Iig3HKGekEaoCPPLXtYgK6N8kT6W7nLvK64xZfgz_NgENTukLgiItNwWM5d0B");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-8 max-w-7xl mx-auto w-full">
+<!-- Page Heading -->
+<div class="flex flex-wrap justify-between items-end gap-3 mb-8">
+<div class="flex flex-col gap-1">
+<h2 class="text-[#111318] dark:text-white text-3xl font-black leading-tight tracking-tight">Quick Overview</h2>
+<p class="text-[#636f88] dark:text-gray-400 text-base font-normal">Welcome back, Sarah. Here's what's happening at Grace Church today.</p>
+</div>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-xl">add_circle</span>
+                        New Entry
+                    </button>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="p-2 bg-primary/10 text-primary rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-[#07883b] text-xs font-bold px-2 py-1 bg-green-50 rounded-full">+12.5%</span>
+</div>
+<div>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">Total Revenue (MTD)</p>
+<p class="text-[#111318] dark:text-white text-3xl font-bold leading-tight">$45,280.00</p>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[72%]"></div>
+</div>
+<p class="text-[11px] text-[#636f88] dark:text-gray-400">72% of monthly donation goal reached</p>
+</div>
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="p-2 bg-accent-gold/10 text-accent-gold rounded-lg">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="text-[#07883b] text-xs font-bold px-2 py-1 bg-green-50 rounded-full">+5%</span>
+</div>
+<div>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">Active Students</p>
+<p class="text-[#111318] dark:text-white text-3xl font-bold leading-tight">1,240</p>
+</div>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Across 14 Bible study courses</p>
+</div>
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="p-2 bg-red-50 text-red-600 rounded-lg">
+<span class="material-symbols-outlined">campaign</span>
+</div>
+<span class="text-red-600 text-xs font-bold px-2 py-1 bg-red-50 rounded-full animate-pulse">Live Soon</span>
+</div>
+<div>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-1">Next Live Event</p>
+<p class="text-[#111318] dark:text-white text-xl font-bold leading-tight">Sunday Main Service</p>
+<p class="text-primary font-bold text-sm mt-1 italic">Today at 10:00 AM</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-5">
+<span class="material-symbols-outlined text-9xl">schedule</span>
+</div>
+</div>
+</div>
+<!-- Main Grid: Activity & Insights -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Section: Activity Feed -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 rounded-xl overflow-hidden">
+<div class="px-6 py-5 border-b border-[#dcdfe5] dark:border-gray-700 flex items-center justify-between">
+<h3 class="text-[#111318] dark:text-white font-bold text-lg">Operational Insights</h3>
+<button class="text-primary text-xs font-bold hover:underline">View Detailed Reports</button>
+</div>
+<div class="p-6">
+<div class="flex flex-col gap-6">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0 size-8 bg-green-100 text-green-700 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-[#111318] dark:text-white">New Financial Record</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Monthly giving has exceeded the target by $3,200 compared to last year's quarter.</p>
+<p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">2 Hours Ago</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0 size-8 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">play_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-[#111318] dark:text-white">Media Upload Complete</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">"The Path to Grace" - Part 3 (4K Video) is now live in the sermon archive.</p>
+<p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">5 Hours Ago</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0 size-8 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">school</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold text-[#111318] dark:text-white">New Enrollment Milestone</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">150 members completed the "Foundations of Faith" introductory module.</p>
+<p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Section: Events & Quick Access -->
+<div class="flex flex-col gap-6">
+<div class="bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 rounded-xl p-6 shadow-sm">
+<h3 class="text-[#111318] dark:text-white font-bold text-lg mb-4">Upcoming Events</h3>
+<div class="flex flex-col gap-4">
+<div class="flex gap-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 transition-colors">
+<div class="flex flex-col items-center justify-center w-12 h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded">
+<span class="text-[10px] font-bold text-red-500 uppercase">Oct</span>
+<span class="text-lg font-black text-gray-800 dark:text-white">12</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-sm font-bold dark:text-white">Elder's Meeting</p>
+<p class="text-xs text-[#636f88]">7:00 PM • Conference Room</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 transition-colors">
+<div class="flex flex-col items-center justify-center w-12 h-12 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded">
+<span class="text-[10px] font-bold text-red-500 uppercase">Oct</span>
+<span class="text-lg font-black text-gray-800 dark:text-white">15</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-sm font-bold dark:text-white">Youth Rally Night</p>
+<p class="text-xs text-[#636f88]">6:30 PM • Main Hall</p>
+</div>
+</div>
+</div>
+</div>
+<!-- System Status -->
+<div class="bg-primary rounded-xl p-6 text-white shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-2 bg-green-400 rounded-full animate-ping"></div>
+<p class="text-xs font-bold uppercase tracking-widest opacity-80">System Status</p>
+</div>
+<h4 class="text-xl font-bold mb-1">Healthy &amp; Active</h4>
+<p class="text-sm text-white/70 mb-4">All servers operational. Last sync: 2 mins ago.</p>
+<div class="flex gap-2">
+<div class="px-2 py-1 bg-white/20 rounded text-[10px] font-bold">Ver 2.4.1</div>
+<div class="px-2 py-1 bg-white/20 rounded text-[10px] font-bold">SSL Secure</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-8xl absolute -right-6 -bottom-6 opacity-10">lock</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-auto px-8 py-4 border-t border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-background-dark">
+<div class="flex items-center justify-between text-[11px] font-medium text-[#636f88] dark:text-gray-500">
+<div class="flex items-center gap-4">
+<span>© 2024 Grace Church Network</span>
+<a class="hover:text-primary transition-colors underline decoration-dotted" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors underline decoration-dotted" href="#">Terms of Use</a>
+</div>
+<div class="flex items-center gap-2">
+<span>Role: Admin Control</span>
+<span class="text-gray-300">|</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> Session: 02h 14m</span>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Stream &amp; Community Chat | Grace Church</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-slate-200 transition-colors duration-200">
+<div class="relative flex min-h-screen flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-background-dark/80 backdrop-blur-md px-6 md:px-10 py-3">
+<div class="mx-auto flex max-w-[1440px] items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<svg class="size-8" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Grace Church</h2>
+</div>
+<nav class="hidden items-center gap-6 lg:flex">
+<a class="text-sm font-semibold text-primary" href="#">Live Stream</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Sermons</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">LMS Courses</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Give</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Events</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:block">
+<label class="relative flex h-10 w-64 items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400">search</span>
+<input class="w-full rounded-lg border-none bg-slate-100 dark:bg-slate-800 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/50" placeholder="Search services..." type="text"/>
+</label>
+</div>
+<button class="hidden rounded-lg bg-primary px-5 py-2 text-sm font-bold text-white transition-all hover:bg-primary/90 md:block">
+                        Join Community
+                    </button>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 ring-2 ring-primary/20 bg-cover bg-center" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiqc-AsjF3u7ncflSyLF78zZ12bynI5Hnnn8C__ZPBiGb5DT4U56FDNTlLqASgKeYDjE6VxhW4kxa55zvbSK-r5YU0VBrLnLLFslRyyVP-t7R5S-voroKWpGxW67jtxFUMdEIPp5revec-awPclO_m5wdLYswka781cYfJtri2Yoq8WvmoxwwgB7lQfdSnaaCm90ikvwPLEkR7L1eRVJnKAIaq5wJbwedKbCUNsTUbf0SA-Ovl04W2ChjvC0LsPYJrzRCgyvFigye5");'></div>
+</div>
+</div>
+</header>
+<main class="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-6 p-4 md:flex-row md:p-6">
+<!-- Left Side: Streaming Player & Content -->
+<div class="flex flex-1 flex-col gap-4">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 px-1 py-1 text-sm">
+<a class="text-slate-500 hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
+<a class="text-slate-500 hover:text-primary" href="#">Worship Services</a>
+<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
+<span class="font-semibold text-primary">Sunday Live Stream</span>
+</nav>
+<!-- Media Player -->
+<div class="overflow-hidden rounded-xl bg-black shadow-2xl">
+<div class="relative aspect-video w-full bg-cover bg-center" data-alt="Church interior wide shot for live stream" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqPr1ydr04taNShwLRQzKcriHC6XnQTbE5UWNKW6ewU_76tK3TA7SWVHR0AGvhtN8RGoWaJWCDwbLT868xWtbDnQYnxqlWpWZLr4u8eWnn1eLO4IEdW_y7ricqAytOI0w6LgXsbzReGc_HzfuaQiVsMPWJa5gLDuKP37lleiz9t5plJvEa_KK7X0owzh8XprfjUJ9jNQ9c7nP8y3OhC0BuVTti5RIyb31ME_1TzFxE-jvIKCTPpS-Y5lCTyK1T08TsMCdxMZ3mwBRZ");'>
+<!-- Video Overlays -->
+<div class="absolute left-6 top-6 flex items-center gap-2">
+<span class="flex items-center gap-1.5 rounded-full bg-red-600 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+<span class="size-1.5 animate-pulse rounded-full bg-white"></span>
+                                Live
+                            </span>
+<span class="flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-md">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                                1,248
+                            </span>
+</div>
+<!-- Play Button Center Overlay -->
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-lg transition-transform hover:scale-110 active:scale-95">
+<span class="material-symbols-outlined !text-[48px] translate-x-1" style="font-variation-settings: 'FILL' 1">play_arrow</span>
+</button>
+</div>
+<!-- Player Controls -->
+<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+<div class="group relative mb-4 h-1 w-full rounded-full bg-white/20">
+<div class="h-full w-2/3 rounded-full bg-primary"></div>
+<div class="absolute top-1/2 left-[66%] size-3 -translate-y-1/2 rounded-full bg-white shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex items-center justify-between text-white">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined hover:text-primary">volume_up</button>
+<span class="text-xs font-medium tracking-wide">45:21 / 01:15:00</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined hover:text-primary">settings</button>
+<button class="material-symbols-outlined hover:text-primary">fullscreen</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Reactions Bar -->
+<div class="flex items-center justify-between rounded-xl bg-white dark:bg-slate-900 p-2 shadow-sm border border-[#f0f2f4] dark:border-slate-800">
+<div class="flex flex-wrap items-center gap-1 sm:gap-4 px-2">
+<button class="group flex items-center gap-2 rounded-lg px-4 py-2 text-slate-600 dark:text-slate-400 transition-all hover:bg-primary/10 hover:text-primary">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">front_hand</span>
+<span class="text-xs font-bold uppercase tracking-wider">Amen</span>
+</button>
+<button class="group flex items-center gap-2 rounded-lg px-4 py-2 text-slate-600 dark:text-slate-400 transition-all hover:bg-red-50 hover:text-red-500">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1">favorite</span>
+<span class="text-xs font-bold uppercase tracking-wider">Love</span>
+</button>
+<button class="group flex items-center gap-2 rounded-lg px-4 py-2 text-slate-600 dark:text-slate-400 transition-all hover:bg-blue-50 hover:text-blue-500">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">volunteer_activism</span>
+<span class="text-xs font-bold uppercase tracking-wider">Pray</span>
+</button>
+<button class="group flex items-center gap-2 rounded-lg px-4 py-2 text-slate-600 dark:text-slate-400 transition-all hover:bg-amber-50 hover:text-amber-500">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">auto_awesome</span>
+<span class="text-xs font-bold uppercase tracking-wider">Praise</span>
+</button>
+</div>
+<div class="px-4">
+<button class="flex items-center gap-2 rounded-lg bg-slate-100 dark:bg-slate-800 px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 transition-colors hover:bg-slate-200">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span class="hidden sm:inline">Invite</span>
+</button>
+</div>
+</div>
+<!-- Sermon Info -->
+<div class="rounded-xl bg-white dark:bg-slate-900 p-6 shadow-sm border border-[#f0f2f4] dark:border-slate-800">
+<div class="mb-4">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Current Series: Foundations of Faith</span>
+<h1 class="mt-1 text-2xl font-bold md:text-3xl">The Power of Community: Growing Together in Grace</h1>
+</div>
+<div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-cover bg-center border-2 border-primary/20" data-alt="Portrait of Pastor David Graham" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACdkzRbQ2qqUfEIqFvePqSW4hKRzUzmlA9dGDpTZWt8s8OdgYYbityaAVVdvrQb10BdNXVDznl7gDyjDqo_s74-dLUllPLXn0BuremeDUJ-T06EDqwpe-To5kuHySwUEq2NWlvi52JFWGypnzSzQCVBEIByGDOg2yoX_5N-GX0j-DFiK1lDB_bTCrUxqkvohkUiDaX4OZ0qs-HHYJ75nQkXz-rxxeua9XqqPmqDwhDqqh8HD9k-m4DoHMLEDMq7amsfG9DdbDEGEmv");'></div>
+<div>
+<p class="font-bold">Pastor David Graham</p>
+<p class="text-sm text-slate-500">Senior Pastor, Grace Church</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                                Sermon Notes
+                            </button>
+<button class="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-[20px]">book</span>
+                                Bible Reference
+                            </button>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                                Give Online
+                            </button>
+</div>
+</div>
+<hr class="my-6 border-slate-100 dark:border-slate-800"/>
+<div class="prose prose-slate dark:prose-invert max-w-none">
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Join us this morning as we explore Acts 2:42-47 and discover what it means to be a thriving community of believers. We'll examine how the early church balanced worship, fellowship, and outreach, and how we can apply these timeless principles to our modern lives.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Right Side: Community Chat -->
+<aside class="flex w-full flex-col gap-4 md:w-[380px] lg:w-[420px]">
+<div class="flex h-[750px] flex-col rounded-xl bg-white dark:bg-slate-900 shadow-xl border border-[#f0f2f4] dark:border-slate-800 overflow-hidden">
+<!-- Chat Header -->
+<div class="flex items-center justify-between border-b border-[#f0f2f4] dark:border-slate-800 p-4">
+<div class="flex items-center gap-2">
+<h3 class="font-bold">Community Chat</h3>
+<span class="rounded bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">LIVE</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-[20px] text-slate-400 hover:text-primary">group</button>
+<button class="material-symbols-outlined text-[20px] text-slate-400 hover:text-primary">more_vert</button>
+</div>
+</div>
+<!-- Pinned Message -->
+<div class="bg-primary/5 p-3 flex items-start gap-3 border-b border-primary/10">
+<span class="material-symbols-outlined text-primary !text-[18px] mt-0.5">push_pin</span>
+<div class="text-xs">
+<span class="font-bold text-primary block mb-0.5">Welcome to Grace Online!</span>
+<p class="text-slate-600 dark:text-slate-400">Join the conversation below. If you have a prayer request, please use the button in the sermon info section.</p>
+</div>
+</div>
+<!-- Chat Messages Area -->
+<div class="custom-scrollbar flex-1 overflow-y-auto p-4 space-y-5">
+<!-- System Message -->
+<div class="flex justify-center">
+<span class="rounded-full bg-slate-50 dark:bg-slate-800 px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">Service Started</span>
+</div>
+<!-- Chat Item -->
+<div class="flex gap-3">
+<div class="size-8 shrink-0 rounded-full bg-cover bg-center" data-alt="Chat user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCSWeD9iciCSLgbW0Gxk6POaxLfIamK5A_Sckkr4oxPir4i64BnjSwnVUs_sDPBhmVUtTKEkiMdkIa87IuMkaUU6W224mV7aHVIsNj1ukvgTVBVHCnXyW5AZTILmsyumKNafSm6NGCwn6JxbJFTi1X9SngqJz9LiUhe16HUTdkPzLI3RfBMkbxUwmkgobqGFMOwg5F-XVT4MyUCCRkd_DTlWUpQ2m447HvHKSlPPDlGbnPu9H0Knc6gBa98aKOMKuL81DbQtFPZ-ty");'></div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-slate-900 dark:text-slate-100">Sarah Jenkins</span>
+<span class="text-[10px] text-slate-400">10:45 AM</span>
+</div>
+<p class="mt-1 text-sm text-slate-600 dark:text-slate-400 leading-snug">Good morning everyone! Joining from Seattle today. So excited for this message! 🙏</p>
+</div>
+</div>
+<!-- Chat Item (Moderator) -->
+<div class="flex gap-3">
+<div class="size-8 shrink-0 rounded-full bg-cover bg-center border-2 border-primary/30" data-alt="Moderator avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4n2S0vR8s3iFXSVMdIRyZ7otygKa8n_HB-2MsvMboc8MC2WfMfkoeXzC4tLtwUBufawnjz854W396GpL88Rbr0C-jd6MBfgsT0diqWi8XT_fuzs6D-EqR4by_fYl4CV5GWgkqbZVPols1PHatpMGkVW8sPVB4sP6-dxGmE1De-mPXMZJG09CdvmjgdmVRv-ia1_nOlk-TuHUij8aqMXr0AcmGDBVB9ix65oB-KfVIvZqbZniGN7OzM3Atgc8WI7-NT4lbUeojWp1n");'></div>
+<div class="rounded-lg bg-primary/5 p-2.5 ring-1 ring-primary/10">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">GraceHost_Mark</span>
+<span class="rounded bg-primary px-1.5 py-0.5 text-[8px] font-bold text-white">MOD</span>
+<span class="text-[10px] text-slate-400 ml-auto">10:46 AM</span>
+</div>
+<p class="mt-1 text-sm text-slate-600 dark:text-slate-400 leading-snug">Welcome, Sarah! Glad to have you worshiping with us from the PNW. ❤️</p>
+</div>
+</div>
+<!-- Chat Item -->
+<div class="flex gap-3">
+<div class="size-8 shrink-0 rounded-full bg-cover bg-center" data-alt="Chat user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKxVHyOBYyEfHnGXyUjo1wemum28sF6Ry4gK5ls41ENYVN5Zoy21vcPFI1MXo-kLUh90K1uOIp3Yiq9l0bV4LHJ8DVQIRMpQYNNJXthRn4EgBNNCONAvmAvmKw0AioRka0JhugfkR4flscqL9-TzyHXdYRNxZMAojCFOr995vYRCWJMOzvKXoGOZcs_hTNradTd33l9t94PuHrTdrWqH_1JxjrsRGXgVp79J5QylSGn5zj4FbdwCVtbO_3ht1KuEduNOlcWByokw52");'></div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-slate-900 dark:text-slate-100">Michael R.</span>
+<span class="text-[10px] text-slate-400">10:48 AM</span>
+</div>
+<p class="mt-1 text-sm text-slate-600 dark:text-slate-400 leading-snug">Amen to that opening worship set! The spirit is moving.</p>
+</div>
+</div>
+<!-- Chat Item (Large Reaction) -->
+<div class="flex gap-3">
+<div class="size-8 shrink-0 rounded-full bg-cover bg-center" data-alt="Chat user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCUoo0K7uVeaBEmAda0eY8b27sdYVbkDlEjOhcPKQ6vM8lMqDnHeIxzbIIGjstDPr9xZnt7bg452nk0Gl9u7Cqc_AQTCwEdXxrTSg-j38WRUTz6vyIaoHEG_UeYJXVP19L20wI1ON7YSr7ZQEvau4mG3kydjKFLkyvfdX9umWK7Uq7AZ-KSmty7oDbEP_Dt2q-xu4IfMunOoU9FWCzgMfIyPGgD-w4B-VBrg-4ARw0NyLrlfGIaCJ2uVruRR0D5d7SllB9Aj9-5zO55");'></div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-slate-900 dark:text-slate-100">Linda Chen</span>
+<span class="text-[10px] text-slate-400">10:52 AM</span>
+</div>
+<div class="mt-1 flex gap-1">
+<span class="material-symbols-outlined text-primary !text-[24px]">front_hand</span>
+<span class="material-symbols-outlined text-primary !text-[24px]">front_hand</span>
+<span class="material-symbols-outlined text-primary !text-[24px]">front_hand</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="border-t border-[#f0f2f4] dark:border-slate-800 p-4">
+<div class="relative">
+<textarea class="w-full resize-none rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 p-3 pr-20 text-sm focus:border-primary focus:ring-0" placeholder="Type a message..." rows="2"></textarea>
+<div class="absolute bottom-3 right-3 flex items-center gap-2">
+<button class="material-symbols-outlined text-slate-400 hover:text-primary">mood</button>
+<button class="flex size-8 items-center justify-center rounded-lg bg-primary text-white hover:bg-primary/90">
+<span class="material-symbols-outlined !text-[18px]">send</span>
+</button>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between px-1">
+<span class="text-[10px] text-slate-400">Be respectful and kind</span>
+<div class="flex items-center gap-1">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+<span class="text-[10px] font-semibold text-slate-500 uppercase tracking-tighter">Connected</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming Event Mini Card -->
+<div class="group relative overflow-hidden rounded-xl bg-primary p-4 text-white shadow-lg transition-transform hover:scale-[1.02]">
+<div class="relative z-10">
+<span class="text-[10px] font-bold uppercase tracking-widest text-white/80">Next Session</span>
+<h4 class="mt-1 font-bold">LMS: Intro to Theology</h4>
+<p class="mt-1 text-xs text-white/80">Starts Monday, 7:00 PM</p>
+<button class="mt-3 w-full rounded-lg bg-white py-2 text-xs font-bold text-primary transition-colors hover:bg-slate-100">
+                            Register Now
+                        </button>
+</div>
+<!-- Decorative background element -->
+<div class="absolute -right-4 -top-4 size-24 rounded-full bg-white/10 blur-2xl transition-all group-hover:bg-white/20"></div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="mt-auto border-t border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-background-dark py-8 px-10 text-center">
+<p class="text-sm text-slate-500">© 2024 Grace Community Church. All Rights Reserved. <a class="text-primary hover:underline ml-2" href="#">Privacy Policy</a></p>
+</footer>
+</div>
+</body></html>

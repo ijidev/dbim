@@ -26,13 +26,19 @@
     <!-- Styles -->
     <style>
         :root {
-            /* Palette */
+            /* Palette (Main) */
             --primary: #1754cf;
             --primary-dark: #103c96;
             --primary-light: #e0e7ff;
             --accent: #f59e0b;
             --danger: #ef4444;
             --success: #10b981;
+            
+            /* Aliases for wider compatibility */
+            --primary-color: var(--primary);
+            --primary-color-dark: var(--primary-dark);
+            --primary-color-light: var(--primary-light);
+            --secondary-color: var(--accent);
             
             /* Backgrounds */
             --bg-body: #f8fafc;
@@ -53,6 +59,21 @@
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             
             --container-width: 1200px;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--primary);
         }
 
         /* Reset & Base */
@@ -290,12 +311,26 @@
                             <span>❤️</span> Give
                         </a>
                     @else
-                        <div style="display: flex; align-items: center; gap: 1rem;">
-                            <span style="font-weight: 500;">{{ Auth::user()->name }}</span>
-                            <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-ghost" style="color: var(--danger);">Logout</button>
-                            </form>
+                        <div style="position: relative;" class="user-dropdown">
+                            <button class="btn btn-ghost dropdown-trigger" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 600;">
+                                👤 {{ Auth::user()->name }}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                            </button>
+                            <div class="dropdown-menu" style="display: none; position: absolute; top: 100%; right: 0; background: white; border-radius: 0.75rem; box-shadow: var(--shadow-lg); min-width: 200px; padding: 0.5rem; z-index: 200; border: 1px solid #e2e8f0;">
+                                @if(Auth::user()->role === 'admin')
+                                    <a href="{{ route('home') }}" class="dropdown-item">🛠️ Admin Dashboard</a>
+                                @elseif(Auth::user()->role === 'instructor')
+                                    <a href="{{ route('home') }}" class="dropdown-item">📋 Instructor Panel</a>
+                                @else
+                                    <a href="{{ route('student.courses') }}" class="dropdown-item">🎓 My Courses</a>
+                                @endif
+                                <a href="{{ route('profile.show') ?? '#' }}" class="dropdown-item">👤 Profile</a>
+                                <div style="height: 1px; background: #e2e8f0; margin: 0.5rem 0;"></div>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item" style="color: var(--danger); width: 100%; text-align: left; background: none; border: none; font: inherit; cursor: pointer;">🚪 Logout</button>
+                                </form>
+                            </div>
                         </div>
                     @endguest
                 </div>
@@ -313,8 +348,9 @@
         <footer class="site-footer">
             <div class="container">
                 <div class="footer-grid">
-                    <div class="footer-col">
-                        <h4>About DBIM</h4>
+                    <div class="footer-col" style="flex: 1.5;">
+                        <h4 style="color: white; font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">DBIM</h4>
+                        <p style="font-size: 1.125rem; font-style: italic; color: var(--primary-light); margin-bottom: 1rem; line-height: 1.4;">"Raising gods from amongst men on earth for Christ"</p>
                         <p>Empowering believers for spiritual and kingdom impact through digital innovation and timeless truth.</p>
                     </div>
                     <div class="footer-col">
@@ -339,5 +375,22 @@
     </div>
 
     @stack('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownTrigger = document.querySelector('.dropdown-trigger');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+
+            if (dropdownTrigger && dropdownMenu) {
+                dropdownTrigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdownMenu.style.display = dropdownMenu.style.display === 'none' ? 'block' : 'none';
+                });
+
+                document.addEventListener('click', function() {
+                    dropdownMenu.style.display = 'none';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

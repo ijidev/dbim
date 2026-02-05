@@ -55,7 +55,8 @@
                         </td>
                         <td class="hide-mobile">{{ $user->created_at->format('M d, Y') }}</td>
                         <td>
-                            <div style="display: flex; gap: 0.5rem;">
+                             <div style="display: flex; gap: 0.5rem;">
+                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;">Edit</a>
                                 <button class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;" onclick="openRoleModal({{ $user->id }}, '{{ $user->role }}')">Role</button>
                                 @if($user->id !== auth()->id())
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">

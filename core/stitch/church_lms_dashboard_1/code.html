@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Course - Grace LMS Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input:checked ~ .dot {
+            transform: translateX(100%);
+        }
+        input:checked ~ .block {
+            background-color: #1754cf;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex flex-col border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a1f2e] h-full shrink-0">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">church</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-tight">Grace LMS</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-normal">Admin Panel</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-xl">library_add</span>
+<p class="text-sm font-medium">Manage Courses</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-xl">group</span>
+<p class="text-sm font-medium">Members</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<p class="text-sm font-medium">Reports</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-xl">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</div>
+</nav>
+<div class="p-4 border-t border-[#dcdfe5] dark:border-gray-800">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Dlke3g7UyYuK-DLl15Yexz-ilCuqI-RIZyL6aUF1jKxCDPDFelOO97IMJ_85_arJBU1wQBXz-XAgcfc3Qac_9JMlkxmwtRYJf4lzuhKLjFz9qUCN27e6sC9T4rVojO2O0Sz-dlUwZaClG6IstL-umVPzgOii9n1rdr0-XzGiaAQRqxfeHu1tFtIRCoDymKX-kT_N_8SvbllspaVOKnVfo5bm5zKXZqPhaDi4OOUKMz0ip8I0k6M4FLP4NixmPtg-EXLj5UpM9s5X");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium">Admin User</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">System Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<header class="flex items-center justify-between border-b border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a1f2e] px-8 py-4 sticky top-0 z-10">
+<div class="flex items-center gap-2">
+<a class="text-[#636f88] hover:text-primary transition-colors flex items-center gap-1 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                        Back to Courses
+                    </a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-sm font-bold text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                        Save Draft
+                    </button>
+<button class="px-6 py-2 bg-primary text-white text-sm font-bold rounded-lg shadow-sm hover:bg-blue-700 transition-colors">
+                        Publish Course
+                    </button>
+</div>
+</header>
+<div class="p-8 max-w-4xl mx-auto w-full space-y-10">
+<div>
+<h2 class="text-3xl font-black tracking-tight mb-2">Add New Course</h2>
+<p class="text-[#636f88] dark:text-gray-400">Fill in the details below to create a new learning experience for your community.</p>
+</div>
+<section class="bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-[#dcdfe5] dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
+<h3 class="font-bold text-base flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                            Basic Information
+                        </h3>
+</div>
+<div class="p-6 space-y-6">
+<div class="grid gap-2">
+<label class="text-sm font-semibold text-[#111318] dark:text-white">Course Title</label>
+<input class="w-full px-4 py-2.5 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 border border-transparent focus:border-primary focus:ring-0 text-sm transition-all" placeholder="e.g., Theology of Grace" type="text"/>
+</div>
+<div class="grid gap-2">
+<label class="text-sm font-semibold text-[#111318] dark:text-white">Short Description</label>
+<textarea class="w-full px-4 py-2.5 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 border border-transparent focus:border-primary focus:ring-0 text-sm transition-all" placeholder="A brief summary of what students will learn..." rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="grid gap-2">
+<label class="text-sm font-semibold text-[#111318] dark:text-white">Category</label>
+<select class="w-full px-4 py-2.5 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 border border-transparent focus:border-primary focus:ring-0 text-sm appearance-none">
+<option>Theology</option>
+<option>Leadership</option>
+<option>Spiritual Growth</option>
+<option>Worship</option>
+</select>
+</div>
+<div class="grid gap-2">
+<label class="text-sm font-semibold text-[#111318] dark:text-white">Difficulty Level</label>
+<select class="w-full px-4 py-2.5 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 border border-transparent focus:border-primary focus:ring-0 text-sm appearance-none">
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-[#dcdfe5] dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
+<h3 class="font-bold text-base flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                            Pricing &amp; Access
+                        </h3>
+</div>
+<div class="p-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+<span class="ml-3 text-sm font-semibold text-[#111318] dark:text-white">Paid Course</span>
+</label>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Toggle on if this course requires payment.</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-sm font-medium text-[#636f88]">$</span>
+<input class="w-32 px-4 py-2.5 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 border border-transparent focus:border-primary focus:ring-0 text-sm transition-all" placeholder="0.00" type="number"/>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-xl flex items-center gap-2 tracking-tight">
+<span class="material-symbols-outlined text-primary">account_tree</span>
+                            Course Content Builder
+                        </h3>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-bold hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+                            Add Module
+                        </button>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-[#dcdfe5] dark:border-gray-800 flex items-center justify-between bg-gray-50/30 dark:bg-gray-800/30">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#636f88] cursor-move">drag_indicator</span>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded uppercase">Module 01</span>
+<input class="font-bold bg-transparent border-none p-0 focus:ring-0 text-[#111318] dark:text-white min-w-[200px]" type="text" value="Introduction to Doctrine"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-[#636f88]">
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-500">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex items-center gap-4 p-4 bg-[#f8f9fa] dark:bg-gray-800/50 rounded-lg border border-[#dcdfe5] dark:border-gray-700/50">
+<span class="material-symbols-outlined text-blue-500">videocam</span>
+<div class="flex-1">
+<p class="text-sm font-semibold">1.1 Welcome &amp; Orientation</p>
+<p class="text-xs text-[#636f88]">Video • 12:45</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-xs font-bold text-[#636f88] hover:text-primary">Edit</button>
+<button class="text-xs font-bold text-red-500/80 hover:text-red-500">Remove</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 bg-[#f8f9fa] dark:bg-gray-800/50 rounded-lg border border-[#dcdfe5] dark:border-gray-700/50">
+<span class="material-symbols-outlined text-purple-500">mic</span>
+<div class="flex-1">
+<p class="text-sm font-semibold">1.2 Core Values Podcast</p>
+<p class="text-xs text-[#636f88]">Audio • 15:20</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-xs font-bold text-[#636f88] hover:text-primary">Edit</button>
+<button class="text-xs font-bold text-red-500/80 hover:text-red-500">Remove</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 bg-orange-50 dark:bg-orange-900/10 rounded-lg border border-orange-200 dark:border-orange-900/30">
+<span class="material-symbols-outlined text-orange-500">quiz</span>
+<div class="flex-1">
+<p class="text-sm font-semibold text-orange-800 dark:text-orange-400">Quiz: Module 1 Review</p>
+<p class="text-xs text-orange-600/80">5 Questions • 80% to pass</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-xs font-bold text-orange-700 hover:text-orange-900">Manage</button>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+<button class="flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-[#dcdfe5] dark:border-gray-700 rounded-lg text-xs font-bold text-[#636f88] hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-base">videocam</span>
+                                    Add Video
+                                </button>
+<button class="flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-[#dcdfe5] dark:border-gray-700 rounded-lg text-xs font-bold text-[#636f88] hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-base">mic</span>
+                                    Add Audio
+                                </button>
+<button class="flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-[#dcdfe5] dark:border-gray-700 rounded-lg text-xs font-bold text-[#636f88] hover:border-primary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-base">article</span>
+                                    Add Text
+                                </button>
+<button class="flex items-center justify-center gap-2 py-2.5 border-2 border-dashed border-[#dcdfe5] dark:border-gray-700 rounded-lg text-xs font-bold text-[#636f88] hover:border-orange-500 hover:text-orange-500 transition-all">
+<span class="material-symbols-outlined text-base">quiz</span>
+                                    Add Quiz
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-[#dcdfe5] dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 flex justify-between items-center">
+<h3 class="font-bold text-base flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">attachment</span>
+                            Course Materials
+                        </h3>
+<button class="text-sm font-bold text-primary hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+                            Upload New
+                        </button>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center gap-3 p-3 rounded-lg border border-[#dcdfe5] dark:border-gray-800">
+<span class="material-symbols-outlined text-red-500">picture_as_pdf</span>
+<div class="flex-1">
+<p class="text-xs font-bold">Study_Guide_V1.pdf</p>
+<p class="text-[10px] text-[#636f88]">PDF • 2.4 MB</p>
+</div>
+<button class="text-[#636f88] hover:text-red-500">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg border border-[#dcdfe5] dark:border-gray-800">
+<span class="material-symbols-outlined text-blue-500">description</span>
+<div class="flex-1">
+<p class="text-xs font-bold">Recommended_Reading.docx</p>
+<p class="text-[10px] text-[#636f88]">Word • 1.1 MB</p>
+</div>
+<button class="text-[#636f88] hover:text-red-500">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<div class="mt-4 border-2 border-dashed border-[#dcdfe5] dark:border-gray-700 rounded-lg p-8 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-[#dcdfe5] dark:text-gray-700 mb-2">cloud_upload</span>
+<p class="text-sm font-medium">Drag and drop course materials here</p>
+<p class="text-xs text-[#636f88]">Support for PDF, DOCX, and PPTX up to 50MB</p>
+</div>
+</div>
+</section>
+<div class="flex justify-end gap-4 py-8">
+<button class="px-8 py-3 text-sm font-bold text-[#636f88] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                        Discard Changes
+                    </button>
+<button class="px-10 py-3 bg-primary text-white text-sm font-bold rounded-lg shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all">
+                        Create Course
+                    </button>
+</div>
+</div>
+<footer class="mt-auto p-8 border-t border-[#dcdfe5] dark:border-gray-800 text-center">
+<p class="text-[#636f88] dark:text-gray-400 text-xs">© 2024 Grace Community Church. Admin Dashboard v2.4.0</p>
+</footer>
+</main>
+</div>
+
+</body></html>

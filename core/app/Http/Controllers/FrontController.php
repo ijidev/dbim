@@ -49,15 +49,55 @@ class FrontController extends Controller
     {
         $events = \App\Models\Event::all();
         $calendarEvents = [];
+        
         foreach($events as $event) {
-            $calendarEvents[] = [
-                'title' => $event->title,
-                'start' => $event->date . 'T' . $event->time,
-                'end' => $event->end_date ? ($event->end_date . 'T' . ($event->end_time ?? '23:59:00')) : null,
-                'url' => route('event.single', $event->id),
-                'color' => $event->status == 'comming' ? '#28a745' : '#6c757d',
-            ];
+            $startDate = \Carbon\Carbon::parse($event->date);
+            $endDate = $event->end_date ? \Carbon\Carbon::parse($event->end_date) : $startDate->copy();
+            $duration = $startDate->diffInMinutes(\Carbon\Carbon::parse($event->date . ' ' . $event->time)->addMinutes(120)); // Assume 2h if no end time
+
+            $recurrence = $event->recurrence ?? 'none';
+            
+            if ($recurrence === 'none') {
+                $calendarEvents[] = $this->formatCalendarEvent($event, $startDate);
+            } else {
+                // Generate occurrences for the next year
+                $limit = \Carbon\Carbon::now()->addYear();
+                $current = $startDate->copy();
+
+                while ($current->lte($limit)) {
+                    $calendarEvents[] = $this->formatCalendarEvent($event, $current);
+                    
+                    if ($recurrence === 'daily') {
+                        $current->addDay();
+                    } elseif ($recurrence === 'weekly') {
+                        $current->addWeek();
+                    } elseif ($recurrence === 'monthly') {
+                        $current->addMonth();
+                    } elseif ($recurrence === 'yearly') {
+                        $current->addYear();
+                    } else {
+                        break;
+                    }
+                }
+            }
         }
         return response()->json($calendarEvents);
+    }
+
+    private function formatCalendarEvent($event, $date)
+    {
+        return [
+            'id' => $event->id,
+            'title' => $event->title,
+            'start' => $date->format('Y-m-d') . 'T' . $event->time,
+            'end' => $date->format('Y-m-d') . 'T' . ($event->end_time ?? \Carbon\Carbon::parse($event->time)->addHours(2)->format('H:i:s')),
+            'url' => route('event.single', $event->id),
+            'color' => $event->status == 'comming' ? '#1754cf' : '#64748b',
+            'extendedProps' => [
+                'location' => $event->location,
+                'type' => $event->type,
+                'status' => $event->status
+            ]
+        ];
     }
 }

@@ -117,7 +117,7 @@
             <div class="event-card">
                 <div class="event-image">
                     @if($event->image)
-                        <img src="{{ asset('assets/images/thumbs/events/' . $event->image) }}" alt="{{ $event->title }}">
+                        <img src="{{ asset($event->image) }}" alt="{{ $event->title }}" class="event-image">
                     @else
                         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #cbd5e1; font-size: 3rem;">
                             📅
@@ -126,6 +126,18 @@
                     <div class="date-badge">
                         <span class="day">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('d') : 'TBA' }}</span>
                         <span class="month">{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('M') : '' }}</span>
+                    </div>
+                    
+                    <div style="position: absolute; bottom: 1rem; left: 1rem; display: flex; gap: 0.5rem;">
+                        @if($event->status == 'comming' || $event->status == 'upcoming')
+                            <span class="badge" style="background: var(--success); color: white; border: none; padding: 0.25rem 0.75rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 700;">Upcoming</span>
+                        @else
+                            <span class="badge" style="background: #64748b; color: white; border: none; padding: 0.25rem 0.75rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 700;">Passed</span>
+                        @endif
+
+                        @if($event->recurrence && $event->recurrence !== 'none')
+                            <span class="badge" style="background: var(--primary); color: white; border: none; padding: 0.25rem 0.75rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 700;">🔄 {{ ucfirst($event->recurrence) }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="event-content">

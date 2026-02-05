@@ -102,12 +102,24 @@
 @section('content')
 <div class="event-hero">
     @if($event->image)
-        <img src="{{ asset('assets/images/thumbs/events/' . $event->image) }}" alt="{{ $event->title }}">
+        <img src="{{ asset($event->image) }}" alt="{{ $event->title }}">
     @else
         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         </div>
     @endif
+    
+    <div style="position: absolute; bottom: 2rem; left: 2rem; display: flex; gap: 0.75rem;">
+        @if($event->status == 'comming' || $event->status == 'upcoming')
+            <span class="badge" style="background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">Upcoming</span>
+        @else
+            <span class="badge" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">Passed</span>
+        @endif
+
+        @if($event->recurrence && $event->recurrence !== 'none')
+            <span class="badge" style="background: #1754cf; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">🔄 {{ ucfirst($event->recurrence) }}</span>
+        @endif
+    </div>
 </div>
 
 <div class="event-container">

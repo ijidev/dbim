@@ -14,6 +14,9 @@ Auth::routes();
 Route::get('auth/google', [App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/google/callback', [App\Http\Controllers\Auth\SocialAuthController::class, 'handleGoogleCallback']);
 
+// Profile Route (Placeholder)
+Route::get('/profile', [HomeController::class, 'index'])->name('profile.show');
+
 Route::get('/', [FrontController::class, 'index'])->name('index');
 Route::get('/up-comming-events', [FrontController::class, 'events'])->name('event');
 Route::get('/event/{id}', [FrontController::class, 'eventSingle'])->name('event.single');
@@ -26,7 +29,7 @@ Route::get('/api/calendar-events', [FrontController::class, 'getEvents'])->name(
 
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'admin'])->name('home');
     Route::resource('events', App\Http\Controllers\Admin\EventController::class);
     Route::get('events/{event}/registrations', [App\Http\Controllers\Admin\EventRegistrationController::class, 'index'])->name('admin.event.registrations');
@@ -40,6 +43,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     
     Route::get('/livestream', [App\Http\Controllers\Admin\LiveStreamController::class, 'index'])->name('livestream.index');
     Route::post('/livestream', [App\Http\Controllers\Admin\LiveStreamController::class, 'update'])->name('livestream.update');
+
+    Route::get('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('admin.settings.index');
+    Route::post('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.settings.update');
     
     // Finance & Donations
     Route::get('/finance', [App\Http\Controllers\Admin\FinanceController::class, 'index'])->name('admin.finance.index');

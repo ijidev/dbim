@@ -19,39 +19,40 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('admin.events.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'date' => 'required',
+            'date' => 'required|date',
             'time' => 'required',
             'location' => 'required',
-            'image' => 'required|image'
+            'image' => 'nullable|image|max:2048'
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image');
 
         if ($request->hasFile('image')) {
+            $path = public_path('assets/images/events');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
             $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('assets/images/events'), $imageName);
+            $request->image->move($path, $imageName);
             $data['image'] = 'assets/images/events/'.$imageName;
         }
 
         // Auto-fill day, month, year from date
         $date = \Carbon\Carbon::parse($request->date);
-        $data['day'] = $date->format('l'); // Full day name (e.g., Monday)
-        // Fix: Enum expects specific values, ensuring compatibility
-        //$data['month'] = $date->format('M'); // Abbreviated month name (e.g., Jan)
-         $months = ['Jan','Feb','March','April','May','Jun','July','Augt','Sep','Oct' , 'Nov', 'Dec' ];
-         $data['month'] = $months[$date->month - 1];
-
+        $data['day'] = $date->format('l');
+        $months = ['Jan','Feb','March','April','May','Jun','July','Augt','Sep','Oct' , 'Nov', 'Dec' ];
+        $data['month'] = $months[$date->month - 1];
         $data['year'] = $date->year;
+
+        // Ensure status and recurrence are set
+        $data['status'] = $request->status ?? 'comming';
+        $data['recurrence'] = $request->recurrence ?? 'none';
+        $data['type'] = $request->type ?? 'program';
 
         \App\Models\Event::create($data);
 
@@ -82,26 +83,29 @@ class EventController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'date' => 'required',
+            'date' => 'required|date',
             'time' => 'required',
             'location' => 'required',
+            'image' => 'nullable|image|max:2048'
         ]);
 
-        $data = $request->all();
+        $data = $request->except('image');
 
         if ($request->hasFile('image')) {
+            $path = public_path('assets/images/events');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
             $imageName = time().'.'.$request->image->extension();  
-            $request->image->move(public_path('assets/images/events'), $imageName);
+            $request->image->move($path, $imageName);
             $data['image'] = 'assets/images/events/'.$imageName;
         }
 
         // Auto-fill day, month, year from date
         $date = \Carbon\Carbon::parse($request->date);
-        $data['day'] = $date->format('l'); // Full day name (e.g., Monday)
-        
-         $months = ['Jan','Feb','March','April','May','Jun','July','Augt','Sep','Oct' , 'Nov', 'Dec' ];
-         $data['month'] = $months[$date->month - 1];
-
+        $data['day'] = $date->format('l');
+        $months = ['Jan','Feb','March','April','May','Jun','July','Augt','Sep','Oct' , 'Nov', 'Dec' ];
+        $data['month'] = $months[$date->month - 1];
         $data['year'] = $date->year;
 
         $event->update($data);

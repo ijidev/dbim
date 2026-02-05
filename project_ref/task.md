@@ -10,4 +10,9 @@
 - [x] Fix Mobile Viewport Layout (Vertical stacking + constraints)
 - [x] Implement Unread Chat Notification Badge
 - [x] Fix Global Button Visibility (Missing CSS Variables)
-- [x] Update project documentation <!-- id: 7 -->
+- [ ] Redesign `/meeting` index page (Redesign UI from stitch reference)
+    - [x] Analyze `one-on-one_session_booking_2` reference <!-- id: 8 -->
+    - [x] Create implementation plan for redesign <!-- id: 9 -->
+    - [x] Implement new dashboard layout in `index.blade.php` <!-- id: 10 -->
+    - [x] Verify dynamic data and responsiveness <!-- id: 11 -->
+- [ ] Update project documentation <!-- id: 7 -->

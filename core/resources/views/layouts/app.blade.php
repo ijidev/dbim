@@ -223,7 +223,7 @@
                 z-index: 90;
             }
             .mobile-toggle { display: block; }
-            #nav-check:checked ~ .nav-container .nav-links {
+            #nav-check:checked ~ .nav-links {
                 transform: translateY(0);
             }
             .nav-link.active::after { display: none; }

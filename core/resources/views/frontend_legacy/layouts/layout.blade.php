@@ -62,13 +62,13 @@
                 <li><a href="{{ route('event') }}" title="Services">Events</a></li>
                 <li><a href="{{ route('calendar') }}" title="Calendar">Calendar</a></li>
                 <li><a href="{{ route('live') }}" title="Live Stream">Live</a></li>
-                <li><a href="{{ route('student.courses') }}" title="LMS">Courses</a></li>
+                <li><a href="{{ route('student.dashboard') }}" title="LMS">Courses</a></li>
                 <li><a href="{{ route('contact') }}" title="Contact us">Contact</a></li>
                 @auth
                     @if(Auth::user()->role == 'admin')
                         <li><a href="{{ route('home') }}" title="Admin">Admin</a></li>
                     @else
-                        <li><a href="{{ route('student.courses') }}" title="My Learning">My Learning</a></li>
+                        <li><a href="{{ route('student.dashboard') }}" title="My Learning">My Learning</a></li>
                     @endif
                     <li>
                          <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -119,7 +119,7 @@
                             <li><a href="{{ route('index') }}">Home</a></li>
                             <li><a href="{{ route('about') }}">About</a></li>
                             <li><a href="{{ route('event') }}">Upcoming Events</a></li>
-                            <li><a href="{{ route('student.courses') }}">LMS/Courses</a></li>
+                            <li><a href="{{ route('student.dashboard') }}">LMS/Courses</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>
                     </div>

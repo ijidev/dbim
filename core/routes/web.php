@@ -94,7 +94,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/my-courses', [App\Http\Controllers\StudentController::class, 'index'])->name('student.courses');
+    Route::get('/academy/dashboard', [App\Http\Controllers\StudentController::class, 'index'])->name('student.dashboard');
+Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 'schedule'])->name('student.schedule');
     Route::get('/course/{course}/learn', [App\Http\Controllers\StudentController::class, 'learn'])->name('student.course.learn');
     
     // Meeting Routes
@@ -103,6 +104,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/meeting', [App\Http\Controllers\MeetingController::class, 'store'])->name('meeting.store');
     Route::get('/meeting/{code}', [App\Http\Controllers\MeetingController::class, 'room'])->name('meeting.room');
     Route::post('/meeting/{meeting}/end', [App\Http\Controllers\MeetingController::class, 'end'])->name('meeting.end');
+    
+    // Booking Routes
+    Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
+    Route::post('/meeting/book', [App\Http\Controllers\MeetingController::class, 'book'])->name('meeting.book');
 });
 
 // Store Routes

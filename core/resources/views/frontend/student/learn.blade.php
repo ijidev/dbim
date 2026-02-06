@@ -120,7 +120,7 @@
                      data-live="{{ $lesson->live_url }}"
                      data-content="{{ $lesson->content }}">
                     <span class="lesson-icon">
-                        @if($lesson->type == 'video') 🎬 @elseif($lesson->type == 'live_stream') 📡 @else 📄 @endif
+                        @if($lesson->type == 'video') 🎬 @elseif($lesson->type == 'live_stream') 📡 @elseif($lesson->type == 'audio') 🎵 @else 📄 @endif
                     </span>
                     <span class="lesson-title">{{ $lesson->title }}</span>
                 </div>
@@ -139,7 +139,15 @@
         </div>
 
         <div class="content-area">
-            <h1 id="lesson-title-display" style="font-size: 2.5rem; font-weight: 800; color: #1e293b; margin-bottom: 1.5rem; letter-spacing: -0.025em;">Course Overview</h1>
+            <div class="flex items-center justify-between mb-8">
+                <h1 id="lesson-title-display" style="font-size: 2.5rem; font-weight: 800; color: #1e293b; margin: 0; letter-spacing: -0.025em;">Course Overview</h1>
+                @if($course->instructor)
+                <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="flex items-center gap-3 px-4 py-2 bg-white border border-slate-100 rounded-xl text-xs font-black shadow-sm hover:bg-slate-50 transition-all">
+                    <span class="material-symbols-outlined text-primary text-lg">person</span>
+                    <span>By {{ explode(' ', $course->instructor->name)[0] }}</span>
+                </a>
+                @endif
+            </div>
             <div id="lesson-content-display" style="line-height: 1.8; color: #334155; font-size: 1.1rem;">
                 <p>{{ $course->description }}</p>
             </div>
@@ -169,10 +177,22 @@
                 // Clear container
                 playerContainer.innerHTML = '';
 
-                if (data.type === 'video' || data.type === 'live_stream') {
+                if (data.type === 'video' || data.type === 'live_stream' || data.type === 'audio') {
                     const url = data.video || data.live;
                     if (url) {
-                        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                        if (data.type === 'audio') {
+                            playerContainer.innerHTML = `
+                                <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f8fafc; gap:2rem;">
+                                    <div class="size-32 rounded-3xl bg-primary/5 text-primary flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-6xl animate-pulse">mic</span>
+                                    </div>
+                                    <audio controls class="w-2/3 shadow-xl rounded-full" style="accent-color: var(--primary-color)">
+                                        <source src="${url}" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
+                            `;
+                        } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
                             const videoId = url.includes('v=') ? url.split('v=')[1].split('&')[0] : url.split('/').pop();
                             playerContainer.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
                         } else {
@@ -185,7 +205,7 @@
                             videojs('my-video');
                         }
                     } else {
-                        playerContainer.innerHTML = '<div style="height:100%; display:flex; align-items:center; justify-content:center; color:white">No video source provided</div>';
+                        playerContainer.innerHTML = '<div style="height:100%; display:flex; align-items:center; justify-content:center; color:white">No source provided</div>';
                     }
                     contentDisplay.innerHTML = data.content || '<p>No additional content for this lesson.</p>';
                 } else {

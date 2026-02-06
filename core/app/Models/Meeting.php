@@ -15,6 +15,7 @@ class Meeting extends Model
         'scheduled_at',
         'type',
         'status',
+        'is_public',
     ];
 
     protected $casts = [

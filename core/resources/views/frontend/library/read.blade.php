@@ -8,22 +8,13 @@
 
     :root {
         --primary: #0f49bd;
-        --bg-dark: #101622;
-        --surface-dark: #0f172a;
-        --border-dark: #1e293b;
     }
 
     .font-manuscript { font-family: 'Crimson Pro', serif; }
     .font-serif-study { font-family: 'Lora', serif; }
 
-    /* Premium Dark Theme Override */
-    .reader-dark-base {
-        background-color: var(--bg-dark);
-        color: #e2e8f0;
-    }
-
     .glass-nav {
-        background: rgba(15, 23, 42, 0.8);
+        background: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
     }
@@ -50,34 +41,34 @@
 @endpush
 
 @section('content')
-<div class="h-screen flex flex-col overflow-hidden reader-dark-base">
+<div class="h-screen flex flex-col overflow-hidden bg-slate-50">
     <!-- Reader Navigation -->
-    <nav class="h-[65px] flex items-center glass-nav border-b border-white/5 px-6 z-50">
+    <nav class="h-[65px] flex items-center glass-nav border-b border-slate-200/50 px-6 z-50">
         <div class="w-full h-full flex items-center justify-between">
             <div class="flex items-center gap-6">
-                <a href="{{ route('library.index') }}" class="group flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest">
+                <a href="{{ route('library.index') }}" class="group flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest">
                     <span class="material-symbols-outlined text-xl transition-transform group-hover:-translate-x-1">arrow_back</span>
                     <span class="hidden sm:inline">Back</span>
                 </a>
-                <div class="h-6 w-px bg-white/10"></div>
+                <div class="h-6 w-px bg-slate-200"></div>
                 <div>
                     <h2 class="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-0.5">{{ $book->title }}</h2>
-                    <h1 class="text-xs sm:text-sm font-black text-white leading-tight line-clamp-1 chapter-title-display">{{ $book->chapters->first()->title ?? $book->title }}</h1>
+                    <h1 class="text-xs sm:text-sm font-black text-slate-900 leading-tight line-clamp-1 chapter-title-display">{{ $book->chapters->first()->title ?? $book->title }}</h1>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
-                <button onclick="toggleChapters()" class="lg:hidden flex h-10 items-center gap-2 rounded-xl bg-white/5 border border-white/10 px-4 text-[10px] font-black text-slate-300 hover:bg-primary/20 hover:text-primary transition-all uppercase tracking-widest">
+                <button onclick="toggleChapters()" class="lg:hidden flex h-10 items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 text-[10px] font-black text-slate-600 hover:bg-primary/10 hover:text-primary transition-all shadow-sm uppercase tracking-widest">
                     <span class="material-symbols-outlined text-[18px]">menu_book</span>
                     <span>TOC</span>
                 </button>
-                <div class="hidden lg:flex items-center bg-white/5 rounded-xl p-1 border border-white/10">
-                    <button onclick="changeMode('sepia')" class="p-2 rounded-lg hover:bg-white/10 text-slate-400 transition-all"><span class="material-symbols-outlined text-lg text-amber-600">texture</span></button>
-                    <button onclick="changeMode('dark')" class="p-2 rounded-lg bg-white/10 text-primary transition-all"><span class="material-symbols-outlined text-lg">dark_mode</span></button>
-                    <div class="w-px h-4 bg-white/10 mx-1"></div>
-                    <button onclick="adjustFontSize(2)" class="p-2 rounded-lg hover:bg-white/10 text-slate-400 transition-all"><span class="text-xs font-black">Aa+</span></button>
+                <div class="hidden lg:flex items-center bg-white rounded-xl p-1 border border-slate-200 shadow-sm">
+                    <button onclick="changeMode('sepia')" class="p-2 rounded-lg hover:bg-slate-50 text-slate-400 transition-all"><span class="material-symbols-outlined text-lg text-amber-600">texture</span></button>
+                    <button onclick="changeMode('dark')" class="p-2 rounded-lg bg-slate-100 text-primary transition-all"><span class="material-symbols-outlined text-lg">dark_mode</span></button>
+                    <div class="w-px h-4 bg-slate-200 mx-1"></div>
+                    <button onclick="adjustFontSize(2)" class="p-2 rounded-lg hover:bg-slate-50 text-slate-400 transition-all"><span class="text-xs font-black">Aa+</span></button>
                 </div>
-                <button onclick="toggleAnnotations()" class="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-primary/20 hover:text-primary transition-all">
+                <button onclick="toggleAnnotations()" class="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:bg-primary/10 hover:text-primary transition-all shadow-sm">
                     <span class="material-symbols-outlined text-[20px]">edit_note</span>
                 </button>
             </div>
@@ -85,28 +76,28 @@
     </nav>
 
     <!-- Reading Progress Bar (Top) -->
-    <div class="h-1 bg-white/5 z-50 overflow-hidden">
-        <div id="reading-progress" class="h-full bg-primary transition-all duration-300 w-0 shadow-[0_0_10px_rgba(15,73,189,0.5)]"></div>
+    <div class="h-1 bg-slate-100 z-50 overflow-hidden">
+        <div id="reading-progress" class="h-full bg-primary transition-all duration-300 w-0 shadow-[0_0_10px_rgba(15,73,189,0.3)]"></div>
     </div>
 
     <!-- Main Reader Workspace -->
     <div id="reader-container" class="flex-1 flex overflow-hidden font-serif-study relative">
         <!-- Persistent Left Sidebar (Desktop) -->
-        <aside id="desktop-sidebar" class="hidden lg:flex w-64 bg-surface-dark border-r border-white/5 flex-col shrink-0 overflow-y-auto no-scrollbar">
+        <aside id="desktop-sidebar" class="hidden lg:flex w-64 bg-white border-r border-slate-100 flex-col shrink-0 overflow-y-auto no-scrollbar">
             <div class="p-6">
                 <div class="flex items-center gap-2 text-primary mb-1">
                     <span class="material-symbols-outlined text-lg">auto_stories</span>
                     <span class="text-[10px] font-black uppercase tracking-widest">Table of Contents</span>
                 </div>
-                <h3 class="text-md font-bold text-white mb-6">{{ $book->title }}</h3>
+                <h3 class="text-md font-bold text-slate-900 mb-6">{{ $book->title }}</h3>
                 <div class="space-y-1">
                     @foreach($book->chapters as $chap)
-                        <div onclick="switchChapter({{ $chap->id }}, '{{ addslashes($chap->title) }}', {{ $loop->index }})" class="chapter-nav-item p-3.5 rounded-xl hover:bg-white/5 cursor-pointer border border-transparent transition-all group {{ $loop->first ? 'bg-primary/10 border-primary/20' : '' }}" data-id="{{ $chap->id }}" data-index="{{ $loop->index }}">
+                        <div onclick="switchChapter({{ $chap->id }}, '{{ addslashes($chap->title) }}', {{ $loop->index }})" class="chapter-nav-item p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer border border-transparent transition-all group {{ $loop->first ? 'bg-primary/5 border-primary/20' : '' }}" data-id="{{ $chap->id }}" data-index="{{ $loop->index }}">
                             <div class="flex items-start gap-3">
                                 <span class="material-symbols-outlined text-primary text-lg mt-0.5 {{ $loop->first ? 'active-icon' : '' }}">{{ $loop->first ? 'menu_book' : 'check_circle' }}</span>
                                 <div>
-                                    <p class="text-xs font-bold text-slate-300 group-hover:text-white transition-colors line-clamp-2 leading-relaxed">{{ $chap->title }}</p>
-                                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-1">Section {{ $loop->iteration }}</p>
+                                    <p class="text-xs font-bold text-slate-700 group-hover:text-primary transition-colors line-clamp-2 leading-relaxed">{{ $chap->title }}</p>
+                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Section {{ $loop->iteration }}</p>
                                 </div>
                             </div>
                         </div>
@@ -116,18 +107,18 @@
         </aside>
 
         <!-- Chapter Sidebar Drawer (Mobile) -->
-        <div id="chapters-drawer" class="lg:hidden fixed inset-y-0 left-0 w-80 bg-surface-dark shadow-2xl z-[60] transform -translate-x-full transition-transform duration-500 ease-in-out border-r border-white/5">
+        <div id="chapters-drawer" class="lg:hidden fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-[60] transform -translate-x-full transition-transform duration-500 ease-in-out border-r border-slate-100">
             <div class="p-8 h-full flex flex-col">
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="text-xs font-black uppercase tracking-widest text-slate-400">Chapters</h3>
-                    <button onclick="toggleChapters()" class="text-slate-500 hover:text-white">
+                    <button onclick="toggleChapters()" class="text-slate-400 hover:text-primary">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
                 <div class="flex-1 overflow-y-auto space-y-2 no-scrollbar">
                     @foreach($book->chapters as $chap)
-                        <div onclick="switchChapter({{ $chap->id }}, '{{ addslashes($chap->title) }}', {{ $loop->index }})" class="chapter-nav-item p-4 rounded-xl hover:bg-white/5 cursor-pointer border border-transparent transition-all group {{ $loop->first ? 'bg-primary/10 border-primary/20' : '' }}" data-id="{{ $chap->id }}" data-index="{{ $loop->index }}">
-                            <p class="text-sm font-bold text-slate-300 group-hover:text-white transition-colors">{{ $chap->title }}</p>
+                        <div onclick="switchChapter({{ $chap->id }}, '{{ addslashes($chap->title) }}', {{ $loop->index }})" class="chapter-nav-item p-4 rounded-xl hover:bg-slate-50 cursor-pointer border border-transparent transition-all group {{ $loop->first ? 'bg-primary/5 border-primary/20' : '' }}" data-id="{{ $chap->id }}" data-index="{{ $loop->index }}">
+                            <p class="text-sm font-bold text-slate-700 group-hover:text-primary transition-colors">{{ $chap->title }}</p>
                         </div>
                     @endforeach
                 </div>
@@ -135,55 +126,57 @@
         </div>
 
         <!-- Book Content Area -->
-        <main id="scroll-container" class="flex-1 overflow-y-auto bg-bg-dark no-scrollbar relative scroll-smooth px-6">
+        <main id="scroll-container" class="flex-1 overflow-y-auto bg-slate-50 no-scrollbar relative scroll-smooth px-6">
             <div class="max-w-3xl mx-auto py-16 lg:py-24">
-                <header class="mb-12 border-b border-white/5 pb-10">
-                    <div class="flex items-center gap-2 text-slate-500 text-[10px] mb-6 uppercase tracking-widest font-black">
-                        <span>Library</span>
-                        <span class="material-symbols-outlined text-[10px]">chevron_right</span>
-                        <span>{{ $book->title }}</span>
-                    </div>
-                    <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight font-manuscript chapter-title-display">{{ $book->chapters->first()->title ?? $book->title }}</h1>
-                    <div class="flex items-center gap-6">
-                        <span class="text-[10px] font-black uppercase tracking-widest text-primary">Read: 12 mins</span>
-                        <div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
-                        <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Audio: 15 mins</span>
-                    </div>
-                </header>
+                <article class="content-card bg-white rounded-[40px] shadow-2xl shadow-slate-200/50 border border-slate-100 p-8 md:p-12 lg:p-20 relative overflow-visible">
+                    <header class="mb-12 border-b border-slate-100 pb-10">
+                        <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-6 uppercase tracking-widest font-black">
+                            <span>Library</span>
+                            <span class="material-symbols-outlined text-[10px]">chevron_right</span>
+                            <span>{{ $book->title }}</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-6 leading-tight font-manuscript chapter-title-display">{{ $book->chapters->first()->title ?? $book->title }}</h1>
+                        <div class="flex items-center gap-6">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-primary">Read: 12 mins</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Audio: 15 mins</span>
+                        </div>
+                    </header>
 
-                <article id="reader-body" class="prose prose-invert prose-slate prose-lg lg:prose-xl max-w-none text-slate-300 leading-[2] font-serif-study text-justify-custom whitespace-pre-wrap transition-all duration-300" style="font-size: 20px;">
-                    {!! $book->chapters->first()->content ?? $book->content !!}
+                    <div id="reader-body" class="prose prose-slate prose-lg lg:prose-xl max-w-none text-slate-700 leading-[2] font-serif-study text-justify-custom whitespace-pre-wrap transition-all duration-300" style="font-size: 20px;">
+                        {!! $book->chapters->first()->content ?? $book->content !!}
+                    </div>
+
+                    <!-- Chapter Navigation -->
+                    <div class="mt-20 pt-10 border-t border-slate-100 flex items-center justify-between">
+                        <button id="prev-btn" onclick="navigateChapter(-1)" class="flex items-center gap-3 px-8 py-4 rounded-2xl border border-slate-200 text-slate-500 hover:text-primary hover:border-primary transition-all group disabled:opacity-30 disabled:pointer-events-none">
+                            <span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">west</span>
+                            <span class="text-[10px] font-black uppercase tracking-widest">Previous</span>
+                        </button>
+                        <button id="next-btn" onclick="navigateChapter(1)" class="flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-white shadow-xl shadow-primary/20 hover:scale-105 transition-all group disabled:opacity-30 disabled:pointer-events-none">
+                            <span class="nav-text text-[10px] font-black uppercase tracking-widest">Next Chapter</span>
+                            <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">east</span>
+                        </button>
+                    </div>
                 </article>
-
-                <!-- Chapter Navigation -->
-                <div class="mt-20 pt-10 border-t border-white/5 flex items-center justify-between">
-                    <button id="prev-btn" onclick="navigateChapter(-1)" class="flex items-center gap-3 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-slate-500 hover:text-white hover:border-slate-600 transition-all group disabled:opacity-20 disabled:pointer-events-none">
-                        <span class="material-symbols-outlined transition-transform group-hover:-translate-x-1">west</span>
-                        <span class="text-[10px] font-black uppercase tracking-widest">Previous</span>
-                    </button>
-                    <button id="next-btn" onclick="navigateChapter(1)" class="flex items-center gap-3 px-8 py-4 rounded-2xl bg-primary text-white shadow-xl shadow-primary/30 hover:scale-105 transition-all group disabled:opacity-20 disabled:pointer-events-none">
-                        <span class="nav-text text-[10px] font-black uppercase tracking-widest">Next Chapter</span>
-                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">east</span>
-                    </button>
-                </div>
             </div>
         </main>
 
         <!-- Persistent Right Sidebar (Desktop) -->
-        <aside id="annotation-sidebar-persistent" class="hidden lg:flex w-72 bg-surface-dark border-l border-white/5 flex-col shrink-0 overflow-y-auto no-scrollbar">
+        <aside id="annotation-sidebar-persistent" class="hidden lg:flex w-72 bg-white border-l border-slate-100 flex-col shrink-0 overflow-y-auto no-scrollbar">
             <div class="p-8 h-full flex flex-col">
                 <div class="flex items-center justify-between mb-8">
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">history_edu</span>
-                        <h2 class="text-[10px] font-black uppercase tracking-widest text-white">My Annotations</h2>
+                        <h2 class="text-[10px] font-black uppercase tracking-widest text-slate-900">My Annotations</h2>
                     </div>
-                    <span class="text-[9px] font-black bg-primary/20 text-primary px-2 py-1 rounded">STUDY MODE</span>
+                    <span class="text-[9px] font-black bg-primary/10 text-primary px-2 py-1 rounded">STUDY MODE</span>
                 </div>
                 <div class="active-annotations-list flex-1 space-y-4">
                     <!-- Notes via JS -->
                 </div>
-                <div class="mt-8 pt-8 border-t border-white/5">
-                    <button class="w-full py-4 bg-white/5 text-slate-400 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary/10 hover:text-white transition-all shadow-xl">
+                <div class="mt-8 pt-8 border-t border-slate-100">
+                    <button class="w-full py-4 bg-slate-50 text-slate-500 border border-slate-100 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-primary/10 hover:text-primary transition-all shadow-sm">
                         <span class="material-symbols-outlined text-sm">download</span>
                         Export Annotations
                     </button>
@@ -192,13 +185,13 @@
         </aside>
 
         <!-- Annotation Sidebar Drawer (Mobile) -->
-        <aside id="annotation-sidebar" class="fixed right-0 top-0 h-full w-80 bg-surface-dark border-l border-white/5 translate-x-full transition-transform duration-500 z-[55] flex flex-col shadow-2xl">
-            <div class="p-8 border-b border-white/5 flex items-center justify-between">
+        <aside id="annotation-sidebar" class="fixed right-0 top-0 h-full w-80 bg-white border-l border-slate-200 translate-x-full transition-transform duration-500 z-[55] flex flex-col shadow-2xl">
+            <div class="p-8 border-b border-slate-100 flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary">history_edu</span>
-                    <h2 class="text-base font-bold text-white">Annotations</h2>
+                    <h2 class="text-base font-bold text-slate-900">Annotations</h2>
                 </div>
-                <button onclick="toggleAnnotations()" class="text-slate-500 hover:text-white transition-colors">
+                <button onclick="toggleAnnotations()" class="text-slate-400 hover:text-primary transition-colors">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
@@ -207,7 +200,7 @@
     </div>
 
     <!-- Toolkit & Modals -->
-    <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[52] hidden transition-opacity duration-500 opacity-0" onclick="closeDrawers()"></div>
+    <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[52] hidden transition-opacity duration-500 opacity-0" onclick="closeDrawers()"></div>
 
     <div id="highlight-toolkit" class="fixed z-[70] hidden flex items-center bg-slate-900 text-white rounded-2xl shadow-2xl p-1 animate-in fade-in zoom-in duration-200">
         <div class="flex items-center gap-2 px-3 border-r border-slate-700">
@@ -225,25 +218,25 @@
     <!-- Note Modal -->
     <div id="note-modal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-6">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeNoteModal()"></div>
-        <div class="relative w-full max-w-lg bg-surface-dark border border-white/10 rounded-[32px] shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
+        <div class="relative w-full max-w-lg bg-white rounded-[32px] shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
             <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">add_comment</span>
                 Add Personal Note
             </h3>
-            <textarea id="note-text" rows="4" class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-sm text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none" placeholder="What truth are you meditating on in this passage?"></textarea>
+            <textarea id="note-text" rows="4" class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-5 text-sm focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none" placeholder="What truth are you meditating on in this passage?"></textarea>
             <div class="mt-6 flex items-center justify-end gap-4">
-                <button onclick="closeNoteModal()" class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white">Cancel</button>
+                <button onclick="closeNoteModal()" class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600">Cancel</button>
                 <button onclick="saveNote()" class="px-8 py-3 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-all">Save Note</button>
             </div>
         </div>
     </div>
 
     <!-- TTS Player Footer -->
-    <div id="tts-player" class="h-[90px] bg-surface-dark border-t border-white/5 z-[60] shadow-[0_-15px_30px_rgba(0,0,0,0.5)] px-6 relative transition-transform duration-500 {{ auth()->check() ? '' : 'hidden' }}">
+    <div id="tts-player" class="h-[90px] bg-white border-t border-slate-100 z-[60] shadow-[0_-15px_30px_rgba(0,0,0,0.05)] px-6 relative transition-transform duration-500 {{ auth()->check() ? '' : 'hidden' }}">
         <!-- Progress Bar at the very top of player bar -->
-        <div class="absolute top-0 left-0 w-full h-[3px] bg-white/5 cursor-pointer group" onclick="handleSeek(event)">
+        <div class="absolute top-0 left-0 w-full h-[3px] bg-slate-100 cursor-pointer group" onclick="handleSeek(event)">
             <div id="voice-progress" class="bg-primary h-full transition-all duration-300 w-0"></div>
-            <div class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-1px]" id="voice-handle" style="left: 0%;"></div>
+            <div class="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border border-primary/20 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-1px]" id="voice-handle" style="left: 0%;"></div>
         </div>
 
         <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-6">
@@ -253,33 +246,33 @@
                     <span class="material-symbols-outlined text-3xl active-icon">graphic_eq</span>
                 </div>
                 <div class="hidden md:block">
-                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-0.5">Now Listening</p>
-                    <p class="text-xs font-bold text-white leading-tight chapter-title-display-small line-clamp-1">{{ $book->chapters->first()->title ?? $book->title }}</p>
+                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Now Listening</p>
+                    <p class="text-xs font-bold text-slate-900 leading-tight chapter-title-display-small line-clamp-1">{{ $book->chapters->first()->title ?? $book->title }}</p>
                 </div>
             </div>
 
             <!-- Center: Transport -->
             <div class="flex flex-col items-center gap-1 flex-1">
                 <div class="flex items-center gap-10">
-                    <button onclick="seekVoice(-5)" class="text-slate-500 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">replay_5</span></button>
-                    <button id="main-play-btn" onclick="toggleVoice()" class="w-12 h-12 rounded-full bg-white text-primary flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(15,73,189,0.4)]">
+                    <button onclick="seekVoice(-5)" class="text-slate-400 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">replay_5</span></button>
+                    <button id="main-play-btn" onclick="toggleVoice()" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
                         <span class="material-symbols-outlined text-3xl active-icon" id="main-play-icon">play_arrow</span>
                     </button>
-                    <button onclick="seekVoice(5)" class="text-slate-500 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">forward_5</span></button>
+                    <button onclick="seekVoice(5)" class="text-slate-400 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">forward_5</span></button>
                 </div>
-                <div class="flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">
+                <div class="flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">
                     <span id="voice-current-time">00:00</span>
-                    <div class="w-1 h-1 rounded-full bg-white/10"></div>
+                    <div class="w-1 h-1 rounded-full bg-slate-200"></div>
                     <span id="voice-duration">00:00</span>
                 </div>
             </div>
 
             <!-- Right: Options -->
             <div class="flex items-center justify-end gap-6 w-72">
-                <div class="flex items-center bg-white/5 border border-white/10 rounded-xl p-1">
-                    <button onclick="setSpeed(1)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-primary bg-white/10 shadow-sm transition-all">1.0x</button>
-                    <button onclick="setSpeed(1.5)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-slate-500 hover:text-white transition-all">1.5x</button>
-                    <button onclick="setSpeed(2)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-slate-500 hover:text-white transition-all">2.0x</button>
+                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1">
+                    <button onclick="setSpeed(1)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-primary bg-white shadow-sm transition-all">1.0x</button>
+                    <button onclick="setSpeed(1.5)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-slate-400 hover:text-primary transition-all">1.5x</button>
+                    <button onclick="setSpeed(2)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-slate-400 hover:text-primary transition-all">2.0x</button>
                 </div>
             </div>
         </div>

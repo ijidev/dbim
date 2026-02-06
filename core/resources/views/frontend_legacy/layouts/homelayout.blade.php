@@ -76,7 +76,7 @@
                                     @if(Auth::user()->role == 'admin')
                                         <a class="dropdown-item" href="{{ route('home') }}">Admin Dashboard</a>
                                     @else
-                                        <a class="dropdown-item" href="{{ route('student.courses') }}">My Learning</a>
+                                        <a class="dropdown-item" href="{{ route('student.dashboard') }}">My Learning</a>
                                     @endif
                                     
                                     <a class="dropdown-item" href="{{ route('logout') }}"

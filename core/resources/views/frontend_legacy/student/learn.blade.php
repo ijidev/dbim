@@ -6,7 +6,7 @@
     <div class="bg-dark text-white p-3">
         <div class="container d-flex justify-content-between align-items-center">
             <h4 class="mb-0">{{ $course->title }}</h4>
-            <a href="{{ route('student.courses') }}" class="btn btn-outline-light btn-sm">Back to Dashboard</a>
+            <a href="{{ route('student.dashboard') }}" class="btn btn-outline-light btn-sm">Back to Dashboard</a>
         </div>
     </div>
 

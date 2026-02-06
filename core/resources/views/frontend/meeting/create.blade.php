@@ -97,6 +97,16 @@
                 <label class="form-label">Schedule Date & Time</label>
                 <input type="datetime-local" name="scheduled_at" class="form-input">
             </div>
+
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; padding: 1rem; background: #f8fafc; border-radius: 0.75rem; border: 1px solid #e2e8f0;">
+                    <input type="checkbox" name="is_public" value="1" style="width: 1.25rem; height: 1.25rem; accent-color: var(--primary-color);">
+                    <div>
+                        <p style="font-weight: 700; color: #1e293b; margin: 0;">Make Meeting Public</p>
+                        <p style="font-size: 0.75rem; color: #64748b; margin: 0;">Allow everyone to see and join this meeting from their dashboard.</p>
+                    </div>
+                </label>
+            </div>
             
             <button type="submit" style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 1rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; cursor: pointer;">
                 Create Meeting

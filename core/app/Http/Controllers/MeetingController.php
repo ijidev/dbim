@@ -34,7 +34,10 @@ class MeetingController extends Controller
             'description' => 'nullable|string|max:500',
             'type' => 'required|in:instant,scheduled',
             'scheduled_at' => 'nullable|date|after:now',
+            'is_public' => 'nullable|boolean',
         ]);
+        
+        $is_public = $request->has('is_public') || $request->is_public == '1';
 
         $meeting = Meeting::create([
             'host_id' => auth()->id(),
@@ -43,6 +46,7 @@ class MeetingController extends Controller
             'type' => $request->type,
             'scheduled_at' => $request->type === 'scheduled' ? $request->scheduled_at : null,
             'status' => $request->type === 'instant' ? 'active' : 'pending',
+            'is_public' => $is_public,
         ]);
 
         if ($request->type === 'instant') {
@@ -76,5 +80,27 @@ class MeetingController extends Controller
 
         $meeting->update(['status' => 'ended']);
         return redirect()->route('meeting.index')->with('success', 'Meeting ended.');
+    }
+
+    public function book(Request $request)
+    {
+        $request->validate([
+            'instructor_id' => 'required|exists:users,id',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'scheduled_at' => 'required|date|after:now',
+        ]);
+
+        $meeting = Meeting::create([
+            'host_id' => $request->instructor_id,
+            'title' => 'Private Session: ' . $request->title,
+            'description' => $request->description,
+            'type' => 'scheduled',
+            'scheduled_at' => $request->scheduled_at,
+            'status' => 'pending',
+            'is_public' => false,
+        ]);
+
+        return back()->with('success', 'Private meeting request sent to instructor!');
     }
 }

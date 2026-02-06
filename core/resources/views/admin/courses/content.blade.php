@@ -141,9 +141,11 @@
                 @forelse($module->lessons as $lesson)
                     <div class="lesson-item">
                         <div class="lesson-info">
-                            <div class="lesson-icon {{ $lesson->type == 'video' ? 'video' : ($lesson->type == 'text' ? 'text' : 'live') }}">
+                            <div class="lesson-icon {{ $lesson->type == 'video' ? 'video' : ($lesson->type == 'audio' ? 'text' : ($lesson->type == 'text' ? 'text' : 'live')) }}">
                                 @if($lesson->type == 'video')
                                     ▶️
+                                @elseif($lesson->type == 'audio')
+                                    🎵
                                 @elseif($lesson->type == 'text')
                                     📄
                                 @elseif($lesson->type == 'live_stream')
@@ -223,14 +225,15 @@
                         <label class="form-label">Lesson Type</label>
                         <select name="type" class="form-input" id="lessonType" onchange="toggleLessonFields()">
                             <option value="video">Video (YouTube/URL)</option>
+                            <option value="audio">Audio Lesson (MP3/URL)</option>
                             <option value="text">Text Content</option>
                             <option value="live_stream">Live Stream</option>
                             <option value="zoom_meeting">Meeting Link</option>
                         </select>
                     </div>
                     <div class="form-group" id="videoField">
-                        <label class="form-label">Video/Meeting URL</label>
-                        <input type="text" name="video_url" class="form-input" placeholder="https://www.youtube.com/watch?v=...">
+                        <label class="form-label" id="mediaLabel">Video/Audio URL</label>
+                        <input type="text" name="video_url" class="form-input" placeholder="https://...">
                     </div>
                     <div class="form-group" id="textField" style="display: none;">
                         <label class="form-label">Content</label>

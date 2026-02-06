@@ -355,7 +355,7 @@
                                 @elseif(Auth::user()->role === 'instructor')
                                     <a href="{{ route('home') }}" class="dropdown-item">📋 Instructor Panel</a>
                                 @else
-                                    <a href="{{ route('student.courses') }}" class="dropdown-item">🎓 My Courses</a>
+                                    <a href="{{ route('student.dashboard') }}" class="dropdown-item">🎓 My Courses</a>
                                 @endif
                                 <a href="{{ route('profile.show') ?? '#' }}" class="dropdown-item">👤 Profile</a>
                                 <div style="height: 1px; background: #e2e8f0; margin: 0.5rem 0;"></div>

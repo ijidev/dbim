@@ -200,7 +200,7 @@
                 Join thousands of students worldwide in our structured spiritual learning path. Master the art of being a God-man in a modern world.
             </p>
             <div class="flex flex-wrap justify-center gap-6">
-                <a href="{{ route('student.courses') }}" class="bg-white text-primary px-12 h-16 rounded-2xl font-black text-xl hover:shadow-2xl shadow-black/20 transition-all hover:-translate-y-1 flex items-center">Start Learning Free</a>
+                <a href="{{ route('student.dashboard') }}" class="bg-white text-primary px-12 h-16 rounded-2xl font-black text-xl hover:shadow-2xl shadow-black/20 transition-all hover:-translate-y-1 flex items-center">Start Learning Free</a>
                 <a href="{{ route('store.index') }}" class="bg-primary-dark/40 border-2 border-white/20 text-white px-12 h-16 rounded-2xl font-bold text-xl hover:bg-white/10 transition-all flex items-center">Library Resources</a>
             </div>
             

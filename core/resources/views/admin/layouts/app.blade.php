@@ -578,9 +578,13 @@
             @if(in_array($role, ['admin', 'author']))
             <div class="nav-section">
                 <div class="nav-section-title">Library</div>
-                <a href="{{ route('admin.books.index') }}" class="nav-item {{ request()->routeIs('admin.books.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.books.index') }}" class="nav-item {{ request()->routeIs('admin.books.*') && !request()->routeIs('admin.library.settings') ? 'active' : '' }}">
                     <span class="material-symbols-outlined nav-icon">menu_book</span>
                     Books
+                </a>
+                <a href="{{ route('admin.library.settings') }}" class="nav-item {{ request()->routeIs('admin.library.settings') ? 'active' : '' }}">
+                    <span class="material-symbols-outlined nav-icon">settings_applications</span>
+                    Library Settings
                 </a>
             </div>
             @endif

@@ -76,6 +76,17 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         'destroy' => 'admin.books.destroy',
     ]);
 
+    // Chapters Management
+    Route::post('books/{book}/chapters', [App\Http\Controllers\Admin\BookController::class, 'storeChapter'])->name('admin.books.chapters.store');
+    Route::get('chapters/{chapter}', [App\Http\Controllers\Admin\BookController::class, 'getChapter'])->name('admin.books.chapters.show');
+    Route::put('chapters/{chapter}', [App\Http\Controllers\Admin\BookController::class, 'updateChapter'])->name('admin.books.chapters.update');
+    Route::delete('chapters/{chapter}', [App\Http\Controllers\Admin\BookController::class, 'deleteChapter'])->name('admin.books.chapters.destroy');
+    Route::post('books/chapters/reorder', [App\Http\Controllers\Admin\BookController::class, 'reorderChapters'])->name('admin.books.chapters.reorder');
+
+    // Library Settings
+    Route::get('/library/settings', [App\Http\Controllers\Admin\BookController::class, 'settings'])->name('admin.library.settings');
+    Route::post('/library/settings', [App\Http\Controllers\Admin\BookController::class, 'updateSettings'])->name('admin.library.settings.update');
+
     // Meeting Management
     Route::get('/meetings-management', [App\Http\Controllers\Admin\MeetingController::class, 'index'])->name('admin.meetings.index');
     Route::post('/meetings/{meeting}/end', [App\Http\Controllers\Admin\MeetingController::class, 'end'])->name('admin.meetings.end');
@@ -105,6 +116,8 @@ Route::post('/checkout', [App\Http\Controllers\StoreController::class, 'processC
 // Library Routes
 Route::get('/library', [App\Http\Controllers\LibraryController::class, 'index'])->name('library.index');
 Route::get('/library/read/{slug}', [App\Http\Controllers\LibraryController::class, 'read'])->name('library.read');
+Route::get('/library/chapter/{id}', [App\Http\Controllers\LibraryController::class, 'getChapterContent'])->name('library.chapter.show');
+Route::post('/library/book/{book}/progress', [App\Http\Controllers\LibraryController::class, 'updateProgress'])->name('library.progress.update');
 
 // Donation Routes
 Route::get('/donate', [App\Http\Controllers\DonationController::class, 'index'])->name('donate');

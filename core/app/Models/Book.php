@@ -39,4 +39,14 @@ class Book extends Model
             }
         });
     }
+
+    public function chapters()
+    {
+        return $this->hasMany(BookChapter::class)->orderBy('order');
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(UserBookProgress::class);
+    }
 }

@@ -90,9 +90,9 @@
                     <div class="flex flex-col gap-2">
                         <h4 class="text-xl font-black text-slate-900 leading-tight line-clamp-1 group-hover:text-primary transition-colors">{{ $book->title }}</h4>
                         <p class="text-primary text-sm font-bold italic tracking-wide opacity-80">{{ $book->author }}</p>
-                        <a href="{{ route('library.read', $book->slug) }}" class="mt-4 flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-slate-900 border border-slate-900 text-white font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-slate-900 transition-all">
+                        <a href="{{ route('library.read', $book->slug) }}" class="mt-4 flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-primary shadow-lg shadow-primary/20 text-white font-black text-xs uppercase tracking-[0.2em] hover:opacity-90 transition-all">
                             <span class="material-symbols-outlined text-[18px]">menu_book</span>
-                            <span>Read Manuscript</span>
+                            <span>Read Now</span>
                         </a>
                     </div>
                 </div>
@@ -122,28 +122,49 @@
                 </div>
                 
                 <div class="space-y-10">
-                    <!-- Recently Read (Mockup for now, could be dynamic later) -->
+                    <!-- Recently Read -->
                     <div>
                         <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6 flex items-center gap-2">
                             <span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span> Recently Read
                         </h4>
-                        <div class="flex gap-5 group cursor-pointer items-center">
-                            <div class="w-16 h-20 bg-slate-100 rounded-xl overflow-hidden shadow-md flex-shrink-0 transition-transform group-hover:scale-105">
-                                <div class="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300"></div>
+                        @if($recentRead)
+                            <a href="{{ route('library.read', $recentRead->book->slug) }}" class="flex gap-5 group cursor-pointer items-center">
+                                <div class="w-16 h-20 bg-slate-100 rounded-xl overflow-hidden shadow-md flex-shrink-0 transition-transform group-hover:scale-105">
+                                    @if($recentRead->book->cover_image)
+                                        <img src="{{ asset($recentRead->book->cover_image) }}" class="w-full h-full object-cover">
+                                    @else
+                                        <div class="w-full h-full bg-slate-200 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-slate-300">auto_stories</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-base font-black text-slate-900 line-clamp-1 group-hover:text-primary transition-colors">{{ $recentRead->book->title }}</p>
+                                    <div class="mt-2 w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                                        <div class="bg-primary h-full" style="width: {{ $recentRead->percentage_complete }}%"></div>
+                                    </div>
+                                    <p class="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">{{ round($recentRead->percentage_complete) }}% complete</p>
+                                </div>
+                            </a>
+                        @else
+                            <div class="flex gap-5 group cursor-pointer items-center opacity-60">
+                                <div class="w-16 h-20 bg-slate-100 rounded-xl overflow-hidden shadow-md flex-shrink-0 flex items-center justify-center">
+                                    <span class="material-symbols-outlined text-slate-300">auto_stories</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-base font-black text-slate-900 line-clamp-1">Start Reading...</p>
+                                    <p class="text-xs text-slate-500 font-bold italic mt-1 uppercase tracking-wide opacity-60">Browse Library</p>
+                                </div>
                             </div>
-                            <div class="flex-1">
-                                <p class="text-base font-black text-slate-900 line-clamp-1 group-hover:text-primary transition-colors">Start Reading...</p>
-                                <p class="text-xs text-slate-500 font-bold italic mt-1 uppercase tracking-wide opacity-60">Browse Library</p>
-                            </div>
-                        </div>
+                        @endif
                     </div>
 
                     <!-- Quote -->
                     <div class="pt-8 border-t border-slate-50 relative">
                         <span class="material-symbols-outlined absolute -top-4 -right-4 text-8xl opacity-[0.03] rotate-12 text-slate-900 pointer-events-none select-none">format_quote</span>
                         <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6">Wisdom of the Day</h4>
-                        <p class="text-xl italic font-medium leading-relaxed text-slate-800 mb-4">"Thou hast made us for thyself, O Lord, and our heart is restless until it finds its rest in thee."</p>
-                        <p class="text-xs font-black uppercase tracking-widest text-primary">— St. Augustine</p>
+                        <p class="text-xl italic font-medium leading-relaxed text-slate-800 mb-4">"{{ $wisdomText }}"</p>
+                        <p class="text-xs font-black uppercase tracking-widest text-primary">— {{ $wisdomAuthor }}</p>
                     </div>
                 </div>
             </div>

@@ -1,163 +1,242 @@
 @extends('layouts.app')
 
+@section('title', 'Live Stream & Community')
+
 @push('styles')
 <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 <style>
-    .live-hub-container {
-        background: #0f172a;
-        min-height: calc(100vh - 64px);
-        color: white;
-        padding: 2rem 0;
+    .fill-1 { font-variation-settings: 'FILL' 1; }
+    
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
     }
-    .cinema-wrapper {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 1rem;
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
     }
-    .player-section {
-        background: black;
-        border-radius: 1rem;
-        overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        aspect-ratio: 16 / 9;
-        position: relative;
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
     }
-    .status-badge {
-        position: absolute;
-        top: 1.5rem;
-        left: 1.5rem;
-        z-index: 10;
-        padding: 0.5rem 1rem;
-        border-radius: 2rem;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-    .status-live {
-        background: #ef4444;
-        color: white;
-        animation: pulse 2s infinite;
-    }
-    .status-offline {
-        background: #475569;
-        color: #cbd5e1;
-    }
-    .live-details {
-        margin-top: 2rem;
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 2rem;
-    }
-    .chat-placeholder {
-        background: #1e293b;
-        border-radius: 1rem;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #94a3b8;
-        border: 1px solid #334155;
-    }
-    @keyframes pulse {
-        0% { opacity: 1; }
-        50% { opacity: 0.7; }
-        100% { opacity: 1; }
-    }
-    @media (max-width: 1024px) {
-        .live-details {
-            grid-template-columns: 1fr;
-        }
-        .live-hub-container {
-            padding: 1rem 0;
-        }
+    
+    .video-js {
+        width: 100%;
+        height: 100%;
     }
 </style>
 @endpush
 
 @section('content')
-<div class="live-hub-container">
-    <div class="cinema-wrapper">
-        <div class="player-section">
-            @if(isset($is_live->value) && $is_live->value == '1')
-                <div class="status-badge status-live">
-                    <span style="width: 8px; height: 8px; background: white; border-radius: 50%;"></span>
-                    Live Now
-                </div>
-                
-                @if(($source_type->value ?? 'embed') == 'embed')
-                    {{-- Social Media Embed --}}
-                    @if(isset($live_settings->value) && $live_settings->value)
-                        <div style="width: 100%; height: 100%;">
-                            {!! $live_settings->value !!}
+<main class="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-8 p-6 lg:p-10 lg:flex-row bg-slate-50 min-h-screen">
+    <!-- Left Side: Streaming Player & Content -->
+    <div class="flex flex-1 flex-col gap-6">
+        <!-- Breadcrumbs -->
+        <nav class="flex items-center gap-2 px-1 py-1 text-sm font-bold uppercase tracking-widest text-slate-400">
+            <a class="hover:text-primary transition-colors" href="{{ route('index') }}">Home</a>
+            <span class="material-symbols-outlined text-sm">chevron_right</span>
+            <span class="text-primary font-black">Live Stream</span>
+        </nav>
+
+        <!-- Media Player Wrapper -->
+        <div class="overflow-hidden rounded-3xl bg-black shadow-2xl relative shadow-primary/10 border border-slate-200/50 group">
+            <div class="aspect-video w-full bg-slate-900 relative">
+                @if(isset($is_live->value) && $is_live->value == '1')
+                    <div class="absolute left-6 top-6 z-20 flex items-center gap-3">
+                        <span class="flex items-center gap-2 rounded-full bg-red-600 px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-white shadow-lg shadow-red-600/20">
+                            <span class="size-2 animate-pulse rounded-full bg-white"></span>
+                            Live Now
+                        </span>
+                        <span class="flex items-center gap-2 rounded-full bg-black/40 px-4 py-1.5 text-[10px] font-black text-white backdrop-blur-md border border-white/10 uppercase tracking-widest">
+                            <span class="material-symbols-outlined text-[16px]">visibility</span>
+                            Online Congregation
+                        </span>
+                    </div>
+
+                    @if(($source_type->value ?? 'embed') == 'embed')
+                        <div class="w-full h-full">
+                            @if(isset($live_settings->value) && $live_settings->value)
+                                {!! $live_settings->value !!}
+                            @else
+                                <div class="h-full flex flex-col items-center justify-center gap-4 text-slate-500">
+                                    <span class="material-symbols-outlined text-6xl opacity-20">videocam_off</span>
+                                    <p class="font-black text-sm uppercase tracking-widest">Embed not configured</p>
+                                </div>
+                            @endif
                         </div>
                     @else
-                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                            <span style="font-size: 3rem;">📹</span>
-                            <p style="color: #94a3b8; margin-top: 1rem;">Embed not configured</p>
-                        </div>
+                        @if(isset($playback_url->value) && $playback_url->value)
+                            <video id="live-video" class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto">
+                                <source src="{{ $playback_url->value }}" type="application/x-mpegURL">
+                            </video>
+                        @else
+                            <div class="h-full flex flex-col items-center justify-center gap-4 text-slate-500">
+                                <span class="material-symbols-outlined text-6xl opacity-20">cloud_off</span>
+                                <p class="font-black text-sm uppercase tracking-widest">Direct stream not configured</p>
+                            </div>
+                        @endif
                     @endif
                 @else
-                    {{-- Direct HLS Stream --}}
-                    @if(isset($playback_url->value) && $playback_url->value)
-                        <video id="live-video" class="video-js vjs-big-play-centered vjs-fluid" controls preload="auto" width="auto" height="auto">
-                            <source src="{{ $playback_url->value }}" type="application/x-mpegURL">
-                        </video>
-                    @else
-                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                            <span style="font-size: 3rem;">📡</span>
-                            <p style="color: #94a3b8; margin-top: 1rem;">Direct stream not configured</p>
+                    <!-- Offline State -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-12 bg-slate-950">
+                        <div class="size-32 rounded-full bg-primary/5 mb-8 flex items-center justify-center border border-primary/10">
+                            <span class="material-symbols-outlined text-7xl text-primary opacity-50 font-light">podcasts</span>
                         </div>
-                    @endif
+                        <h2 class="text-white text-4xl font-black mb-4 tracking-tight">Broadcast Offline</h2>
+                        <p class="text-slate-400 max-w-md font-medium text-lg leading-relaxed">We aren't broadcasting right now. Join us for our next scheduled service.</p>
+                        <a href="{{ route('event') }}" class="mt-10 bg-primary text-white px-10 h-14 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl shadow-primary/20">
+                            <span class="material-symbols-outlined">history</span>
+                            Explore Archives
+                        </a>
+                    </div>
                 @endif
-            @else
-                <div class="status-badge status-offline">Offline</div>
-                <div style="height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem;">
-                    <span style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.5;">📡</span>
-                    <h2 style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 0.5rem;">Join us for our next service</h2>
-                    <p style="color: #94a3b8; max-width: 500px;">We aren't broadcasting right now, but you can always catch up on previous messages on our Events page.</p>
-                    <a href="{{ route('event') }}" style="margin-top: 2rem; background: var(--primary-color); color: white; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none;">Watch Previous Services</a>
-                </div>
-            @endif
+            </div>
         </div>
 
-        <div class="live-details">
-            <div>
-                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">Live Service Broadcast</h1>
-                <p style="color: #94a3b8; font-size: 1.125rem; line-height: 1.6;">Experience the glory of God from wherever you are. Join us in worship, prayer, and the transforming word of God. Our live stream connects the global DBIM family in one spirit.</p>
-                
-                <div style="margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <div style="background: #1e293b; padding: 1.5rem; border-radius: 1rem; flex: 1; min-width: 200px;">
-                        <h4 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary-color); margin-bottom: 0.5rem;">Next Broadcast</h4>
-                        <p style="font-weight: 700; margin: 0;">Sunday Morning Service</p>
-                        <p style="font-size: 0.875rem; color: #94a3b8; margin: 0.25rem 0 0;">8:00 AM WAT</p>
+        <!-- Reactions & Share Bar -->
+        <div class="flex flex-wrap items-center justify-between rounded-3xl bg-white p-4 shadow-sm border border-slate-100 px-6">
+            <div class="flex flex-wrap items-center gap-2 lg:gap-6">
+                <!-- Reactions (Functional in V2) -->
+                <button class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-slate-500 font-black text-xs uppercase tracking-widest transition-all hover:bg-primary/10 hover:text-primary">
+                    <span class="material-symbols-outlined text-[20px]">front_hand</span>
+                    <span>Amen</span>
+                </button>
+                <button class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-slate-500 font-black text-xs uppercase tracking-widest transition-all hover:bg-red-50 hover:text-red-500">
+                    <span class="material-symbols-outlined text-[20px] fill-1">favorite</span>
+                    <span>Love</span>
+                </button>
+                <button class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-slate-500 font-black text-xs uppercase tracking-widest transition-all hover:bg-blue-50 hover:text-blue-500">
+                    <span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+                    <span>Pray</span>
+                </button>
+                <button class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-slate-500 font-black text-xs uppercase tracking-widest transition-all hover:bg-amber-50 hover:text-amber-500">
+                    <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                    <span>Praise</span>
+                </button>
+            </div>
+            <button class="flex items-center gap-3 rounded-xl bg-slate-100 px-6 py-2.5 text-xs font-black text-slate-900 uppercase tracking-widest transition-colors hover:bg-slate-200">
+                <span class="material-symbols-outlined text-[18px]">share</span>
+                <span>Share</span>
+            </button>
+        </div>
+
+        <!-- Sermon Info -->
+        <div class="rounded-3xl bg-white p-8 lg:p-10 shadow-sm border border-slate-100">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="h-px w-8 bg-primary"></span>
+                    <span class="text-xs font-black uppercase tracking-[0.2em] text-primary">
+                        @if(isset($is_live->value) && $is_live->value == '1')
+                            Live Broadcast
+                        @else
+                            Previous Message
+                        @endif
+                    </span>
+                </div>
+                <h1 class="text-3xl lg:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+                    @if(isset($is_live->value) && $is_live->value == '1')
+                        {{ $latest_sermon->title ?? 'Sunday Service: Worship & Word' }}
+                    @else
+                        {{ $latest_sermon->title ?? 'Welcome to DBIM Online' }}
+                    @endif
+                </h1>
+            </div>
+            
+            <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between border-t border-slate-50 pt-8">
+                <div class="flex items-center gap-5">
+                    <div class="size-14 rounded-2xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center text-primary font-black">
+                        {{ isset($latest_sermon) ? substr($latest_sermon->location ?? 'DBIM', 0, 2) : 'DB' }}
                     </div>
-                    <div style="background: #1e293b; padding: 1.5rem; border-radius: 1rem; flex: 1; min-width: 200px;">
-                        <h4 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary-color); margin-bottom: 0.5rem;">Ways to Watch</h4>
-                        <div style="display: flex; gap: 0.75rem;">
-                            <span title="YouTube">📺</span>
-                            <span title="Facebook">🌐</span>
-                            <span title="TikTok">📱</span>
-                        </div>
+                    <div>
+                        <p class="font-black text-slate-900">Divine Business Impact Ministry</p>
+                        <p class="text-sm font-bold text-slate-400">Transforming Lives Globally</p>
                     </div>
                 </div>
+                <div class="flex flex-wrap gap-4">
+                    <button class="flex items-center gap-3 rounded-xl border border-slate-200 px-6 h-12 text-sm font-black text-slate-900 hover:bg-slate-50 transition-all">
+                        <span class="material-symbols-outlined text-[20px]">description</span>
+                        <span>Notes</span>
+                    </button>
+                    <a href="{{ route('donate') }}" class="flex items-center gap-3 rounded-xl bg-primary px-8 h-12 text-sm font-black text-white shadow-lg shadow-primary/20 hover:shadow-xl transition-all">
+                        <span class="material-symbols-outlined fill-1">volunteer_activism</span>
+                        <span>Give Online</span>
+                    </a>
+                </div>
             </div>
-
-            <div class="chat-placeholder">
-                <div style="font-size: 2rem; margin-bottom: 1rem;">💬</div>
-                <h3 style="color: white; font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem;">Live Chat</h3>
-                <p style="font-size: 0.875rem;">Join the conversation and fellowship with other believers during the live broadcast.</p>
-                <div style="width: 100%; height: 1px; background: #334155; margin: 1.5rem 0;"></div>
-                <p style="font-size: 0.75rem; color: #64748b;">Chat will be active during the live service.</p>
+            
+            <div class="mt-8 prose prose-slate max-w-none">
+                <p class="text-slate-500 font-medium text-lg leading-relaxed">
+                    @if(isset($is_live->value) && $is_live->value == '1')
+                        Join us as we worship and learn from the Word of God together.
+                    @else
+                        {{ $latest_sermon->description ?? 'Explore our library of sermons and teachings to grow in your faith.' }}
+                    @endif
+                </p>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Right Side: Community Chat -->
+    <aside class="flex w-full flex-col gap-6 lg:w-[420px] shrink-0">
+        <div class="flex h-[800px] flex-col rounded-3xl bg-white shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+            <!-- Chat Header -->
+            <div class="flex items-center justify-between border-b border-slate-50 p-6 bg-slate-50/50">
+                <div class="flex items-center gap-3">
+                    <h3 class="font-black text-slate-900 uppercase tracking-widest text-sm">Community Chat</h3>
+                    <span class="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[10px] font-black text-primary border border-primary/10">LIVE</span>
+                </div>
+                <button class="material-symbols-outlined text-[20px] text-slate-400 hover:text-primary transition-colors">group</button>
+            </div>
+
+            <!-- Pinned message -->
+            <div class="bg-primary/5 p-5 flex items-start gap-4 border-b border-primary/10">
+                <span class="material-symbols-outlined text-primary !text-[18px] mt-0.5 animate-bounce">push_pin</span>
+                <div class="text-xs">
+                    <p class="font-black text-primary mb-1 uppercase tracking-widest">Welcome to DBIM Online!</p>
+                    <p class="text-slate-600 font-medium leading-relaxed">Join the conversation below. Be respectful and let's grow together!</p>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="custom-scrollbar flex-1 overflow-y-auto p-6 space-y-8">
+                <div class="flex justify-center">
+                    <span class="rounded-full bg-slate-100 px-5 py-1.5 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Service Started</span>
+                </div>
+                
+                <div class="flex flex-col items-center justify-center py-12 text-center opacity-40">
+                    <span class="material-symbols-outlined text-4xl mb-2">chat_bubble</span>
+                    <p class="text-xs font-bold uppercase tracking-widest">Chat is empty</p>
+                    <p class="text-[10px] mt-1">Be the first to say something!</p>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="border-t border-slate-50 p-6 bg-slate-50/30">
+                <div class="relative">
+                    <textarea class="w-full resize-none rounded-2xl border-slate-100 bg-white p-4 pr-16 text-sm font-medium focus:border-primary/30 focus:ring-0 placeholder-slate-300 shadow-sm" placeholder="Type your message..." rows="2"></textarea>
+                    <button class="absolute bottom-3 right-3 flex size-10 items-center justify-center rounded-xl bg-primary text-white hover:bg-primary-dark transition-all shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined !text-[20px] translate-x-0.5">send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Promo -->
+        <div class="group relative overflow-hidden rounded-3xl bg-slate-900 p-8 text-white shadow-2xl transition-all hover:scale-[1.02]">
+            <div class="relative z-10">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Next Session</span>
+                <h4 class="mt-2 text-xl font-black tracking-tight">{{ $next_event->title ?? 'Ministry Academy' }}</h4>
+                <p class="mt-1 text-sm text-slate-400 font-bold uppercase tracking-widest">
+                    @if(isset($next_event))
+                        {{ \Carbon\Carbon::parse($next_event->date)->format('l, g:i A') }}
+                    @else
+                        Coming Soon
+                    @endif
+                </p>
+                <a href="{{ isset($next_event) ? route('event.single', $next_event->id) : route('event') }}" class="mt-6 w-full rounded-xl bg-white/10 py-3 text-xs font-black text-white transition-all hover:bg-white hover:text-slate-900 uppercase tracking-widest flex items-center justify-center">Register Now</a>
+            </div>
+            <div class="absolute -right-8 -top-8 size-40 rounded-full bg-primary/20 blur-3xl transition-all group-hover:bg-primary/40"></div>
+        </div>
+    </aside>
+</main>
 @endsection
 
 @push('scripts')

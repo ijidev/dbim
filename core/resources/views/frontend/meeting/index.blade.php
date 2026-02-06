@@ -3,6 +3,23 @@
 @section('title', 'Meetings Dashboard')
 
 @push('styles')
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1754cf",
+                    "primary-dark": "#103c96",
+                    "primary-light": "#e0e7ff",
+                    "accent": "#f59e0b",
+                }
+            }
+        }
+    }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
     .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -22,6 +39,12 @@
         background: var(--primary);
         border-radius: 50%;
     }
+
+    @keyframes scale-in {
+        from { transform: scale(0.95); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+    .scale-in { animation: scale-in 0.2s ease-out; }
 </style>
 @endpush
 

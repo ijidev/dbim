@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Book Creator &amp; Publisher</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Lexend', sans-serif; }
+        .editor-container:focus-within { border-color: #0f49bd; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #282e39; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f4756; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111318] px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">ChurchPress Admin</h2>
+<div class="flex items-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Autosaved at 14:32
+                </div>
+</div>
+</div>
+<div class="flex flex-1 justify-center max-w-2xl">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Library</a>
+<a class="text-sm font-medium text-primary" href="#">Book Creator</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-slate-200 dark:bg-[#282e39] text-sm font-bold transition-all hover:bg-slate-300 dark:hover:bg-slate-700">
+<span>Save Draft</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold transition-all hover:opacity-90 shadow-lg shadow-primary/20">
+<span>Publish to Library</span>
+</button>
+<div class="ml-2 bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6bDLoecqhh8Q0O_kzXsG_F2bBnHChuKTgCmL6kK4oW67TVA6bD2tM0lcuih7MxwzoRkFk8e-AQTINBtr34nlgppi8gVsdtTnWz1_ZuACfjGzVv1FsB8ZP2HU_exnZGbpr71gyXvErBlePGVT2vZPLhO5B8yjr0lqeUOa1HHsnSEGnLfFGX_GW73iFp-WLujtvzD-4J-9s7p6-qL5ijY_PcflDVrNW1d182cOfAapiCD3nPF3f5YCEdahGWN4ROFjjA6zdKbGvXvyO");'></div>
+</div>
+</header>
+<!-- Main Workspace Layout -->
+<main class="flex flex-1 overflow-hidden h-[calc(100vh-65px)]">
+<!-- Left Column: Book Metadata -->
+<aside class="w-80 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111318] overflow-y-auto p-6 flex flex-col gap-6">
+<div>
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">info</span> Book Metadata
+                </h3>
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500">Book Title</label>
+<input class="w-full bg-background-light dark:bg-[#282e39] border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary" placeholder="e.g. The Path of Faith" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500">Author</label>
+<input class="w-full bg-background-light dark:bg-[#282e39] border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary" placeholder="Full name" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500">Genre / Category</label>
+<select class="w-full bg-background-light dark:bg-[#282e39] border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary">
+<option>Theology</option>
+<option>History</option>
+<option>Devotional</option>
+<option>Biography</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500">ISBN</label>
+<input class="w-full bg-background-light dark:bg-[#282e39] border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary" placeholder="978-3-16-148410-0" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-semibold text-slate-500">Cover Image</label>
+<div class="relative group cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl aspect-[3/4] flex flex-col items-center justify-center gap-2 hover:border-primary transition-colors bg-background-light dark:bg-[#282e39]/50">
+<div class="absolute inset-0 rounded-xl overflow-hidden opacity-20 group-hover:opacity-40 transition-opacity">
+<div class="w-full h-full bg-gradient-to-br from-primary to-purple-600" data-alt="Abstract blue and purple gradient background"></div>
+</div>
+<span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary">upload_file</span>
+<p class="text-[10px] text-center px-4 font-medium text-slate-500 group-hover:text-slate-300 uppercase tracking-tighter">Drag cover here or click to browse</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Column: Chapter Builder / Editor -->
+<section class="flex-1 flex flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Editor Toolbar -->
+<div class="bg-white dark:bg-[#161b26] border-b border-slate-200 dark:border-slate-800 p-2 flex items-center justify-between px-6">
+<div class="flex items-center gap-1">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Bold">
+<span class="material-symbols-outlined text-lg">format_bold</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Italic">
+<span class="material-symbols-outlined text-lg">format_italic</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Underline">
+<span class="material-symbols-outlined text-lg">format_underlined</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Heading 1">
+<span class="material-symbols-outlined text-lg">format_h1</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Heading 2">
+<span class="material-symbols-outlined text-lg">format_h2</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Bullet List">
+<span class="material-symbols-outlined text-lg">format_list_bulleted</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Numbered List">
+<span class="material-symbols-outlined text-lg">format_list_numbered</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded transition-colors" title="Insert Image">
+<span class="material-symbols-outlined text-lg">image</span>
+</button>
+</div>
+<div class="text-xs text-slate-500 font-medium">
+                    1,248 words
+                </div>
+</div>
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto p-12 flex flex-col items-center">
+<div class="max-w-3xl w-full bg-white dark:bg-[#161b26] shadow-xl rounded-xl min-h-[1000px] p-16 editor-container border-2 border-transparent transition-all">
+<input class="w-full text-4xl font-black bg-transparent border-none p-0 mb-8 focus:ring-0 placeholder-slate-300 dark:placeholder-slate-700" placeholder="Enter chapter title..." type="text" value="Chapter 1: The Foundation of Community"/>
+<div class="prose prose-slate dark:prose-invert max-w-none text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+<p class="mb-4">Begin typing your manuscript here. Use the toolbar above to format text, insert images, or manage headers. This interface is designed for focused writing and easy content manipulation.</p>
+<p class="mb-4">The path of faith is not one walked in isolation, but in the vibrant heartbeat of a community united by purpose. In this chapter, we explore how ancient traditions inform our modern approach to spiritual growth and collective worship.</p>
+<p>The essence of our shared journey lies in the simple acts of service and the profound moments of shared reflection...</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Chapter List / Sidebar -->
+<aside class="w-72 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111318] flex flex-col">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<h3 class="text-sm font-bold uppercase tracking-wider text-slate-500">Chapters</h3>
+<button class="size-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-2">
+<!-- Chapter Item: Active -->
+<div class="group flex items-center gap-3 p-3 bg-primary/10 border border-primary/20 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined text-slate-400 cursor-grab">drag_indicator</span>
+<div class="flex-1">
+<p class="text-sm font-bold text-primary truncate">1. The Foundation</p>
+<p class="text-[10px] text-slate-500">1,248 words</p>
+</div>
+<span class="material-symbols-outlined text-primary text-sm">edit</span>
+</div>
+<!-- Chapter Item -->
+<div class="group flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-[#282e39] border border-transparent rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-slate-400 cursor-grab">drag_indicator</span>
+<div class="flex-1">
+<p class="text-sm font-medium truncate">2. Principles of Faith</p>
+<p class="text-[10px] text-slate-500">850 words</p>
+</div>
+</div>
+<!-- Chapter Item -->
+<div class="group flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-[#282e39] border border-transparent rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-slate-400 cursor-grab">drag_indicator</span>
+<div class="flex-1">
+<p class="text-sm font-medium truncate">3. Modern Stewardship</p>
+<p class="text-[10px] text-slate-500">2,104 words</p>
+</div>
+</div>
+<!-- Chapter Item -->
+<div class="group flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-[#282e39] border border-transparent rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-slate-400 cursor-grab">drag_indicator</span>
+<div class="flex-1">
+<p class="text-sm font-medium truncate">4. Leadership &amp; Light</p>
+<p class="text-[10px] text-slate-500">Drafting</p>
+</div>
+</div>
+<!-- Chapter Item -->
+<div class="group flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-[#282e39] border border-transparent rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-slate-400 cursor-grab">drag_indicator</span>
+<div class="flex-1">
+<p class="text-sm font-medium truncate">5. Conclusion</p>
+<p class="text-[10px] text-slate-500">0 words</p>
+</div>
+</div>
+</div>
+<!-- Sidebar Footer Help/Tips -->
+<div class="p-6 bg-slate-50 dark:bg-[#161b26]/50 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg">lightbulb</span>
+<p class="text-[11px] leading-normal text-slate-500">
+<strong>Pro-tip:</strong> Reorder chapters by dragging the <span class="material-symbols-outlined text-[12px] align-middle">drag_indicator</span> handle.
+                    </p>
+</div>
+</div>
+</aside>
+</main>
+<!-- Global Footer / Toast Simulation Area -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-4 border border-slate-700 z-[100] scale-90 md:scale-100">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">cloud_done</span>
+<span class="text-sm font-medium tracking-wide">All changes saved locally</span>
+</div>
+<div class="w-px h-4 bg-slate-700"></div>
+<button class="text-primary text-sm font-bold hover:underline">Preview Book</button>
+</div>
+</body></html>

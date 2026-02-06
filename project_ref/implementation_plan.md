@@ -1,26 +1,34 @@
-# Implementation Plan: Fix Meeting Room UI Icons & Layout
+# Implementation Plan - Admin UI Fixes and Data Dynamicness
 
-The meeting room UI is currently "broken" because the Material Symbols font is not loading correctly. This causes icons to render as raw text, which then overflows the fixed-size control buttons and mashes them together.
+## Goal Description
+Fix the admin menu and dashboard where icons are displaying as names instead of icons. Replace placeholder text and dummy data with actual dynamic content from the database.
 
 ## Proposed Changes
 
-### [Frontend] Meeting Room View
-- **File:** [room.blade.php](file:///c:/xampp/htdocs/dbim/core/resources/views/frontend/meeting/room.blade.php)
-- **Robust Font Loading:** Used the most compatible Google Fonts link for Material Symbols Outlined.
-- **Tailwind Integration:** Added Tailwind CDN to match the design system exactly.
-- **Strict CSS:** Implemented CSS rules to force ligatures (`font-feature-settings: 'liga'`) and ensure the font family is applied with `!important`.
-- **Layout Constraint:** Added `max-height` and `max-width` to `#mainStage` to prevent it from covering the screen and pushing controls off-screen.
-- **Mobile Viewport Fix:**
-    - Adjusted `#videoArea` and `#galleryStrip` for better vertical stacking.
-    - Added fixed dimensions for `#mainStage` on mobile to ensure layout stability.
-- **Notification System:**
-    - **Fixed Toast:** Reimplemented the "Link Copied" toast with fixed positioning and transition effects to ensure it disappears correctly.
-    - **Unread Badge:** Added a real-time notification badge to the chat button that tracks unread messages when the sidebar is closed or on a different tab.
+### Admin Layout and UI
+#### [MODIFY] [app.blade.php](file:///c:/xampp/htdocs/dbim/core/resources/views/admin/layouts/app.blade.php)
+- Fix the Google Fonts CDN link to include all variable axes for Material Symbols.
+- Consolidate and correct the `.material-symbols-outlined` CSS class to ensure the proper `font-family` is applied.
+- Ensure the `nav-icon` class correctly displays icons in the sidebar.
+
+### Dashboard Content
+#### [MODIFY] [dashboard.blade.php](file:///c:/xampp/htdocs/dbim/core/resources/views/admin/dashboard.blade.php)
+- Replace static dummy data like `+12% This Month` and `Session in 2h` with Eloquent queries.
+- Add logic to calculate enrollment trends and identify the next scheduled event.
+- Ensure all icons in the dashboard body use the corrected Material Symbols class.
+
+### Documentation
+#### [MODIFY] [merged_progress.md](file:///c:/xampp/htdocs/dbim/project_ref/merged_progress.md)
+- Append this implementation plan and keep track of project history.
 
 ## Verification Plan
 
+### Automated Tests
+- N/A (UI focused)
+
 ### Manual Verification
-1.  Open the meeting room at `localhost/dbim/meeting/{code}`.
-2.  Verify icons are symbols.
-3.  Resize the browser to mobile width and verify the layout (video, gallery, controls).
-4.  Confirm the main video doesn't force the footer off-screen.
+- Use the browser tool to navigate to `http://localhost/dbim/admin/dashboard` and verify:
+    - Sidebar icons render correctly.
+    - Dashboard stat cards show actual database counts (even if 0, they should be dynamic).
+    - Icons like `groups`, `menu_book`, etc. render visually instead of text.
+- Check other admin pages (`/admin/events`, `/admin/courses`, `/admin/livestream`) to ensure global layout fixes apply.

@@ -23,7 +23,8 @@ class HomeController extends Controller
      */
     public function admin()
     {
-        return view('admin.dashboard');
+        $recent_enrollments = \App\Models\Enrollment::with(['user', 'course'])->latest()->take(5)->get();
+        return view('admin.dashboard', compact('recent_enrollments'));
     }
 
     public function index(){

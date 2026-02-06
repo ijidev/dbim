@@ -10,7 +10,17 @@ class StudentController extends Controller
     {
         $user = \Illuminate\Support\Facades\Auth::user();
         $enrollments = $user->enrollments()->with('course.instructor')->get();
-        return view('frontend.student.dashboard', compact('enrollments'));
+        
+        $enrolledCourseIds = $enrollments->pluck('course_id')->toArray();
+        $featured_courses = \App\Models\Course::whereNotIn('id', $enrolledCourseIds)
+            ->with('instructor')
+            ->latest()
+            ->take(3)
+            ->get();
+            
+        $is_live = \App\Models\Setting::where('key', 'is_live')->first();
+        
+        return view('frontend.student.dashboard', compact('enrollments', 'featured_courses', 'is_live'));
     }
 
     public function learn($id)

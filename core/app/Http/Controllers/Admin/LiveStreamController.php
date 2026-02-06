@@ -30,6 +30,8 @@ class LiveStreamController extends Controller
             $stream_key = (object)['value' => $new_key];
         }
 
+        $total_users = \App\Models\User::count();
+        
         return view('admin.livestream.index', compact(
             'live_settings', 
             'live_status', 
@@ -37,7 +39,8 @@ class LiveStreamController extends Controller
             'stream_url', 
             'stream_key', 
             'playback_url',
-            'default_url'
+            'default_url',
+            'total_users'
         ));
     }
 

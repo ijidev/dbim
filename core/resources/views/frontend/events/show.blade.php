@@ -102,29 +102,32 @@
 @section('content')
 <div class="event-hero">
     @if($event->image)
-        <img src="{{ asset($event->image) }}" alt="{{ $event->title }}">
+        <img src="{{ asset('storage/'.$event->image) }}" onerror="this.src='https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=1200'" alt="{{ $event->title }}">
     @else
-        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="w-full h-full flex items-center justify-center bg-slate-200">
+            <span class="material-symbols-outlined text-8xl text-slate-400 font-light">calendar_month</span>
         </div>
     @endif
     
     <div style="position: absolute; bottom: 2rem; left: 2rem; display: flex; gap: 0.75rem;">
         @if($event->status == 'comming' || $event->status == 'upcoming')
-            <span class="badge" style="background: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">Upcoming</span>
+            <span class="px-5 py-2 bg-emerald-500 text-white rounded-full text-xs font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20">Upcoming</span>
         @else
-            <span class="badge" style="background: #64748b; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">Passed</span>
+            <span class="px-5 py-2 bg-slate-500 text-white rounded-full text-xs font-black uppercase tracking-widest shadow-lg shadow-slate-500/20">Passed</span>
         @endif
 
         @if($event->recurrence && $event->recurrence !== 'none')
-            <span class="badge" style="background: #1754cf; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">🔄 {{ ucfirst($event->recurrence) }}</span>
+            <span class="px-5 py-2 bg-primary text-white rounded-full text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">sync</span>
+                {{ ucfirst($event->recurrence) }}
+            </span>
         @endif
     </div>
 </div>
 
 <div class="event-container">
-    <a href="{{ route('event') }}" class="back-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    <a href="{{ route('event') }}" class="flex items-center gap-2 text-slate-500 font-black text-xs uppercase tracking-widest hover:text-primary transition-colors mb-6">
+        <span class="material-symbols-outlined text-lg">arrow_back</span>
         Back to Events
     </a>
 
@@ -136,22 +139,22 @@
                 <div class="meta-item">
                     <span class="meta-label">Date</span>
                     <span class="meta-value">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span class="material-symbols-outlined text-primary">calendar_today</span>
                         {{ $event->date ? \Carbon\Carbon::parse($event->date)->format('l, F j, Y') : 'TBA' }}
                     </span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Time</span>
                     <span class="meta-value">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span class="material-symbols-outlined text-primary">schedule</span>
                         {{ $event->time ?? 'TBA' }}
                     </span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Location</span>
                     <span class="meta-value">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        {{ $event->location ?? 'TBA' }}
+                        <span class="material-symbols-outlined text-primary">location_on</span>
+                        {{ $event->location ?? 'Main Sanctuary' }}
                     </span>
                 </div>
             </div>

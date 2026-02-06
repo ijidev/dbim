@@ -27,15 +27,24 @@ class BookController extends Controller
             'description' => 'nullable|string',
             'content' => 'required|string',
             'cover_image' => 'nullable|image|max:2048',
+            'price' => 'required_if:is_free,0|numeric|min:0',
+            'category' => 'nullable|string|max:255',
+            'pages' => 'nullable|integer|min:1',
         ]);
 
-        $data = $request->only(['title', 'author', 'description', 'content', 'category', 'pages']);
+        $data = $request->only(['title', 'author', 'description', 'content', 'category', 'pages', 'price']);
         $data['slug'] = \Str::slug($request->title);
-        $data['is_published'] = $request->has('is_published');
+        $data['status'] = $request->has('status') || $request->has('is_published');
         $data['is_free'] = $request->has('is_free');
 
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('books', 'public');
+            $path = base_path('../assets/images/books');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $imageName = time().'.'.$request->cover_image->extension();  
+            $request->cover_image->move($path, $imageName);
+            $data['cover_image'] = 'assets/images/books/'.$imageName;
         }
 
         Book::create($data);
@@ -56,15 +65,24 @@ class BookController extends Controller
             'description' => 'nullable|string',
             'content' => 'required|string',
             'cover_image' => 'nullable|image|max:2048',
+            'price' => 'required_if:is_free,0|numeric|min:0',
+            'category' => 'nullable|string|max:255',
+            'pages' => 'nullable|integer|min:1',
         ]);
 
-        $data = $request->only(['title', 'author', 'description', 'content', 'category', 'pages']);
+        $data = $request->only(['title', 'author', 'description', 'content', 'category', 'pages', 'price']);
         $data['slug'] = \Str::slug($request->title);
-        $data['is_published'] = $request->has('is_published');
+        $data['status'] = $request->has('status') || $request->has('is_published');
         $data['is_free'] = $request->has('is_free');
 
         if ($request->hasFile('cover_image')) {
-            $data['cover_image'] = $request->file('cover_image')->store('books', 'public');
+            $path = base_path('../assets/images/books');
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $imageName = time().'.'.$request->cover_image->extension();  
+            $request->cover_image->move($path, $imageName);
+            $data['cover_image'] = 'assets/images/books/'.$imageName;
         }
 
         $book->update($data);

@@ -19,6 +19,8 @@ class Book extends Model
         'content',
         'price',
         'is_free',
+        'category',
+        'pages',
         'status',
     ];
 

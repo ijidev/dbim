@@ -102,7 +102,7 @@
 @section('content')
 <div class="event-hero">
     @if($event->image)
-        <img src="{{ asset('storage/'.$event->image) }}" onerror="this.src='https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=1200'" alt="{{ $event->title }}">
+        <img src="{{ asset($event->image) }}" onerror="this.src='https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80&w=1200'" alt="{{ $event->title }}">
     @else
         <div class="w-full h-full flex items-center justify-center bg-slate-200">
             <span class="material-symbols-outlined text-8xl text-slate-400 font-light">calendar_month</span>

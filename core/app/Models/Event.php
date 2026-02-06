@@ -21,7 +21,9 @@ class Event extends Model
         'end_time',
         'end_date',
         'recurrence',
-        'type'
+        'type',
+        'extra_dates',
+        'loop_extra_dates'
     ];
     use HasFactory;
 

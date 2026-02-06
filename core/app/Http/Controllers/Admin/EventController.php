@@ -19,6 +19,14 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    public function create()
+    {
+        return view('admin.events.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -33,7 +41,7 @@ class EventController extends Controller
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            $path = public_path('assets/images/events');
+            $path = base_path('../assets/images/events');
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
@@ -53,6 +61,7 @@ class EventController extends Controller
         $data['status'] = $request->status ?? 'comming';
         $data['recurrence'] = $request->recurrence ?? 'none';
         $data['type'] = $request->type ?? 'program';
+        $data['loop_extra_dates'] = $request->has('loop_extra_dates');
 
         \App\Models\Event::create($data);
 
@@ -92,7 +101,7 @@ class EventController extends Controller
         $data = $request->except('image');
 
         if ($request->hasFile('image')) {
-            $path = public_path('assets/images/events');
+            $path = base_path('../assets/images/events');
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
             }
@@ -107,6 +116,8 @@ class EventController extends Controller
         $months = ['Jan','Feb','March','April','May','Jun','July','Augt','Sep','Oct' , 'Nov', 'Dec' ];
         $data['month'] = $months[$date->month - 1];
         $data['year'] = $date->year;
+
+        $data['loop_extra_dates'] = $request->has('loop_extra_dates');
 
         $event->update($data);
 

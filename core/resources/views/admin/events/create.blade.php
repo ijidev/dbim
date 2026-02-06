@@ -84,6 +84,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-label">Extra Event Dates (Optional)</label>
+                    <textarea name="extra_dates" class="form-input" rows="2" placeholder="e.g. 2026-02-15, 2026-02-22 (Comma-separated)">{{ old('extra_dates') }}</textarea>
+                    <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" name="loop_extra_dates" value="1" id="loop_extra">
+                        <label for="loop_extra" style="font-size: 0.8125rem; color: #64748b; cursor: pointer;">Loop these dates monthly (Treat as day of month)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-label">Event Image</label>
                     <input type="file" name="image" class="form-input" accept="image/*">
                     <p style="font-size: 0.8125rem; color: #64748b; margin-top: 0.5rem;">Recommended size: 1200x600px</p>

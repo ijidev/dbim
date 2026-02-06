@@ -72,15 +72,12 @@
                             <option value="activity" {{ $event->type == 'activity' ? 'selected' : '' }}>Activity</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Recurrence</label>
-                        <select name="recurrence" class="form-input">
-                            <option value="none" {{ $event->recurrence == 'none' ? 'selected' : '' }}>One-time Event</option>
-                            <option value="daily" {{ $event->recurrence == 'daily' ? 'selected' : '' }}>Daily</option>
-                            <option value="weekly" {{ $event->recurrence == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                            <option value="monthly" {{ $event->recurrence == 'monthly' ? 'selected' : '' }}>Monthly</option>
-                            <option value="yearly" {{ $event->recurrence == 'yearly' ? 'selected' : '' }}>Yearly</option>
-                        </select>
+                <div class="form-group">
+                    <label class="form-label">Extra Event Dates (Optional)</label>
+                    <textarea name="extra_dates" class="form-input" rows="2" placeholder="e.g. 2026-02-15, 2026-02-22 (Comma-separated)">{{ old('extra_dates', $event->extra_dates) }}</textarea>
+                    <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" name="loop_extra_dates" value="1" id="loop_extra" {{ $event->loop_extra_dates ? 'checked' : '' }}>
+                        <label for="loop_extra" style="font-size: 0.8125rem; color: #64748b; cursor: pointer;">Loop these dates monthly (Treat as day of month)</label>
                     </div>
                 </div>
 
@@ -88,7 +85,7 @@
                     <label class="form-label">Event Image</label>
                     @if($event->image)
                         <div style="margin-bottom: 1rem;">
-                            <img src="{{ asset('assets/images/thumbs/events/' . $event->image) }}" alt="Current Image" style="max-width: 200px; border-radius: 0.5rem;">
+                            <img src="{{ asset($event->image) }}" alt="Current Image" style="max-width: 200px; border-radius: 0.5rem;">
                         </div>
                     @endif
                     <input type="file" name="image" class="form-input" accept="image/*">

@@ -72,36 +72,62 @@ class FrontController extends Controller
         
         foreach($events as $event) {
             $startDate = \Carbon\Carbon::parse($event->date);
-            $endDate = $event->end_date ? \Carbon\Carbon::parse($event->end_date) : $startDate->copy();
-            $duration = $startDate->diffInMinutes(\Carbon\Carbon::parse($event->date . ' ' . $event->time)->addMinutes(120)); // Assume 2h if no end time
-
+            // Use end_date as limit if set, otherwise default to 1 year
+            $limit = $event->end_date ? \Carbon\Carbon::parse($event->end_date)->endOfDay() : \Carbon\Carbon::now()->addYear();
+            
             $recurrence = $event->recurrence ?? 'none';
             
+            // Standard Recurrence
             if ($recurrence === 'none') {
-                $calendarEvents[] = $this->formatCalendarEvent($event, $startDate);
+                if ($startDate->lte($limit)) {
+                    $calendarEvents[] = $this->formatCalendarEvent($event, $startDate);
+                }
             } else {
-                // Generate occurrences for the next year
-                $limit = \Carbon\Carbon::now()->addYear();
                 $current = $startDate->copy();
-
                 while ($current->lte($limit)) {
                     $calendarEvents[] = $this->formatCalendarEvent($event, $current);
                     
-                    if ($recurrence === 'daily') {
-                        $current->addDay();
-                    } elseif ($recurrence === 'weekly') {
-                        $current->addWeek();
-                    } elseif ($recurrence === 'monthly') {
-                        $current->addMonth();
-                    } elseif ($recurrence === 'yearly') {
-                        $current->addYear();
-                    } else {
-                        break;
-                    }
+                    if ($recurrence === 'daily') $current->addDay();
+                    elseif ($recurrence === 'weekly') $current->addWeek();
+                    elseif ($recurrence === 'monthly') $current->addMonth();
+                    elseif ($recurrence === 'yearly') $current->addYear();
+                    else break;
+                }
+            }
+
+            // Custom Extra Dates
+            if ($event->extra_dates) {
+                $extraDates = array_map('trim', explode(',', $event->extra_dates));
+                foreach ($extraDates as $dateStr) {
+                    try {
+                        $extraDate = \Carbon\Carbon::parse($dateStr);
+                        
+                        if ($event->loop_extra_dates) {
+                            // Repeat these day numbers every month for a year (or until limit)
+                            $loopCurrent = $extraDate->copy();
+                            $loopLimit = $limit->copy();
+                            
+                            while ($loopCurrent->lte($loopLimit)) {
+                                $calendarEvents[] = $this->formatCalendarEvent($event, $loopCurrent);
+                                $loopCurrent->addMonth();
+                                // Ensure we stay on the same day number if possible (Carbon addMonth handles this)
+                            }
+                        } else {
+                            if ($extraDate->lte($limit)) {
+                                $calendarEvents[] = $this->formatCalendarEvent($event, $extraDate);
+                            }
+                        }
+                    } catch (\Exception $e) { continue; }
                 }
             }
         }
-        return response()->json($calendarEvents);
+        
+        // Remove duplicates if any (e.g. if start_date is also in extra_dates)
+        $uniqueEvents = collect($calendarEvents)->unique(function ($item) {
+            return $item['id'] . $item['start'];
+        })->values()->all();
+
+        return response()->json($uniqueEvents);
     }
 
     private function formatCalendarEvent($event, $date)
@@ -118,7 +144,7 @@ class FrontController extends Controller
                 'type' => $event->type,
                 'status' => $event->status,
                 'description' => $event->description,
-                'image' => $event->image ? asset('storage/'.$event->image) : null,
+                'image' => $event->image ? asset($event->image) : null,
             ]
         ];
     }

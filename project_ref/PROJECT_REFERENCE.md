@@ -7,11 +7,13 @@
 - Icons: Ensure Material Icons are correctly rendered.
 
 ## Project Timeline and To-Do List
-### Current Phase: Initial Analysis and UI Fixes
-- [ ] Project structure analysis
-- [ ] Scanning for broken pages
-- [ ] Fixing admin menu and dashboard icons
-- [ ] Replacing dummy data with actual content
+### Current Phase: Academy & Instructor Enhancements
+- [x] Rename student dashboard to `/academy/dashboard`
+- [x] Implement content filtering (All, Video, Audio)
+- [x] Integrated Public/Private Meeting system
+- [x] Create Premium Instructor Dashboard at `/instructor/dashboard`
+- [x] Add Audio lesson format support
+- [x] Developed Premium Instructor Profile with booking functionality
 
 ### Completed
 - [x] Initial documentation setup

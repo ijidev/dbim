@@ -105,15 +105,14 @@ Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 
     Route::get('/meeting/{code}', [App\Http\Controllers\MeetingController::class, 'room'])->name('meeting.room');
     Route::post('/meeting/{meeting}/end', [App\Http\Controllers\MeetingController::class, 'end'])->name('meeting.end');
     
-    // Booking Routes
-    // Booking Routes
-    Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
-    Route::post('/meeting/book', [App\Http\Controllers\MeetingController::class, 'book'])->name('meeting.book');
-
     // Instructor Routes
     Route::middleware(['role:admin,instructor'])->group(function () {
         Route::get('/instructor/dashboard', [App\Http\Controllers\InstructorController::class, 'index'])->name('instructor.dashboard');
     });
+
+    // Booking Routes
+    Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
+    Route::post('/meeting/book', [App\Http\Controllers\MeetingController::class, 'book'])->name('meeting.book');
 });
 
 // Store Routes

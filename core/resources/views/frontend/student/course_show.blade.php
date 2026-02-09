@@ -4,473 +4,293 @@
 
 @push('styles')
 <style>
-    .course-hero {
-        background: linear-gradient(135deg, #0a192f 0%, #1754cf 100%);
-        position: relative;
-        min-height: 360px;
-        display: flex;
-        align-items: flex-end;
-        padding-bottom: 48px;
-    }
-    
-    .course-hero::before {
-        content: '';
+    .course-hero-bg {
         position: absolute;
         inset: 0;
-        background: url('{{ asset($course->thumbnail ?? "") }}') center/cover;
-        opacity: 0.15;
-    }
-    
-    .course-hero-content {
-        position: relative;
-        z-index: 2;
-    }
-    
-    .course-badge {
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255,255,255,0.2);
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: white;
-    }
-    
-    .course-badge.free {
-        background: rgba(34, 197, 94, 0.2);
-        border-color: rgba(34, 197, 94, 0.3);
-        color: #22c55e;
-    }
-    
-    .course-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 32px;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
-    }
-    
-    @media (min-width: 1024px) {
-        .course-grid {
-            grid-template-columns: 2fr 1fr;
-        }
-    }
-    
-    .course-card {
-        background: white;
-        border-radius: 16px;
-        padding: 24px;
-        border: 1px solid #e5e7eb;
-    }
-    
-    .curriculum-item {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px 0;
-        border-bottom: 1px solid #f1f5f9;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    
-    .curriculum-item:hover {
-        background: #f8fafc;
-        margin: 0 -16px;
-        padding-left: 16px;
-        padding-right: 16px;
-        border-radius: 8px;
-    }
-    
-    .curriculum-item:last-child {
-        border-bottom: none;
-    }
-    
-    .curriculum-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        background: rgba(23, 84, 207, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        flex-shrink: 0;
-    }
-    
-    .curriculum-icon.video {
-        background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-    }
-    
-    .curriculum-icon.text {
-        background: rgba(34, 197, 94, 0.1);
-        color: #22c55e;
-    }
-    
-    .curriculum-icon.quiz {
-        background: rgba(168, 85, 247, 0.1);
-        color: #a855f7;
-    }
-    
-    .module-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px;
-        background: #f8fafc;
-        border-radius: 12px;
-        margin-bottom: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    
-    .module-header:hover {
-        background: #f1f5f9;
-    }
-    
-    .enroll-card {
-        background: white;
-        border-radius: 16px;
-        padding: 24px;
-        border: 1px solid #e5e7eb;
-        position: sticky;
-        top: 96px;
-    }
-    
-    .price-tag {
-        font-size: 32px;
-        font-weight: 900;
-        color: var(--text-main);
-    }
-    
-    .price-tag.free {
-        color: #22c55e;
-    }
-    
-    .enroll-btn {
-        width: 100%;
-        padding: 16px 24px;
-        background: var(--primary);
-        color: white;
-        font-size: 16px;
-        font-weight: 700;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.2s;
-    }
-    
-    .enroll-btn:hover {
-        background: #1346b0;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(23, 84, 207, 0.3);
-    }
-    
-    .enroll-btn.enrolled {
-        background: #22c55e;
-    }
-    
-    .feature-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 0;
-        border-bottom: 1px solid #f1f5f9;
-    }
-    
-    .feature-item:last-child {
-        border-bottom: none;
-    }
-    
-    .instructor-card {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px;
-        background: #f8fafc;
-        border-radius: 12px;
-        transition: all 0.2s;
-    }
-    
-    .instructor-card:hover {
-        background: #f1f5f9;
-    }
-    
-    .related-course {
-        display: flex;
-        gap: 16px;
-        padding: 16px 0;
-        border-bottom: 1px solid #f1f5f9;
-        transition: all 0.2s;
-    }
-    
-    .related-course:hover {
-        background: #f8fafc;
-        margin: 0 -16px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-    
-    .related-course:last-child {
-        border-bottom: none;
-    }
-    
-    .related-thumb {
-        width: 80px;
-        height: 60px;
-        border-radius: 8px;
-        object-fit: cover;
-        flex-shrink: 0;
+        background-color: #0f172a;
+        background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), #0f172a), url('{{ asset($course->thumbnail ?? "") }}');
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
     }
 </style>
 @endpush
 
 @section('content')
 <!-- Hero Section -->
-<div class="course-hero">
-    <div class="course-hero-content w-full max-w-6xl mx-auto px-6">
-        <div class="flex flex-wrap gap-3 mb-4">
-            <span class="course-badge">
-                <span class="material-symbols-outlined text-sm mr-1">school</span>
-                {{ $course->modules->count() }} Modules
-            </span>
-            <span class="course-badge">
-                <span class="material-symbols-outlined text-sm mr-1">play_circle</span>
-                {{ $totalLessons }} Lessons
-            </span>
-            @if($course->price == 0)
-            <span class="course-badge free">Free Course</span>
+<div class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <div class="course-hero-bg"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="max-w-3xl">
+            <div class="flex flex-wrap gap-3 mb-6">
+                <span class="bg-primary/20 text-blue-200 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                    {{ $course->category ?? 'Course' }}
+                </span>
+                @if($course->price == 0)
+                <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                    Free
+                </span>
+                @endif
+            </div>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
+                {{ $course->title }}
+            </h1>
+            
+            @if($course->description)
+            <p class="text-lg text-slate-300 mb-8 leading-relaxed max-w-2xl">
+                {{ Str::limit(strip_tags($course->description), 150) }}
+            </p>
             @endif
-        </div>
-        
-        <h1 class="text-3xl md:text-4xl font-black text-white mb-4 max-w-3xl">{{ $course->title }}</h1>
-        
-        @if($course->description)
-        <p class="text-white/80 text-lg max-w-2xl mb-6">{{ Str::limit($course->description, 200) }}</p>
-        @endif
-        
-        @if($course->instructor)
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white font-bold">
-                {{ strtoupper(substr($course->instructor->name, 0, 2)) }}
+            
+            <div class="flex items-center gap-6 text-slate-300 font-medium text-sm">
+                @if($course->instructor)
+                <div class="flex items-center gap-3">
+                    @if($course->instructor->avatar)
+                        <img src="{{ asset('storage/'.$course->instructor->avatar) }}" alt="{{ $course->instructor->name }}" class="w-10 h-10 rounded-full object-cover border-2 border-slate-700">
+                    @else
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold border-2 border-slate-600">
+                            {{ strtoupper(substr($course->instructor->name, 0, 2)) }}
+                        </div>
+                    @endif
+                    <span>
+                        <span class="block text-xs text-slate-400 uppercase tracking-wider">Instructor</span>
+                        <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="text-white hover:text-primary transition-colors">{{ $course->instructor->name }}</a>
+                    </span>
+                </div>
+                @endif
+                
+                <div class="hidden sm:flex items-center gap-2">
+                    <span class="material-symbols-outlined text-amber-400">star</span>
+                    <span class="text-white">4.9</span>
+                    <span class="text-slate-500">(120 reviews)</span>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-slate-400">schedule</span>
+                    <span>{{ $totalLessons * 15 }}m approx</span> <!-- Mock duration -->
+                </div>
             </div>
-            <div>
-                <p class="text-white font-semibold">{{ $course->instructor->name }}</p>
-                <p class="text-white/60 text-sm capitalize">{{ $course->instructor->role }}</p>
-            </div>
         </div>
-        @endif
     </div>
 </div>
 
 <!-- Main Content -->
-<div class="py-10 bg-slate-50">
-    <div class="course-grid">
-        <!-- Left Column - Curriculum -->
-        <div class="space-y-8">
-            <!-- About -->
-            <div class="course-card">
-                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">info</span>
-                    About This Course
-                </h2>
-                <div class="text-slate-600 leading-relaxed">
-                    {!! nl2br(e($course->description)) !!}
-                </div>
-            </div>
-            
-            <!-- Curriculum -->
-            <div class="course-card">
-                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">menu_book</span>
-                    Course Curriculum
-                </h2>
+<div class="bg-slate-50 min-h-screen pb-20">
+    <div class="max-w-7xl mx-auto px-6 -mt-20 relative z-20">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Tabs (Optional, sticking to sections for now) -->
                 
-                @forelse($course->modules as $module)
-                <div class="mb-4">
-                    <div class="module-header" onclick="this.parentElement.classList.toggle('collapsed')">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-primary">folder</span>
-                            <div>
-                                <h3 class="font-bold">{{ $module->title }}</h3>
-                                <p class="text-sm text-slate-500">{{ $module->lessons->count() }} lessons</p>
-                            </div>
+                <!-- About -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                    <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 text-primary flex items-center justify-center">
+                            <span class="material-symbols-outlined">description</span>
                         </div>
-                        <span class="material-symbols-outlined text-slate-400 transition-transform module-chevron">expand_more</span>
+                        About This Course
+                    </h2>
+                    <div class="prose prose-slate max-w-none prose-img:rounded-xl">
+                        {!! nl2br($course->description) !!}
+                    </div>
+                </div>
+                
+                <!-- Curriculum -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                                <span class="material-symbols-outlined">menu_book</span>
+                            </div>
+                            Curriculum
+                        </h2>
+                        <span class="text-sm font-bold text-slate-500">{{ $course->modules->count() }} Modules • {{ $totalLessons }} Lessons</span>
                     </div>
                     
-                    <div class="module-content pl-4">
-                        @foreach($module->lessons as $index => $lesson)
-                        <div class="curriculum-item">
-                            <span class="font-bold text-slate-400 text-sm w-6">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                            <div class="curriculum-icon {{ $lesson->type ?? 'video' }}">
-                                @if(($lesson->type ?? 'video') === 'video')
-                                <span class="material-symbols-outlined">play_circle</span>
-                                @elseif(($lesson->type ?? 'video') === 'quiz')
-                                <span class="material-symbols-outlined">quiz</span>
-                                @else
-                                <span class="material-symbols-outlined">description</span>
-                                @endif
+                    <div class="space-y-4">
+                        @forelse($course->modules as $module)
+                        <div x-data="{ expanded: false }" class="border border-slate-200 rounded-xl overflow-hidden">
+                            <button @click="expanded = !expanded" class="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 transition-colors text-left">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-slate-400 transition-transform duration-200" :class="{ 'rotate-90': expanded }">chevron_right</span>
+                                    <span class="font-bold text-slate-900">{{ $module->title }}</span>
+                                </div>
+                                <span class="text-xs font-bold text-slate-400 uppercase">{{ $module->lessons->count() }} Lessons</span>
+                            </button>
+                            
+                            <div x-show="expanded" class="divide-y divide-slate-100 bg-white">
+                                @foreach($module->lessons as $lesson)
+                                <div class="p-4 pl-12 flex items-center justify-between group hover:bg-slate-50 transition-colors cursor-default">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-blue-50 group-hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-lg">
+                                                {{ ($lesson->type ?? 'video') === 'quiz' ? 'quiz' : 'play_circle' }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-slate-700 group-hover:text-slate-900">{{ $lesson->title }}</p>
+                                            @if($lesson->duration)
+                                            <p class="text-xs text-slate-400">{{ $lesson->duration }} min</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @if(!$isEnrolled && !$course->is_free)
+                                    <span class="material-symbols-outlined text-slate-300 text-sm">lock</span>
+                                    @endif
+                                </div>
+                                @endforeach
                             </div>
-                            <div class="flex-1">
-                                <p class="font-medium">{{ $lesson->title }}</p>
-                                @if($lesson->duration)
-                                <p class="text-sm text-slate-500">{{ $lesson->duration }} min</p>
-                                @endif
+                        </div>
+                        @empty
+                        <p class="text-slate-500 italic text-center py-4">No modules available yet.</p>
+                        @endforelse
+                    </div>
+                </div>
+                
+                <!-- Instructor -->
+                @if($course->instructor)
+                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+                     <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        Instructor
+                    </h2>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="shrink-0 group relative">
+                            @if($course->instructor->avatar)
+                                <img src="{{ asset('storage/'.$course->instructor->avatar) }}" alt="{{ $course->instructor->name }}" class="w-24 h-24 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform duration-300">
+                            @else
+                                <div class="w-24 h-24 rounded-2xl bg-slate-800 flex items-center justify-center text-white font-black text-2xl shadow-md group-hover:scale-105 transition-transform duration-300">
+                                    {{ strtoupper(substr($course->instructor->name, 0, 2)) }}
+                                </div>
+                            @endif
+                        </a>
+                        <div class="flex-1">
+                             <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="text-lg font-bold text-slate-900 hover:text-primary transition-colors mb-1 inline-block">
+                                {{ $course->instructor->name }}
+                            </a>
+                            <p class="text-slate-500 text-sm font-medium uppercase tracking-wider mb-4">{{ $course->instructor->role }} at DBIM</p>
+                            
+                            @if($course->instructor->bio)
+                            <p class="text-slate-600 leading-relaxed mb-4">{{ Str::limit($course->instructor->bio, 300) }}</p>
+                            @endif
+                            
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-1.5 text-slate-500 text-sm font-medium">
+                                    <span class="material-symbols-outlined text-amber-500 text-lg">star</span>
+                                    4.9 Instructor Rating
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-500 text-sm font-medium">
+                                    <span class="material-symbols-outlined text-primary text-lg">school</span>
+                                    1,203 Students
+                                </div>
                             </div>
-                            @if(!$isEnrolled && !$course->is_free)
-                            <span class="material-symbols-outlined text-slate-300">lock</span>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <!-- Right Column (Sticky Sidebar) -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 space-y-6">
+                    <!-- Enrollment Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden relative">
+                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-purple-500 to-pink-500"></div>
+                        
+                        <div class="mb-6">
+                            @if($course->price > 0)
+                            <div class="flex items-end gap-2 mb-1">
+                                <span class="text-4xl font-black text-slate-900">₦{{ number_format($course->price) }}</span>
+                            </div>
+                            <p class="text-slate-500 text-sm font-medium">One-time payment • Lifetime access</p>
+                            @else
+                            <div class="flex items-end gap-2 mb-1">
+                                <span class="text-4xl font-black text-emerald-600">Free</span>
+                            </div>
+                            <p class="text-slate-500 text-sm font-medium">Free enrollment • Full access</p>
                             @endif
                         </div>
-                        @endforeach
-                    </div>
-                </div>
-                @empty
-                <div class="text-center py-8 text-slate-500">
-                    <span class="material-symbols-outlined text-4xl mb-2">folder_off</span>
-                    <p>No curriculum available yet.</p>
-                </div>
-                @endforelse
-            </div>
-            
-            <!-- Instructor -->
-            @if($course->instructor)
-            <div class="course-card">
-                <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">person</span>
-                    Your Instructor
-                </h2>
-                <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="instructor-card">
-                    <div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">
-                        {{ strtoupper(substr($course->instructor->name, 0, 2)) }}
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-lg">{{ $course->instructor->name }}</h3>
-                        <p class="text-sm text-slate-500 capitalize">{{ $course->instructor->role }}</p>
-                        @if($course->instructor->bio)
-                        <p class="text-sm text-slate-600 mt-2">{{ Str::limit($course->instructor->bio, 100) }}</p>
+                        
+                        @if($isEnrolled)
+                        <a href="{{ route('student.course.learn', $course) }}" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl text-center shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-1 mb-4 flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined">play_circle</span>
+                            Continue Learning
+                        </a>
+                        @else
+                        <form action="{{ route('enrollment.enroll') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="course_id" value="{{ $course->id }}">
+                            <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-xl text-center shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 mb-4 flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">school</span>
+                                Enroll Now
+                            </button>
+                        </form>
                         @endif
+                        
+                        @if(!$isEnrolled)
+                        <p class="text-center text-xs text-slate-400 mb-6">30-Day Money-Back Guarantee</p>
+                        @endif
+                        
+                        <div class="space-y-4 pt-6 border-t border-slate-100">
+                             <h4 class="font-bold text-xs text-slate-900 uppercase tracking-widest mb-2">This course includes:</h4>
+                             <ul class="space-y-3">
+                                 <li class="flex items-center gap-3 text-sm text-slate-600">
+                                     <span class="material-symbols-outlined text-primary text-lg">videocam</span>
+                                     <span>{{ $totalLessons }} video lessons</span>
+                                 </li>
+                                 <li class="flex items-center gap-3 text-sm text-slate-600">
+                                     <span class="material-symbols-outlined text-primary text-lg">folder_zip</span>
+                                     <span>{{ $course->modules->count() }} downloadable resources</span>
+                                 </li>
+                                 <li class="flex items-center gap-3 text-sm text-slate-600">
+                                     <span class="material-symbols-outlined text-primary text-lg">all_inclusive</span>
+                                     <span>Full lifetime access</span>
+                                 </li>
+                                 <li class="flex items-center gap-3 text-sm text-slate-600">
+                                     <span class="material-symbols-outlined text-primary text-lg">devices</span>
+                                     <span>Access on mobile and TV</span>
+                                 </li>
+                                 <li class="flex items-center gap-3 text-sm text-slate-600">
+                                     <span class="material-symbols-outlined text-primary text-lg">card_membership</span>
+                                     <span>Certificate of completion</span>
+                                 </li>
+                             </ul>
+                        </div>
                     </div>
-                    <span class="material-symbols-outlined text-slate-400">arrow_forward</span>
-                </a>
-            </div>
-            @endif
-        </div>
-        
-        <!-- Right Column - Enroll Card -->
-        <div>
-            <div class="enroll-card">
-                <!-- Price -->
-                <div class="mb-6">
-                    @if($course->price > 0)
-                    <p class="price-tag">₦{{ number_format($course->price) }}</p>
-                    <p class="text-sm text-slate-500">One-time payment</p>
-                    @else
-                    <p class="price-tag free">Free</p>
-                    <p class="text-sm text-slate-500">No payment required</p>
+                    
+                    <!-- Related Courses -->
+                    @if($relatedCourses->count() > 0)
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 mb-4">Related Courses</h3>
+                        <div class="space-y-4">
+                            @foreach($relatedCourses as $related)
+                            <a href="{{ route('course.show', $related) }}" class="flex gap-4 group">
+                                <div class="w-20 h-16 rounded-lg bg-slate-100 overflow-hidden shrink-0">
+                                    <img src="{{ asset($related->thumbnail ?? 'assets/images/courses/default.jpg') }}" alt="{{ $related->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-slate-900 text-sm leading-tight truncate group-hover:text-primary transition-colors">{{ $related->title }}</h4>
+                                    <p class="text-xs text-slate-500 mt-1">{{ $related->category ?? 'General' }}</p>
+                                    <p class="text-xs font-bold text-primary mt-1">{{ $related->price > 0 ? '₦'.number_format($related->price) : 'Free' }}</p>
+                                </div>
+                            </a>
+                            @endforeach
+                        </div>
+                    </div>
                     @endif
                 </div>
-                
-                <!-- Enroll Button -->
-                @if($isEnrolled)
-                <a href="{{ route('student.course.learn', $course) }}" class="enroll-btn enrolled">
-                    <span class="material-symbols-outlined">play_circle</span>
-                    Continue Learning
-                </a>
-                @else
-                <form action="{{ route('enrollment.enroll') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="course_id" value="{{ $course->id }}">
-                    <button type="submit" class="enroll-btn">
-                        <span class="material-symbols-outlined">school</span>
-                        Enroll Now
-                    </button>
-                </form>
-                @endif
-                
-                <!-- Features -->
-                <div class="mt-6 pt-6 border-t border-slate-100">
-                    <h4 class="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4">What's Included</h4>
-                    
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined text-primary">folder</span>
-                        <span class="text-sm">{{ $course->modules->count() }} learning modules</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined text-primary">play_circle</span>
-                        <span class="text-sm">{{ $totalLessons }} video lessons</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined text-primary">all_inclusive</span>
-                        <span class="text-sm">Lifetime access</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined text-primary">devices</span>
-                        <span class="text-sm">Access on all devices</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="material-symbols-outlined text-primary">workspace_premium</span>
-                        <span class="text-sm">Certificate of completion</span>
-                    </div>
-                </div>
             </div>
-            
-            <!-- Related Courses -->
-            @if($relatedCourses->count() > 0)
-            <div class="course-card mt-6">
-                <h4 class="font-bold mb-4">Related Courses</h4>
-                
-                @foreach($relatedCourses as $related)
-                <a href="{{ route('course.show', $related) }}" class="related-course block">
-                    <img src="{{ asset($related->thumbnail ?? 'assets/images/courses/default.jpg') }}" 
-                         alt="{{ $related->title }}"
-                         class="related-thumb"
-                         onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop'">
-                    <div class="flex-1 min-w-0">
-                        <h5 class="font-bold text-sm truncate">{{ $related->title }}</h5>
-                        <p class="text-xs text-slate-500">{{ $related->instructor->name ?? 'DBIM' }}</p>
-                        <p class="text-sm font-bold text-primary mt-1">
-                            @if($related->price > 0)
-                            ₦{{ number_format($related->price) }}
-                            @else
-                            Free
-                            @endif
-                        </p>
-                    </div>
-                </a>
-                @endforeach
-            </div>
-            @endif
         </div>
     </div>
 </div>
 @endsection
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Module collapse/expand
-    const moduleHeaders = document.querySelectorAll('.module-header');
-    moduleHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            const chevron = this.querySelector('.module-chevron');
-            
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                chevron.style.transform = 'rotate(0deg)';
-            } else {
-                content.style.display = 'none';
-                chevron.style.transform = 'rotate(-90deg)';
-            }
-        });
-    });
-});
-</script>
+<!-- Alpine.js for interactivity -->
+<script src="//unpkg.com/alpinejs" defer></script>
 @endpush

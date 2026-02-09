@@ -142,7 +142,7 @@
             <div class="flex items-center justify-between mb-8">
                 <h1 id="lesson-title-display" style="font-size: 2.5rem; font-weight: 800; color: #1e293b; margin: 0; letter-spacing: -0.025em;">Course Overview</h1>
                 @if($course->instructor)
-                <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="flex items-center gap-3 px-4 py-2 bg-white border border-slate-100 rounded-xl text-xs font-black shadow-sm hover:bg-slate-50 transition-all">
+                <a href="{{ $course->instructor ? route('instructor.profile', $course->instructor->id) : '#' }}" class="flex items-center gap-3 px-4 py-2 bg-white border border-slate-100 rounded-xl text-xs font-black shadow-sm hover:bg-slate-50 transition-all {{ !$course->instructor ? 'pointer-events-none opacity-50' : '' }}">
                     <span class="material-symbols-outlined text-primary text-lg">person</span>
                     <span>By {{ explode(' ', $course->instructor->name)[0] }}</span>
                 </a>

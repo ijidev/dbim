@@ -39,29 +39,7 @@ class StudentController extends Controller
         return view('frontend.student.schedule');
     }
 
-    public function instructorProfile($id)
-    {
-        $instructor = \App\Models\User::where('role', 'instructor')->findOrFail($id);
-        $courses = \App\Models\Course::where('instructor_id', $id)->with('modules')->get();
-        
-        // Get total students enrolled in instructor's courses
-        $total_students = \App\Models\Enrollment::whereIn('course_id', $courses->pluck('id'))->count();
-        
-        // Get instructor's books if Book model exists
-        $books = collect();
-        if (class_exists(\App\Models\Book::class)) {
-            $books = \App\Models\Book::where('author_id', $id)->take(3)->get();
-        }
-        
-        // Get upcoming sessions/meetings hosted by instructor
-        $upcoming_sessions = \App\Models\Meeting::where('host_id', $id)
-            ->where('status', '!=', 'ended')
-            ->orderBy('scheduled_at', 'asc')
-            ->take(3)
-            ->get();
-        
-        return view('frontend.student.instructor_profile', compact('instructor', 'courses', 'total_students', 'books', 'upcoming_sessions'));
-    }
+
 
     public function learn($id)
     {
@@ -99,13 +77,19 @@ class StudentController extends Controller
         return view('frontend.student.catalog', compact('courses', 'my_enrollments', 'live_meeting'));
     }
 
-    public function courseShow($id)
+    public function courseShow($id, $slug = null)
     {
         $user = \Illuminate\Support\Facades\Auth::user();
         $course = \App\Models\Course::with(['instructor', 'modules.lessons'])->findOrFail($id);
         
+        // SEO Redirect
+        $expectedSlug = \Illuminate\Support\Str::slug($course->title);
+        if ($slug !== $expectedSlug) {
+            return redirect()->route('course.show', ['course' => $id, 'slug' => $expectedSlug]);
+        }
+        
         // Check if user is enrolled
-        $isEnrolled = $user->enrollments()->where('course_id', $id)->exists();
+        $isEnrolled = $user ? $user->enrollments()->where('course_id', $id)->exists() : false;
         
         // Get related courses (same instructor or category)
         $relatedCourses = \App\Models\Course::where('id', '!=', $id)
@@ -120,6 +104,8 @@ class StudentController extends Controller
         
         return view('frontend.student.course_show', compact('course', 'isEnrolled', 'relatedCourses', 'totalLessons'));
     }
+
+
 
     public function enroll(\Illuminate\Http\Request $request)
     {
@@ -179,5 +165,104 @@ class StudentController extends Controller
     {
         $meeting = \App\Models\Meeting::with('host')->findOrFail($id);
         return view('frontend.student.session_booked', compact('meeting'));
+    }
+    public function myLearning()
+    {
+        $user = auth()->user();
+        $enrollments = $user->enrollments()->with(['course.instructor', 'course.modules.lessons'])->get();
+        
+        $active_courses = $enrollments->where('progress', '<', 100);
+        $completed_courses = $enrollments->where('progress', '>=', 100);
+        
+        // Count total lessons completed across all courses (mock logic for now if not tracked finely)
+        //$certificates_count = $user->certificates()->count(); // Assuming Certificate model exists
+        $certificates_count = 0; // Placeholder
+
+        return view('frontend.student.my_learning', compact('active_courses', 'completed_courses', 'certificates_count'));
+    }
+    public function profile()
+    {
+        $user = auth()->user();
+        $enrollments = $user->enrollments()->with('course')->get();
+        return view('frontend.student.profile', compact('user', 'enrollments'));
+    }
+
+    public function settings()
+    {
+        return view('frontend.student.settings');
+    }
+
+    public function updateSettings(\Illuminate\Http\Request $request)
+    {
+        $user = auth()->user();
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'bio' => 'nullable|string|max:1000',
+            'avatar' => 'nullable|image|max:2048'
+        ]);
+
+        $user->name = $request->name;
+        $user->bio = $request->bio;
+
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($user->avatar) {
+                \Illuminate\Support\Facades\Storage::delete($user->avatar);
+            }
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function updatePassword(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        $user = auth()->user();
+
+        if (!\Illuminate\Support\Facades\Hash::check($request->current_password, $user->password)) {
+            return back()->with('error', 'Current password does not match.');
+        }
+
+        $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        $user->save();
+
+        return back()->with('success', 'Password updated successfully.');
+    }
+    public function instructorProfile($id)
+    {
+        $instructor = \App\Models\User::whereIn('role', ['instructor', 'admin'])->findOrFail($id);
+        $courses = \App\Models\Course::where('instructor_id', $id)->with('modules')->get();
+        
+        // Get total students enrolled in instructor's courses
+        $total_students = \App\Models\Enrollment::whereIn('course_id', $courses->pluck('id'))->count();
+        
+        // Get instructor's books if Book model exists
+        $books = collect();
+        if (class_exists(\App\Models\Book::class)) {
+            // Fetch books where author name matches instructor name
+            $books = \App\Models\Book::where('author', $instructor->name)
+                ->orWhere('author', 'like', '%' . $instructor->name . '%')
+                ->latest()
+                ->take(3)
+                ->get();
+        }
+        
+        // Get upcoming sessions/meetings hosted by instructor
+        $upcoming_sessions = \App\Models\Meeting::where('host_id', $id)
+            ->where('status', '!=', 'ended')
+            ->orderBy('scheduled_at', 'asc')
+            ->take(3)
+            ->get();
+        
+        return view('frontend.student.instructor_profile', compact('instructor', 'courses', 'total_students', 'books', 'upcoming_sessions'));
     }
 }

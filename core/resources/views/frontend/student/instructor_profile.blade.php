@@ -188,7 +188,7 @@
                 <span class="material-symbols-outlined">book_2</span>
                 Course Catalog
             </a>
-            <a href="{{ route('student.dashboard') }}" class="nav-item">
+            <a href="{{ route('student.learning') }}" class="nav-item">
                 <span class="material-symbols-outlined">school</span>
                 My Learning
             </a>
@@ -198,16 +198,16 @@
             </div>
         </nav>
         
-        <div class="p-4 border-t border-slate-200">
-            <div class="flex items-center gap-3 p-2">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">
+        <div class="p-6 border-t border-slate-100">
+            <a href="{{ route('student.profile') }}" class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-xl transition-colors group">
+                <div class="size-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs border border-primary/20 group-hover:bg-primary group-hover:text-white transition-colors">
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium truncate">{{ Auth::user()->name }}</p>
-                    <p class="text-xs text-slate-400">Member since {{ Auth::user()->created_at->format('Y') }}</p>
+                    <p class="text-sm font-black text-slate-900 group-hover:text-primary transition-colors truncate">{{ Auth::user()->name }}</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">View Profile</p>
                 </div>
-            </div>
+            </a>
         </div>
     </aside>
     
@@ -431,8 +431,8 @@
                         @foreach($books->take(2) as $book)
                         <div class="book-item">
                             <div class="w-16 h-20 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center text-gray-400 shadow-sm border border-gray-100">
-                                @if($book->cover)
-                                <img src="{{ asset($book->cover) }}" alt="{{ $book->title }}" class="w-full h-full object-cover rounded-lg">
+                                @if($book->cover_image)
+                                <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover rounded-lg">
                                 @else
                                 <span class="material-symbols-outlined text-2xl">book_2</span>
                                 @endif

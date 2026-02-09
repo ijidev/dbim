@@ -357,7 +357,7 @@
                                 @else
                                     <a href="{{ route('student.dashboard') }}" class="dropdown-item">🎓 My Courses</a>
                                 @endif
-                                <a href="{{ route('profile.show') ?? '#' }}" class="dropdown-item">👤 Profile</a>
+                                <a href="{{ route('student.profile') }}" class="dropdown-item">👤 Profile</a>
                                 <div style="height: 1px; background: #e2e8f0; margin: 0.5rem 0;"></div>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf

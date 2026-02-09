@@ -49,6 +49,13 @@
 @endpush
 
 @section('content')
+@php
+    $courses = $courses ?? collect();
+    $active_courses_count = $active_courses_count ?? 0;
+    $total_students_count = $total_students_count ?? 0;
+    $upcoming_meetings = $upcoming_meetings ?? collect();
+    $recent_enrollments = $recent_enrollments ?? collect();
+@endphp
 <div class="flex bg-[#f8fafc] min-h-screen">
     <!-- Sidebar -->
     <aside class="hidden lg:flex flex-col instructor-sidebar">

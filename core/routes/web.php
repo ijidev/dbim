@@ -97,7 +97,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/academy/dashboard', [App\Http\Controllers\StudentController::class, 'index'])->name('student.dashboard');
     Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 'schedule'])->name('student.schedule');
     Route::get('/academy/catalog', [App\Http\Controllers\StudentController::class, 'catalog'])->name('student.catalog');
-    Route::get('/course/{course}', [App\Http\Controllers\StudentController::class, 'courseShow'])->name('course.show');
+    Route::get('/course/{course}/{slug?}', [App\Http\Controllers\StudentController::class, 'courseShow'])->name('course.show');
+    Route::get('/my-learning', [App\Http\Controllers\StudentController::class, 'myLearning'])->name('student.learning');
+    Route::get('/profile', [App\Http\Controllers\StudentController::class, 'profile'])->name('student.profile');
+    Route::get('/settings', [App\Http\Controllers\StudentController::class, 'settings'])->name('student.settings');
+    Route::put('/settings/update', [App\Http\Controllers\StudentController::class, 'updateSettings'])->name('student.settings.update');
+    Route::put('/settings/password', [App\Http\Controllers\StudentController::class, 'updatePassword'])->name('student.settings.password');
     Route::get('/course/{course}/learn', [App\Http\Controllers\StudentController::class, 'learn'])->name('student.course.learn');
     
     // Meeting Routes

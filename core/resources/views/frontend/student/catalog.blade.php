@@ -273,7 +273,7 @@
                 <span class="material-symbols-outlined text-xl">book_2</span>
                 Course Catalog
             </a>
-            <a href="{{ route('student.dashboard') }}" class="nav-item">
+            <a href="{{ route('student.learning') }}" class="nav-item">
                 <span class="material-symbols-outlined text-xl">school</span>
                 My Learning
             </a>
@@ -283,16 +283,16 @@
             </a>
         </nav>
         
-        <div class="p-4 border-t border-slate-200">
-            <div class="flex items-center gap-3 p-2">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">
+        <div class="p-6 border-t border-slate-100">
+            <a href="{{ route('student.profile') }}" class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-xl transition-colors group">
+                <div class="size-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs border border-primary/20 group-hover:bg-primary group-hover:text-white transition-colors">
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium truncate">{{ Auth::user()->name }}</p>
-                    <p class="text-xs text-slate-500 capitalize">{{ Auth::user()->role }}</p>
+                    <p class="text-sm font-black text-slate-900 group-hover:text-primary transition-colors truncate">{{ Auth::user()->name }}</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">View Profile</p>
                 </div>
-            </div>
+            </a>
         </div>
     </aside>
     
@@ -350,7 +350,7 @@
             <section>
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl font-bold">My Courses</h2>
-                    <a href="{{ route('student.dashboard') }}" class="text-primary text-sm font-semibold hover:underline">View All</a>
+                    <a href="{{ route('student.learning') }}" class="text-primary text-sm font-semibold hover:underline">View All</a>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

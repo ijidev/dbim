@@ -29,7 +29,7 @@
                 <span class="material-symbols-outlined">book_2</span>
                 <span>Course Catalog</span>
             </a>
-            <a href="{{ route('student.dashboard') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
+            <a href="{{ route('student.learning') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
                 <span class="material-symbols-outlined">school</span>
                 <span>My Learning</span>
             </a>
@@ -39,15 +39,15 @@
             </a>
         </nav>
         <div class="p-6 border-t border-slate-100">
-            <div class="flex items-center gap-4 p-2">
-                <div class="size-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs border border-primary/20">
+            <a href="{{ route('student.profile') }}" class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-xl transition-colors group">
+                <div class="size-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs border border-primary/20 group-hover:bg-primary group-hover:text-white transition-colors">
                     {{ substr(Auth::user()->name, 0, 2) }}
                 </div>
                 <div class="flex flex-col">
-                    <p class="text-sm font-black text-slate-900">{{ Auth::user()->name }}</p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Student</p>
+                    <p class="text-sm font-black text-slate-900 group-hover:text-primary transition-colors">{{ Auth::user()->name }}</p>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">View Profile</p>
                 </div>
-            </div>
+            </a>
         </div>
     </aside>
 
@@ -233,7 +233,7 @@
                         <a href="{{ route('course.show', $course->id) }}">{{ $course->title }}</a>
                     </h4>
                     <div class="flex items-center gap-3">
-                        <a href="{{ route('instructor.profile', $course->instructor->id ?? 0) }}" class="text-xs font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest hover:text-primary transition-colors">
+                        <a href="{{ $course->instructor ? route('instructor.profile', $course->instructor->id) : '#' }}" class="text-xs font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest hover:text-primary transition-colors {{ !$course->instructor ? 'pointer-events-none opacity-50' : '' }}">
                             <span class="material-symbols-outlined text-base">person</span> {{ $course->instructor->name ?? 'DBIM Faculty' }}
                         </a>
                         <span class="text-slate-300">•</span>

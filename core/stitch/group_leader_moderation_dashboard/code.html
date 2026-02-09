@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Group Leader Moderation Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="w-72 bg-[#111318] border-r border-[#282e39] flex flex-col justify-between shrink-0">
+<div class="p-6 flex flex-col gap-8">
+<!-- Profile Header -->
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="Profile picture of the Group Leader" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrbBzczm-wrBb3eZQDeZRY3gS102YTVaHxV-AIfcaVwNV0mqKy7eQvnYXqhb3vpgj11lp5jTz7mh_I4jhLTNECg2WEC5zd8DLVSc7QuSIjayndAJPtHuu6IQqrPtjcL9rjJcet1TXKxWqHdYPwGOkMZxImvWZ_Krpvsiogsuk4k_c792SVst6PbwghvMvp6Y359VxIAs7Uncq6O4kbHpLFiGsxxx4YjmDJlhcuJ604DTA4bwbRwHgKJuubhyi1baYOosuHDWWS7bzE');"></div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-semibold leading-tight">Admin Panel</h1>
+<p class="text-[#9da6b9] text-xs font-normal">Group Leader</p>
+</div>
+</div>
+<!-- Navigation Groups -->
+<nav class="flex flex-col gap-1">
+<p class="text-[#9da6b9] text-[10px] font-bold uppercase tracking-wider mb-2 px-3">Groups</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="text-sm font-medium">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#282e39] text-white" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1">groups</span>
+<span class="text-sm font-medium">Men's Fellowship</span>
+<span class="ml-auto bg-primary text-[10px] px-1.5 py-0.5 rounded-full">3</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">diversity_3</span>
+<span class="text-sm font-medium">Young Adults</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+<span class="text-sm font-medium">Marriage Ministry</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">public</span>
+<span class="text-sm font-medium">Outreach</span>
+</a>
+</nav>
+<nav class="flex flex-col gap-1">
+<p class="text-[#9da6b9] text-[10px] font-bold uppercase tracking-wider mb-2 px-3">Management</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+<span class="text-sm font-medium">Permissions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">analytics</span>
+<span class="text-sm font-medium">Activity Logs</span>
+</a>
+</nav>
+</div>
+<div class="p-6 border-t border-[#282e39]">
+<button class="w-full bg-primary hover:bg-primary/90 text-white text-sm font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    Create New Group
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-[#282e39] flex items-center justify-between px-8 bg-white dark:bg-background-dark/50 backdrop-blur-md z-10">
+<div class="flex items-center gap-6 flex-1">
+<h2 class="text-lg font-bold tracking-tight">Moderation Dashboard</h2>
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-slate-100 dark:bg-[#282e39] border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all" placeholder="Search members or content..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-lg bg-slate-100 dark:bg-[#282e39] text-slate-600 dark:text-slate-300 relative">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#282e39]"></span>
+</button>
+<button class="p-2 rounded-lg bg-slate-100 dark:bg-[#282e39] text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+</button>
+<div class="size-9 rounded-lg bg-primary/20 flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</div>
+</header>
+<!-- Content Scroll Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Page Title & Stats -->
+<div class="flex flex-col gap-6">
+<div class="flex justify-between items-end">
+<div>
+<h3 class="text-3xl font-black text-slate-900 dark:text-white">Men's Fellowship</h3>
+<p class="text-slate-500 dark:text-[#9da6b9] mt-1">Community Oversight &amp; Resource Management</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-slate-100 dark:bg-[#282e39] text-slate-900 dark:text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-80">Group Settings</button>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90">Invite Members</button>
+</div>
+</div>
+<!-- Stat Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white dark:bg-[#111318] p-6 rounded-xl border border-slate-200 dark:border-[#282e39] flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium uppercase tracking-wider">Total Members</span>
+<span class="material-symbols-outlined text-primary">group</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold">1,284</span>
+<span class="text-emerald-500 text-sm font-bold flex items-center mb-1"><span class="material-symbols-outlined text-[16px]">arrow_upward</span>5%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#111318] p-6 rounded-xl border border-slate-200 dark:border-[#282e39] flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium uppercase tracking-wider">Pending Comments</span>
+<span class="material-symbols-outlined text-amber-500">pending_actions</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold">12</span>
+<span class="text-slate-400 text-sm font-normal mb-1">— New today</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#111318] p-6 rounded-xl border border-slate-200 dark:border-[#282e39] flex flex-col gap-2 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1 h-full bg-red-500"></div>
+<div class="flex justify-between items-start">
+<span class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium uppercase tracking-wider">Flagged Insights</span>
+<span class="material-symbols-outlined text-red-500">flag</span>
+</div>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-bold">3</span>
+<span class="text-red-500 text-sm font-bold flex items-center mb-1"><span class="material-symbols-outlined text-[16px]">priority_high</span>Urgent</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Tabs & View -->
+<div class="space-y-6">
+<div class="border-b border-slate-200 dark:border-[#282e39]">
+<nav class="flex gap-8">
+<button class="pb-4 border-b-2 border-primary text-primary font-bold text-sm">Discussion Feed</button>
+<button class="pb-4 border-b-2 border-transparent text-slate-500 dark:text-[#9da6b9] font-bold text-sm hover:text-slate-700 dark:hover:text-white transition-all">Member Management</button>
+<button class="pb-4 border-b-2 border-transparent text-slate-500 dark:text-[#9da6b9] font-bold text-sm hover:text-slate-700 dark:hover:text-white transition-all">Reading Goals</button>
+<button class="pb-4 border-b-2 border-transparent text-slate-500 dark:text-[#9da6b9] font-bold text-sm hover:text-slate-700 dark:hover:text-white transition-all">Shared Files</button>
+</nav>
+</div>
+<div class="grid grid-cols-12 gap-6">
+<!-- Left: Feed -->
+<div class="col-span-12 lg:col-span-8 space-y-4">
+<!-- Feed Item 1 (Flagged) -->
+<div class="bg-white dark:bg-[#111318] rounded-xl border border-red-500/30 p-5 space-y-4 relative">
+<div class="flex items-start justify-between">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Avatar of user Marcus T." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtUBed7BdYwE40gFd5yYXRzVDm8j6lew3qcu1h7h1C1pYvRG_gtxxWbboIqxWENKe3qkhalbRASq9Ngki5N_6b6yrUJdLE0OubblWGn1RWN0kOFh5yf8CaKj2O03-IBYZvsBBaWtn2-cLkyXhhhII-mOa4N0MqKV8CnyqTg6KY9Dv5doYPBn7EJv_pnen3mQXUKMPsui3X30fhBCKSlJR3Wn2GA6jT443eJGC_UM2IikttmC2HOvs7MR1nwMdjxFNsuA3daftygJRC');"></div>
+<div>
+<p class="font-bold text-sm">Marcus T. <span class="text-xs font-normal text-slate-500 ml-2">2h ago</span></p>
+<p class="text-xs text-red-500 font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">report</span> Flagged for "Inappropriate Content"
+                                            </p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-[#282e39] rounded-lg text-slate-400" title="Keep Post"><span class="material-symbols-outlined text-[20px]">check_circle</span></button>
+<button class="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-red-500" title="Delete Post"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+<p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                    I don't agree with the interpretation shared in the video. It seems like the speaker is ignoring the historical context of the text in Genesis 2... [Truncated for brevity]
+                                </p>
+<div class="flex items-center gap-4 pt-2 border-t border-slate-100 dark:border-[#282e39]">
+<button class="flex items-center gap-1.5 text-xs font-bold text-primary hover:underline">
+<span class="material-symbols-outlined text-[18px]">reply</span> Reply as Leader
+                                    </button>
+<button class="flex items-center gap-1.5 text-xs font-bold text-slate-400">
+<span class="material-symbols-outlined text-[18px]">push_pin</span> Pin to Top
+                                    </button>
+</div>
+</div>
+<!-- Feed Item 2 -->
+<div class="bg-white dark:bg-[#111318] rounded-xl border border-slate-200 dark:border-[#282e39] p-5 space-y-4">
+<div class="flex items-start justify-between">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Avatar of user Daniel S." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBGRsqACANBLdtLv1hx3KLoWpyM44HiOMb0lbndBqglCMojb-7Mp7FqmOJMVfvdZG6h6la6vWfKYy88uQxCQw76cltHNV5eKJSNVpH7Zvv9YiH6L8hPluPeM_pjxSl1Vl7AOFMgE4uIpOJgVe2NmkLO0kPkwjlW8f2B0qEY2kurfOO2UGXaCy-xggUenhdjhsI3JCGP1_85eOSqbVxnbBACxkdnvbcCyBe-j7atJH4JzVkGmlNbQ5RrDAXCFx__L1T2CTmby20Vpa5V');"></div>
+<div>
+<p class="font-bold text-sm">Daniel S. <span class="text-xs font-normal text-slate-500 ml-2">4h ago</span></p>
+<p class="text-xs text-primary font-semibold mt-0.5">Scripture Insight</p>
+</div>
+</div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-[#282e39] rounded-lg text-slate-400"><span class="material-symbols-outlined text-[20px]">more_horiz</span></button>
+</div>
+<p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+                                    Really enjoyed the reading this week. It's fascinating how the concept of 'stewardship' evolves from Genesis to the New Testament. How are you guys applying this at work?
+                                </p>
+<div class="flex items-center gap-4 pt-2 border-t border-slate-100 dark:border-[#282e39]">
+<button class="flex items-center gap-1.5 text-xs font-bold text-primary hover:underline">
+<span class="material-symbols-outlined text-[18px]">reply</span> Reply as Leader
+                                    </button>
+<button class="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-amber-500">
+<span class="material-symbols-outlined text-[18px]">push_pin</span> Pin to Top
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Right: Widgets -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Reading Goal Widget -->
+<div class="bg-primary text-white rounded-xl p-6 space-y-4 shadow-lg shadow-primary/20">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-base flex items-center gap-2">
+<span class="material-symbols-outlined">auto_stories</span> Current Goal
+                                    </h4>
+<button class="size-8 rounded-lg bg-white/20 flex items-center justify-center hover:bg-white/30"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+<div>
+<p class="text-xs text-blue-200 uppercase font-bold tracking-widest">Scripture Focus</p>
+<p class="text-lg font-bold">Exodus 12 - 18</p>
+</div>
+<div>
+<p class="text-xs text-blue-200 uppercase font-bold tracking-widest">Deadline</p>
+<p class="text-base font-medium">October 24, 2023</p>
+</div>
+<div class="bg-white/10 rounded-lg p-3">
+<div class="flex justify-between text-xs font-bold mb-1.5">
+<span>Group Progress</span>
+<span>64%</span>
+</div>
+<div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
+<div class="bg-white h-full w-[64%]"></div>
+</div>
+</div>
+</div>
+<!-- Join Requests -->
+<div class="bg-white dark:bg-[#111318] rounded-xl border border-slate-200 dark:border-[#282e39] p-5 space-y-4">
+<div class="flex items-center justify-between mb-2">
+<h4 class="font-bold text-sm">Join Requests</h4>
+<span class="text-xs text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-full">2 New</span>
+</div>
+<div class="space-y-4">
+<!-- Request Item -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-300 bg-cover bg-center" data-alt="Portrait of applicant Robert L." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCf0XR5S2bDnsX-SyTHLFK84kLqkMh7MRcLH4PjWxnjVo5E_bbg-w9Ra4UuKfAUHNjM3elc03SsltGR79z2XiuqzJdSflJrXs3m6Ota6LiHEhdSFoBFs8MIiei_v7O0zV1MrFkgByzsR6-SpYZWNAIKH_e0uhrkxDKoDETB8lu27ml2dm76VTb5xj8C0r0nA3dj-SL7OnvYbymXEZjEsjHcfX4CfUh5kjtNEZs8YWTzhX_e6UqNRzjGHd2cNplE8Az_vo8_G9llCPpW');"></div>
+<div>
+<p class="text-xs font-bold">Robert L.</p>
+<p class="text-[10px] text-slate-500">20m ago</p>
+</div>
+</div>
+<div class="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="size-7 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all"><span class="material-symbols-outlined text-[16px]">check</span></button>
+<button class="size-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</div>
+</div>
+<!-- Request Item -->
+<div class="flex items-center justify-between group border-t border-slate-100 dark:border-[#282e39] pt-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-300 bg-cover bg-center" data-alt="Portrait of applicant Sarah K." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBg4eHOcNpndLpHe6fQ3XCeugSw82bmInpbPQ385gTHcBAsjDmWJ-gNI03SBqM_Y1T-d0IJ3NnIf_gRUKUqMogTHg7MLo3fcoCDQIyJZ2aI1b1DVGkyEz546bH0XverijbEBvFK7g0pNF0ZsNRlgGHf1emh-WwDLXaETUIo0bA9yxRm5UnPvdhwYc6uEOllBwWY_sJcn51GA04t9fdVOrmGA1KSR3BehlxomaP_MA4bFkRfT2IGswvtyoCeeMNL5SBtkHMrh1wRzcdp');"></div>
+<div>
+<p class="text-xs font-bold">Sarah K.</p>
+<p class="text-[10px] text-slate-500">1h ago</p>
+</div>
+</div>
+<div class="flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="size-7 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all"><span class="material-symbols-outlined text-[16px]">check</span></button>
+<button class="size-7 rounded-lg bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"><span class="material-symbols-outlined text-[16px]">close</span></button>
+</div>
+</div>
+</div>
+<button class="w-full text-center text-xs font-bold text-slate-400 hover:text-primary transition-colors mt-2">View All Requests</button>
+</div>
+<!-- Group Goal Setter -->
+<div class="bg-white dark:bg-[#111318] rounded-xl border border-slate-200 dark:border-[#282e39] p-5 space-y-4">
+<h4 class="font-bold text-sm">Update Reading Goal</h4>
+<div class="space-y-3">
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-slate-400 px-1">Chapters</label>
+<input class="w-full bg-slate-100 dark:bg-[#282e39] border-none rounded-lg text-sm px-3 py-2 focus:ring-1 focus:ring-primary" placeholder="e.g. Genesis 1-10" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] uppercase font-bold text-slate-400 px-1">Completion Date</label>
+<div class="relative">
+<input class="w-full bg-slate-100 dark:bg-[#282e39] border-none rounded-lg text-sm px-3 py-2 focus:ring-1 focus:ring-primary" type="date"/>
+</div>
+</div>
+<button class="w-full bg-slate-900 dark:bg-primary text-white text-xs font-bold py-2.5 rounded-lg mt-2">Broadcast Goal to Group</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

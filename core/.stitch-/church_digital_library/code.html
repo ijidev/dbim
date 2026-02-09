@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Church Digital Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#FAF9F6", // Ivory tone
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Newsreader', serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#2D2D2D] dark:text-gray-100 font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 px-6 lg:px-20 py-4 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+<h2 class="text-[#111318] dark:text-white text-xl font-bold leading-tight tracking-tight italic">Church Digital Library</h2>
+</div>
+<div class="hidden md:flex items-center gap-8 ml-4">
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Library</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">My Bookshelf</a>
+<a class="text-[#111318] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Collections</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center rounded-full h-10 w-10 bg-gray-100 dark:bg-gray-800 text-[#111318] dark:text-white hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-full h-10 w-10 bg-gray-100 dark:bg-gray-800 text-[#111318] dark:text-white hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+</div>
+<div class="h-10 w-10 bg-primary/10 rounded-full border-2 border-primary/20 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS64WFOemPk1_Jsc1w4zuIb8NDZvf3aruOpfPkr8qj9zcAZ3tvww7iH0kUU8GRnDe-UVvueRBAlErpccNltKk1zuzIg9R7DgbRMPB0Ac-Un0sg0Xmf3_Yd_-hIjr61u-DxkBn6qhGXkGcxQEoxuzitA8AsBNXvAiNmTMpU8q6V1M9zEKrx9STiIx_zkuxdySTNHiWK3AWjw21FMafM48JA6zZfDoNSbc379JMNtHHp_gNwPoxLR5_8xBtD37Xownr02stGntckneSO"/>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1440px] mx-auto w-full px-6 lg:px-20 py-8">
+<!-- Search & Filters -->
+<div class="flex flex-col gap-6 mb-10">
+<div class="max-w-3xl w-full">
+<label class="relative block group">
+<span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="block w-full h-14 pl-12 pr-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:italic placeholder:text-gray-400 text-lg" placeholder="Search for theology, devotionals, or sacred texts..." type="text"/>
+</label>
+</div>
+<div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+<button class="px-5 py-2 rounded-full bg-primary text-white font-medium text-sm shadow-md">All Works</button>
+<button class="px-5 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:border-primary hover:text-primary transition-all">Theology</button>
+<button class="px-5 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:border-primary hover:text-primary transition-all">Devotionals</button>
+<button class="px-5 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:border-primary hover:text-primary transition-all">Church History</button>
+<button class="px-5 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:border-primary hover:text-primary transition-all">Liturgy</button>
+<button class="px-5 py-2 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium text-sm hover:border-primary hover:text-primary transition-all">Biographies</button>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-12">
+<!-- Main Library Grid -->
+<div class="flex-1">
+<div class="flex items-baseline justify-between mb-8 border-b border-gray-200 dark:border-gray-800 pb-4">
+<h3 class="text-3xl font-bold tracking-tight italic">Spiritual Literature</h3>
+<span class="text-sm text-gray-500 font-medium">1,248 volumes available</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+<!-- Book Card 1 -->
+<div class="group flex flex-col gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-md">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover of The Confessions by St Augustine" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZbLWWbT-tM2CehkQ57AK3lbrxldAtdrA5cwWiYodUVu97LYOSpppuUWT9-vznzeLR5gFLuerCLeX1Ufnf1HhLbkNufSdhV0irkD6bzEJboT14ZqAhpB-Izrw0XzT16HoXsJIE3BTc2iXRkXAX-gcKedGgocDCxsyJkhhW6mKowOTWCQrFu8HGssBKK95B68SerXJ9sME41Ah7kMb7ULtGOXu32sQLDQKR8FYFkuIphHVOCfZZRCX-BciB34OpRXXduvMky7-GhQ4A"/>
+</div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary font-bold py-2 px-6 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Preview</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-bold leading-tight line-clamp-1">The Confessions</h4>
+<p class="text-primary text-sm font-medium italic mb-2">St. Augustine</p>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                    Read Now
+                                </button>
+</div>
+</div>
+<!-- Book Card 2 -->
+<div class="group flex flex-col gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-md">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover of The Practice of the Presence of God" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoM3TPdLs5oWbAPBR_h4fsYlDJS1LnnVJJs8nk8tXn62L3FWAb6fxPtTHrUYPvOASwBI0JcPW6hl0xIFui5D-_rOkioRAYZaatqnQ7QMC660HR62syu2cj-EJloCEwisAk_j7PxLTK3nT4hL69eGiU_Wo8pQhANfDca8_QMkfyTLBzqRIfMSQu4_UGIfOlFznqGOLXYBDG33HS3zOk0D91VGPY8ybFOeW19ty3iDFLxNsCqEUfnoklPLPeDiySQDVFfi35FOBg_Ykd"/>
+</div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary font-bold py-2 px-6 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Preview</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-bold leading-tight line-clamp-1">The Practice of the Presence of God</h4>
+<p class="text-primary text-sm font-medium italic mb-2">Brother Lawrence</p>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                    Read Now
+                                </button>
+</div>
+</div>
+<!-- Book Card 3 -->
+<div class="group flex flex-col gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-md">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover of Orthodoxy by GK Chesterton" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHqYn_9lY-SngytD8CoxdnvJjhAC2ZunV5KTMP3zF_NtSQmflSqAK3f__hGzOJkNf7O_VICDUz7PxaaTW6YyER3c7BWRvtlErtb0pzQWuNdchbhAjogmyoF0e0hMHlscyVav65Zfh68qobBhHbeehVNc6q57zmbgrbZGOqgbFJj0iC1DzZtMoUbzutuBD0CzPcZyZTQr7u2iI7D77_buEYEMKtSEc-Xct4tPTUN_dBRNG0vxGV1pH2ziWIjtRV9vfuGgcJpcpVp7wB"/>
+</div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary font-bold py-2 px-6 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Preview</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-bold leading-tight line-clamp-1">Orthodoxy</h4>
+<p class="text-primary text-sm font-medium italic mb-2">G.K. Chesterton</p>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                    Read Now
+                                </button>
+</div>
+</div>
+<!-- Book Card 4 -->
+<div class="group flex flex-col gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-md">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover of Mere Christianity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxoqmdb8yw0DaJve0ubs7rQd9td6nEH4eoNZY8NxKWtXDkrTiT73QMijzvXLvHfLYs0amGZAoHHIoY9H7Myi1d8aFj5UwWmgzJqteSBNOnoKw9RsTbmE2X7apJ1fKGvizpE-wqvSn1e8_-Xsbo2P7nMqb6ob-c0WP8qQbHvvNnGpzR5nwXc3Z4GLRUsJkCPkT5kQ8ztz7KqfmE1LAmXU_FaP6inadg5vk8mbfR7vFcejM9IXfZ7eTKUUTwwwluTa1JCKfGUOlyZp1_"/>
+</div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary font-bold py-2 px-6 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Preview</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-bold leading-tight line-clamp-1">Mere Christianity</h4>
+<p class="text-primary text-sm font-medium italic mb-2">C.S. Lewis</p>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                    Read Now
+                                </button>
+</div>
+</div>
+<!-- Book Card 5 -->
+<div class="group flex flex-col gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-md">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover of The Imitation of Christ" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr1xsYP_KzWX95vGOYJGWhX9LqxlkEV0kUQypMVCb6lRLh3_o_TTmdU1zrMKw6LNO09Gmjf9SS4uuancTfN-6uJJhlyZugcubTl-tN8zWECInM-cwg2GB7qSAXUS5CVChvwewj-Y7c6Rj9SY7ScbFA4muvKLoPnS0HM8Psa1uocpfItj5SE7H4VKAqkGdFNxjLTDqOqLIWHmdTJJLHjeYfkFLRvdhY-E3PCJuBvtLsgJrZgdeEMzVBw1G1I0Utl89hjv9Yd7wPXIhP"/>
+</div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary font-bold py-2 px-6 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Preview</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-bold leading-tight line-clamp-1">The Imitation of Christ</h4>
+<p class="text-primary text-sm font-medium italic mb-2">Thomas à Kempis</p>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                    Read Now
+                                </button>
+</div>
+</div>
+<!-- Book Card 6 -->
+<div class="group flex flex-col gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-gray-100 dark:hover:border-gray-700">
+<div class="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-md">
+<div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover of City of God" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuY4swnDWsO9-j_iJ5d6f0G9WasTYEE_US76Rl5CJEKMdEj0N4UtJA56srMZCt9-rdATzlXpgY7tdkygbkQpl3TSua7fFozdiI8uTcSQJ_LJwPVEzC1pHtkKqmW87g_hdgBwr_kpB_EUEeGkQOXWxQemLRA6M3L386AuDYoTVz5pJ1JAOHZ6F0CoyklSc-ZExLGTFuvFPZX3WWlVndbCU_o4u9W77nVHtpVjSaU4uZ9s-vIf73_YYUqrDn5sx_-LEGjK6O3GZ6U2C7"/>
+</div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+<button class="bg-white text-primary font-bold py-2 px-6 rounded-lg shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">Preview</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-bold leading-tight line-clamp-1">City of God</h4>
+<p class="text-primary text-sm font-medium italic mb-2">St. Augustine</p>
+<button class="w-full py-2 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                    Read Now
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar -->
+<aside class="w-full lg:w-80 shrink-0 flex flex-col gap-8">
+<!-- Your Sanctuary Header -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">bookmark_heart</span>
+<h3 class="text-xl font-bold italic">Your Sanctuary</h3>
+</div>
+<div class="space-y-6">
+<!-- Section: Recently Read -->
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Recently Read</h4>
+<div class="flex gap-4 group cursor-pointer">
+<div class="w-16 h-20 bg-gray-200 rounded-lg overflow-hidden shadow-sm flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cover thumbnail of Orthodoxy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM_ZfilJ72LQF4kwplcnndoo-32wFdM6KCrqycxWWpq7390ClP80x9YdQkgiiwy1Yg3jEh6QBE7K3bBW-Q9DRVkr808JgEE3IIAVaaEfU1FQb0_WlSpIgXImbs4Uv4sj8CdsYZdWQhlm20OMSafZy3ghb_OnWHlI6gRFFPTdytA1rPspN9rx1n1VxqEtBa55csu1H2UrAl8KIwzXx4T2pdnG-VsNU-AMndMmfcqIQ6tYx6Wio4NFGO7SaZCs11XFzKqulusDRwEFlu"/>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-sm font-bold line-clamp-1 group-hover:text-primary transition-colors">Orthodoxy</p>
+<p class="text-xs text-gray-500 italic">42% complete</p>
+<div class="w-full h-1 bg-gray-100 dark:bg-gray-700 mt-2 rounded-full">
+<div class="bg-primary h-full w-[42%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Recommended -->
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Recommended for You</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-4 group cursor-pointer p-2 -ml-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<div class="w-12 h-16 bg-gray-200 rounded-md overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cover thumbnail for The Everlasting Man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi5TW7T5ldt6lPhBqA8rtGreh1EfaSJBbtInodkb4oIoUvaqv2BLeBS1pvE69F-y6Qb0uC5bFiB5tJiVXQm1s6JDU3rhayU3e6IHJZmp5CBWZlGzLX90GqySPTQ-r2q-CUfskS0H3xw01juhdQCy5X19vLC3tCJWmThw_X4Bj0wlwGkY0RYU_ilO52bVfIgvErD2AqKmnOpBbAk6SNcGC_hAfcKwjgnBx6HyImFWwo7PdH4ouSo7fRwjngo3XsLKLlnCl9uM9nt21g"/>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold line-clamp-1">The Everlasting Man</p>
+<p class="text-xs text-gray-500 italic">G.K. Chesterton</p>
+</div>
+</div>
+<div class="flex items-center gap-4 group cursor-pointer p-2 -ml-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<div class="w-12 h-16 bg-gray-200 rounded-md overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cover thumbnail for Pensees" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1Ml3z6Le7imCCNEXyXHDDnmSxMunT-i2fO3dAbs6NP3ab3fbu4uYA4nIyee--15G6ez-0Cg2mz-wgWwrstgeM_N4hGNQidxq6sXMW0VW_iCpa1TnJetklz9qgSK66Ff7CvPA6FzRgmIY-27eEtXk0jTbsd5g1BoIngz1ia48ZvMuCGM4EKrzd0RJrE05GrT5q5DG5spj7_a_C_tvoXJLeC8bF6iUFxGiWkhhNyKAZ8vl8ryuHGc_nMAm5QXiOIxcRjAANPRLsLunJ"/>
+</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold line-clamp-1">Pensées</p>
+<p class="text-xs text-gray-500 italic">Blaise Pascal</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl transition-colors text-sm">
+                            View All Reading History
+                        </button>
+</div>
+<!-- Quote of the day -->
+<div class="p-6 bg-primary text-white rounded-2xl shadow-lg relative overflow-hidden">
+<span class="material-symbols-outlined absolute -top-2 -right-2 text-7xl opacity-10 rotate-12">format_quote</span>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-4 opacity-80">Wisdom of the Day</h4>
+<p class="text-lg italic font-medium leading-relaxed mb-4">"Thou hast made us for thyself, O Lord, and our heart is restless until it finds its rest in thee."</p>
+<p class="text-sm font-bold opacity-90">— St. Augustine</p>
+</div>
+</aside>
+</div>
+</main>
+<footer class="bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 px-6 lg:px-20 py-10 mt-12">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3 opacity-60 grayscale hover:grayscale-0 transition-all cursor-default">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-sm font-bold italic">Church Digital Library © 2024</span>
+</div>
+<div class="flex gap-8 text-sm text-gray-500 font-medium">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Grace</a>
+<a class="hover:text-primary transition-colors" href="#">Archive Access</a>
+<a class="hover:text-primary transition-colors" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

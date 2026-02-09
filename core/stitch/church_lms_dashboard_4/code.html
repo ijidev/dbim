@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Instructor Profile - Grace LMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "accent-gold": "#b8860b",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "navy-deep": "#0a192f"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .nav-tab-active {
+            @apply border-primary text-primary border-b-2;
+        }
+        .hero-overlay {
+            background: linear-gradient(to top, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex flex-col border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a1f2e] h-full hidden lg:flex">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">church</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-tight">Grace LMS</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-normal uppercase tracking-wider">Spiritual Growth</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">book_2</span>
+<p class="text-sm font-medium">Course Catalog</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">school</span>
+<p class="text-sm font-medium">My Learning</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium">Instructors</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer transition-colors">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</div>
+</nav>
+<div class="p-4 border-t border-[#dcdfe5] dark:border-gray-800">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-fDxnGtmktuFJP2xOjuGkiRJon5qtJlwiQ9tsWYIW4epzZ1I3oYvpcUSAMNeZ47TNgEZO4XE0aKB_ugTbWd8_TG8ON8aC7dcUKIQzLmVJ5SyaG0cng7-Kows7Htox9-7ovZYoEWRKmMX-Ob5UTQ7cH6GDB_qnsJuOGsN-blxrTtoAk7sLkiJxBJi0auRZ1albJzlXD4IeZ-OnFehwH0Gd5X3qbKHX5RoT6h4LeRWNFjp3cuyEQsAsBSxZgtMh58Rt-c0c4SoKZFnf");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium">John Doe</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Member since 2023</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<div class="relative w-full bg-navy-deep pb-8 pt-12 md:pt-20 px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-end gap-8">
+<div class="relative">
+<div class="size-32 md:size-40 rounded-2xl bg-cover bg-center border-4 border-white dark:border-[#1a1f2e] shadow-2xl" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCn5oHZVOzo8uhUGTsPto_5UIypDUrirkgwiCzLCAAMduemdpBU04Ky1Y2cohwPvyPawFlHt2bzZF27llSK48Q5ME_RI3ECtpgj9XLYhUL62Gsg1-QKfeHZmsY9W4g-su77fOzp2KFzGO9fDtXn_H6-7ZEMXU9cTA3HpP05Y0la9Kg7kPYgS0oXg6k9N9516P8Vaf9uG_j5r2gzAdxEOWEEuk_RWIcrmtxYA1tomB22QuIc7zYYK7KJ8iCb5-wzVf8yM2ui4j1-plTe");'></div>
+<div class="absolute -bottom-3 -right-3 bg-green-500 size-8 rounded-full border-4 border-navy-deep flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">videocam</span>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left mb-2">
+<div class="flex flex-col md:flex-row md:items-center gap-3 mb-2 justify-center md:justify-start">
+<h1 class="text-3xl md:text-4xl font-black text-white">Dr. Elizabeth Graham</h1>
+<span class="bg-accent-gold/20 text-accent-gold border border-accent-gold/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider w-fit mx-auto md:mx-0">Head of Ministry Education</span>
+</div>
+<p class="text-gray-400 text-lg max-w-2xl mx-auto md:mx-0">Empowering leaders through biblical wisdom and practical theology. Specializing in community building and servant leadership.</p>
+<div class="flex items-center justify-center md:justify-start gap-4 mt-4 text-sm text-gray-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-accent-gold text-lg">location_on</span>
+                                Dallas, TX
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-accent-gold text-lg">language</span>
+                                elizabethgraham.com
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-accent-gold text-lg">mail</span>
+                                Contact
+                            </div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-primary/20 flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                            Follow
+                        </button>
+<button class="bg-white/10 hover:bg-white/20 text-white px-4 py-3 rounded-xl font-bold transition-all border border-white/10">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="px-8 py-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-white dark:bg-[#1a1f2e] rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">play_circle</span>
+                            Welcome Message
+                        </h2>
+<div class="relative aspect-video rounded-xl overflow-hidden bg-gray-900 group cursor-pointer">
+<img alt="Video Thumbnail" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Dlke3g7UyYuK-DLl15Yexz-ilCuqI-RIZyL6aUF1jKxCDPDFelOO97IMJ_85_arJBU1wQBXz-XAgcfc3Qac_9JMlkxmwtRYJf4lzuhKLjFz9qUCN27e6sC9T4rVojO2O0Sz-dlUwZaClG6IstL-umVPzgOii9n1rdr0-XzGiaAQRqxfeHu1tFtIRCoDymKX-kT_N_8SvbllspaVOKnVfo5bm5zKXZqPhaDi4OOUKMz0ip8I0k6M4FLP4NixmPtg-EXLj5UpM9s5X"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="size-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-4xl">play_arrow</span>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4">
+<p class="text-white font-bold text-lg">My Vision for Ministry Education</p>
+<p class="text-gray-300 text-sm">3:45 • Posted 2 days ago</p>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg font-bold mb-4">About Me</h2>
+<div class="prose dark:prose-invert max-w-none text-[#636f88] dark:text-gray-400 leading-relaxed text-sm">
+<p>For over 20 years, I have dedicated my life to bridging the gap between deep theological study and practical, everyday ministry. My journey began in youth mentorship and evolved into academic leadership, where I found my passion for equipping the next generation of church leaders.</p>
+<p class="mt-4">I believe that true leadership starts with a servant's heart. My courses are designed not just to inform, but to transform—helping you build a resilient faith that can weather the challenges of modern community life.</p>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500 animate-pulse">sensors</span>
+                                Upcoming Live Sessions
+                            </h2>
+<button class="text-sm font-bold text-primary hover:underline">View Calendar</button>
+</div>
+<div class="space-y-4">
+<div class="bg-white dark:bg-[#1a1f2e] rounded-2xl p-5 shadow-sm border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-5 hover:border-primary/30 transition-colors group">
+<div class="flex-shrink-0 w-full sm:w-48 h-32 rounded-xl bg-cover bg-center overflow-hidden relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Dlke3g7UyYuK-DLl15Yexz-ilCuqI-RIZyL6aUF1jKxCDPDFelOO97IMJ_85_arJBU1wQBXz-XAgcfc3Qac_9JMlkxmwtRYJf4lzuhKLjFz9qUCN27e6sC9T4rVojO2O0Sz-dlUwZaClG6IstL-umVPzgOii9n1rdr0-XzGiaAQRqxfeHu1tFtIRCoDymKX-kT_N_8SvbllspaVOKnVfo5bm5zKXZqPhaDi4OOUKMz0ip8I0k6M4FLP4NixmPtg-EXLj5UpM9s5X");'>
+<div class="absolute top-2 left-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
+                                        Oct 24
+                                     </div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg group-hover:text-primary transition-colors">Theology of Suffering</h3>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2 py-1 rounded">Open</span>
+</div>
+<p class="text-sm text-gray-500 mt-1">A deep dive into historical perspectives on suffering and hope.</p>
+<div class="flex items-center gap-4 mt-3 text-xs text-gray-400 font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 2:00 PM EST</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">group</span> 45/100 spots</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
+<span class="font-bold text-lg">$25.00</span>
+<button class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">Register</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-2xl p-5 shadow-sm border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-5 hover:border-primary/30 transition-colors group">
+<div class="flex-shrink-0 w-full sm:w-48 h-32 rounded-xl bg-cover bg-center overflow-hidden relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Dlke3g7UyYuK-DLl15Yexz-ilCuqI-RIZyL6aUF1jKxCDPDFelOO97IMJ_85_arJBU1wQBXz-XAgcfc3Qac_9JMlkxmwtRYJf4lzuhKLjFz9qUCN27e6sC9T4rVojO2O0Sz-dlUwZaClG6IstL-umVPzgOii9n1rdr0-XzGiaAQRqxfeHu1tFtIRCoDymKX-kT_N_8SvbllspaVOKnVfo5bm5zKXZqPhaDi4OOUKMz0ip8I0k6M4FLP4NixmPtg-EXLj5UpM9s5X");'>
+<div class="absolute top-2 left-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
+                                        Oct 28
+                                     </div>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg group-hover:text-primary transition-colors">Leadership Q&amp;A Panel</h3>
+<span class="bg-accent-gold/10 text-accent-gold text-xs font-bold px-2 py-1 rounded">Selling Fast</span>
+</div>
+<p class="text-sm text-gray-500 mt-1">Open session answering your questions about ministry leadership.</p>
+<div class="flex items-center gap-4 mt-3 text-xs text-gray-400 font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 5:00 PM EST</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">group</span> 82/100 spots</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
+<span class="font-bold text-lg">Free</span>
+<button class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">Register</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="bg-white dark:bg-[#1a1f2e] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">Instructor Stats</h4>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl text-center border border-gray-100 dark:border-gray-800">
+<p class="text-2xl font-black text-navy-deep dark:text-white">1.2k</p>
+<p class="text-xs text-gray-500 font-medium mt-1">Students</p>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl text-center border border-gray-100 dark:border-gray-800">
+<p class="text-2xl font-black text-navy-deep dark:text-white">15</p>
+<p class="text-xs text-gray-500 font-medium mt-1">Courses</p>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl text-center border border-gray-100 dark:border-gray-800">
+<p class="text-2xl font-black text-navy-deep dark:text-white">22</p>
+<p class="text-xs text-gray-500 font-medium mt-1">Yrs Ministry</p>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl text-center border border-gray-100 dark:border-gray-800">
+<p class="text-2xl font-black text-navy-deep dark:text-white">4.9</p>
+<p class="text-xs text-gray-500 font-medium mt-1">Rating</p>
+</div>
+</div>
+<button class="w-full mt-6 bg-white border border-gray-300 dark:bg-transparent dark:border-gray-700 text-sm font-bold py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            Send Message
+                        </button>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-sm font-bold uppercase tracking-wider text-gray-400">Published Books</h4>
+<a class="text-xs font-bold text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 items-start group cursor-pointer">
+<div class="w-16 h-20 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0 flex items-center justify-center text-gray-400 shadow-sm border border-gray-100 dark:border-gray-600">
+<span class="material-symbols-outlined text-2xl">book_2</span>
+</div>
+<div>
+<h5 class="text-sm font-bold leading-snug group-hover:text-primary transition-colors">Leading with Grace</h5>
+<p class="text-xs text-gray-500 mt-1">A guide to empathetic leadership in difficult times.</p>
+<p class="text-xs font-bold text-accent-gold mt-2">$14.99</p>
+</div>
+</div>
+<div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
+<div class="flex gap-4 items-start group cursor-pointer">
+<div class="w-16 h-20 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0 flex items-center justify-center text-gray-400 shadow-sm border border-gray-100 dark:border-gray-600">
+<span class="material-symbols-outlined text-2xl">book_2</span>
+</div>
+<div>
+<h5 class="text-sm font-bold leading-snug group-hover:text-primary transition-colors">The Modern Disciple</h5>
+<p class="text-xs text-gray-500 mt-1">Reimagining discipleship for the digital age.</p>
+<p class="text-xs font-bold text-accent-gold mt-2">$18.99</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-primary to-navy-deep rounded-2xl p-6 text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-4xl mb-3 opacity-80">workspace_premium</span>
+<h4 class="text-lg font-bold">Need a Mentor?</h4>
+<p class="text-sm text-white/80 mt-2 mb-4 leading-relaxed">Book a 1-on-1 mentorship session with Dr. Graham to discuss your ministry path.</p>
+<button class="w-full bg-white text-primary text-sm font-bold py-2.5 rounded-lg hover:bg-gray-50 transition-colors">
+                            Request Session
+                        </button>
+</div>
+</div>
+</div>
+<footer class="mt-auto p-12 bg-white dark:bg-[#1a1f2e] border-t border-[#dcdfe5] dark:border-gray-800">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-8 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">church</span>
+</div>
+<p class="text-sm font-bold">Grace LMS</p>
+</div>
+<div class="flex gap-8 text-xs font-medium text-gray-500">
+<a class="hover:text-primary" href="#">About Us</a>
+<a class="hover:text-primary" href="#">Contact Support</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+</div>
+<p class="text-[#636f88] dark:text-gray-400 text-xs">© 2024 Grace Community Church. Powered by FaithLMS Platform.</p>
+</div>
+</footer>
+</main>
+</div>
+
+</body></html>

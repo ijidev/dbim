@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Church Meeting &amp; Class Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eca413",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#110f0a",
+                        "surface-dark": "#1c1914",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #393328;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #eca413;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between px-6 py-3 border-b border-slate-200 dark:border-white/10 bg-white/50 dark:bg-background-dark/50 backdrop-blur-md z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+</span>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Live Session</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">Theology 101: Grace and Mercy</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Mentor: Dr. Abraham Miller • 14:02:45</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full border-2 border-background-dark bg-cover bg-center" data-alt="Portrait of a male attendee" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQ6XYvqwzL7Aus5r1tkoYl2BLXEb4-34mujIKDqrbYuM3pZAM39yBqT_rnf6eAwrQPQbfOFNtnt1G2rXef0_6TlU--IkEplTyYVWI55AzYMwmbXk0o0-DdaK3wlMaicKAaT12qzGJr8eWrWslSy4iMVhp5VKLoM9pjkFOTEylUSmrvr0qOgVSUoaT-YLOnp3m7UqCmLmCt_Aj6iiJ_FaMhUm4FpVmMKHLMcPDAr9gF3K-wmHNE3k04DFUQM_h1HRp9LPBEzar5udXS')"></div>
+<div class="size-8 rounded-full border-2 border-background-dark bg-cover bg-center" data-alt="Portrait of a female attendee" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDNQtv4NgvM0DOWqcQKEsgEbfbbyf1wI0uYlqq2TrjqNc3xhYrzjDopuIrIrx8iFxhkBVy-HoZLbI1bAHt9WbXVyhaSZEwPvDgM21GkAzXb4PcdnFqF6OMl17HaRq7ur4NL4QsCh68hl6dtWqlLIIGCtnD41Jwp4Hpx6ipxJbeIVxsN5Xd8jCZ7-eDvnW1GEa6w2bASTJZRwghecAlbi9fRzX3YkokB3f94Jxqc5fqhcQVFCLMfvZ75jBA3O_iy8VjvBVoFHsl-3oZp')"></div>
+<div class="size-8 rounded-full border-2 border-background-dark bg-slate-700 flex items-center justify-center text-[10px] font-bold">+12</div>
+</div>
+<button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="bg-primary text-background-dark px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">person_add</span> Invite
+            </button>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Main Content Area (Video + Gallery) -->
+<div class="flex-1 flex flex-col p-4 gap-4 overflow-hidden">
+<!-- Main Stage Video -->
+<div class="relative flex-1 bg-black rounded-xl overflow-hidden shadow-2xl group border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center opacity-90" data-alt="High-definition video feed of a speaker in a modern church setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDDi6yDGraM4tNWStFl2m2dxgJ-CrkfdLfii3SqHSVnStadJpHiOVPNBK-Qsw_h3dN34QoYf3nTwnvIPN4zDGT0o5PydF7Rk6xFvGAKqH2geeqPjHkuILT88ROQ16leHrghVrRQB57SBsxd3WYKZTUory69gXSAlCORLmYeUf81dnoetTIgwpPcJnTVG5rnZwuIexo6pRSx4zzrM38usrENRZZrTY-3IMPUUv48diLgFsqe0fpZKnLdO2twIFcuN2tgD44zXlAzcDQF')"></div>
+<!-- Video Overlays -->
+<div class="absolute top-4 left-4 flex gap-2">
+<div class="bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 border border-white/10">
+<span class="material-symbols-outlined text-primary text-sm fill-icon">verified</span>
+                        Dr. Abraham Miller (Mentor)
+                    </div>
+</div>
+<div class="absolute bottom-4 right-4">
+<div class="bg-black/40 backdrop-blur-md p-1.5 rounded-lg flex items-center gap-1 border border-white/10">
+<span class="material-symbols-outlined text-sm text-green-500">signal_cellular_4_bar</span>
+<span class="text-[10px] font-bold uppercase opacity-70">HD 1080p</span>
+</div>
+</div>
+<!-- Subtle Brand Pattern Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-5 mix-blend-overlay">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"></path>
+</pattern>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+</div>
+<!-- Gallery Strip -->
+<div class="h-32 flex gap-3 overflow-x-auto pb-2 shrink-0">
+<!-- Self View -->
+<div class="relative min-w-48 aspect-video bg-surface-dark rounded-lg overflow-hidden border border-white/10 shrink-0">
+<div class="absolute inset-0 bg-cover bg-center grayscale" data-alt="Video feed of the user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRxhkhZ446vxyV-is1y6Xri_fkoWp0PxrDQueijcwYq8ehe2_W2hM5pJc3ppBm0ulYKnSXH9Xha1DSP1FEq4YPWNLyUWNC8NJ1gCeh9ygMS4rKpSyXQzLxB3iyuSzdGtQGPbczSQfUB-bD2rvyZTmjwdNSVH9Wwg2tB04TRSdSi2K0X0LoJTINIK0A71WS_0uxFxbb38xbSYLJkgxu091nRVB5sbQsZHKfo2gz4E3I2dzzu9dzH1jVUh2NxkimSO3Ij_44eFbJUJgr')"></div>
+<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded text-[10px] font-medium border border-white/10">You (Muted)</div>
+</div>
+<!-- Other Attendees -->
+<div class="relative min-w-48 aspect-video bg-surface-dark rounded-lg overflow-hidden border-2 border-primary shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Video feed of Sarah Smith" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbd443p9TykOM3czkYQPk3PRGp_AbsWSWtxQsstRfCoy2GLzb5woruBG614WkM0MdYcKphbyQxnqgBws9nu4Awd3GuLaWZKz9FjKTtsbshZiFtTJ1j3GH2g5OgHeZ6prC2-N1vDg4GyYRMYIQ3l1fcW3XuBCyDEr5iRT61eZwoF-gn63Pj2mCZQRbbyoqfozpVJoE4SpTzWMkVOP66vPbyxltQJ91VbleIgTdIUEGs7sU5wvDVP-aHKwcn5n8881tjap7S1MA9kNb0')"></div>
+<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded text-[10px] font-medium border border-white/10">Sarah Smith</div>
+<div class="absolute top-2 right-2 flex gap-1">
+<span class="material-symbols-outlined text-xs bg-primary text-background-dark rounded-full p-0.5">mic</span>
+</div>
+</div>
+<div class="relative min-w-48 aspect-video bg-surface-dark rounded-lg overflow-hidden border border-white/10 shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Video feed of Sister Martha" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCl9FiZVwh_tunqYO-EsKGGIHU4EgzCBdOlBoEX3aqouNzQ6J6V8jzd5E7dfhftooMx9RD6pGuC-URzpq5tBDS9ahM3UQ31oI4aVPO4vKrkiBUG-qW5zJiymtkrkIwBHBPakfc5-GFAX7jFUSmRgnLSvbU2rrhSaU5ZEcLEILAyTK2Y4OrGgHShFdaIuz6x4I7vwr6LDtyiUOYXkLb85CV5oC8cKIuGypLrJw4AeaALhsQ95CvyjcOi7--2972iAX7sX6f4wPb0Ckao')"></div>
+<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded text-[10px] font-medium border border-white/10">Sister Martha</div>
+</div>
+<div class="relative min-w-48 aspect-video bg-surface-dark rounded-lg overflow-hidden border border-white/10 shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Video feed of Brother John" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD7TeNqYXWVH-fMwD5Ifa973JYWWkpxDrBuek1nX_1T-sg0ERvf9z9lHkPX3G-rerbfugVz0rPzo46hBpFpxm-yftpH3ctbEUb7Pp2l8PSPL7ipv3PWqXdT8IrWrIh6lHG4YsWx7fVLHwoRGirl0Iqj0L0DmTU9aiBHl1oERBsdrI7KkjVj5blXU88Qj0Kytj9TbleJLouhM4tasX_UUaZK1iRzk4Kxmp9GLe4EmAriTyBu1ZCajlVazYxHlEzeo78CifA2D900K42L')"></div>
+<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded text-[10px] font-medium border border-white/10">Brother John</div>
+</div>
+<div class="relative min-w-48 aspect-video bg-surface-dark rounded-lg overflow-hidden border border-white/10 shrink-0">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Video feed of Elder Thomas" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEbls0kTtz3fEGtDtY95l0ET-WBJP22UEYJvlCJdH8bp85vRh59f-E1eOLngJeDO57vMtzxE3fr-tafq1i_M_zwUnNpOYWGGrzXudBlX-ju_sJm1GP9G1eLm7H_1cJyjEH_U-0j7lCr25QKLJ1wLZkHbwfesXCKpKcADHk22B1vbye57qw1Jl_PDx0mSy7D6pQ8rPWUF2Zu5E94VSRo73n8_068OtG_j4gVZlHisihvLn8jBZgOqnkWDaSn-Ug8iKO6gxJsVaI09OJ')"></div>
+<div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded text-[10px] font-medium border border-white/10">Elder Thomas</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (Chat/Participants/Docs) -->
+<aside class="w-80 bg-white dark:bg-surface-dark border-l border-slate-200 dark:border-white/10 flex flex-col">
+<!-- Sidebar Tabs -->
+<div class="flex border-b border-slate-200 dark:border-white/10">
+<button class="flex-1 py-4 text-xs font-bold uppercase tracking-widest border-b-2 border-primary text-primary">Chat</button>
+<button class="flex-1 py-4 text-xs font-bold uppercase tracking-widest border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">People</button>
+<button class="flex-1 py-4 text-xs font-bold uppercase tracking-widest border-b-2 border-transparent text-slate-400 hover:text-white transition-colors">Docs</button>
+</div>
+<!-- Chat Content -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold text-primary uppercase">Mentor</span>
+<span class="text-[10px] opacity-50">10:45 AM</span>
+</div>
+<div class="bg-primary/10 border border-primary/20 rounded-lg p-3 text-sm leading-relaxed">
+                        Welcome everyone. Today we reflect on Romans 5:8. "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us."
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase">Sarah Smith</span>
+<span class="text-[10px] opacity-50">10:48 AM</span>
+</div>
+<div class="bg-slate-100 dark:bg-white/5 rounded-lg p-3 text-sm leading-relaxed">
+                        This passage really resonates with today's lesson on unconditional grace.
+                    </div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold text-slate-400 uppercase">Brother John</span>
+<span class="text-[10px] opacity-50">10:52 AM</span>
+</div>
+<div class="bg-slate-100 dark:bg-white/5 rounded-lg p-3 text-sm leading-relaxed">
+                        Amen! How can we best apply this in our daily outreach?
+                    </div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-4 bg-slate-100 dark:bg-black/20">
+<div class="relative">
+<input class="w-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Message the class..." type="text"/>
+<button class="absolute right-2 top-1.5 text-primary">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- Bottom Control Bar -->
+<footer class="h-20 border-t border-slate-200 dark:border-white/10 bg-white/50 dark:bg-background-dark/80 backdrop-blur-xl flex items-center justify-between px-8 z-20">
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-bold tracking-widest text-slate-500">Duration</span>
+<span class="text-sm font-mono font-bold text-primary">01:45:22</span>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-white/10"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-500 fill-icon">cloud_done</span>
+<span class="text-[10px] uppercase font-bold tracking-widest text-slate-500">Cloud Recording Active</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="size-12 rounded-full flex items-center justify-center bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-primary/20 hover:text-primary transition-all group">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="size-12 rounded-full flex items-center justify-center bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-primary/20 hover:text-primary transition-all group">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-white/10 mx-2"></div>
+<button class="size-12 rounded-full flex items-center justify-center bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-primary/20 hover:text-primary transition-all group">
+<span class="material-symbols-outlined">present_to_all</span>
+</button>
+<button class="size-12 rounded-full flex items-center justify-center bg-primary/20 text-primary border border-primary/30 shadow-lg shadow-primary/10 transition-all hover:scale-105">
+<span class="material-symbols-outlined fill-icon">front_hand</span>
+</button>
+<button class="size-12 rounded-full flex items-center justify-center bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-white hover:bg-primary/20 hover:text-primary transition-all group">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="flex items-center">
+<button class="bg-red-600/10 text-red-500 hover:bg-red-600 hover:text-white border border-red-500/20 px-6 py-2 rounded-lg text-sm font-bold transition-all uppercase tracking-widest">
+                End Session
+            </button>
+</div>
+</footer>
+</body></html>

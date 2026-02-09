@@ -95,7 +95,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/academy/dashboard', [App\Http\Controllers\StudentController::class, 'index'])->name('student.dashboard');
-Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 'schedule'])->name('student.schedule');
+    Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 'schedule'])->name('student.schedule');
+    Route::get('/academy/catalog', [App\Http\Controllers\StudentController::class, 'catalog'])->name('student.catalog');
+    Route::get('/course/{course}', [App\Http\Controllers\StudentController::class, 'courseShow'])->name('course.show');
     Route::get('/course/{course}/learn', [App\Http\Controllers\StudentController::class, 'learn'])->name('student.course.learn');
     
     // Meeting Routes
@@ -112,7 +114,11 @@ Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 
 
     // Booking Routes
     Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
-    Route::post('/meeting/book', [App\Http\Controllers\MeetingController::class, 'book'])->name('meeting.book');
+    Route::post('/meeting/book', [App\Http\Controllers\StudentController::class, 'bookMeeting'])->name('meeting.book');
+    Route::get('/meeting/booked/{id}', [App\Http\Controllers\StudentController::class, 'sessionBooked'])->name('meeting.booked');
+    
+    // Enrollment Routes
+    Route::post('/enrollment/enroll', [App\Http\Controllers\StudentController::class, 'enroll'])->name('enrollment.enroll');
 });
 
 // Store Routes

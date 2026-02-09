@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student My Courses - Grace Church LMS</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white transition-colors duration-200">
+<div class="flex min-h-screen">
+<aside class="w-64 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a202c] flex flex-col fixed inset-y-0">
+<div class="p-6 flex flex-col h-full">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">church</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-tight">Grace Church</h1>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Student Portal</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">home</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined text-xl fill-icon">book_2</span>
+                    My Courses
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">explore</span>
+                    Browse All
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">bookmark</span>
+                    Saved for Later
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">emoji_events</span>
+                    Certificates
+                </a>
+</nav>
+<div class="mt-auto border-t border-[#dcdfe5] dark:border-gray-800 pt-6">
+<div class="flex items-center gap-3 px-2">
+<img alt="Student avatar" class="size-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBah-DpCaF41n9C215Lc72mha-SkgwWNP19qY05zjT9oJwwUsPkJhGB_m4-CEdmifQsbn87RGGtueedXOMHoOGnCthBOIgzD-I7xGjD8bPi0n61eutFdnLyFsJkKDkIYNyKUk8pG7UgJTISobi_cYsT4YxXyGCtj1vfk0vMXbIIfzYHuYiOF3iS2OfEgHosqVaee6AWqSMPjM9yAzcYcuQ_FcojBBlp8IwVBFAnUYwxkm25j9Ee3IhdAAIm9wgu-7gGxsxAbDB8Duc3"/>
+<div class="overflow-hidden">
+<p class="text-sm font-bold truncate">Samuel Miller</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400 truncate">Spiritual Growth Path</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 ml-64">
+<header class="h-16 border-b border-[#dcdfe5] dark:border-gray-800 bg-white/80 dark:bg-[#1a202c]/80 backdrop-blur-md sticky top-0 z-10 flex items-center justify-between px-8">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#636f88] text-xl">search</span>
+<input class="w-full bg-[#f0f2f4] dark:bg-gray-800 border-none rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none" placeholder="Search my courses..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-gray-300 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2.5 right-2.5 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a202c]"></span>
+</button>
+<button class="p-2 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-gray-300">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto">
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="text-3xl font-bold tracking-tight">My Courses</h2>
+<p class="text-[#636f88] dark:text-gray-400 mt-1">Continue your journey of faith and spiritual learning.</p>
+</div>
+<div class="flex bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 rounded-lg p-1">
+<button class="px-4 py-2 bg-primary/10 text-primary rounded-md text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+</button>
+<button class="px-4 py-2 hover:bg-[#f0f2f4] dark:hover:bg-gray-800 rounded-md text-sm font-bold flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg text-[#636f88]">view_list</span>
+</button>
+</div>
+</div>
+<div class="border-b border-[#dcdfe5] dark:border-gray-800 mb-8">
+<div class="flex gap-8">
+<button class="pb-4 border-b-2 border-primary text-primary font-bold text-sm">In Progress (3)</button>
+<button class="pb-4 border-b-2 border-transparent text-[#636f88] dark:text-gray-400 font-bold text-sm hover:text-[#111318] dark:hover:text-white transition-colors">Completed (12)</button>
+<button class="pb-4 border-b-2 border-transparent text-[#636f88] dark:text-gray-400 font-bold text-sm hover:text-[#111318] dark:hover:text-white transition-colors">Saved for Later (5)</button>
+</div>
+</div>
+<div class="mb-12">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden group flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<img alt="Course image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ECBczAQe_G83OIq7zNdXDzFGk5rIrUjTyQtwqmqtcYsOlHoUuHgnXIwxrh2G5jzXsnVKVZlIULDjvo40s6NrqbTPymx9SJDoMcbig1QDOP1h5M20dOa6_qtAZ3npY68VbuR5rk9R3xLw9gOMX1kkvamQHR23mV9hQj-vHkY1VaLXCZo6F-XU_1jvj0zwIDtx7QFdza2zOuhyYhy7gBGG2gDK8E8z-_VzB4xdVnzCfEbfR8XJiMEcKAeb-C-khnUD_ZlbmJpzYiyV"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 text-white">
+<span class="bg-primary/90 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded mb-2 inline-block">Theology</span>
+<h4 class="font-bold text-lg leading-tight">Introduction to Hermeneutics</h4>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div class="flex items-center gap-3">
+<img alt="Instructor" class="size-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBah-DpCaF41n9C215Lc72mha-SkgwWNP19qY05zjT9oJwwUsPkJhGB_m4-CEdmifQsbn87RGGtueedXOMHoOGnCthBOIgzD-I7xGjD8bPi0n61eutFdnLyFsJkKDkIYNyKUk8pG7UgJTISobi_cYsT4YxXyGCtj1vfk0vMXbIIfzYHuYiOF3iS2OfEgHosqVaee6AWqSMPjM9yAzcYcuQ_FcojBBlp8IwVBFAnUYwxkm25j9Ee3IhdAAIm9wgu-7gGxsxAbDB8Duc3"/>
+<div class="text-xs">
+<p class="font-bold">Dr. Sarah Jenkins</p>
+<p class="text-[#636f88]">Lead Instructor</p>
+</div>
+<div class="ml-auto flex items-center gap-1 text-[#636f88] text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 12h total
+                                </div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-xs">
+<span class="font-bold text-primary">65% Completed</span>
+<span class="text-[#636f88]">12/18 Lessons</span>
+</div>
+<div class="h-2 w-full bg-[#f0f2f4] dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 65%;"></div>
+</div>
+</div>
+<button class="w-full mt-auto py-3 bg-primary text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-lg">play_arrow</span> Continue Learning
+                            </button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden group flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<img alt="Course image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN2Lv4s7uHHjjMMvdrJRQpCc5b6HWzJ9nZg4sa4GGCWdS6vVwHiBKae40Z1ZO84sxxr7cXx4AVNEREwLs9H9F6IEV2xDpfrHr6uzHFPFPu2nccKRIEQpvBbbNdjwzY7EwTi5LzrZhfYaz0a_mibMxMlHWufkHkYn08od0sP2Vff0YOT_6N7uEyIU66fu4DANHeR3Sd3bpQsR-5x29D9qC-xOEFaWoeOqtWQmMbZocXeJX03pgKAES10DS3qYiYRYxZnCvF-75bJqGT"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 text-white">
+<span class="bg-primary/90 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded mb-2 inline-block">Leadership</span>
+<h4 class="font-bold text-lg leading-tight">Servant Leadership Foundations</h4>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs uppercase">PT</div>
+<div class="text-xs">
+<p class="font-bold">Pastor Thomas</p>
+<p class="text-[#636f88]">Ministry Lead</p>
+</div>
+<div class="ml-auto flex items-center gap-1 text-[#636f88] text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> 8h total
+                                </div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between text-xs">
+<span class="font-bold text-primary">12% Completed</span>
+<span class="text-[#636f88]">2/15 Lessons</span>
+</div>
+<div class="h-2 w-full bg-[#f0f2f4] dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000" style="width: 12%;"></div>
+</div>
+</div>
+<button class="w-full mt-auto py-3 bg-primary text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-lg">play_arrow</span> Continue Learning
+                            </button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden group flex flex-col">
+<div class="h-44 relative overflow-hidden">
+<div class="absolute top-4 right-4 z-10">
+<span class="bg-red-500 text-white text-[10px] font-bold uppercase px-2 py-1 rounded flex items-center gap-1">
+<span class="size-1.5 bg-white rounded-full animate-pulse"></span> Live Now
+                                </span>
+</div>
+<img alt="Course image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBah-DpCaF41n9C215Lc72mha-SkgwWNP19qY05zjT9oJwwUsPkJhGB_m4-CEdmifQsbn87RGGtueedXOMHoOGnCthBOIgzD-I7xGjD8bPi0n61eutFdnLyFsJkKDkIYNyKUk8pG7UgJTISobi_cYsT4YxXyGCtj1vfk0vMXbIIfzYHuYiOF3iS2OfEgHosqVaee6AWqSMPjM9yAzcYcuQ_FcojBBlp8IwVBFAnUYwxkm25j9Ee3IhdAAIm9wgu-7gGxsxAbDB8Duc3"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 text-white">
+<span class="bg-primary/90 text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded mb-2 inline-block">Bible Study</span>
+<h4 class="font-bold text-lg leading-tight">Weekly Scripture Study</h4>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-xs uppercase">ML</div>
+<div class="text-xs">
+<p class="font-bold">Mary Lewis</p>
+<p class="text-[#636f88]">Small Group Facilitator</p>
+</div>
+<div class="ml-auto flex items-center gap-1 text-[#636f88] text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span> Recurring
+                                </div>
+</div>
+<p class="text-xs text-[#636f88] bg-[#f0f2f4] dark:bg-gray-800 p-3 rounded-lg">
+                                The live session "Interpreting Psalms" has just started. Join fellow students now!
+                            </p>
+<button class="w-full mt-auto py-3 bg-red-500 text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2 hover:bg-red-600 transition-all">
+<span class="material-symbols-outlined text-lg">podcasts</span> Join Live Session
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold">Recently Completed</h3>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View All Certificates</a>
+</div>
+<div class="space-y-4 mb-12">
+<div class="bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 rounded-xl p-4 flex flex-col md:flex-row items-center gap-6 hover:shadow-md transition-shadow">
+<div class="size-20 rounded-lg overflow-hidden shrink-0">
+<img alt="Course thumb" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ECBczAQe_G83OIq7zNdXDzFGk5rIrUjTyQtwqmqtcYsOlHoUuHgnXIwxrh2G5jzXsnVKVZlIULDjvo40s6NrqbTPymx9SJDoMcbig1QDOP1h5M20dOa6_qtAZ3npY68VbuR5rk9R3xLw9gOMX1kkvamQHR23mV9hQj-vHkY1VaLXCZo6F-XU_1jvj0zwIDtx7QFdza2zOuhyYhy7gBGG2gDK8E8z-_VzB4xdVnzCfEbfR8XJiMEcKAeb-C-khnUD_ZlbmJpzYiyV"/>
+</div>
+<div class="flex-1 text-center md:text-left">
+<span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest flex items-center justify-center md:justify-start gap-1">
+<span class="material-symbols-outlined text-xs fill-icon">check_circle</span> Completed on Oct 05, 2023
+                        </span>
+<h4 class="font-bold text-lg mt-1">Foundations of Christian Faith</h4>
+<p class="text-sm text-[#636f88] dark:text-gray-400">Instructor: Elder David Thorne • 10 Lessons • 15h 30m</p>
+</div>
+<div class="flex gap-3 shrink-0">
+<button class="px-5 py-2.5 bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-[#f0f2f4] transition-colors">
+<span class="material-symbols-outlined text-lg">refresh</span> Retake
+                        </button>
+<button class="px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10">
+<span class="material-symbols-outlined text-lg">card_membership</span> Download Certificate
+                        </button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 rounded-xl p-4 flex flex-col md:flex-row items-center gap-6 hover:shadow-md transition-shadow">
+<div class="size-20 rounded-lg overflow-hidden shrink-0">
+<img alt="Course thumb" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN2Lv4s7uHHjjMMvdrJRQpCc5b6HWzJ9nZg4sa4GGCWdS6vVwHiBKae40Z1ZO84sxxr7cXx4AVNEREwLs9H9F6IEV2xDpfrHr6uzHFPFPu2nccKRIEQpvBbbNdjwzY7EwTi5LzrZhfYaz0a_mibMxMlHWufkHkYn08od0sP2Vff0YOT_6N7uEyIU66fu4DANHeR3Sd3bpQsR-5x29D9qC-xOEFaWoeOqtWQmMbZocXeJX03pgKAES10DS3qYiYRYxZnCvF-75bJqGT"/>
+</div>
+<div class="flex-1 text-center md:text-left">
+<span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest flex items-center justify-center md:justify-start gap-1">
+<span class="material-symbols-outlined text-xs fill-icon">check_circle</span> Completed on Sep 22, 2023
+                        </span>
+<h4 class="font-bold text-lg mt-1">Introduction to the Old Testament</h4>
+<p class="text-sm text-[#636f88] dark:text-gray-400">Instructor: Dr. Elias Vance • 12 Lessons • 22h total</p>
+</div>
+<div class="flex gap-3 shrink-0">
+<button class="px-5 py-2.5 bg-white dark:bg-gray-800 border border-[#dcdfe5] dark:border-gray-700 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-[#f0f2f4] transition-colors">
+<span class="material-symbols-outlined text-lg">refresh</span> Retake
+                        </button>
+<button class="px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-emerald-700 transition-all shadow-md shadow-emerald-600/10">
+<span class="material-symbols-outlined text-lg">card_membership</span> Download Certificate
+                        </button>
+</div>
+</div>
+</div>
+<div class="mb-12">
+<h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bookmark</span> Saved for Later
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 rounded-xl overflow-hidden group">
+<div class="h-32 relative">
+<img alt="Saved course" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4ECBczAQe_G83OIq7zNdXDzFGk5rIrUjTyQtwqmqtcYsOlHoUuHgnXIwxrh2G5jzXsnVKVZlIULDjvo40s6NrqbTPymx9SJDoMcbig1QDOP1h5M20dOa6_qtAZ3npY68VbuR5rk9R3xLw9gOMX1kkvamQHR23mV9hQj-vHkY1VaLXCZo6F-XU_1jvj0zwIDtx7QFdza2zOuhyYhy7gBGG2gDK8E8z-_VzB4xdVnzCfEbfR8XJiMEcKAeb-C-khnUD_ZlbmJpzYiyV"/>
+<button class="absolute top-2 right-2 size-8 bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-md">
+<span class="material-symbols-outlined text-lg fill-icon">bookmark</span>
+</button>
+</div>
+<div class="p-3">
+<h5 class="text-sm font-bold line-clamp-1">Biblical Prophecy</h5>
+<p class="text-xs text-[#636f88] mt-1">4.5 hours • Advanced</p>
+<button class="w-full mt-3 py-2 text-primary border border-primary/20 rounded-lg text-xs font-bold hover:bg-primary/5 transition-colors">Start Course</button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 rounded-xl overflow-hidden group">
+<div class="h-32 relative">
+<img alt="Saved course" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN2Lv4s7uHHjjMMvdrJRQpCc5b6HWzJ9nZg4sa4GGCWdS6vVwHiBKae40Z1ZO84sxxr7cXx4AVNEREwLs9H9F6IEV2xDpfrHr6uzHFPFPu2nccKRIEQpvBbbNdjwzY7EwTi5LzrZhfYaz0a_mibMxMlHWufkHkYn08od0sP2Vff0YOT_6N7uEyIU66fu4DANHeR3Sd3bpQsR-5x29D9qC-xOEFaWoeOqtWQmMbZocXeJX03pgKAES10DS3qYiYRYxZnCvF-75bJqGT"/>
+<button class="absolute top-2 right-2 size-8 bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-md">
+<span class="material-symbols-outlined text-lg fill-icon">bookmark</span>
+</button>
+</div>
+<div class="p-3">
+<h5 class="text-sm font-bold line-clamp-1">Spiritual Disciplines</h5>
+<p class="text-xs text-[#636f88] mt-1">6 hours • Beginner</p>
+<button class="w-full mt-3 py-2 text-primary border border-primary/20 rounded-lg text-xs font-bold hover:bg-primary/5 transition-colors">Start Course</button>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-primary text-white p-6 rounded-2xl flex items-center gap-5 shadow-xl shadow-primary/20">
+<div class="size-14 bg-white/20 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">emoji_events</span>
+</div>
+<div>
+<p class="text-xs font-medium uppercase tracking-wider opacity-80">Courses Finished</p>
+<p class="text-3xl font-bold">15</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 p-6 rounded-2xl flex items-center gap-5">
+<div class="size-14 bg-[#f0f2f4] dark:bg-gray-800 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">auto_stories</span>
+</div>
+<div>
+<p class="text-xs font-medium text-[#636f88] dark:text-gray-400 uppercase tracking-wider">Total Lessons</p>
+<p class="text-3xl font-bold">142</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] border border-[#dcdfe5] dark:border-gray-800 p-6 rounded-2xl flex items-center gap-5">
+<div class="size-14 bg-[#f0f2f4] dark:bg-gray-800 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">history</span>
+</div>
+<div>
+<p class="text-xs font-medium text-[#636f88] dark:text-gray-400 uppercase tracking-wider">Learning Hours</p>
+<p class="text-3xl font-bold">84h</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

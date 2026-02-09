@@ -25,7 +25,7 @@
                 <span class="material-symbols-outlined fill-1">dashboard</span>
                 <span>Dashboard</span>
             </a>
-            <a href="{{ route('index') }}#courses" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
+            <a href="{{ route('student.catalog') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
                 <span class="material-symbols-outlined">book_2</span>
                 <span>Course Catalog</span>
             </a>
@@ -198,7 +198,7 @@
                 <div class="col-span-2 text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-100">
                     <span class="material-symbols-outlined text-6xl text-slate-200 mb-4 font-light">inventory_2</span>
                     <p class="text-slate-400 font-black">You are not enrolled in any courses yet</p>
-                    <a href="{{ route('index') }}#courses" class="text-primary font-black mt-4 inline-block hover:underline">Explore Catalog</a>
+                    <a href="{{ route('student.catalog') }}" class="text-primary font-black mt-4 inline-block hover:underline">Explore Catalog</a>
                 </div>
                 @endforelse
             </div>
@@ -226,11 +226,11 @@
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
                         <div class="absolute bottom-4 left-4 px-3 py-1 bg-black/60 backdrop-blur-md text-white text-[10px] font-black rounded-lg uppercase tracking-widest">{{ $course->modules->count() }} Modules</div>
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-14 bg-white rounded-full text-primary shadow-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100">
-                            <a href="{{ route('student.course.learn', $course->id) }}" class="material-symbols-outlined text-3xl fill-1">play_arrow</a>
+                            <a href="{{ route('course.show', $course->id) }}" class="material-symbols-outlined text-3xl fill-1">play_arrow</a>
                         </div>
                     </div>
                     <h4 class="font-black text-lg text-slate-900 leading-tight group-hover:text-primary transition-colors mb-2">
-                        <a href="{{ route('student.course.learn', $course->id) }}">{{ $course->title }}</a>
+                        <a href="{{ route('course.show', $course->id) }}">{{ $course->title }}</a>
                     </h4>
                     <div class="flex items-center gap-3">
                         <a href="{{ route('instructor.profile', $course->instructor->id ?? 0) }}" class="text-xs font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest hover:text-primary transition-colors">

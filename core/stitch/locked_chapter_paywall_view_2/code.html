@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Book Checkout</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "navy": {
+                            50: "#f0f4f8",
+                            100: "#d9e2ec",
+                            200: "#bcccdc",
+                            800: "#1e293b",
+                            900: "#0f172a",
+                            950: "#020617",
+                        },
+                        "gold": {
+                            400: "#fbbf24",
+                            500: "#f59e0b",
+                            600: "#d97706",
+                        },
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a", 
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Lexend", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased min-h-screen flex flex-col">
+<header class="flex-none flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-navy-900 px-6 py-4 z-30 relative shadow-sm">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined text-xl">auto_stories</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Grace Reader</h2>
+</div>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-lg">lock</span>
+        Secure Checkout
+    </div>
+</header>
+<main class="flex-1 flex items-center justify-center p-4 md:p-8">
+<div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<div class="md:col-span-5 lg:col-span-4 order-2 md:order-1">
+<div class="bg-white dark:bg-navy-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden sticky top-8">
+<div class="p-6 bg-slate-50 dark:bg-navy-950/50 border-b border-slate-100 dark:border-slate-800">
+<h3 class="font-semibold text-slate-900 dark:text-white mb-4">Order Summary</h3>
+<div class="flex gap-4">
+<div class="w-20 h-28 flex-shrink-0 rounded-md shadow-md overflow-hidden bg-slate-200">
+<img alt="Book cover: Living with Purpose" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOt59Zhvj7wvIx-s26Oh3HtoDaEKdm3TNO67SRE-HIXPIoZC2VNNKGqfjvHWxksiCc9KJ1OUhmhKIqqbPM2ebWbF65oqUccRKZQfsLhFKQUCJYsqFuwuVsbL7hcjM69mDCRf3W0rEasDub0A1rWziIpOUXNcvNyhEwUkP5fk1YHa6cn4580Vt_Xx0GLMKLdddxq56HYqigT3Y8mZZ_rRatGPD6PjJGqmLIXOXI3KuFFDwq3Zolk0DSvNIZXhL2eIm-3vnm9MHaqJ_S"/>
+</div>
+<div class="flex flex-col">
+<h4 class="font-bold text-slate-900 dark:text-white leading-snug">Living with Purpose</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">By Pastor John Doe</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary mt-2 w-fit">
+                                Digital Edition
+                            </span>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+<span>Subtotal</span>
+<span>$14.99</span>
+</div>
+<div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
+<span>Tax</span>
+<span>$0.00</span>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+<span class="font-bold text-slate-900 dark:text-white">Total</span>
+<span class="text-xl font-bold text-slate-900 dark:text-white">$14.99</span>
+</div>
+</div>
+<div class="bg-blue-50 dark:bg-navy-800/50 p-4 border-t border-blue-100 dark:border-navy-800">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-xl">verified_user</span>
+<p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+<strong>100% Secure Purchase.</strong> Your contribution supports our church ministry and digital outreach programs.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<div class="md:col-span-7 lg:col-span-8 order-1 md:order-2">
+<div class="bg-white dark:bg-navy-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 md:p-8">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Complete your purchase</h1>
+<p class="text-slate-500 dark:text-slate-400">Select a payment method to unlock full access instantly.</p>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-2 gap-4">
+<label class="relative flex items-center justify-center gap-2 p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer transition-all">
+<input checked="" class="sr-only" name="payment_method" type="radio"/>
+<span class="material-symbols-outlined text-primary">credit_card</span>
+<span class="font-medium text-slate-900 dark:text-white">Card</span>
+<div class="absolute top-2 right-2 size-4 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[10px] font-bold">check</span>
+</div>
+</label>
+<label class="relative flex items-center justify-center gap-2 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-navy-800 cursor-pointer transition-all">
+<input class="sr-only" name="payment_method" type="radio"/>
+<svg class="h-5 w-auto" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .533 5.347.533 12s5.333 12 11.947 12c3.507 0 6.187-1.173 8.373-3.44 2.213-2.213 2.907-5.333 2.907-7.96 0-.787-.08-1.453-.253-2.027H12.48z"></path>
+</svg>
+<span class="font-medium text-slate-900 dark:text-white">Google Pay</span>
+</label>
+</div>
+<div class="space-y-5 pt-2 animate-fade-in-up">
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-950 text-slate-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm" placeholder="you@example.com" type="email" value="student@church.org"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Card Information</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-950 text-slate-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm pr-10" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute right-3 top-2.5 flex gap-1">
+<span class="material-symbols-outlined text-slate-400">credit_card</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Expiration Date</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-950 text-slate-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm" placeholder="MM / YY" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">CVC</label>
+<div class="relative">
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-950 text-slate-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm" placeholder="123" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 text-lg cursor-help" title="3 digits on back of card">help</span>
+</div>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Name on Card</label>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-950 text-slate-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm" placeholder="Full Name" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Country or region</label>
+<select class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-navy-950 text-slate-900 dark:text-white focus:ring-primary focus:border-primary shadow-sm">
+<option>United States</option>
+<option>Canada</option>
+<option>United Kingdom</option>
+</select>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full bg-gradient-to-r from-gold-400 to-gold-500 hover:from-gold-500 hover:to-gold-600 text-navy-950 font-bold py-4 px-6 rounded-xl shadow-lg shadow-gold-500/20 transform transition hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 flex items-center justify-center gap-2 text-lg">
+<span class="material-symbols-outlined">lock</span>
+<span>Complete Purchase - $14.99</span>
+</button>
+<p class="text-center mt-4 text-xs text-slate-400">
+                            By confirming your payment, you allow Grace Reader to charge your card for this payment and future payments in accordance with our terms.
+                        </p>
+</div>
+</div>
+</div>
+<div class="mt-6 flex justify-center gap-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="h-8 flex items-center gap-1 font-bold text-slate-500">
+<span class="material-symbols-outlined">lock</span>
+<span>SSL Encrypted</span>
+</div>
+<div class="h-8 flex items-center gap-1 font-bold text-slate-500">
+<span class="material-symbols-outlined">credit_card</span>
+<span>Stripe</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Prayer Wall - Grace Community</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4a5d8a",
+                        "accent": "#9dabce",
+                        "spiritual-bg": "#fdfbf7",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                font-family: 'Inter', sans-serif;
+            }
+            .font-serif {
+                font-family: 'Playfair Display', serif;
+            }
+        }
+        .prayer-gradient {
+            background: linear-gradient(135deg, #fdfbf7 0%, #f1f5f9 100%);
+        }
+        .dark .prayer-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes subtle-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(74, 93, 138, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(74, 93, 138, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(74, 93, 138, 0); }
+        }
+        .pulse-once:active {
+            animation: subtle-pulse 0.6s ease-out;
+        }
+    </style>
+</head>
+<body class="prayer-gradient text-[#1e293b] dark:text-slate-200 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md h-full">
+<div class="p-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-10 rounded-xl flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined filled">church</span>
+</div>
+<div>
+<h1 class="text-lg font-serif font-bold leading-tight">Grace</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest">Community</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-white/80 dark:hover:bg-slate-800/80 rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">home</span>
+<p class="text-sm font-medium">Home</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-md">
+<span class="material-symbols-outlined filled">volunteer_activism</span>
+<p class="text-sm font-medium">Prayer Wall</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-white/80 dark:hover:bg-slate-800/80 rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium">Fellowship</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-white/80 dark:hover:bg-slate-800/80 rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">auto_stories</span>
+<p class="text-sm font-medium">Bible Study</p>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:bg-white/80 dark:hover:bg-slate-800/80 rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">event</span>
+<p class="text-sm font-medium">Events</p>
+</div>
+</nav>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 bg-white/40 dark:bg-slate-800/40 rounded-2xl">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtr_G_m_m3OrDxvc0U1bTdfg2scuX1_PT4cf0rb-F-GEISyCgIq7__fODGfyXtqqx1FcE7sOgJo4U8fRHE0haTFc0YdY9PVeJpZPM-hv60o-yTtQxNmPHheNOKqxk68JOgGXCVT1BIoa5JbzqwSN_7bGQKJQg7n6f-dZM5cXcblEtCXu0LQQU9UTJj9dmZg7k5_X97efM6poCKh-TWaB6ACq-mkyoKI7eQAXxkUWBH_YbmIj8F8Rf6zlEGIZ4s2WvTZ04LH9bct0iA");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-semibold">John Doe</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Prayer Warrior</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<header class="flex items-center justify-between px-10 py-6">
+<div class="flex flex-col">
+<h2 class="text-3xl font-serif font-bold text-slate-800 dark:text-white">Digital Prayer Wall</h2>
+<p class="text-slate-500 italic">"Carry each other's burdens, and in this way you will fulfill the law of Christ."</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-3 shadow-lg shadow-primary/20 transition-all active:scale-95">
+<span class="material-symbols-outlined filled">add_circle</span>
+                        Submit a Prayer Request
+                    </button>
+</div>
+</header>
+<div class="px-10 pb-12 w-full max-w-7xl mx-auto space-y-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-2 p-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur rounded-2xl border border-slate-200/50 dark:border-slate-700/50 w-fit">
+<button class="px-6 py-2.5 rounded-xl text-sm font-bold bg-white dark:bg-slate-700 shadow-sm text-primary">All Requests</button>
+<button class="px-6 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-primary transition-colors flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-400"></span> Urgent
+                        </button>
+<button class="px-6 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-primary transition-colors flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-400"></span> Personal
+                        </button>
+<button class="px-6 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:text-primary transition-colors flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span> Global
+                        </button>
+</div>
+<div class="flex items-center gap-3 text-slate-500 text-sm">
+<span class="material-symbols-outlined">filter_list</span>
+<span>Sort by: <b>Most Recent</b></span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-shadow relative flex flex-col h-full">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="Sarah" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsjyUmdiRSAbNRxEMG_5PZ1AzYMIi6YtnQ4dbcsUx3L7u92iw5qEv2IeIwMe5_ejPjJFnMHPvZetCk3c4XUSIs0Sn77SolCPj4D0fYNWkK1NbycNGYk-JFbw5vO_4E-EFgoIi5UcwMkQGBvoMRJ1gXH8WFznjk5TrT74ncBv8C4l_onWczle0DqEbLs1Gl5trwcIOG-S8IFXaGrtosypg2Sy1-njXu2E9HQEYF6BbIPS5f7IQvUqBxDmNWHIT8OOu6bnjwy0Xp0Mc-"/>
+</div>
+<div>
+<p class="text-sm font-bold">Sarah Jenkins</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-widest">2 hours ago</p>
+</div>
+</div>
+<span class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-red-100 dark:border-red-900/30">Urgent</span>
+</div>
+<h3 class="text-xl font-serif font-bold mb-3 text-slate-800 dark:text-slate-100">Recovery from Surgery</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-8">
+                            Please pray for my mother who is undergoing a critical heart surgery tomorrow morning. We are asking for steady hands for the surgeons and peace for our family during this time.
+                        </p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-slate-50 dark:border-slate-700/50">
+<button class="pulse-once flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/5 dark:bg-primary/10 text-primary text-xs font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition-all border border-primary/10">
+<span class="material-symbols-outlined text-base">favorite</span>
+                                I Prayed for This
+                                <span class="ml-1 px-1.5 py-0.5 bg-primary/20 rounded-md">24</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-shadow relative flex flex-col h-full">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400">person_off</span>
+</div>
+<div>
+<p class="text-sm font-bold italic">Anonymous</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-widest">5 hours ago</p>
+</div>
+</div>
+<span class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-blue-100 dark:border-blue-900/30">Personal</span>
+</div>
+<h3 class="text-xl font-serif font-bold mb-3 text-slate-800 dark:text-slate-100">Guidance for Career</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-8">
+                            Asking for wisdom as I navigate a difficult career transition. I want to ensure I'm following God's path and not just my own ambitions. Praying for clarity and an open door.
+                        </p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-slate-50 dark:border-slate-700/50">
+<button class="pulse-once flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/5 dark:bg-primary/10 text-primary text-xs font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition-all border border-primary/10">
+<span class="material-symbols-outlined text-base">favorite</span>
+                                I Prayed for This
+                                <span class="ml-1 px-1.5 py-0.5 bg-primary/20 rounded-md">12</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-shadow relative flex flex-col h-full">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="Mark" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcoP3xmks2MEaQwTRYA_n0Io3ZyL01LD3IQyJh2EseYu49eFj_lpoy4nA6tLb4p-L77ioSVtrQLQVNKuv5he9Wp9siVnlgMEZVVOJClieaQCqurX577xMiRasjkjwGLfVRiHZNnpfYxxeOuRrR9a7XuWJNiTD6SU_lMPtTSAoKkH8NaQhMUn138uFw6rAam1Cp1IEcuUoIHkfDCpaAtwClSB__pvq0dV0antsWQMB5MoxzC480AGwxkGqn0AKPPgzjj2zdQiOOUzST"/>
+</div>
+<div>
+<p class="text-sm font-bold">Mark Stevenson</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-widest">Yesterday</p>
+</div>
+</div>
+<span class="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-emerald-100 dark:border-emerald-900/30">Global</span>
+</div>
+<h3 class="text-xl font-serif font-bold mb-3 text-slate-800 dark:text-slate-100">Peace in the Middle East</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-8">
+                            Let us join together to pray for peace and protection for families caught in conflict. We pray for leaders to seek reconciliation and for comfort for those who have lost loved ones.
+                        </p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-slate-50 dark:border-slate-700/50">
+<button class="pulse-once flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/5 dark:bg-primary/10 text-primary text-xs font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition-all border border-primary/10">
+<span class="material-symbols-outlined text-base">favorite</span>
+                                I Prayed for This
+                                <span class="ml-1 px-1.5 py-0.5 bg-primary/20 rounded-md">156</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-shadow relative flex flex-col h-full">
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="Elena" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1NAji_abVjn7Z_AknpQdasciFPF5yKEAW1T4oU_ODVARiRR-qgJJt4qxkqTuj3ffY_1kYb8QytK5zrvmovOn4Qnq9mAEmIgrUrgWDsOcjQKL2K3zsS8B09AU2Sv086zZ522JXSxA6l3v-9KkS69115JkLRA_QvA182wYF8LCP_cTzdeH1VrPEFfBZVHIotaDS_sbli0DJCuYHISdk3POhXA7L6LDsC_jVe7FSfzus5cROgFelagQctT3fQmMu0KiXa6YyW-q4ii6e"/>
+</div>
+<div>
+<p class="text-sm font-bold">Elena Rodriguez</p>
+<p class="text-[10px] text-slate-400 uppercase tracking-widest">2 days ago</p>
+</div>
+</div>
+<span class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-blue-100 dark:border-blue-900/30">Personal</span>
+</div>
+<h3 class="text-xl font-serif font-bold mb-3 text-slate-800 dark:text-slate-100">Financial Restoration</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed flex-1 mb-8">
+                            Our family has been struggling with unexpected medical bills and debt. Please pray for provision and for us to be good stewards of what we have. We trust in God's timing.
+                        </p>
+<div class="flex items-center justify-between mt-auto pt-6 border-t border-slate-50 dark:border-slate-700/50">
+<button class="pulse-once flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary/5 dark:bg-primary/10 text-primary text-xs font-bold hover:bg-primary/10 dark:hover:bg-primary/20 transition-all border border-primary/10">
+<span class="material-symbols-outlined text-base">favorite</span>
+                                I Prayed for This
+                                <span class="ml-1 px-1.5 py-0.5 bg-primary/20 rounded-md">38</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex justify-center pt-8">
+<button class="px-8 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-bold hover:bg-white/50 transition-all">
+                        Load More Requests
+                    </button>
+</div>
+</div>
+<footer class="mt-auto py-10 border-t border-slate-200 dark:border-slate-800 text-center">
+<div class="flex flex-col items-center gap-2">
+<p class="text-slate-400 text-xs uppercase tracking-widest font-medium">Grace Community Church</p>
+<p class="text-slate-500 text-sm italic font-serif">"And whatever you ask in prayer, you will receive, if you have faith." — Matthew 21:22</p>
+</div>
+</footer>
+</main>
+</div>
+
+</body></html>

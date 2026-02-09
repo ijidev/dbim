@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Study Group Annotation Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #282e39;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Main Navigation Container -->
+<div class="flex h-screen flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-solid border-slate-200 dark:border-[#282e39] bg-white dark:bg-[#111318] px-6 py-3 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">TheologyHub</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Library</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-0.5" href="#">Study Groups</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Community</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<label class="hidden lg:flex flex-col min-w-40 max-w-md w-full relative">
+<div class="flex items-center bg-slate-100 dark:bg-[#282e39] rounded-lg px-3 py-1.5 focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-500 text-slate-900 dark:text-white" placeholder="Search insights, books, or members..."/>
+</div>
+</label>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-lg transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Share Insight</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-[#282e39] mx-2"></div>
+<div class="relative group cursor-pointer">
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center ring-2 ring-transparent group-hover:ring-primary/50 transition-all" data-alt="User profile picture of a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVAl0KrAkY_SFI5iZT0rf8LNO1mNLbEUZmX_HOUuwCkoZplRds6-Wc4DNe2ipBJV10P7DAyRwG8x5a0aLGfKx59K3naIlqEcsrj84G1zdSLrixuTiKlbTXYNbmXkbthcqmmF2zLcpp9VaOhOCFVS_thdnjM6h6u9Mg-QWwgfbwwik_SvKN9GSZR6dBGT4rTFEJSNfzkWQGbAe4jpu-Qt2KI2uiFHdDcezb38Gn2RWKhw-CmEdx6uInH3eLDdYTqSgLzCE_oA6tpvvO");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area (3-Column Layout) -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar: Active Groups -->
+<aside class="w-64 border-r border-slate-200 dark:border-[#282e39] bg-white dark:bg-[#111318] flex flex-col shrink-0 overflow-y-auto custom-scrollbar">
+<div class="p-6">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">My Study Groups</h3>
+<div class="space-y-1">
+<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold">
+<span class="material-symbols-outlined text-[20px] fill-current">group</span>
+<span class="truncate">Weekly Discipleship</span>
+<span class="ml-auto size-2 bg-primary rounded-full"></span>
+</button>
+<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#1c1f27] transition-all">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span class="truncate text-sm font-medium">Theology 101</span>
+</button>
+<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#1c1f27] transition-all">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+<span class="truncate text-sm font-medium">Epistle Studies</span>
+</button>
+<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#1c1f27] transition-all">
+<span class="material-symbols-outlined text-[20px]">church</span>
+<span class="truncate text-sm font-medium">Foundations</span>
+</button>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mt-8 mb-4">Reading Now</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-1">
+<div class="size-10 bg-slate-200 rounded shrink-0 bg-cover" data-alt="Cover of a book with classic typography" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCOxW2_UhulzTg9AoNQJe5b5RJIMdG8Fv5UqpbSgBqLjgAzxnLuPmJDYTB_f0DwOhds1YQp-4ILMmT8dJHvesnId8DL4s8NhorxzYJP0V4Wzrq5sQ-oJlIWruvQLy3oPnrShPFRyjIkb8FfccNhTmbx_rltN5FKnOyE7SX4-B8c8yCU6oKDlS-VeJtqryjuUqASvH7SFJhp_nVi8lNLqvan3pownx7GMrN6L5WEADNO2aJFWhxNiXox9pVWWy4i2VEQtBSPJDwQMkRr");'></div>
+<div>
+<p class="text-xs font-bold truncate">Mere Christianity</p>
+<p class="text-[10px] text-slate-500">C.S. Lewis</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-1">
+<div class="size-10 bg-slate-200 rounded shrink-0 bg-cover" data-alt="Cover of an old leather-bound book" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVud6sMvBTYptFCqvQGHS2ZCFR8yftVlUTEx7fP6Ugzi00irrJaR2W4CG-jTmq3vnKISO8EhCCLisB98FhvJjUDEq6fiAahY4zIhsS1SVfCD3j_yHVaHNj8TYr1a7mL2g2-xE8x99FmDqqCL5UeUfVK94t7NwtZoL6o9HQV8GTGGraqmtGPcCZ-grpVLJVMOLggn3Tc-FdSDmhW8aRmFFkvq74gavjY6pPBUNlVV6b0cLX0qf_EKSsVFkW_PO4J3KsvTawQQRENNr5");'></div>
+<div>
+<p class="text-xs font-bold truncate">Confessions</p>
+<p class="text-[10px] text-slate-500">St. Augustine</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-slate-200 dark:border-[#282e39]">
+<button class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Preferences</span>
+</button>
+</div>
+</aside>
+<!-- Center Feed: Shared Insights -->
+<section class="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 dark:bg-background-dark/50">
+<div class="max-w-2xl mx-auto py-8 px-4">
+<div class="mb-8">
+<h1 class="text-2xl font-bold dark:text-white text-slate-900">Weekly Discipleship</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Reflecting on "Mere Christianity" Chapter 3 &amp; 4</p>
+</div>
+<!-- Insight Feed -->
+<div class="flex flex-col gap-6">
+<!-- Insight Card 1 -->
+<div class="bg-white dark:bg-[#1c1f27] rounded-xl border border-slate-200 dark:border-[#282e39] shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+<div class="p-5">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar of a man with glasses" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZk_s08dkcyJ3xIxze_hvPcS8uUAnikpJqv_Efu0LamKjinUcS-m_bKKU_Aq3My2fhajRkgVDdJE3Fgbafycby4gA1vS0lAPKMfniYjsxKo8WL7MxxHUfXb416KQGGW0ZrklrhUc0VMczjdr6Vt4z-wYIrJtHThJ9TmMJEParG23gmdRy00_FwfSG6wzIsznTpnQ6dwDMMFGCb5-muncVuuZlLcCPzhMQpi-GpSwBcYzMKjpBsIaecCQ98y9UO6K6woiR1VC2qsb6B");'></div>
+<div>
+<p class="text-sm font-bold">David Henderson</p>
+<p class="text-xs text-slate-500">2 hours ago</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">Mere Christianity</span>
+</div>
+<div class="relative pl-4 border-l-4 border-primary/30 mb-4 italic text-slate-600 dark:text-slate-300">
+<p class="text-lg font-display leading-relaxed">
+                                        "God whispers to us in our pleasures, speaks in our conscience, but shouts in our pains: it is his megaphone to rouse a deaf world."
+                                    </p>
+</div>
+<div class="space-y-3">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Theological Reflection</h4>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                                        This passage always hits differently during seasons of trial. Lewis suggests that pain isn't just a consequence of a fallen world, but a tool used by God for redirection. How are we hearing the "megaphone" in our current challenges? I feel like I've been deaf to the whispers lately.
+                                    </p>
+</div>
+</div>
+<div class="px-5 py-3 bg-slate-50 dark:bg-[#232731] border-t border-slate-200 dark:border-[#282e39] flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">favorite</span>
+<span>Amen · 12</span>
+</button>
+<button class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+<span>Discussion · 4</span>
+</button>
+<button class="ml-auto flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+</div>
+</div>
+<!-- Insight Card 2 -->
+<div class="bg-white dark:bg-[#1c1f27] rounded-xl border border-slate-200 dark:border-[#282e39] shadow-sm overflow-hidden">
+<div class="p-5">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User avatar of a woman with a friendly smile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJDggcct82eQh1CjjhDG98znkJhugzVfFyAR6mLOxXrE58u0WXNI7YHoM_qc28oEeqFa28FvIT8MDy3UDF4chqOoUbN6QhuGes2XhgQBVN9zcQ8wrIVEdsOkMXqzyRTL_KHwLm9ht7j2j3JCXEC8h_nzTYMKhmYIYCef8Ha4n5u6SbGeK0CxdshLB9mDWiDC7lr808bnmB5jS5rRe1a5uN03I2reqcEYtHpdkGIoNjHliLS7Z1jCroEJ3cpRkmkC8xdIXaJmTlLGO5");'></div>
+<div>
+<p class="text-sm font-bold">Sarah Jenkins</p>
+<p class="text-xs text-slate-500">5 hours ago</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-500 text-[10px] font-bold uppercase tracking-wider">Romans 8:28</span>
+</div>
+<div class="relative pl-4 border-l-4 border-emerald-500/30 mb-4 italic text-slate-600 dark:text-slate-300">
+<p class="text-lg font-display leading-relaxed">
+                                        "And we know that in all things God works for the good of those who love him, who have been called according to his purpose."
+                                    </p>
+</div>
+<div class="space-y-3">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Personal Note</h4>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                                        Working through the Greek here, 'synergei' (works together) is such a powerful verb. It implies an active, ongoing weaving of events. Even the messy threads are being woven into the final tapestry. Grateful for this reminder today.
+                                    </p>
+</div>
+</div>
+<!-- Comment Preview -->
+<div class="px-5 py-4 border-t border-slate-200 dark:border-[#282e39] bg-slate-50 dark:bg-[#1a1d25]">
+<div class="flex gap-3 mb-4">
+<div class="size-7 rounded-full bg-slate-300 bg-cover bg-center shrink-0" data-alt="Commenter avatar of a smiling man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB82vm1Tpm92Iu2BREPMn3Qkd6lPz8ozKA45OicVM4DOuuLmchvzr7LIa9d4vhYPHbm4_h3G-hL4YDB3BvKo9V6AyFfAnRR3z1gCJfpN9YXyo9XY5UjtHL8ShRn29KPDFxKF1bWnLFrO0zE-jMROP8TGy3j1pKG23IKFuLUH74YpOzT14HDus3-_OMpD4J6OyrmsQdA32NIO1TfWinbUce9VFydbf-V_89StAWMz02kM241WN4CSlyFREOjn5BxK1Uf8mSVbGagsHKc");'></div>
+<div class="bg-white dark:bg-[#282e39] p-3 rounded-lg flex-1 shadow-sm">
+<p class="text-xs font-bold mb-1">Marcus Thorne</p>
+<p class="text-xs text-slate-600 dark:text-slate-400">That Greek insight is beautiful, Sarah. I never noticed the "active weaving" aspect before!</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-7 rounded-full bg-slate-300 bg-cover bg-center shrink-0" data-alt="Current user avatar small" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuBqJ0h5T26S88NE99LbpURE486zTlihExfy1LsU1i_pPADrhXE9I_HqDYrn172wnXSjGDgfPZRV3YmSnIQU8F2NGTtpo6Hzwzi5qvv0by2gbo2O7Recqe0qpcdgXovaMFKG_ebsHUGHZS-g4ubpL0NRoXMpH8AOK4Bp1fyovWbRyd3dVCI-41On5fNJ5ht9V5H5ydGHdbv9Tn_sPFs4MRRk0utCSZiuy-E4FWjId7_BcZApzSRJLX-wZDXvKFHws3PBJA3yWCaov6");'></div>
+<div class="flex-1 relative">
+<input class="w-full text-xs bg-white dark:bg-[#282e39] border-slate-200 dark:border-transparent rounded-full px-4 py-2 focus:ring-1 focus:ring-primary/50" placeholder="Add a comment..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-primary">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Group Members & Activity -->
+<aside class="w-72 border-l border-slate-200 dark:border-[#282e39] bg-white dark:bg-[#111318] hidden xl:flex flex-col shrink-0 overflow-y-auto custom-scrollbar">
+<div class="p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-sm font-bold text-slate-900 dark:text-white">Group Members</h3>
+<span class="text-[10px] px-2 py-0.5 bg-slate-100 dark:bg-[#282e39] rounded text-slate-500">14 Online</span>
+</div>
+<div class="space-y-4">
+<!-- Member List -->
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-cover bg-center" data-alt="Active member profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCatXhyQwaDENjYJWEMGTixQUfJua76x-deggHQso_hz6FPfj42Wt-yH4k-aLbnHiBF0d4IwEtgt2Kpn1mGTDbRz3oPUNylFAy6IBVwCtMKvE9PvAZ0lV-dlkRErhqxZTWDeP73Wq70AMH6od9-pBhcQuVim6XO58A8YrxUBz-Y7W0lu-ZhmNc5_eLSMOiIBvN9GR51C2MVadYpjQaB5poPlE2f3pcgkqyKpw7j89bFlj4o_sqsmBCteZef3MstLGNF87e1tlPHb69i");'></div>
+<span class="absolute bottom-0 right-0 size-2.5 bg-green-500 rounded-full border-2 border-white dark:border-[#111318]"></span>
+</div>
+<div>
+<p class="text-sm font-semibold">David H. (Me)</p>
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Facilitator</p>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-cover bg-center" data-alt="Active member Sarah" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBCoRJ8Ylwld4h0yPIFC8zJ6Z-eHQOpOy3oUlwazq7_4yunSpktm0aoOXBVhopmtprSPjqMvWUUEiUA39at62wl9fvupZccP0BcvA-LyysypJp7kziGqWxTMNQGI1PyqipTwLLEDyDP3aijZ3wcv3fB9BS-VhUPDj5l3iw24NEdyTmoCYVusEFk2AJ55VEhL3FVAKhn4n-rK5x_mbWLlQdlZv6BWJ9Lskcw87E1TnV88JcYiozab0zA4L_bm43x2HPBg1fzgloLAtVe");'></div>
+<span class="absolute bottom-0 right-0 size-2.5 bg-green-500 rounded-full border-2 border-white dark:border-[#111318]"></span>
+</div>
+<div>
+<p class="text-sm font-semibold">Sarah Jenkins</p>
+<p class="text-[10px] text-slate-500">Studying now</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="size-9 rounded-full bg-cover bg-center grayscale" data-alt="Offline member Marcus" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCU27k_AjMHhmM1mL41yJaU4wnryEL3Ec4r8t9L0_9VvzyvphL8zcJlXK5a9_Wpmhig5jPXHKBhcMDGABAofxGNU4yYsZD1HvyK6vV1DgCLILR81Y4bgT3z5wPvll1urZzC2jOfnD7Kdo-73UKQ4zlSTcbSNe33uz593mV94xAxxP96NCJxNp2ct7RS1z8mVTYEMhWN_5nR-4Q2itI97QzMgUy-jY3LqT06gyy_wuNmNhm2A_liBIbSsASSPHiN6o4Jng8C6aIFMnty");'></div>
+<span class="absolute bottom-0 right-0 size-2.5 bg-slate-400 rounded-full border-2 border-white dark:border-[#111318]"></span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-500">Marcus Thorne</p>
+<p class="text-[10px] text-slate-500">Away for 1h</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-10 p-4 rounded-xl bg-primary/5 border border-primary/10">
+<h4 class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Upcoming Meetup</h4>
+<p class="text-sm font-bold mb-1">Chapter 5 Reflection</p>
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Thursday, 7:00 PM</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 mt-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Church Library / Zoom</span>
+</div>
+<button class="w-full mt-4 py-2 bg-primary/20 hover:bg-primary/30 text-primary text-xs font-bold rounded-lg transition-colors">
+                            Add to Calendar
+                        </button>
+</div>
+<div class="mt-10">
+<h3 class="text-sm font-bold mb-4">Top Insights This Week</h3>
+<div class="space-y-4">
+<div class="flex gap-3">
+<span class="text-xl font-black text-slate-200 dark:text-[#282e39]">01</span>
+<p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400 italic">
+                                    "Humility is not thinking less of yourself, but thinking of yourself less."
+                                </p>
+</div>
+<div class="flex gap-3">
+<span class="text-xl font-black text-slate-200 dark:text-[#282e39]">02</span>
+<p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400 italic">
+                                    "A man can no more diminish God's glory by refusing to worship Him than..."
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body></html>

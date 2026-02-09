@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Mentorship Session - Grace LMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "accent-gold": "#b8860b",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "navy-deep": "#0a192f"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .payment-radio:checked + label {
+            @apply border-primary ring-1 ring-primary bg-primary/5;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen">
+<header class="bg-white dark:bg-[#1a1f2e] border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
+<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-8 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">church</span>
+</div>
+<h1 class="text-sm font-bold">Grace LMS</h1>
+</div>
+<div class="flex items-center gap-2 text-green-600 font-medium text-xs bg-green-50 px-3 py-1.5 rounded-full border border-green-100 dark:bg-green-900/20 dark:border-green-800">
+<span class="material-symbols-outlined text-sm">lock</span>
+            Secure Checkout
+        </div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-6 py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-5 space-y-8">
+<section>
+<button class="flex items-center gap-2 text-sm text-gray-500 hover:text-primary transition-colors mb-6 font-medium">
+<span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Back to Profile
+                </button>
+<h2 class="text-2xl font-bold mb-6">Order Summary</h2>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm">
+<div class="flex gap-4 items-center mb-6 pb-6 border-b border-gray-100 dark:border-gray-800">
+<div class="size-20 rounded-xl bg-cover bg-center border-2 border-white dark:border-gray-700 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCn5oHZVOzo8uhUGTsPto_5UIypDUrirkgwiCzLCAAMduemdpBU04Ky1Y2cohwPvyPawFlHt2bzZF27llSK48Q5ME_RI3ECtpgj9XLYhUL62Gsg1-QKfeHZmsY9W4g-su77fOzp2KFzGO9fDtXn_H6-7ZEMXU9cTA3HpP05Y0la9Kg7kPYgS0oXg6k9N9516P8Vaf9uG_j5r2gzAdxEOWEEuk_RWIcrmtxYA1tomB22QuIc7zYYK7KJ8iCb5-wzVf8yM2ui4j1-plTe");'></div>
+<div>
+<span class="text-[10px] font-bold uppercase tracking-widest text-accent-gold bg-accent-gold/10 px-2 py-0.5 rounded">Mentorship Session</span>
+<h3 class="text-lg font-bold mt-1">1-on-1 Spiritual Guidance</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">with Dr. Elizabeth Graham</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-gray-400">calendar_today</span>
+<span class="font-medium">Wednesday, October 30, 2024</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-gray-400">schedule</span>
+<span class="font-medium">2:00 PM – 3:00 PM (EST)</span>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<span class="material-symbols-outlined text-gray-400">videocam</span>
+<span class="font-medium">Zoom Video Conference</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 space-y-3">
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Session Fee</span>
+<span class="font-medium">$150.00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-gray-500">Processing Fee</span>
+<span class="font-medium">$5.50</span>
+</div>
+<div class="flex justify-between text-lg font-bold pt-3">
+<span>Total Due</span>
+<span class="text-primary">$155.50</span>
+</div>
+</div>
+</div>
+</section>
+<div class="bg-navy-deep rounded-2xl p-6 text-white overflow-hidden relative">
+<div class="relative z-10">
+<div class="flex items-center gap-2 text-accent-gold mb-2">
+<span class="material-symbols-outlined">verified</span>
+<span class="text-xs font-bold uppercase tracking-wider">Satisfaction Guaranteed</span>
+</div>
+<p class="text-sm text-gray-300 leading-relaxed italic">
+                        "My goal is to provide deep theological clarity and practical guidance. If you don't find value in our session, we'll offer a full credit for another resource."
+                    </p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-white/5 text-9xl">format_quote</span>
+</div>
+</div>
+<div class="lg:col-span-7">
+<div class="bg-white dark:bg-[#1a1f2e] rounded-2xl p-8 border border-gray-200 dark:border-gray-800 shadow-sm">
+<h2 class="text-xl font-bold mb-8">Payment Method</h2>
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="relative">
+<input checked="" class="hidden payment-radio" id="card" name="payment_type" type="radio"/>
+<label class="flex flex-col items-center justify-center p-4 border-2 border-gray-100 dark:border-gray-700 rounded-xl cursor-pointer hover:border-primary/50 transition-all" for="card">
+<span class="material-symbols-outlined text-2xl mb-1">credit_card</span>
+<span class="text-sm font-bold">Credit Card</span>
+</label>
+</div>
+<div class="relative">
+<input class="hidden payment-radio" id="wallet" name="payment_type" type="radio"/>
+<label class="flex flex-col items-center justify-center p-4 border-2 border-gray-100 dark:border-gray-700 rounded-xl cursor-pointer hover:border-primary/50 transition-all" for="wallet">
+<span class="material-symbols-outlined text-2xl mb-1">account_balance_wallet</span>
+<span class="text-sm font-bold">Digital Wallet</span>
+</label>
+</div>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Cardholder Name</label>
+<input class="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary text-sm" placeholder="John Doe" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Card Number</label>
+<div class="relative">
+<input class="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary text-sm" placeholder="0000 0000 0000 0000" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+<img alt="Visa" class="h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiazWWG_g5CNwfLumb0HTIF04mT5_dUpGw8ZIZBs4MibhCk3xxsNAjr-J9kqdsXTEEseUYNR5NjqmQ89aiaS6jRPaTgxJAJVUkK3fNMh77h-j4xUzGEO1_1PmgzryRImF3DbqH43NflAz06sRiIrsKIAZ6t7SfPuIx9pvI9MZFP3YcnzBxdnniNUcOv0tHOzpFJNPcWUXMuBoMjVl1bhDYkE5GXyCwmGUyj6lDCgsxl8CB3VzdEbmSL3RW7utOTvCDjQAoLi_kNPD9"/>
+<img alt="Mastercard" class="h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrYj5uDZcJacQyyBXqEVGl8WA-YLp96IeTK-CLkAD7GB0GVAAGKNDLclSj6qK81liNu2kHdfcNZO2oThJC7cUB-EXZeimpooYUyEDNkZqPGko_iubSm0eg14DedWFmuVNacNulZy_H6gCRVk4ZsCaosUZ3YZG0CCnDIy7lrsYxK3xW-OaU6m4dOLwF6hjNzPapsktiXFTzhXj0eTBVzPZiFuEnkaw6EFI2WJNRc3S3o5EWz3CMr6zhpD1L__hsfg_0w0yEfgp3IYNN"/>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">Expiry Date</label>
+<input class="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary text-sm" placeholder="MM / YY" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-bold mb-2 text-gray-700 dark:text-gray-300">CVV</label>
+<input class="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 focus:ring-primary focus:border-primary text-sm" placeholder="123" type="text"/>
+</div>
+</div>
+<div class="flex items-start gap-3 mt-8">
+<input class="mt-1 rounded border-gray-300 text-primary focus:ring-primary" id="save-card" type="checkbox"/>
+<label class="text-sm text-gray-500 dark:text-gray-400" for="save-card">
+                            Save this card for future mentorship sessions and resource purchases.
+                        </label>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-black py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-3 mt-8">
+<span class="material-symbols-outlined">check_circle</span>
+                        Complete Payment ($155.50)
+                    </button>
+<p class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-xs">encrypted</span>
+                        Your payment is encrypted and securely processed.
+                    </p>
+</form>
+</div>
+<div class="mt-10 flex items-center justify-center gap-8 opacity-50 grayscale contrast-125">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined">security</span>
+<span class="text-xs font-bold uppercase tracking-widest">PCI Compliant</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="text-xs font-bold uppercase tracking-widest">SSL Secured</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-20 p-12 bg-white dark:bg-[#1a1f2e] border-t border-[#dcdfe5] dark:border-gray-800">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-8 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-lg">church</span>
+</div>
+<p class="text-sm font-bold">Grace LMS</p>
+</div>
+<div class="flex gap-8 text-xs font-medium text-gray-500">
+<a class="hover:text-primary" href="#">About Us</a>
+<a class="hover:text-primary" href="#">Contact Support</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+</div>
+<p class="text-[#636f88] dark:text-gray-400 text-xs">© 2024 Grace Community Church. Powered by FaithLMS Platform.</p>
+</div>
+</footer>
+
+</body></html>

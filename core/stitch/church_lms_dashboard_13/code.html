@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Purchased Books Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "secondary": "#cca353", 
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex flex-col border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a1f2e] h-full flex-shrink-0">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">church</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-tight">Grace LMS</h1>
+<p class="text-[#636f88] dark:text-gray-400 text-xs font-normal">Spiritual Growth</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">Dashboard</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">book_2</span>
+<p class="text-sm font-medium">Course Catalog</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">library_books</span>
+<p class="text-sm font-medium">My Books</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">school</span>
+<p class="text-sm font-medium">My Learning</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">groups</span>
+<p class="text-sm font-medium">Community</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#636f88] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">Settings</p>
+</div>
+</nav>
+<div class="p-4 border-t border-[#dcdfe5] dark:border-gray-800">
+<div class="flex items-center gap-3 p-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Profile picture of a church member" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9Dlke3g7UyYuK-DLl15Yexz-ilCuqI-RIZyL6aUF1jKxCDPDFelOO97IMJ_85_arJBU1wQBXz-XAgcfc3Qac_9JMlkxmwtRYJf4lzuhKLjFz9qUCN27e6sC9T4rVojO2O0Sz-dlUwZaClG6IstL-umVPzgOii9n1rdr0-XzGiaAQRqxfeHu1tFtIRCoDymKX-kT_N_8SvbllspaVOKnVfo5bm5zKXZqPhaDi4OOUKMz0ip8I0k6M4FLP4NixmPtg-EXLj5UpM9s5X");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium">John Doe</p>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Member since 2023</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<header class="flex items-center justify-between border-b border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a1f2e] px-8 py-4 sticky top-0 z-10">
+<div class="flex items-center gap-6">
+<div class="relative w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#636f88] text-lg">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 border-none focus:ring-2 focus:ring-primary text-sm" placeholder="Search your library..."/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-white">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto w-full space-y-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="flex flex-col gap-2">
+<h2 class="text-3xl font-black tracking-tight text-[#111318] dark:text-white">My Purchased Books</h2>
+<p class="text-[#636f88] dark:text-gray-400 text-base">Manage and read the digital books you have purchased.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<select class="appearance-none pl-4 pr-10 py-2.5 rounded-lg bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-700 text-sm font-medium focus:ring-2 focus:ring-primary cursor-pointer">
+<option>All Categories</option>
+<option>Theology</option>
+<option>Christian Living</option>
+<option>Prayer</option>
+<option>History</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-lg">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none pl-4 pr-10 py-2.5 rounded-lg bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-700 text-sm font-medium focus:ring-2 focus:ring-primary cursor-pointer">
+<option>All Authors</option>
+<option>Rev. Thomas Moore</option>
+<option>Dr. James Wilson</option>
+<option>Sarah Jenkins</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-lg">expand_more</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+<div class="relative aspect-[2/3] w-full bg-gray-200">
+<div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDhX9GjWYPz5ml2WlxGT9WlqeZ7_gPw9F3sayURyUuFlCc8ftlEdrDA1x2MKbIYiFYpcaPZ81dOWatdWfDEVQUpuea7oQ_CGN5JgK2CXBOT9J3hEwqT7S5OjEnJ_sJJsnyy_WdbeH2x0tI39amEUYAXlPKMhqnNPSN4DnT0H-HwsJkQq9Z__QMVAjs4nt1Bwd_FgqGfvSl6AXWr_9sI84N4XKF3Dl63VOYFbAFkT-27LKkB7R0jDgABYg5gv2IvE7iNc-z5YmZCkK9T");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="w-full bg-gray-200/30 backdrop-blur-sm h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-secondary h-full w-[75%]"></div>
+</div>
+<p class="text-white text-xs font-medium">75% Read</p>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="font-bold text-lg leading-tight line-clamp-2 mb-1">Wisdom from Proverbs</h3>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">Elder Lydia</p>
+</div>
+<div class="mt-auto space-y-3">
+<button class="w-full py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">auto_stories</span>
+                                    Read Now
+                                </button>
+<button class="w-full py-2.5 bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-[#111318] dark:text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">download</span>
+                                    Download PDF
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+<div class="relative aspect-[2/3] w-full bg-gray-200">
+<div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBw0AU8MeTamJUD8kWwCMyhrgHvx91qCChIaVtB1DIVDlM_eVV30Shno-4HmWOqudykLvBIh02DkzWgsMsxC2ZC8vfQGOyZnCAwxQI6FepASCZBWZK7MKxs-mzRXH46zaI7cz5EuP7sF8RQbPEK4C46uPTruV5ksVrjrwc5HViPAOT7W7M5FZy2GUWFDtJxFoUtc0xgMdE69CA0uqTIkOKCD91XGWWNaSEI25JWS6mUKUvh8-ifr46OWgsKwcfMfvzB0XvQLZ8imNN");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="w-full bg-gray-200/30 backdrop-blur-sm h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-secondary h-full w-[15%]"></div>
+</div>
+<p class="text-white text-xs font-medium">15% Read</p>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="font-bold text-lg leading-tight line-clamp-2 mb-1">Prayer Strategies for the Modern World</h3>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">Dr. James Wilson</p>
+</div>
+<div class="mt-auto space-y-3">
+<button class="w-full py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">auto_stories</span>
+                                    Read Now
+                                </button>
+<button class="w-full py-2.5 bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-[#111318] dark:text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">download</span>
+                                    Download PDF
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+<div class="relative aspect-[2/3] w-full bg-gray-200">
+<div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAr8oUDkfWUo5QiWrvBtob1OD9cOD02htY2rXPqZZzGJpaomZXOXyLNR14lXnle03NHTSxTkBsudYFsDhy4Y2cl9j1LYaJ0igCpxJ3klUfmJNNIFO554O6-bbyj9V_SOruZu9lb80DYk3ReUs0XrkIswZYIw7RhwFCBqvKmWgwfJAnEVeUWlirj_QpkCKaMZ02j1cnopHARWloToJoKCnXTQ8gMkMqLomwIKuOMAh2tlx0oM_r4H8BCdTTDVfAx7Igx3LTz0-PFJCVs");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="w-full bg-gray-200/30 backdrop-blur-sm h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-secondary h-full w-[0%]"></div>
+</div>
+<p class="text-white text-xs font-medium">Not Started</p>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="font-bold text-lg leading-tight line-clamp-2 mb-1">Walking with the Holy Spirit</h3>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">Rev. Thomas Moore</p>
+</div>
+<div class="mt-auto space-y-3">
+<button class="w-full py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">auto_stories</span>
+                                    Start Reading
+                                </button>
+<button class="w-full py-2.5 bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-[#111318] dark:text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">download</span>
+                                    Download PDF
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a1f2e] rounded-xl border border-[#dcdfe5] dark:border-gray-800 overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300">
+<div class="relative aspect-[2/3] w-full bg-gray-200">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-blue-800 flex items-center justify-center text-center p-4">
+<h4 class="text-white/80 font-serif text-xl italic">The Grace of Giving</h4>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4">
+<div class="w-full bg-gray-200/30 backdrop-blur-sm h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-secondary h-full w-[100%]"></div>
+</div>
+<p class="text-white text-xs font-medium">Completed</p>
+</div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="font-bold text-lg leading-tight line-clamp-2 mb-1">The Grace of Giving</h3>
+<p class="text-[#636f88] dark:text-gray-400 text-sm">Pastor Sarah Jenkins</p>
+</div>
+<div class="mt-auto space-y-3">
+<button class="w-full py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">restart_alt</span>
+                                    Read Again
+                                </button>
+<button class="w-full py-2.5 bg-white dark:bg-[#1a1f2e] border border-[#dcdfe5] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-[#111318] dark:text-white text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[1.25rem]">download</span>
+                                    Download PDF
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="mt-auto p-8 border-t border-[#dcdfe5] dark:border-gray-800 text-center">
+<p class="text-[#636f88] dark:text-gray-400 text-xs">© 2024 Grace Community Church. Powered by FaithLMS Platform.</p>
+</footer>
+</main>
+</div>
+
+</body></html>

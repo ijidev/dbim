@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Dashboard - Live Sessions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1754cf",
+              "background-light": "#f8fafc",
+              "background-dark": "#0f172a",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .sidebar-link-active {
+        @apply bg-primary/10 text-primary border-r-4 border-primary;
+      }
+      .live-pulse {
+        @apply relative flex h-3 w-3;
+      }
+      .live-pulse span:first-child {
+        @apply animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75;
+      }
+      .live-pulse span:last-child {
+        @apply relative inline-flex rounded-full h-3 w-3 bg-red-500;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111318] dark:text-gray-100 flex">
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 hidden lg:flex flex-col sticky top-0 h-screen">
+<div class="p-6 flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold">Grace Portal</h2>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 sidebar-link-active font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">menu_book</span> My Library
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">school</span> My Courses
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_month</span> Schedule
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">bookmark</span> Saved Items
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC');"></div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">Samuel Moore</p>
+<p class="text-xs text-slate-500 truncate">sam.moore@email.com</p>
+</div>
+</div>
+</div>
+</aside>
+<div class="flex-1 flex flex-col">
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 flex items-center justify-between px-8">
+<div class="flex items-center gap-4">
+<button class="lg:hidden text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-xl font-bold text-slate-900 dark:text-white">Student Dashboard</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 !text-xl">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary" placeholder="Search courses, books..." type="text"/>
+</div>
+<button class="relative text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+</div>
+</header>
+<main class="p-8 max-w-7xl mx-auto w-full">
+<section class="mb-10">
+<div class="relative overflow-hidden bg-primary rounded-2xl shadow-xl shadow-primary/20">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<svg class="h-full w-full" fill="currentColor" viewBox="0 0 100 100">
+<pattern height="10" id="grid" patternUnits="userSpaceOnUse" width="10">
+<circle cx="1" cy="1" r="1"></circle>
+</pattern>
+<rect fill="url(#grid)" height="100" width="100"></rect>
+</svg>
+</div>
+<div class="relative flex flex-col md:flex-row items-center gap-6 p-6 md:p-8">
+<div class="relative w-full md:w-64 h-40 flex-shrink-0 rounded-xl overflow-hidden group">
+<img alt="Live Meeting" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYol4H2QQJYqtSwJICge_1vAzZsveLRO5q67qxK7S5CVoKVKgTBoswLrZsYhm0YgIZVzhLtaBeUxLkSfE44dU6vyYf09h-D9joqWnuhk44erEUOXR_zAth5ZGvrPwUpbPd7SJV5WZqACC_C2kwoou9xMmgZvpVWC_t6Xwyh_eSIs2p6MkLgTTQwXOPyEOry2M0qk0bCQvOtqzr_0ZoXRaQ5vzpGKJUwPXF17ZTUevivLd1M5VEnc_Xzje_IZIu86tPV6xBkRTG4bEd"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-4xl group-hover:scale-110 transition-transform">play_circle</span>
+</div>
+<div class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1.5 uppercase tracking-wider">
+<span class="live-pulse"><span></span><span></span></span>
+                                Live Now
+                            </div>
+</div>
+<div class="flex-1 text-white">
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 bg-white/20 rounded text-[10px] font-bold uppercase">Main Sanctuary</span>
+<span class="text-white/60 text-xs">• 1.2k attending</span>
+</div>
+<h2 class="text-2xl font-extrabold mb-2">Sunday Worship Main Stream</h2>
+<p class="text-white/80 text-sm leading-relaxed mb-6 max-w-2xl">
+                                Join Pastor Michael Roberts and the worship team for our weekly main service. Today we dive into the "Foundations of Faith" series. Be part of the conversation in the live chat!
+                            </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-white text-primary hover:bg-slate-100 px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined">videocam</span> Join Now
+                                </button>
+<button class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-2.5 rounded-lg font-bold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined">share</span> Share Link
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="space-y-12">
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+                            Continue Learning
+                        </h3>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+<img alt="Course thumbnail" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC"/>
+<div class="p-5">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[10px] font-bold text-primary uppercase bg-primary/10 px-2 py-0.5 rounded">Leadership</span>
+<span class="text-xs text-slate-500">8 Modules</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">Principles of Servant Leadership</h4>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mb-4">
+<div class="bg-primary h-full rounded-full w-3/4"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-500">75% Complete</span>
+<button class="text-primary font-bold text-sm hover:underline">Resume</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+<img alt="Course thumbnail" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC"/>
+<div class="p-5">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[10px] font-bold text-emerald-600 uppercase bg-emerald-100 px-2 py-0.5 rounded">Theology</span>
+<span class="text-xs text-slate-500">12 Modules</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">New Testament In-Depth Analysis</h4>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mb-4">
+<div class="bg-primary h-full rounded-full w-1/4"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-500">25% Complete</span>
+<button class="text-primary font-bold text-sm hover:underline">Resume</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+<img alt="Course thumbnail" class="w-full h-40 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYol4H2QQJYqtSwJICge_1vAzZsveLRO5q67qxK7S5CVoKVKgTBoswLrZsYhm0YgIZVzhLtaBeUxLkSfE44dU6vyYf09h-D9joqWnuhk44erEUOXR_zAth5ZGvrPwUpbPd7SJV5WZqACC_C2kwoou9xMmgZvpVWC_t6Xwyh_eSIs2p6MkLgTTQwXOPyEOry2M0qk0bCQvOtqzr_0ZoXRaQ5vzpGKJUwPXF17ZTUevivLd1M5VEnc_Xzje_IZIu86tPV6xBkRTG4bEd"/>
+<div class="p-5">
+<div class="flex items-center justify-between mb-3">
+<span class="text-[10px] font-bold text-amber-600 uppercase bg-amber-100 px-2 py-0.5 rounded">Marriage</span>
+<span class="text-xs text-slate-500">6 Modules</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">Building Strong Foundations</h4>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mb-4">
+<div class="bg-primary h-full rounded-full w-[90%]"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-slate-500">90% Complete</span>
+<button class="text-primary font-bold text-sm hover:underline">Resume</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">library_books</span>
+                            From the Library
+                        </h3>
+<a class="text-primary text-sm font-semibold hover:underline" href="#">Browse Library</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-lg overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-md transition-all">
+<img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-4 transition-opacity">
+<button class="bg-white text-slate-900 p-2 rounded-full mb-2"><span class="material-symbols-outlined">import_contacts</span></button>
+<span class="text-white text-[10px] font-bold uppercase">Read Now</span>
+</div>
+</div>
+<h5 class="text-sm font-bold text-slate-900 dark:text-white truncate">Grace Abounding</h5>
+<p class="text-xs text-slate-500">John Bunyan</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-lg overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-md transition-all">
+<img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-4 transition-opacity">
+<button class="bg-white text-slate-900 p-2 rounded-full mb-2"><span class="material-symbols-outlined">import_contacts</span></button>
+<span class="text-white text-[10px] font-bold uppercase">Read Now</span>
+</div>
+</div>
+<h5 class="text-sm font-bold text-slate-900 dark:text-white truncate">The Cost of Discipleship</h5>
+<p class="text-xs text-slate-500">Dietrich Bonhoeffer</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-lg overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-md transition-all">
+<img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYol4H2QQJYqtSwJICge_1vAzZsveLRO5q67qxK7S5CVoKVKgTBoswLrZsYhm0YgIZVzhLtaBeUxLkSfE44dU6vyYf09h-D9joqWnuhk44erEUOXR_zAth5ZGvrPwUpbPd7SJV5WZqACC_C2kwoou9xMmgZvpVWC_t6Xwyh_eSIs2p6MkLgTTQwXOPyEOry2M0qk0bCQvOtqzr_0ZoXRaQ5vzpGKJUwPXF17ZTUevivLd1M5VEnc_Xzje_IZIu86tPV6xBkRTG4bEd"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-4 transition-opacity">
+<button class="bg-white text-slate-900 p-2 rounded-full mb-2"><span class="material-symbols-outlined">import_contacts</span></button>
+<span class="text-white text-[10px] font-bold uppercase">Read Now</span>
+</div>
+</div>
+<h5 class="text-sm font-bold text-slate-900 dark:text-white truncate">Walking with God</h5>
+<p class="text-xs text-slate-500">T.L. Osborn</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-lg overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-md transition-all">
+<img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-4 transition-opacity">
+<button class="bg-white text-slate-900 p-2 rounded-full mb-2"><span class="material-symbols-outlined">import_contacts</span></button>
+<span class="text-white text-[10px] font-bold uppercase">Read Now</span>
+</div>
+</div>
+<h5 class="text-sm font-bold text-slate-900 dark:text-white truncate">The Practice of Piety</h5>
+<p class="text-xs text-slate-500">Lewis Bayly</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-lg overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-md transition-all">
+<img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLIXIhJvbDSSPndtOPjuhIHpDIYdtjqOx8DsWQl4dkVDcoxK2H21XUCWf-mVlob_Ul3KD_SX5NFEdmBtjsXSTzKKw6yobTl2mlk_1qsWV0Dw3G3sIdQNPkyFrApYhrc-fnBUyzipXjFCijk9FhOEBU1jfzTbNUzXF8xgI_tpvrWa7lMdP3Yz5ysN7KF6WeAhuT_TgJ6C2aj6V6PhAIdfzW7ZHqEAIDJ6hgToBWzT-Tus_oGh7Snmf7y91aRjXFkTL6y1m1xfLO2PjC"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-4 transition-opacity">
+<button class="bg-white text-slate-900 p-2 rounded-full mb-2"><span class="material-symbols-outlined">import_contacts</span></button>
+<span class="text-white text-[10px] font-bold uppercase">Read Now</span>
+</div>
+</div>
+<h5 class="text-sm font-bold text-slate-900 dark:text-white truncate">The Holy War</h5>
+<p class="text-xs text-slate-500">John Bunyan</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-lg overflow-hidden bg-slate-200 mb-3 shadow-sm group-hover:shadow-md transition-all">
+<img alt="Book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYol4H2QQJYqtSwJICge_1vAzZsveLRO5q67qxK7S5CVoKVKgTBoswLrZsYhm0YgIZVzhLtaBeUxLkSfE44dU6vyYf09h-D9joqWnuhk44erEUOXR_zAth5ZGvrPwUpbPd7SJV5WZqACC_C2kwoou9xMmgZvpVWC_t6Xwyh_eSIs2p6MkLgTTQwXOPyEOry2M0qk0bCQvOtqzr_0ZoXRaQ5vzpGKJUwPXF17ZTUevivLd1M5VEnc_Xzje_IZIu86tPV6xBkRTG4bEd"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center p-4 transition-opacity">
+<button class="bg-white text-slate-900 p-2 rounded-full mb-2"><span class="material-symbols-outlined">import_contacts</span></button>
+<span class="text-white text-[10px] font-bold uppercase">Read Now</span>
+</div>
+</div>
+<h5 class="text-sm font-bold text-slate-900 dark:text-white truncate">Pilgrim's Progress</h5>
+<p class="text-xs text-slate-500">John Bunyan</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="p-8 border-t border-slate-200 dark:border-slate-800 mt-auto bg-white dark:bg-slate-900">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-500">© 2024 Grace &amp; Faith Church Learning. All rights reserved.</p>
+<div class="flex gap-6 text-xs text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Support</a>
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

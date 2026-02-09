@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Individual Student Progress Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1A237E",
+                        "accent": "#C5A059",
+                        "background-light": "#f8f9fb",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #dcdfe5;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#1e293b] dark:text-slate-200 transition-colors duration-200">
+<div class="flex min-h-screen">
+<aside class="w-64 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a202c] flex flex-col fixed inset-y-0 z-20">
+<div class="p-6 flex flex-col h-full">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-accent">
+<span class="material-symbols-outlined font-bold">church</span>
+</div>
+<div>
+<h1 class="text-base font-bold leading-tight text-primary dark:text-white">Grace Church</h1>
+<p class="text-xs text-[#636f88] dark:text-gray-400">Instructor Panel</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl text-[#636f88]">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl text-[#636f88]">book_2</span>
+                    Courses
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium bg-primary text-white" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1">group</span>
+                    Students
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl text-[#636f88]">video_call</span>
+                    Live Sessions
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium hover:bg-[#f0f2f4] dark:hover:bg-gray-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl text-[#636f88]">analytics</span>
+                    Reports
+                </a>
+</nav>
+<div class="mt-auto pt-6 border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-3 px-2">
+<img alt="Instructor Profile" class="size-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBah-DpCaF41n9C215Lc72mha-SkgwWNP19qY05zjT9oJwwUsPkJhGB_m4-CEdmifQsbn87RGGtueedXOMHoOGnCthBOIgzD-I7xGjD8bPi0n61eutFdnLyFsJkKDkIYNyKUk8pG7UgJTISobi_cYsT4YxXyGCtj1vfk0vMXbIIfzYHuYiOF3iS2OfEgHosqVaee6AWqSMPjM9yAzcYcuQ_FcojBBlp8IwVBFAnUYwxkm25j9Ee3IhdAAIm9wgu-7gGxsxAbDB8Duc3"/>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Pastor David</p>
+<p class="text-[10px] text-[#636f88] truncate">Senior Instructor</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 ml-64 min-h-screen">
+<header class="h-16 border-b border-[#dcdfe5] dark:border-gray-800 bg-white/80 dark:bg-[#1a202c]/80 backdrop-blur-md sticky top-0 z-10 flex items-center justify-between px-8">
+<div class="flex items-center gap-2">
+<button class="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors text-[#636f88]">
+<span class="material-symbols-outlined text-xl">arrow_back</span>
+</button>
+<h2 class="text-lg font-bold">Student Progress Profile</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 border border-[#dcdfe5] dark:border-gray-700 rounded-lg text-sm font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span> Export Report
+                </button>
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-sm">
+<span class="material-symbols-outlined text-lg">mail</span> Send Message
+                </button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<div class="bg-white dark:bg-[#1a202c] p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-6">
+<div class="relative">
+<img alt="Student Photo" class="size-24 rounded-full object-cover border-4 border-primary/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrSgTGnBIaoEnhsiQcJhLXUbkVbPGZA2_Ldg4WxqadDn9GM_eLcKX7iK0wbXa3jIrxjHfgFg1UMCbv25xdwK-bNGzG4bB6W63DPqGj-zxR-h6VHEJU6cmGsvw65nS5hVdjwU6zlFAhPz-OvZ1G7PpwYnGkkzcM7O8yHIv3IkkCeAlS4jFC6iPfrg4739BeEP9qD3kh8WFb4TaLd9hsLxqS9etBLEqtBPO05fE7mkd0wKSDoahJk_cvOPkMUKgdB6IFxK0aRsQE99m8"/>
+<span class="absolute bottom-1 right-1 size-5 bg-emerald-500 border-4 border-white dark:border-[#1a202c] rounded-full"></span>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h1 class="text-2xl font-bold">Samuel Miller</h1>
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">Active Student</span>
+</div>
+<p class="text-[#636f88] flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-sm">mail</span> sam.miller@church.org
+                            </p>
+<div class="mt-3 flex items-center gap-4 text-xs font-medium text-[#636f88]">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">calendar_today</span> Joined Oct 12, 2023</span>
+<span class="flex items-center gap-1 text-primary dark:text-accent font-bold"><span class="material-symbols-outlined text-sm">location_on</span> New York Campus</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="text-right px-6 border-r border-[#dcdfe5] dark:border-gray-800">
+<p class="text-[10px] font-bold text-[#636f88] uppercase tracking-widest mb-1">Last Activity</p>
+<p class="text-sm font-bold">Today, 10:45 AM</p>
+</div>
+<div class="text-right px-6">
+<p class="text-[10px] font-bold text-[#636f88] uppercase tracking-widest mb-1">Membership</p>
+<p class="text-sm font-bold">Covenant Partner</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-[#1a202c] p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-xs font-bold text-[#636f88] dark:text-gray-400 uppercase tracking-wider">Total Courses Completed</p>
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">school</span>
+</div>
+</div>
+<p class="text-3xl font-bold">14</p>
+<p class="mt-2 text-xs text-emerald-600 font-medium">+2 in the last 30 days</p>
+</div>
+<div class="bg-white dark:bg-[#1a202c] p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-xs font-bold text-[#636f88] dark:text-gray-400 uppercase tracking-wider">Overall Quiz Average</p>
+<div class="bg-accent/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-accent">military_tech</span>
+</div>
+</div>
+<p class="text-3xl font-bold">92.4%</p>
+<div class="mt-3 w-full bg-[#f0f2f4] dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-accent h-full" style="width: 92.4%"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a202c] p-6 rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<p class="text-xs font-bold text-[#636f88] dark:text-gray-400 uppercase tracking-wider">Engagement Score</p>
+<div class="bg-emerald-50 dark:bg-emerald-900/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-emerald-600">bolt</span>
+</div>
+</div>
+<p class="text-3xl font-bold">High</p>
+<p class="mt-2 text-xs text-primary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">verified</span> Top 5% of student body
+                    </p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-[#dcdfe5] dark:border-gray-800 flex items-center justify-between">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">auto_stories</span>
+                                Current Courses
+                            </h3>
+<button class="text-xs font-bold text-primary dark:text-accent hover:underline uppercase tracking-tight">View All Courses</button>
+</div>
+<div class="divide-y divide-[#dcdfe5] dark:divide-gray-800">
+<div class="p-6 hover:bg-[#f8f9fb] dark:hover:bg-gray-800/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-base mb-1">Introduction to Hermeneutics</h4>
+<div class="flex gap-2">
+<span class="text-[10px] font-bold text-accent uppercase bg-accent/10 px-2 py-0.5 rounded">Theology</span>
+<span class="text-[10px] font-bold text-[#636f88] uppercase bg-[#f0f2f4] dark:bg-gray-700 px-2 py-0.5 rounded">Level 2</span>
+</div>
+</div>
+<p class="text-xs text-[#636f88] font-medium">Last accessed: 2h ago</p>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-sm">
+<span class="text-[#636f88]">Progress</span>
+<span class="font-bold">78%</span>
+</div>
+<div class="w-full h-2 bg-[#f0f2f4] dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 78%"></div>
+</div>
+<div class="flex items-center gap-6 mt-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-[#636f88]">task_alt</span>
+<span class="text-xs font-medium">12/15 Lessons</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-[#636f88]">quiz</span>
+<span class="text-xs font-medium">Avg. Quiz: 94%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 hover:bg-[#f8f9fb] dark:hover:bg-gray-800/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="font-bold text-base mb-1">Old Testament Survey</h4>
+<div class="flex gap-2">
+<span class="text-[10px] font-bold text-accent uppercase bg-accent/10 px-2 py-0.5 rounded">Biblical Studies</span>
+<span class="text-[10px] font-bold text-[#636f88] uppercase bg-[#f0f2f4] dark:bg-gray-700 px-2 py-0.5 rounded">Level 1</span>
+</div>
+</div>
+<p class="text-xs text-[#636f88] font-medium">Last accessed: Yesterday</p>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-sm">
+<span class="text-[#636f88]">Progress</span>
+<span class="font-bold">42%</span>
+</div>
+<div class="w-full h-2 bg-[#f0f2f4] dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 42%"></div>
+</div>
+<div class="flex items-center gap-6 mt-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-[#636f88]">task_alt</span>
+<span class="text-xs font-medium">8/19 Lessons</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-base text-[#636f88]">quiz</span>
+<span class="text-xs font-medium">Avg. Quiz: 88%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<div class="bg-white dark:bg-[#1a202c] rounded-xl border border-[#dcdfe5] dark:border-gray-800 shadow-sm overflow-hidden h-full">
+<div class="p-6 border-b border-[#dcdfe5] dark:border-gray-800 flex items-center justify-between">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-accent">history_edu</span>
+                                Spiritual Journey
+                            </h3>
+</div>
+<div class="p-6">
+<div class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-primary/20 before:to-transparent">
+<div class="relative flex items-start group">
+<div class="absolute left-0 flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 border-4 border-white dark:border-[#1a202c] z-10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">check_circle</span>
+</div>
+<div class="ml-14">
+<time class="text-[10px] font-bold text-accent uppercase mb-1 block">2 hours ago</time>
+<h5 class="text-sm font-bold">Completed Lesson 12</h5>
+<p class="text-xs text-[#636f88] mt-1 leading-relaxed">"Methods of Interpretation" - Hermeneutics 101</p>
+</div>
+</div>
+<div class="relative flex items-start group">
+<div class="absolute left-0 flex items-center justify-center w-10 h-10 rounded-full bg-emerald-50 border-4 border-white dark:border-[#1a202c] z-10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-emerald-600 text-sm" style="font-variation-settings: 'FILL' 1">emoji_events</span>
+</div>
+<div class="ml-14">
+<time class="text-[10px] font-bold text-accent uppercase mb-1 block">Yesterday</time>
+<h5 class="text-sm font-bold">Quiz Excellence</h5>
+<p class="text-xs text-[#636f88] mt-1 leading-relaxed">Scored 100% on "Principles of Context" quiz.</p>
+</div>
+</div>
+<div class="relative flex items-start group">
+<div class="absolute left-0 flex items-center justify-center w-10 h-10 rounded-full bg-accent/10 border-4 border-white dark:border-[#1a202c] z-10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-accent text-sm" style="font-variation-settings: 'FILL' 1">forum</span>
+</div>
+<div class="ml-14">
+<time class="text-[10px] font-bold text-accent uppercase mb-1 block">3 days ago</time>
+<h5 class="text-sm font-bold">Community Reflection Shared</h5>
+<div class="mt-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-[#dcdfe5] dark:border-gray-700">
+<p class="text-xs italic text-[#636f88] line-clamp-2">"Truly understanding the historical context of the text has opened my eyes to the depth of God's..."</p>
+</div>
+</div>
+</div>
+<div class="relative flex items-start group">
+<div class="absolute left-0 flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 border-4 border-white dark:border-[#1a202c] z-10 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1">person_add</span>
+</div>
+<div class="ml-14">
+<time class="text-[10px] font-bold text-accent uppercase mb-1 block">Oct 12, 2023</time>
+<h5 class="text-sm font-bold">Joined Grace Academy</h5>
+<p class="text-xs text-[#636f88] mt-1">Began the journey with Hermeneutics 101.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

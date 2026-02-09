@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Church Video &amp; Audio Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "accent-gold": "#D4AF37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#05070a",
+                        "surface-dark": "#101622",
+                        "border-dark": "#1d2533",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1d2533;
+            border-radius: 10px;
+        }
+        .waveform-bar {
+            width: 3px;
+            background-color: #3b4354;
+            border-radius: 1px;
+            transition: background-color 0.2s;
+        }
+        .waveform-bar.active {
+            background-color: #0f49bd;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-solid border-slate-200 dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-3 md:px-12">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">church</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight hidden md:block">Grace Church Media</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-bold text-primary" href="#">Library</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Events</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">About</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-xs relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="w-full h-full pl-10 pr-4 rounded-lg text-sm border-none bg-slate-100 dark:bg-surface-dark focus:ring-2 focus:ring-primary/50 placeholder:text-slate-400" placeholder="Search sermons..." type="text"/>
+</label>
+<button class="flex items-center justify-center size-10 rounded-full bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile avatar circle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLvmSdlhnesSk3h0h_-UecS6F1u-iJUrNh3MxzstLZkILra2Bjspe6-gjbb-o-pJRtVhtFXMix4qXntFquetolNn9qUn7ndY5NB_RVAf2RCXCXsfUVyhPsPQTi0FV1UwLRCrD5aBYC95LSX9f4IY_JPf3hxXFmRRH6W-xdAF_slvbCeN9XhZC7vn44k33pFRS65HcOIGHZ1ICsOFdv7O7HWthDCrJk5fdGtGRH6lqKem4mosbhsDINyyVwJ8kl7W4XNLuWqU7zAPYI");'></div>
+</div>
+</header>
+<main class="flex-1 flex flex-col">
+<!-- Featured Hero Section -->
+<section class="w-full px-6 py-6 md:px-12 md:py-8">
+<div class="relative overflow-hidden rounded-2xl aspect-[21/9] min-h-[360px] flex items-end">
+<!-- Background Image -->
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Cinematic church interior with stage lighting and audience" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsBaB4ODlchx-mrmCpDQy5Cf2Jx0QuVBL-rbPTV02MMYJU3lKKjgJ0bCJjndSWZmlodUVlfoICu6LjBI_0qyQmSF1tZZSGCOQMHwFSSge0DwebXTOzLGmulHS4HhH2IcoCKRPcd5edA13fhkF39A-uCv_1Z7VuaQBNxz5CItm8NNgm-9wwf3KRlif2lO6OakhN-2YOoX6nrMNQh6_JbKImYH1MgYmoZrN5mEWXz3vBRG_comhIDft8pq5bsLVvpjg0myv4m4yeEbPO");'>
+</div>
+<!-- Overlay Gradients -->
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-background-dark/20 to-transparent"></div>
+<!-- Content -->
+<div class="relative z-10 p-8 md:p-12 w-full max-w-3xl">
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-accent-gold text-background-dark text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded">Featured Sermon</span>
+<span class="text-white/60 text-xs font-medium uppercase tracking-wider">• Series: Walking in Grace</span>
+</div>
+<h1 class="text-white text-4xl md:text-5xl font-black leading-tight tracking-tight mb-4">
+                            The Path of Divine Mercy
+                        </h1>
+<p class="text-white/80 text-base md:text-lg mb-8 max-w-xl">
+                            Pastor Sarah Jenkins | Oct 22, 2023. A cinematic exploration of how divine mercy manifests in our daily challenges and victories.
+                        </p>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:scale-105">
+<span class="material-symbols-outlined">play_arrow</span>
+                                Watch Now
+                            </button>
+<button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-xl font-bold border border-white/20 transition-all">
+<span class="material-symbols-outlined">description</span>
+                                Read Transcript
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Library Content Area -->
+<div class="flex flex-1 gap-8 px-6 pb-12 md:px-12">
+<!-- Sidebar Filters -->
+<aside class="hidden lg:flex flex-col w-64 shrink-0 gap-8">
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 px-2">Library Filters</h3>
+<div class="space-y-1">
+<button class="w-full flex items-center justify-between p-3 rounded-xl bg-primary/10 text-primary group transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">folder</span>
+<span class="text-sm font-bold">Series</span>
+</div>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark group transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">person</span>
+<span class="text-sm font-medium">Speakers</span>
+</div>
+<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark group transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">label</span>
+<span class="text-sm font-medium">Topics</span>
+</div>
+<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark group transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary">calendar_today</span>
+<span class="text-sm font-medium">Date Range</span>
+</div>
+<span class="material-symbols-outlined text-sm text-slate-400">chevron_right</span>
+</button>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 px-2">Popular Tags</h3>
+<div class="flex flex-wrap gap-2 px-2">
+<span class="px-3 py-1 bg-slate-100 dark:bg-surface-dark rounded-full text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-border-dark cursor-pointer hover:border-primary/50 transition-colors">PRAYER</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-surface-dark rounded-full text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-border-dark cursor-pointer hover:border-primary/50 transition-colors">FAITH</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-surface-dark rounded-full text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-border-dark cursor-pointer hover:border-primary/50 transition-colors">RESTORATION</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-surface-dark rounded-full text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-border-dark cursor-pointer hover:border-primary/50 transition-colors">GENESIS</span>
+</div>
+</div>
+<div class="mt-auto">
+<button class="w-full py-3 bg-slate-100 dark:bg-surface-dark text-slate-500 dark:text-slate-400 text-sm font-bold rounded-xl border border-dashed border-slate-300 dark:border-border-dark hover:border-primary/50 transition-colors">
+                            Reset All Filters
+                        </button>
+</div>
+</aside>
+<!-- Content Grid -->
+<div class="flex-1 flex flex-col gap-6">
+<!-- Tab Controls -->
+<div class="flex items-center justify-between border-b border-slate-200 dark:border-border-dark">
+<div class="flex gap-8">
+<button class="relative py-4 text-sm font-bold text-primary">
+                                Video Sermons
+                                <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"></div>
+</button>
+<button class="py-4 text-sm font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                                Podcasts &amp; Audio
+                            </button>
+</div>
+<div class="flex items-center gap-2 text-slate-400">
+<span class="text-xs font-medium">Sort by:</span>
+<button class="text-xs font-bold flex items-center gap-1 dark:text-white">
+                                Newest First
+                                <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Media Grid (Video View) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Video Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Modern church building exterior with abstract lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSjUurxTbypC6gKcT1EcC3zksfYz3ULQ26MW0iBiGbGrj-PWHXRrPlZll_0ekoWs0zjcyhL0-e7zj_1GBEqtf4ULwyHAWl66FElWO3C_hzsGdHZ-enIVmQ896lBafYLeAQ5Iss2-L7e68M5hH4Y91WeBEX-wNdx_3M6SUzMsF4aHUCLu7LAPiFXJygrpoHuwwZTDGb21o-HRUINpTnm0EAb0XfaoHpUA_QD0rVzXryK7oyjwmwTkHTkWX4PKNpFj9sUPJ0p1orSwV5"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-bold rounded">42:15</span>
+</div>
+<h4 class="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-snug">Finding Peace in a Chaotic World</h4>
+<p class="text-xs text-slate-400 font-medium">Pastor Sarah Jenkins • Oct 15, 2023</p>
+</div>
+<!-- Video Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Person standing with a book under bright sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRBD8vEvuPbzS3N8YPghrLC7YZH-XOXA6TL2PTNxc6BJgXCFx_G_Oc9cyX8Ny8WAAS8Pb5iZATlvksR_wtFw2h-7jigjI5wN3jyQvAIya-KqRCQMSuBdQBQIoq5GpWHXqfIeW2f8hm5P5Alv0GfmSfW28hb1hINsUAcIScHm9A8WUpzZB7mZ7Ykgs46FzPh-Knh1dIAa8_Tp7EGAEM5pxCgD3_OlmCoUxyOlHwTRD4ahz0pNMIFaNFYoEcaeawPkfNeOqj6RVz2EqI"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-bold rounded">38:40</span>
+</div>
+<h4 class="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-snug">The Architecture of Faith</h4>
+<p class="text-xs text-slate-400 font-medium">Guest Pastor Michael Ross • Oct 08, 2023</p>
+</div>
+<!-- Video Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A crowd of people at a community event" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQNRCeewLpAOfdzyV_ezpl4YRCrGqoIvFyloj_Rqq75tEYakX7xyLwu1u2E81DaMpn5Hf5yiR_7ZTT59z5Ij6gfJvHKbWakRNp_tELtCox6UhuGGu367vInaetWJQgN7LR23UR8Vpr3_cXj90osb5kaIGPHtCIxAq9qk_VcRY3VSzfnA_utAThIV3XOT1Qjrs6cGJKXZ_C2wgrV9I8wWoOXW0pzbMjXU1BzV8Yf1ghNVIlNWnakomlFXNTrD6jmYpVXFx83b0JYwK"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-bold rounded">45:12</span>
+</div>
+<h4 class="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-snug">Love Thy Neighbor: A Call to Action</h4>
+<p class="text-xs text-slate-400 font-medium">Youth Pastor David Kim • Oct 01, 2023</p>
+</div>
+<!-- Video Card 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Sunlight rays breaking through forest trees" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIFQAjS3_VT-Pgl_sxpGx7IWDalPc6FD315M8ewyh9UpIpWgZBx2pmFdHtYLANB7oZGtbIHSyhN02yqV9ecZgn_JVYb22JhqjeJuH810Cky2V0oLCjJ9SjaJvlDumT8Kjfp0VmogYk0LYoKdjyyYAxlH21ok_KBKEs-0yPIfUMxXRy9Xo_zhhjQQTM5Z2C2tVyQ2EuZXebmc6yubGugxoAW-3aNM2dKFU9m1KO8Hd7AoL-tZfHLdQ4z9oo_zBEoPZM-4B8kJUFUPjd"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-bold rounded">51:04</span>
+</div>
+<h4 class="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-snug">Through the Valley of Shadow</h4>
+<p class="text-xs text-slate-400 font-medium">Pastor Sarah Jenkins • Sep 24, 2023</p>
+</div>
+<!-- Video Card 5 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Antique paper and quill pen in soft light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC22rx8tnrPvnmgwEt2Ls4RgMrU3aDyyb6uHzqjWMwaxAmlcnUWOtFNv9UxKuo0RqGrry0FhrnvxBAvOxLXg5HDRps8WR2pToJT_RQW4tl_uDKDgHd1jIeugnpxfPQq_Sl75vCVwU3n6-LYowB_6WIOh3QCurOJx49TQ7bK_BTcSrrMxoavCAsPiiwCaifVwILhnv8k62U85fp7fjO9EzQSwIrYE9JjaJMAF32F6csXoYlkRrmSwgylvALzKJLtEic8Pt4vV7WJR0b5"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-bold rounded">32:55</span>
+</div>
+<h4 class="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-snug">The Genesis Study: Chapter One</h4>
+<p class="text-xs text-slate-400 font-medium">Theology Prof. Elena Valez • Sep 17, 2023</p>
+</div>
+<!-- Video Card 6 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-video rounded-xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Abstract bokeh lights on deep background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpuODLrif197RvQi6jNdX9GEJPdCrRYDUE5Z3YFA86CkXPvWE-QS8fDYbdHqqWP9DdBIN0EHFbxfKcajjgt-k9oq-a-IryzyoJ3V4AX3xfvj7__4zS8-p0bc5FjcRuBeh4Y677ZbmY6-l6K2FZ0XdZuHv5py4v5F7OxKG7m5-kMNZedIRS4Dro7H6rJW98cXCQ-JEROH2EobmsxuBirRwDiE60P_uJXYB7sgM-fQ3XwQQNb66aC0FOPsAvdfzrPGk9DntqMvW4qtu0"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+<div class="size-12 rounded-full bg-primary text-white flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+<span class="material-symbols-outlined text-3xl">play_arrow</span>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-bold rounded">28:10</span>
+</div>
+<h4 class="font-bold text-sm mb-1 group-hover:text-primary transition-colors leading-snug">Modern Miracles: Real Stories</h4>
+<p class="text-xs text-slate-400 font-medium">Grace Church Community • Sep 10, 2023</p>
+</div>
+</div>
+<!-- Audio Player Mockup Section (Always visible for this demo) -->
+<div class="mt-8">
+<h3 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">podcasts</span>
+                            Latest Audio Episodes
+                        </h3>
+<div class="space-y-4">
+<!-- Podcast Item 1 -->
+<div class="bg-slate-100 dark:bg-surface-dark p-4 rounded-2xl border border-slate-200 dark:border-border-dark flex items-center gap-6">
+<button class="size-12 rounded-full bg-primary text-white flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h5 class="font-bold text-sm truncate">EP. 45 - The Silence of Prayer</h5>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter shrink-0">15:02 Remaining</span>
+</div>
+<!-- Waveform visualizer mockup -->
+<div class="flex items-end gap-[2px] h-8 w-full mt-2">
+<div class="waveform-bar active h-[40%]"></div>
+<div class="waveform-bar active h-[60%]"></div>
+<div class="waveform-bar active h-[30%]"></div>
+<div class="waveform-bar active h-[70%]"></div>
+<div class="waveform-bar active h-[80%]"></div>
+<div class="waveform-bar active h-[50%]"></div>
+<div class="waveform-bar active h-[90%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[20%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[20%]"></div>
+<div class="waveform-bar h-[90%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[90%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Podcast Item 2 -->
+<div class="bg-slate-100 dark:bg-surface-dark p-4 rounded-2xl border border-slate-200 dark:border-border-dark flex items-center gap-6 opacity-80 hover:opacity-100 transition-opacity">
+<button class="size-12 rounded-full border-2 border-slate-300 dark:border-slate-700 text-slate-500 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h5 class="font-bold text-sm truncate">EP. 44 - Walking Through Trials</h5>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter shrink-0">28:45 Duration</span>
+</div>
+<div class="flex items-end gap-[2px] h-8 w-full mt-2 grayscale opacity-50">
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[90%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[20%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[20%]"></div>
+<div class="waveform-bar h-[90%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[90%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+<div class="waveform-bar h-[80%]"></div>
+<div class="waveform-bar h-[50%]"></div>
+<div class="waveform-bar h-[70%]"></div>
+<div class="waveform-bar h-[30%]"></div>
+<div class="waveform-bar h-[60%]"></div>
+<div class="waveform-bar h-[40%]"></div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center mt-12 gap-2">
+<button class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 rounded-lg flex items-center justify-center bg-primary text-white font-bold text-sm">1</button>
+<button class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors font-bold text-sm">2</button>
+<button class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors font-bold text-sm">3</button>
+<span class="flex items-center px-2 text-slate-400">...</span>
+<button class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors font-bold text-sm">12</button>
+<button class="size-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Player Mini Bar (Sticky Bottom) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-4xl bg-white/90 dark:bg-surface-dark/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl rounded-2xl p-4 z-50 flex items-center gap-6">
+<div class="flex items-center gap-4 min-w-[200px]">
+<div class="size-10 rounded-lg bg-cover bg-center shrink-0" data-alt="Mini player thumbnail artwork" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_53W6tBWRVuo4OMujbKnjn25S-Z4N4avcUHXD0mn1pIVIiM5DU8Foy7NHKnQCskx60U1VuOeFsCGfVw7zj4UBUaSG7LGWEdEevxHPbe8RDOeM25CN7dmzH5dytGr2IVxKaeBhj39_pd0on51LTwSoUxCAWpAfEXP_trha7O55jArQkMZeVGWCKnZvfoD8wdvOfH4dFqgXGHXBEFOzTC0wFjRGNXxRxtxkWLekQdtlaQVW9WVtVDgqLETMv1D5XcSJTVl1lgbwxuZp");'></div>
+<div class="min-w-0">
+<h6 class="text-xs font-bold truncate">EP. 45 - The Silence of Prayer</h6>
+<p class="text-[10px] text-slate-400 font-medium">Grace Church Podcast</p>
+</div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center justify-center gap-6">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">skip_previous</span>
+</button>
+<button class="size-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">pause</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">skip_next</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[10px] font-bold text-primary">04:12</span>
+<div class="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[30%]"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">15:02</span>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-4 shrink-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-lg">volume_up</span>
+<div class="w-20 h-1 bg-slate-200 dark:bg-slate-700 rounded-full">
+<div class="h-full bg-slate-400 w-[60%] rounded-full"></div>
+</div>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">playlist_play</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="border-t border-slate-200 dark:border-border-dark bg-slate-50 dark:bg-surface-dark px-12 py-12 text-center md:text-left">
+<div class="flex flex-col md:flex-row justify-between gap-12">
+<div class="max-w-sm">
+<div class="flex items-center gap-3 mb-6 justify-center md:justify-start">
+<div class="bg-primary p-1.5 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">church</span>
+</div>
+<h2 class="text-lg font-bold">Grace Church Media</h2>
+</div>
+<p class="text-sm text-slate-400 leading-relaxed">
+                        Sharing the word of hope and grace through modern digital media. Access our full library of sermons, podcasts, and study materials anytime, anywhere.
+                    </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
+<div class="flex flex-col gap-4">
+<h4 class="font-bold text-primary uppercase tracking-widest text-[11px]">Resources</h4>
+<a class="text-slate-500 hover:text-primary" href="#">Video Library</a>
+<a class="text-slate-500 hover:text-primary" href="#">Audio Podcast</a>
+<a class="text-slate-500 hover:text-primary" href="#">Study Guides</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-bold text-primary uppercase tracking-widest text-[11px]">Community</h4>
+<a class="text-slate-500 hover:text-primary" href="#">Events</a>
+<a class="text-slate-500 hover:text-primary" href="#">Groups</a>
+<a class="text-slate-500 hover:text-primary" href="#">Prayer Request</a>
+</div>
+<div class="flex flex-col gap-4 col-span-2 md:col-span-1">
+<h4 class="font-bold text-primary uppercase tracking-widest text-[11px]">Contact</h4>
+<p class="text-slate-500">123 Faith Lane, Springfield</p>
+<p class="text-slate-500">hello@gracechurch.org</p>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-slate-200 dark:border-border-dark flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-400">© 2023 Grace Church Media. All rights reserved.</p>
+<div class="flex gap-6 text-slate-400">
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-lg">social_leaderboard</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-lg">public</span></a>
+<a class="hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-lg">mail</span></a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

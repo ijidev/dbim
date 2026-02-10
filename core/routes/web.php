@@ -124,6 +124,8 @@ Route::middleware(['auth'])->group(function () {
     
     // Enrollment Routes
     Route::post('/enrollment/enroll', [App\Http\Controllers\StudentController::class, 'enroll'])->name('enrollment.enroll');
+    // Quiz Routes
+    Route::post('/lesson/{lesson}/quiz-submit', [App\Http\Controllers\StudentController::class, 'submitQuiz'])->name('student.quiz.submit');
 });
 
 // Store Routes

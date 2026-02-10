@@ -50,10 +50,17 @@ class StudentController extends Controller
         
         // Simplified auth check for development
         if(!$isEnrolled && !$course->is_free && $user->role !== 'admin') {
-            // Logic for unauthorized access could go here
+            return redirect()->route('course.show', $id)->with('error', 'Please enroll to access this course.');
         }
 
-        return view('frontend.student.learn', compact('course'));
+        // Load quiz results for this course lessons
+        $lessonIds = $course->modules->flatMap(fn($m) => $m->lessons->pluck('id'));
+        $quizResults = \App\Models\QuizResult::where('user_id', $user->id)
+            ->whereIn('lesson_id', $lessonIds)
+            ->get()
+            ->keyBy('lesson_id');
+
+        return view('frontend.student.learn', compact('course', 'quizResults'));
     }
 
     public function catalog()
@@ -264,5 +271,57 @@ class StudentController extends Controller
             ->get();
         
         return view('frontend.student.instructor_profile', compact('instructor', 'courses', 'total_students', 'books', 'upcoming_sessions'));
+    }
+    public function submitQuiz(\Illuminate\Http\Request $request, $id)
+    {
+        $lesson = \App\Models\Lesson::findOrFail($id);
+        if ($lesson->type !== 'quiz') {
+            return response()->json(['success' => false, 'message' => 'Not a quiz lesson'], 400);
+        }
+
+        $quizData = $lesson->quiz_data;
+        if (!$quizData || !isset($quizData['questions'])) {
+            return response()->json(['success' => false, 'message' => 'Quiz data missing'], 400);
+        }
+
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $submittedAnswers = $request->input('answers', []); // Question Index => Option Index
+        
+        $correctCount = 0;
+        $totalQuestions = count($quizData['questions']);
+        
+        foreach ($quizData['questions'] as $index => $question) {
+            if (isset($submittedAnswers[$index]) && (int)$submittedAnswers[$index] === (int)$question['correct_answer']) {
+                $correctCount++;
+            }
+        }
+
+        $score = round(($correctCount / $totalQuestions) * 100);
+        $passingScore = $quizData['passing_score'] ?? 70;
+        $passed = $score >= $passingScore;
+
+        // Save result
+        $result = \App\Models\QuizResult::updateOrCreate(
+            ['user_id' => $user->id, 'lesson_id' => $id],
+            [
+                'score' => $score,
+                'passed' => $passed,
+                'answers_json' => $submittedAnswers,
+            ]
+        );
+        // Increment attempts if not first time
+        if (!$result->wasRecentlyCreated) {
+            $result->increment('attempts');
+        }
+
+        return response()->json([
+            'success' => true,
+            'score' => $score,
+            'passed' => $passed,
+            'passing_score' => $passingScore,
+            'correct_count' => $correctCount,
+            'total_questions' => $totalQuestions,
+            'message' => $passed ? 'Congratulations! You passed.' : 'Keep studying and try again.'
+        ]);
     }
 }

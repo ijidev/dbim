@@ -24,4 +24,15 @@ class Lesson extends Model
     {
         return $this->belongsTo(Module::class);
     }
+
+    public function quizResults()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
+
+    public function getQuizDataAttribute()
+    {
+        if ($this->type !== 'quiz') return null;
+        return json_decode($this->content, true);
+    }
 }

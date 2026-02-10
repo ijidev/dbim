@@ -277,25 +277,21 @@
             <!-- Left Column -->
             <div class="lg:col-span-2 space-y-8">
                 <!-- Welcome Video -->
-                @if($instructor->intro_video)
+                @if($instructor->welcome_video_url)
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                     <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                         <span class="material-symbols-outlined text-primary">play_circle</span>
                         Welcome Message
                     </h2>
-                    <div class="relative aspect-video rounded-xl overflow-hidden bg-gray-900 group cursor-pointer">
-                        <img src="{{ asset($instructor->video_thumbnail ?? 'assets/images/video-placeholder.jpg') }}" 
-                             alt="Video Thumbnail" 
-                             class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity"
-                             onerror="this.src='https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&h=450&fit=crop'">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="size-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-white text-4xl">play_arrow</span>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-4 left-4 right-4">
-                            <p class="text-white font-bold text-lg">{{ $instructor->video_title ?? 'My Vision for Ministry Education' }}</p>
-                        </div>
+                    <div class="relative aspect-video rounded-xl overflow-hidden bg-gray-900 group">
+                        @if(Str::contains($instructor->welcome_video_url, 'youtube.com') || Str::contains($instructor->welcome_video_url, 'youtu.be'))
+                            <iframe class="w-full h-full" src="{{ $instructor->welcome_video_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        @else
+                            <video class="w-full h-full object-cover" controls>
+                                <source src="{{ asset($instructor->welcome_video_url) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        @endif
                     </div>
                 </div>
                 @endif
@@ -304,56 +300,53 @@
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
                     <h2 class="text-lg font-bold mb-4">About Me</h2>
                     <div class="prose max-w-none text-slate-600 leading-relaxed text-sm">
-                        <p>{{ $instructor->about ?? 'For over 20 years, I have dedicated my life to bridging the gap between deep theological study and practical, everyday ministry. My journey began in youth mentorship and evolved into academic leadership, where I found my passion for equipping the next generation of church leaders.' }}</p>
-                        @if($instructor->about_extended)
-                        <p class="mt-4">{{ $instructor->about_extended }}</p>
-                        @else
-                        <p class="mt-4">I believe that true leadership starts with a servant's heart. My courses are designed not just to inform, but to transform—helping you build a resilient faith that can weather the challenges of modern community life.</p>
-                        @endif
+                        <p>{{ $instructor->bio ?? 'Empowering leaders through biblical wisdom and practical theology. Specializing in community building and servant leadership.' }}</p>
                     </div>
                 </div>
                 
                 <!-- Upcoming Live Sessions -->
-                @if(isset($upcoming_sessions) && $upcoming_sessions->count() > 0)
+                @if($upcoming_sessions->count() > 0)
                 <div>
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-xl font-bold flex items-center gap-2">
                             <span class="material-symbols-outlined text-red-500 animate-pulse">sensors</span>
                             Upcoming Live Sessions
                         </h2>
-                        <a href="{{ route('calendar') }}" class="text-sm font-bold text-primary hover:underline">View Calendar</a>
+                        <a href="{{ route('student.schedule') }}" class="text-sm font-bold text-primary hover:underline">View All</a>
                     </div>
                     <div class="space-y-4">
                         @foreach($upcoming_sessions as $session)
                         <div class="session-card group">
-                            <div class="flex-shrink-0 w-full sm:w-48 h-32 rounded-xl bg-cover bg-center overflow-hidden relative"
-                                 style="background-image: url('{{ asset($session->thumbnail ?? 'assets/images/session-placeholder.jpg') }}');">
-                                <div class="absolute top-2 left-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded">
-                                    {{ $session->scheduled_at ? $session->scheduled_at->format('M d') : 'TBD' }}
+                            <div class="flex-shrink-0 w-full sm:w-48 h-32 rounded-xl bg-slate-100 flex items-center justify-center relative overflow-hidden">
+                                @if($session->thumbnail)
+                                <img src="{{ asset($session->thumbnail) }}" alt="{{ $session->title }}" class="w-full h-full object-cover">
+                                @else
+                                <span class="material-symbols-outlined text-slate-300 text-4xl">video_camera_front</span>
+                                @endif
+                                <div class="absolute top-2 left-2 bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded">
+                                    {{ $session->scheduled_at->format('M d') }}
                                 </div>
                             </div>
                             <div class="flex-1 flex flex-col justify-between">
                                 <div>
                                     <div class="flex justify-between items-start">
                                         <h3 class="font-bold text-lg group-hover:text-primary transition-colors">{{ $session->title }}</h3>
-                                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">Open</span>
+                                        <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Upcoming</span>
                                     </div>
-                                    <p class="text-sm text-gray-500 mt-1">{{ Str::limit($session->description, 80) }}</p>
+                                    <p class="text-sm text-gray-500 mt-1">{{ Str::limit($session->description, 100) }}</p>
                                     <div class="flex items-center gap-4 mt-3 text-xs text-gray-400 font-medium">
                                         <span class="flex items-center gap-1">
                                             <span class="material-symbols-outlined text-sm">schedule</span>
-                                            {{ $session->scheduled_at ? $session->scheduled_at->format('g:i A') : 'TBD' }}
+                                            {{ $session->scheduled_at->format('g:i A') }} ({{ $session->type ?? 'Live' }})
                                         </span>
                                     </div>
                                 </div>
                                 <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
-                                    @if($session->price > 0)
-                                    <span class="font-bold text-lg">₦{{ number_format($session->price) }}</span>
-                                    @else
-                                    <span class="font-bold text-lg text-green-600">Free</span>
-                                    @endif
-                                    <a href="{{ route('meeting.room', $session->room_code) }}" class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
-                                        Register
+                                    <span class="font-bold text-lg {{ $session->price > 0 ? 'text-slate-900' : 'text-emerald-600' }}">
+                                        {{ $session->price > 0 ? '₦' . number_format($session->price) : 'Free' }}
+                                    </span>
+                                    <a href="{{ route('meeting.room', $session->room_code) }}" class="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-6 py-2 rounded-lg transition-all shadow-md shadow-primary/10">
+                                        Join Session
                                     </a>
                                 </div>
                             </div>
@@ -373,16 +366,22 @@
                         @foreach($courses as $course)
                         <a href="{{ route('course.show', $course) }}" class="bg-white rounded-2xl p-5 border border-gray-200 hover:border-primary/30 transition-colors group">
                             <div class="flex gap-4">
-                                <div class="w-20 h-20 rounded-xl bg-cover bg-center flex-shrink-0" 
-                                     style="background-image: url('{{ $course->thumbnail ? asset($course->thumbnail) : 'https://placehold.co/100x100?text=Course' }}');">
+                                <div class="w-20 h-20 rounded-xl bg-slate-100 flex-shrink-0 relative overflow-hidden">
+                                    @if($course->thumbnail)
+                                    <img src="{{ asset($course->thumbnail) }}" alt="{{ $course->title }}" class="w-full h-full object-cover">
+                                    @else
+                                    <div class="w-full h-full flex items-center justify-center text-slate-300">
+                                        <span class="material-symbols-outlined text-3xl">menu_book</span>
+                                    </div>
+                                    @endif
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="font-bold leading-tight mb-1 group-hover:text-primary transition-colors">{{ $course->title }}</h4>
-                                    <p class="text-xs text-slate-400 mb-2">{{ $course->modules->count() }} Modules</p>
+                                    <h4 class="font-bold leading-tight mb-1 group-hover:text-primary transition-colors text-sm">{{ $course->title }}</h4>
+                                    <p class="text-[10px] text-slate-400 mb-2 font-bold uppercase tracking-wider">{{ $course->modules_count }} Modules</p>
                                     @if($course->price > 0)
-                                    <span class="text-sm font-bold text-primary">₦{{ number_format($course->price) }}</span>
+                                    <span class="text-sm font-black text-primary">₦{{ number_format($course->price) }}</span>
                                     @else
-                                    <span class="text-sm font-bold text-green-600">Free</span>
+                                    <span class="text-sm font-black text-emerald-600">Free</span>
                                     @endif
                                 </div>
                             </div>
@@ -399,56 +398,54 @@
                     <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">Instructor Stats</h4>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="stat-card">
-                            <p class="text-2xl font-black text-slate-900">{{ $total_students ?? '1.2k' }}</p>
-                            <p class="text-xs text-gray-500 font-medium mt-1">Students</p>
+                            <p class="text-2xl font-black text-slate-900">{{ number_format($total_students) }}</p>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Students</p>
                         </div>
                         <div class="stat-card">
                             <p class="text-2xl font-black text-slate-900">{{ $courses->count() }}</p>
-                            <p class="text-xs text-gray-500 font-medium mt-1">Courses</p>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Courses</p>
                         </div>
                         <div class="stat-card">
-                            <p class="text-2xl font-black text-slate-900">{{ $instructor->years_ministry ?? '5+' }}</p>
-                            <p class="text-xs text-gray-500 font-medium mt-1">Yrs Ministry</p>
+                            <p class="text-2xl font-black text-slate-900">{{ $instructor->years_ministry ?? '0' }}</p>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Yrs Ministry</p>
                         </div>
                         <div class="stat-card">
-                            <p class="text-2xl font-black text-slate-900">{{ $instructor->rating ?? '4.9' }}</p>
-                            <p class="text-xs text-gray-500 font-medium mt-1">Rating</p>
+                            <p class="text-2xl font-black text-slate-900">{{ number_format($instructor->rating ?? 5.0, 1) }}</p>
+                            <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Rating</p>
                         </div>
                     </div>
-                    <button class="w-full mt-6 bg-white border border-gray-300 text-sm font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                    <button class="w-full mt-6 bg-white border border-gray-200 text-sm font-bold py-3 rounded-xl hover:bg-slate-50 transition-colors shadow-sm">
                         Send Message
                     </button>
                 </div>
                 
                 <!-- Published Books -->
-                @if(isset($books) && $books->count() > 0)
+                @if($books->count() > 0)
                 <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400">Published Books</h4>
-                        <a href="{{ route('library.index') }}" class="text-xs font-bold text-primary hover:underline">View All</a>
+                        <a href="{{ route('library.index') }}" class="text-[10px] font-bold text-primary hover:underline uppercase tracking-widest">View All</a>
                     </div>
                     <div class="space-y-4">
-                        @foreach($books->take(2) as $book)
+                        @foreach($books as $book)
                         <div class="book-item">
-                            <div class="w-16 h-20 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center text-gray-400 shadow-sm border border-gray-100">
+                            <div class="w-14 h-20 bg-slate-50 rounded-lg flex-shrink-0 overflow-hidden border border-slate-100 flex items-center justify-center">
                                 @if($book->cover_image)
-                                <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover rounded-lg">
+                                <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                                 @else
-                                <span class="material-symbols-outlined text-2xl">book_2</span>
+                                <span class="material-symbols-outlined text-slate-300">import_contacts</span>
                                 @endif
                             </div>
-                            <div>
-                                <h5 class="book-title text-sm font-bold leading-snug transition-colors">{{ $book->title }}</h5>
-                                <p class="text-xs text-gray-500 mt-1">{{ Str::limit($book->description, 50) }}</p>
-                                @if($book->price > 0)
-                                <p class="text-xs font-bold text-[#b8860b] mt-2">₦{{ number_format($book->price) }}</p>
-                                @else
-                                <p class="text-xs font-bold text-green-600 mt-2">Free</p>
-                                @endif
+                            <div class="flex-1 min-w-0">
+                                <h5 class="book-title text-sm font-bold leading-tight truncate transition-colors">{{ $book->title }}</h5>
+                                <p class="text-[10px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">{{ $book->description }}</p>
+                                <p class="text-xs font-black text-primary mt-2">
+                                    {{ $book->price > 0 ? '₦' . number_format($book->price) : 'Free' }}
+                                </p>
                             </div>
                         </div>
                         @if(!$loop->last)
-                        <div class="border-t border-gray-100"></div>
+                        <div class="border-t border-slate-50"></div>
                         @endif
                         @endforeach
                     </div>
@@ -456,51 +453,16 @@
                 @endif
                 
                 <!-- Mentorship CTA -->
-                <div class="mentor-cta">
-                    <span class="material-symbols-outlined text-4xl mb-3 opacity-80">workspace_premium</span>
-                    <h4 class="text-lg font-bold">Need a Mentor?</h4>
-                    <p class="text-sm text-white/80 mt-2 mb-4 leading-relaxed">Book a 1-on-1 mentorship session with {{ explode(' ', $instructor->name)[0] }} to discuss your ministry path.</p>
-                    <button onclick="document.getElementById('booking-form').scrollIntoView({behavior: 'smooth'})" 
-                            class="w-full bg-white text-primary text-sm font-bold py-2.5 rounded-lg hover:bg-gray-50 transition-colors">
-                        Request Session
-                    </button>
-                </div>
-                
-                <!-- Booking Form -->
-                <div id="booking-form" class="booking-card">
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Book Private Session</h3>
-                    <p class="text-sm text-slate-500 mb-6">Schedule a one-on-one mentorship call.</p>
-                    
-                    @if(session('success'))
-                    <div class="mb-6 p-4 bg-emerald-50 text-emerald-700 rounded-xl text-sm font-bold border border-emerald-100">
-                        {{ session('success') }}
+                <div class="mentor-cta text-center">
+                    <div class="size-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-md">
+                        <span class="material-symbols-outlined text-white text-3xl">workspace_premium</span>
                     </div>
-                    @endif
-                    
-                    <form action="{{ route('meeting.book') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="instructor_id" value="{{ $instructor->id }}">
-                        
-                        <div class="mb-4">
-                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Session Title</label>
-                            <input type="text" name="title" class="form-input" placeholder="e.g., Business Strategy Call" required>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Preferred Date & Time</label>
-                            <input type="datetime-local" name="scheduled_at" class="form-input" required>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 block">Brief Agenda</label>
-                            <textarea name="description" class="form-input" rows="3" placeholder="What would you like to discuss?"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full py-3 bg-primary text-white rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
-                            Request Booking
-                        </button>
-                        <p class="text-xs text-center text-slate-400 mt-4">Instructor will confirm via email/portal</p>
-                    </form>
+                    <h4 class="text-xl font-black mb-2">Need a Mentor?</h4>
+                    <p class="text-sm text-white/70 mb-8 leading-relaxed">Book a 1-on-1 mentorship session with {{ explode(' ', $instructor->name)[0] }} to discuss your ministry path.</p>
+                    <a href="{{ route('instructor.book', $instructor->id) }}" 
+                       class="block w-full bg-white text-primary text-sm font-black py-4 rounded-xl hover:bg-slate-50 transition-all shadow-xl shadow-black/10">
+                        Request Session
+                    </a>
                 </div>
             </div>
         </div>

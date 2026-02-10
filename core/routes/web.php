@@ -118,7 +118,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Booking Routes
+    Route::get('/instructors', [App\Http\Controllers\StudentController::class, 'instructors'])->name('instructors');
     Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
+    Route::get('/instructor/{id}/book', [App\Http\Controllers\StudentController::class, 'bookSession'])->name('instructor.book');
     Route::post('/meeting/book', [App\Http\Controllers\StudentController::class, 'bookMeeting'])->name('meeting.book');
     Route::get('/meeting/booked/{id}', [App\Http\Controllers\StudentController::class, 'sessionBooked'])->name('meeting.booked');
     

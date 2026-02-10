@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('room_code', 20)->unique();
             $table->dateTime('scheduled_at')->nullable();
             $table->enum('type', ['instant', 'scheduled'])->default('instant');
-            $table->enum('status', ['pending', 'active', 'ended'])->default('pending');
+            $table->enum('status', ['pending', 'scheduled', 'active', 'ended', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

@@ -19,9 +19,11 @@ class StitchTestSeeder extends Seeder
                 'name' => 'Dr. Julian Foster',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'admin',
-                'bio' => 'Lead researcher at DBIM with over 15 years in ministerial strategy and digital theology.',
-                'headline' => 'Ministerial Strategist',
+                'bio' => 'Lead researcher at DBIM with over 15 years in ministerial strategy and digital theology. Empowering leaders to navigate the modern church landscape.',
+                'headline' => 'Ministerial Strategist & Lead Researcher',
                 'years_ministry' => '15+',
+                'location' => 'Lagos, Nigeria',
+                'welcome_video_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
             ]
         );
 
@@ -104,5 +106,32 @@ class StitchTestSeeder extends Seeder
                 'order' => 3
             ]
         );
+
+        // 6. Create Books for the Instructor
+        if (class_exists(\App\Models\Book::class)) {
+            \App\Models\Book::firstOrCreate(
+                ['title' => 'The Divine Strategy'],
+                [
+                    'description' => 'A masterclass in navigating modern ministerial challenges with spiritual precision.',
+                    'author' => $instructor->name,
+                    'price' => 5000,
+                    'is_published' => true,
+                    'category' => 'Leadership',
+                    'cover_image' => 'https://images.unsplash.com/photo-1544648151-1823ed4117ff?auto=format&fit=crop&q=80&w=400',
+                ]
+            );
+
+            \App\Models\Book::firstOrCreate(
+                ['title' => 'Kingdom Impact'],
+                [
+                    'description' => 'Principles for scaling your ministry in the digital age.',
+                    'author' => $instructor->name,
+                    'price' => 0,
+                    'is_published' => true,
+                    'category' => 'Strategy',
+                    'cover_image' => 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400',
+                ]
+            );
+        }
     }
 }

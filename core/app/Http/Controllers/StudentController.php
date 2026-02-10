@@ -241,8 +241,13 @@ class StudentController extends Controller
 
         $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
         $user->save();
-
         return back()->with('success', 'Password updated successfully.');
+    }
+
+    public function instructors()
+    {
+        $instructors = \App\Models\User::whereIn('role', ['instructor', 'admin'])->latest()->get();
+        return view('frontend.student.instructors', compact('instructors'));
     }
     public function instructorProfile($id)
     {
@@ -264,13 +269,23 @@ class StudentController extends Controller
         }
         
         // Get upcoming sessions/meetings hosted by instructor
-        $upcoming_sessions = \App\Models\Meeting::where('host_id', $id)
-            ->where('status', '!=', 'ended')
-            ->orderBy('scheduled_at', 'asc')
-            ->take(3)
-            ->get();
+        $upcoming_sessions = collect();
+        if (class_exists(\App\Models\Meeting::class)) {
+            $upcoming_sessions = \App\Models\Meeting::where('host_id', $id)
+                ->where('status', '!=', 'ended')
+                ->where('scheduled_at', '>=', now())
+                ->orderBy('scheduled_at', 'asc')
+                ->take(3)
+                ->get();
+        }
         
         return view('frontend.student.instructor_profile', compact('instructor', 'courses', 'total_students', 'books', 'upcoming_sessions'));
+    }
+
+    public function bookSession($id)
+    {
+        $instructor = \App\Models\User::whereIn('role', ['instructor', 'admin'])->findOrFail($id);
+        return view('frontend.student.book_session', compact('instructor'));
     }
     public function submitQuiz(\Illuminate\Http\Request $request, $id)
     {

@@ -79,40 +79,9 @@
 @endpush
 
 @section('content')
-<div class="flex h-[calc(100vh-64px)] overflow-hidden bg-[#f6f6f8]">
-    <!-- Sidebar -->
-    <aside class="hidden lg:flex w-72 flex-col border-r border-slate-200 bg-white h-full shrink-0">
-        <nav class="flex-1 px-6 py-8 space-y-2">
-            <a href="{{ route('student.dashboard') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
-                <span class="material-symbols-outlined">dashboard</span>
-                <span>Dashboard</span>
-            </a>
-            <a href="{{ route('student.catalog') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
-                <span class="material-symbols-outlined">book_2</span>
-                <span>Course Catalog</span>
-            </a>
-            <a href="{{ route('student.learning') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
-                <span class="material-symbols-outlined">school</span>
-                <span>My Learning</span>
-            </a>
-            <a href="{{ route('calendar') }}" class="sidebar-link flex items-center gap-4 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
-                <span class="material-symbols-outlined">groups</span>
-                <span>Community</span>
-            </a>
-        </nav>
-        
-        <div class="p-6 border-t border-slate-100">
-            <a href="{{ route('student.profile') }}" class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-xl transition-colors group">
-                <div class="size-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs border border-primary/20 group-hover:bg-primary group-hover:text-white transition-colors">
-                    {{ substr(Auth::user()->name, 0, 2) }}
-                </div>
-                <div class="flex flex-col">
-                    <p class="text-sm font-black text-slate-900 group-hover:text-primary transition-colors">{{ Auth::user()->name }}</p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">View Profile</p>
-                </div>
-            </a>
-        </div>
-    </aside>
+<div class="flex h-[calc(100vh-72px)] overflow-hidden bg-[#f6f6f8]">
+    <!-- Sidebar Navigation (Desktop) -->
+    @include('partials.student_sidebar')
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col overflow-y-auto px-6 lg:px-12 py-10 max-w-5xl mx-auto w-full">

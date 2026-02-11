@@ -60,7 +60,9 @@ class StudentController extends Controller
             ->get()
             ->keyBy('lesson_id');
 
-        return view('frontend.student.learn', compact('course', 'quizResults'));
+        $activeLessonId = request('lesson');
+
+        return view('frontend.student.learn', compact('course', 'quizResults', 'activeLessonId'));
     }
 
     public function catalog()
@@ -129,12 +131,12 @@ class StudentController extends Controller
                 ->with('info', 'You are already enrolled in this course.');
         }
         
-        // For paid courses, redirect to checkout (future implementation)
+        // For paid courses, redirect to checkout
         if ($course->price > 0 && !$course->is_free) {
-            // For now, just enroll - payment integration can be added later
+            return redirect()->route('student.course.checkout', $course->id);
         }
         
-        // Create enrollment
+        // Create enrollment for free courses
         $user->enrollments()->create([
             'course_id' => $course->id,
             'status' => 'active',
@@ -144,13 +146,37 @@ class StudentController extends Controller
         return redirect()->route('student.course.learn', $course)
             ->with('success', 'Congratulations! You have successfully enrolled in ' . $course->title);
     }
+
+    public function courseCheckout($id)
+    {
+        $course = \App\Models\Course::with('instructor')->findOrFail($id);
+        return view('frontend.student.checkout', ['course' => $course]);
+    }
+
+    public function processCoursePayment(Request $request, $id)
+    {
+        $course = \App\Models\Course::findOrFail($id);
+        $user = auth()->user();
+
+        // Simulate payment success and create enrollment
+        $user->enrollments()->updateOrCreate(
+            ['course_id' => $course->id],
+            ['status' => 'active', 'progress' => 0]
+        );
+
+        return redirect()->route('student.course.learn', $course->id)
+            ->with('success', 'Successfully enrolled in ' . $course->title);
+    }
     public function bookMeeting(\Illuminate\Http\Request $request)
     {
         $request->validate([
             'instructor_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'scheduled_at' => 'required|date|after:now',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'visibility' => 'required|in:public,private',
+            'price' => 'required|numeric|min:0',
+            'type' => 'nullable|string'
         ]);
 
         $meeting = new \App\Models\Meeting();
@@ -159,13 +185,48 @@ class StudentController extends Controller
         $meeting->scheduled_at = $request->scheduled_at;
         $meeting->description = $request->description;
         $meeting->room_code = \Illuminate\Support\Str::random(10);
+        $meeting->status = 'pending'; // Start as pending until "payment"
+        $meeting->visibility = $request->visibility;
+        $meeting->price = $request->price;
+        $meeting->type = $request->type ?? 'scheduled';
+        
+        // If private, add current student to allowed list
+        if ($request->visibility === 'private') {
+            $meeting->allowed_student_ids = json_encode([auth()->id()]);
+        }
+        
+        $meeting->save();
+
+        return redirect()->route('meeting.checkout', $meeting->id);
+    }
+
+    public function checkout($id)
+    {
+        $meeting = \App\Models\Meeting::with('host')->findOrFail($id);
+        return view('frontend.student.checkout', compact('meeting'));
+    }
+
+    public function processPayment(Request $request, $id)
+    {
+        $meeting = \App\Models\Meeting::findOrFail($id);
+        // Simulate payment success
         $meeting->status = 'scheduled';
         $meeting->save();
 
-        // In a real app, we would add the student as a participant here
-        // $meeting->participants()->attach(auth()->id());
-
         return redirect()->route('meeting.booked', $meeting->id);
+    }
+
+    public function myBookings()
+    {
+        $user = auth()->user();
+        // Meetings where user is host OR in allowed_student_ids
+        $meetings = \App\Models\Meeting::where('host_id', $user->id)
+            ->orWhereJsonContains('allowed_student_ids', $user->id)
+            ->with('host')
+            ->orderBy('scheduled_at', 'desc')
+            ->get();
+
+        return view('frontend.student.my_bookings', compact('meetings'));
     }
 
     public function sessionBooked($id)

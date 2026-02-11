@@ -357,6 +357,7 @@
                                     <a href="{{ route('instructor.dashboard') }}" class="dropdown-item">📋 Instructor Panel</a>
                                 @else
                                     <a href="{{ route('student.dashboard') }}" class="dropdown-item">🎓 My Courses</a>
+                                    <a href="{{ route('student.bookings') }}" class="dropdown-item">📅 My Bookings</a>
                                 @endif
                                 <a href="{{ route('student.profile') }}" class="dropdown-item">👤 Profile</a>
                                 <div style="height: 1px; background: #e2e8f0; margin: 0.5rem 0;"></div>

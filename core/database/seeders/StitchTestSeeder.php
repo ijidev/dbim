@@ -19,6 +19,7 @@ class StitchTestSeeder extends Seeder
                 'name' => 'Dr. Julian Foster',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'admin',
+                'avatar' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1374&auto=format&fit=crop',
                 'bio' => 'Lead researcher at DBIM with over 15 years in ministerial strategy and digital theology. Empowering leaders to navigate the modern church landscape.',
                 'headline' => 'Ministerial Strategist & Lead Researcher',
                 'years_ministry' => '15+',
@@ -39,7 +40,7 @@ class StitchTestSeeder extends Seeder
                 'is_published' => true,
                 'category' => 'Leadership',
                 'type' => 'video',
-                'thumbnail' => 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&q=80&w=1000',
+                'thumbnail' => 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1471&auto=format&fit=crop',
             ]
         );
 
@@ -97,41 +98,84 @@ class StitchTestSeeder extends Seeder
                 ]
             ]
         ];
-
         \App\Models\Lesson::firstOrCreate(
             ['module_id' => $module1->id, 'title' => 'Foundations Knowledge Check'],
             [
                 'type' => 'quiz',
-                'content' => json_encode($quizData),
+                'content' => '<p>Test your knowledge.</p>',
+                'quiz_data' => json_encode($quizData),
                 'order' => 3
             ]
         );
 
         // 6. Create Books for the Instructor
         if (class_exists(\App\Models\Book::class)) {
-            \App\Models\Book::firstOrCreate(
-                ['title' => 'The Divine Strategy'],
+            \App\Models\Book::updateOrCreate(
+                ['slug' => 'the-divine-strategy'],
                 [
+                    'title' => 'The Divine Strategy',
                     'description' => 'A masterclass in navigating modern ministerial challenges with spiritual precision.',
                     'author' => $instructor->name,
                     'price' => 5000,
-                    'is_published' => true,
+                    'status' => true,
                     'category' => 'Leadership',
                     'cover_image' => 'https://images.unsplash.com/photo-1544648151-1823ed4117ff?auto=format&fit=crop&q=80&w=400',
                 ]
             );
 
-            \App\Models\Book::firstOrCreate(
-                ['title' => 'Kingdom Impact'],
+            \App\Models\Book::updateOrCreate(
+                ['slug' => 'kingdom-impact'],
                 [
+                    'title' => 'Kingdom Impact',
                     'description' => 'Principles for scaling your ministry in the digital age.',
                     'author' => $instructor->name,
                     'price' => 0,
-                    'is_published' => true,
+                    'status' => true,
                     'category' => 'Strategy',
                     'cover_image' => 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400',
                 ]
             );
         }
+
+        // 7. Create a Student User
+        $student = \App\Models\User::updateOrCreate(
+            ['email' => 'student@dbim.com'],
+            [
+                'name' => 'John Student',
+                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'role' => 'student',
+            ]
+        );
+
+        // 8. Create Meetings
+        \App\Models\Meeting::updateOrCreate(
+            ['title' => 'Mastering Digital Ministry'],
+            [
+                'host_id' => $instructor->id,
+                'description' => 'A deep dive into digital tools for modern churches.',
+                'room_code' => 'DIGITAL101',
+                'status' => 'scheduled',
+                'scheduled_at' => now()->addDays(2),
+                'visibility' => 'public',
+                'price' => 25000,
+                'type' => 'masterclass',
+                'max_participants' => 10,
+            ]
+        );
+
+        \App\Models\Meeting::updateOrCreate(
+            ['title' => 'Personal Mentorship Session'],
+            [
+                'host_id' => $instructor->id,
+                'description' => '1-on-1 ministerial guidance.',
+                'room_code' => 'PRIVATE777',
+                'status' => 'scheduled',
+                'scheduled_at' => now()->addDays(5),
+                'visibility' => 'private',
+                'price' => 75000,
+                'type' => 'mentorship',
+                'allowed_student_ids' => json_encode([$student->id]),
+            ]
+        );
     }
 }

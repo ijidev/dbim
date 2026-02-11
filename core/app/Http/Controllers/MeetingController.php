@@ -64,9 +64,32 @@ class MeetingController extends Controller
             return redirect()->route('meeting.index')->with('error', 'This meeting has already ended.');
         }
 
+        // Access Control for Private Meetings
+        if ($meeting->visibility === 'private') {
+            $allowedIds = json_decode($meeting->allowed_student_ids ?? '[]', true);
+            if ($meeting->host_id !== auth()->id() && !in_array(auth()->id(), $allowedIds)) {
+                return redirect()->route('student.bookings')->with('error', 'Access Denied: This is a private session.');
+            }
+        }
+
+        // Check if room is full for public meetings
+        if ($meeting->visibility === 'public') {
+            // Count current participants (this would need a participants table/tracking)
+            // For now, we assume room size is managed by the frontend/logic elsewhere
+        }
+
         // Update status to active if pending (only for the host or first person)
         if ($meeting->status === 'pending') {
             $meeting->update(['status' => 'active']);
+        }
+
+        // Track Attendance
+        if (auth()->check() && $meeting->host_id !== auth()->id()) {
+            $attendedIds = $meeting->attended_student_ids ?? [];
+            if (!in_array(auth()->id(), $attendedIds)) {
+                $attendedIds[] = auth()->id();
+                $meeting->update(['attended_student_ids' => $attendedIds]);
+            }
         }
 
         return view('frontend.meeting.room', compact('meeting'));

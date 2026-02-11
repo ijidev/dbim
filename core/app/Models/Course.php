@@ -37,4 +37,13 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, 'enrollments');
     }
+
+    public function getThumbnailUrlAttribute()
+    {
+        if ($this->thumbnail && (str_starts_with($this->thumbnail, 'http') || file_exists(public_path($this->thumbnail)))) {
+            return str_starts_with($this->thumbnail, 'http') ? $this->thumbnail : asset($this->thumbnail);
+        }
+        
+        return 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop';
+    }
 }

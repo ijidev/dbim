@@ -218,13 +218,7 @@
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-end gap-8">
                 <!-- Avatar -->
                 <div class="relative">
-                    @if($instructor->avatar)
-                    <img src="{{ asset($instructor->avatar) }}" alt="{{ $instructor->name }}" class="profile-avatar object-cover">
-                    @else
-                    <div class="profile-avatar bg-slate-600 flex items-center justify-center text-white text-5xl font-black">
-                        {{ substr($instructor->name, 0, 1) }}
-                    </div>
-                    @endif
+                    <img src="{{ $instructor->avatar_url }}" alt="{{ $instructor->name }}" class="profile-avatar object-cover">
                     <div class="online-indicator">
                         <span class="material-symbols-outlined text-sm">videocam</span>
                     </div>
@@ -316,7 +310,39 @@
                     </div>
                     <div class="space-y-4">
                         @foreach($upcoming_sessions as $session)
-                        <div class="session-card group">
+                        @php
+                            $isPaid = $session->isPaid(auth()->user());
+                            $isLive = $session->isLive();
+                            $hasExpired = $session->hasExpired();
+                            $wasAttended = $session->wasAttended(auth()->user());
+                        @endphp
+                        <div class="session-card group" x-data="{ 
+                            countdown: '',
+                            targetDate: '{{ $session->scheduled_at->toIso8601String() }}',
+                            init() {
+                                if(!{{ $isLive ? 'true' : 'false' }} && !{{ $hasExpired ? 'true' : 'false' }}) {
+                                    this.updateCountdown();
+                                    setInterval(() => this.updateCountdown(), 1000);
+                                }
+                            },
+                            updateCountdown() {
+                                const target = new Date(this.targetDate).getTime();
+                                const now = new Date().getTime();
+                                const diff = target - now;
+                                
+                                if (diff < 0) {
+                                    this.countdown = 'Started';
+                                    return;
+                                }
+                                
+                                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                                
+                                this.countdown = (days > 0 ? days + 'd ' : '') + hours + 'h ' + mins + 'm ' + secs + 's';
+                            }
+                        }">
                             <div class="flex-shrink-0 w-full sm:w-48 h-32 rounded-xl bg-slate-100 flex items-center justify-center relative overflow-hidden">
                                 @if($session->thumbnail)
                                 <img src="{{ asset($session->thumbnail) }}" alt="{{ $session->title }}" class="w-full h-full object-cover">
@@ -331,7 +357,20 @@
                                 <div>
                                     <div class="flex justify-between items-start">
                                         <h3 class="font-bold text-lg group-hover:text-primary transition-colors">{{ $session->title }}</h3>
-                                        <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Upcoming</span>
+                                        
+                                        @if($isLive)
+                                            <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider animate-pulse">Now Live</span>
+                                        @elseif($hasExpired)
+                                            @if($wasAttended)
+                                                <span class="bg-slate-200 text-slate-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Ended</span>
+                                            @else
+                                                <span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Expired</span>
+                                            @endif
+                                        @elseif($isPaid)
+                                            <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Paid</span>
+                                        @else
+                                            <span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Upcoming</span>
+                                        @endif
                                     </div>
                                     <p class="text-sm text-gray-500 mt-1">{{ Str::limit($session->description, 100) }}</p>
                                     <div class="flex items-center gap-4 mt-3 text-xs text-gray-400 font-medium">
@@ -339,15 +378,38 @@
                                             <span class="material-symbols-outlined text-sm">schedule</span>
                                             {{ $session->scheduled_at->format('g:i A') }} ({{ $session->type ?? 'Live' }})
                                         </span>
+                                        @if(!$isLive && !$hasExpired && $isPaid)
+                                        <span class="text-primary font-bold" x-text="'Starts in: ' + countdown"></span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
-                                    <span class="font-bold text-lg {{ $session->price > 0 ? 'text-slate-900' : 'text-emerald-600' }}">
-                                        {{ $session->price > 0 ? '₦' . number_format($session->price) : 'Free' }}
+                                    <span class="font-bold text-lg {{ $session->price > 0 && !$isPaid ? 'text-slate-900' : 'text-emerald-600' }}">
+                                        @if($isPaid)
+                                            <span class="text-xs uppercase text-slate-400">Access Granted</span>
+                                        @else
+                                            {{ $session->price > 0 ? '₦' . number_format($session->price) : 'Free' }}
+                                        @endif
                                     </span>
-                                    <a href="{{ route('meeting.room', $session->room_code) }}" class="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-6 py-2 rounded-lg transition-all shadow-md shadow-primary/10">
-                                        Join Session
-                                    </a>
+
+                                    @if($isLive)
+                                        <a href="{{ route('meeting.room', $session->room_code) }}" class="bg-red-600 hover:bg-red-700 text-white text-sm font-bold px-6 py-2 rounded-lg transition-all shadow-md shadow-red-600/20 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-sm">play_circle</span>
+                                            Join Now
+                                        </a>
+                                    @elseif($hasExpired)
+                                        <button disabled class="bg-slate-100 text-slate-400 text-sm font-bold px-6 py-2 rounded-lg cursor-not-allowed">
+                                            Session Ended
+                                        </button>
+                                    @elseif($isPaid)
+                                        <button disabled class="bg-emerald-50 text-emerald-600 text-sm font-bold px-6 py-2 rounded-lg">
+                                            Enrolled
+                                        </button>
+                                    @else
+                                        <a href="{{ route('meeting.checkout', $session->id) }}" class="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-6 py-2 rounded-lg transition-all shadow-md shadow-primary/10">
+                                            {{ $session->price > 0 ? 'Gain Access' : 'Join Session' }}
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -419,31 +481,31 @@
                     </button>
                 </div>
                 
-                <!-- Published Books -->
+                <!-- Books by Author -->
                 @if($books->count() > 0)
                 <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
-                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400">Published Books</h4>
-                        <a href="{{ route('library.index') }}" class="text-[10px] font-bold text-primary hover:underline uppercase tracking-widest">View All</a>
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400">Books by Author</h4>
+                        <a href="{{ route('library.index', ['search' => $instructor->name]) }}" class="text-[10px] font-bold text-primary hover:underline uppercase tracking-widest">View All</a>
                     </div>
                     <div class="space-y-4">
                         @foreach($books as $book)
-                        <div class="book-item">
+                        <a href="{{ route('library.read', $book->slug) }}" class="book-item group flex gap-3">
                             <div class="w-14 h-20 bg-slate-50 rounded-lg flex-shrink-0 overflow-hidden border border-slate-100 flex items-center justify-center">
                                 @if($book->cover_image)
-                                <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
+                                <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
                                 @else
                                 <span class="material-symbols-outlined text-slate-300">import_contacts</span>
                                 @endif
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h5 class="book-title text-sm font-bold leading-tight truncate transition-colors">{{ $book->title }}</h5>
+                                <h5 class="book-title text-sm font-bold leading-tight truncate group-hover:text-primary transition-colors">{{ $book->title }}</h5>
                                 <p class="text-[10px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">{{ $book->description }}</p>
                                 <p class="text-xs font-black text-primary mt-2">
                                     {{ $book->price > 0 ? '₦' . number_format($book->price) : 'Free' }}
                                 </p>
                             </div>
-                        </div>
+                        </a>
                         @if(!$loop->last)
                         <div class="border-t border-slate-50"></div>
                         @endif

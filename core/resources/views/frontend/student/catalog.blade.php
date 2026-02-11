@@ -251,50 +251,7 @@
 @section('content')
 <div class="catalog-layout">
     <!-- Sidebar -->
-    <aside class="catalog-sidebar">
-        <div class="p-6">
-            <div class="flex items-center gap-3 mb-8">
-                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
-                    <span class="material-symbols-outlined">school</span>
-                </div>
-                <div>
-                    <h1 class="text-base font-bold leading-tight">DBIM Academy</h1>
-                    <p class="text-slate-500 text-xs">Spiritual Growth</p>
-                </div>
-            </div>
-        </div>
-        
-        <nav class="flex-1 px-4 space-y-1">
-            <a href="{{ route('student.dashboard') }}" class="nav-item">
-                <span class="material-symbols-outlined text-xl">dashboard</span>
-                Dashboard
-            </a>
-            <a href="{{ route('student.catalog') }}" class="nav-item active">
-                <span class="material-symbols-outlined text-xl">book_2</span>
-                Course Catalog
-            </a>
-            <a href="{{ route('student.learning') }}" class="nav-item">
-                <span class="material-symbols-outlined text-xl">school</span>
-                My Learning
-            </a>
-            <a href="{{ route('library.index') }}" class="nav-item">
-                <span class="material-symbols-outlined text-xl">auto_stories</span>
-                Library
-            </a>
-        </nav>
-        
-        <div class="p-6 border-t border-slate-100">
-            <a href="{{ route('student.profile') }}" class="flex items-center gap-4 p-2 hover:bg-slate-50 rounded-xl transition-colors group">
-                <div class="size-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs border border-primary/20 group-hover:bg-primary group-hover:text-white transition-colors">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-black text-slate-900 group-hover:text-primary transition-colors truncate">{{ Auth::user()->name }}</p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">View Profile</p>
-                </div>
-            </a>
-        </div>
-    </aside>
+    @include('partials.student_sidebar')
     
     <!-- Main Content -->
     <main class="catalog-main">
@@ -408,10 +365,9 @@
                     @forelse($courses as $course)
                     <a href="{{ route('course.show', $course) }}" class="course-card" data-type="{{ $course->type ?? 'video' }}">
                         <div class="course-thumbnail-container">
-                            <img src="{{ asset($course->thumbnail ?? 'assets/images/courses/default.jpg') }}" 
+                            <img src="{{ $course->thumbnail_url }}" 
                                  alt="{{ $course->title }}" 
-                                 class="course-thumbnail"
-                                 onerror="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=400&fit=crop'">
+                                 class="course-thumbnail">
                             <div class="thumbnail-overlay"></div>
                             <div class="lesson-badge">
                                 {{ $course->modules->sum(fn($m) => $m->lessons->count()) }} Lessons

@@ -52,66 +52,74 @@
 @endpush
 
 @section('content')
-<div class="schedule-container">
-    <div class="schedule-header">
-        <h1 class="text-3xl font-black text-slate-900 mb-2">Academic Schedule</h1>
-        <p class="text-slate-500 font-medium">Keep track of your upcoming live sessions, meetings, and deadlines.</p>
-    </div>
+<div class="flex h-[calc(100vh-72px)] overflow-hidden bg-slate-50">
+    <!-- Sidebar Navigation (Desktop) -->
+    @include('partials.student_sidebar')
 
-    <div class="calendar-card">
-        <div class="flex items-center justify-between mb-8 pb-6 border-bottom border-slate-100">
-            <h2 class="text-xl font-bold text-slate-900">Upcoming Events</h2>
-            <div class="flex gap-2">
-                <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full">Meetings</span>
-                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase rounded-full">Classes</span>
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="schedule-header">
+                <h1 class="text-3xl font-black text-slate-900 mb-2">Academic Schedule</h1>
+                <p class="text-slate-500 font-medium">Keep track of your upcoming live sessions, meetings, and deadlines.</p>
+            </div>
+
+            <div class="calendar-card">
+                <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
+                    <h2 class="text-xl font-bold text-slate-900">Upcoming Events</h2>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase rounded-full">Meetings</span>
+                        <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase rounded-full">Classes</span>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    {{-- This would dynamically fetch from both Meetings and Events/Classes --}}
+                    <div class="event-item">
+                        <div class="event-date">
+                            <div class="date-day">08</div>
+                            <div class="date-month">Feb</div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-black text-slate-900">Bible Study Course: Live Session 1</h4>
+                                <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase rounded">Class</span>
+                            </div>
+                            <p class="text-sm text-slate-500 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">schedule</span> 10:00 AM - 11:30 AM
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{ route('live') }}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-xs font-black hover:bg-primary hover:text-white transition-all">Join Room</a>
+                        </div>
+                    </div>
+
+                    <div class="event-item text-slate-400">
+                        <div class="event-date">
+                            <div class="date-day">12</div>
+                            <div class="date-month">Feb</div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-black text-slate-900">Spoken Word Ministry Open Forum</h4>
+                                <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-black uppercase rounded">Meeting</span>
+                            </div>
+                            <p class="text-sm text-slate-500 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm">schedule</span> 04:00 PM
+                            </p>
+                        </div>
+                        <div>
+                            <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-xs font-black" disabled>Pending</button>
+                        </div>
+                    </div>
+                    
+                    <div class="py-12 text-center">
+                        <span class="material-symbols-outlined text-4xl text-slate-200 mb-2">event_busy</span>
+                        <p class="text-slate-400 font-medium">No more events scheduled for this week.</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="space-y-2">
-            {{-- This would dynamically fetch from both Meetings and Events/Classes --}}
-            <div class="event-item">
-                <div class="event-date">
-                    <div class="date-day">08</div>
-                    <div class="date-month">Feb</div>
-                </div>
-                <div class="flex-1">
-                    <div class="flex items-center justify-between mb-1">
-                        <h4 class="font-black text-slate-900">Bible Study Course: Live Session 1</h4>
-                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase rounded">Class</span>
-                    </div>
-                    <p class="text-sm text-slate-500 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm">schedule</span> 10:00 AM - 11:30 AM
-                    </p>
-                </div>
-                <div>
-                    <a href="{{ route('live') }}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-xs font-black hover:bg-primary hover:text-white transition-all">Join Room</a>
-                </div>
-            </div>
-
-            <div class="event-item text-slate-400">
-                <div class="event-date">
-                    <div class="date-day">12</div>
-                    <div class="date-month">Feb</div>
-                </div>
-                <div class="flex-1">
-                    <div class="flex items-center justify-between mb-1">
-                        <h4 class="font-black text-slate-900">Spoken Word Ministry Open Forum</h4>
-                        <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-black uppercase rounded">Meeting</span>
-                    </div>
-                    <p class="text-sm text-slate-500 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm">schedule</span> 04:00 PM
-                    </p>
-                </div>
-                <div>
-                    <button class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-xs font-black" disabled>Pending</button>
-                </div>
-            </div>
-            
-            <div class="py-12 text-center">
-                <span class="material-symbols-outlined text-4xl text-slate-200 mb-2">event_busy</span>
-                <p class="text-slate-400 font-medium">No more events scheduled for this week.</p>
-            </div>
-        </div>
-    </div>
+    </main>
 </div>
 @endsection

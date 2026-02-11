@@ -169,7 +169,23 @@
                                 </div>
 
                                 <!-- Quiz Questions -->
-                                <div x-show="step === 'active' && quizData.questions[currentQuestionIndex]" class="space-y-6">
+                                <div x-show="step === 'active'" class="space-y-6">
+                                    <!-- Error state if no questions -->
+                                    <template x-if="!quizData.questions || quizData.questions.length === 0">
+                                        <div class="text-center py-12">
+                                            <div class="size-20 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                                                <span class="material-symbols-outlined text-4xl">error</span>
+                                            </div>
+                                            <h3 class="text-xl font-black text-white mb-2">No Questions Available</h3>
+                                            <p class="text-slate-400 mb-8">This quiz hasn't been set up yet. Please contact your instructor.</p>
+                                            <button @click="step = 'intro'" class="px-6 py-3 bg-white/10 text-white font-bold rounded-xl hover:bg-white/20 transition-colors">
+                                                Go Back
+                                            </button>
+                                        </div>
+                                    </template>
+                                    
+                                    <!-- Questions UI -->
+                                    <template x-if="quizData.questions && quizData.questions.length > 0 && quizData.questions[currentQuestionIndex]">
                                     <div class="flex items-center justify-between mb-8">
                                         <span class="text-[10px] font-bold text-primary uppercase tracking-widest" 
                                               x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + quizData.questions.length"></span>
@@ -223,6 +239,7 @@
                                             </button>
                                         </template>
                                     </div>
+                                    </template>
                                 </div>
 
                                 <!-- Quiz Results -->
@@ -348,19 +365,33 @@
 
                     <!-- Resources Tab -->
                     <div x-show="tab === 'resources'" x-transition x-cloak>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 bg-[#1e1e1e] border border-white/5 rounded-2xl flex items-center gap-4 group hover:border-primary/30 transition-all cursor-pointer">
-                                <div class="size-12 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center group-hover:bg-red-500/20">
-                                    <span class="material-symbols-outlined text-2xl">picture_as_pdf</span>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-black text-white">Lecture_Notes_{{ Str::slug($course->title) }}.pdf</p>
-                                    <p class="text-[10px] font-bold text-slate-500 uppercase mt-0.5">PDF • 1.2 MB</p>
-                                </div>
-                                <span class="material-symbols-outlined text-slate-600 group-hover:text-primary">download</span>
+                        <template x-if="currentLesson.resources && currentLesson.resources.length > 0">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <template x-for="resource in currentLesson.resources" :key="resource.id">
+                                    <a :href="resource.file_path" download 
+                                       class="p-4 bg-[#1e1e1e] border border-white/5 rounded-2xl flex items-center gap-4 group hover:border-primary/30 transition-all cursor-pointer">
+                                        <div class="size-12 bg-red-500/10 text-red-500 rounded-xl flex items-center justify-center group-hover:bg-red-500/20">
+                                            <span class="material-symbols-outlined text-2xl">picture_as_pdf</span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-black text-white truncate" x-text="resource.title"></p>
+                                            <p class="text-[10px] font-bold text-slate-500 uppercase mt-0.5" x-text="resource.file_type + ' • ' + resource.file_size"></p>
+                                        </div>
+                                        <span class="material-symbols-outlined text-slate-600 group-hover:text-primary">download</span>
+                                    </a>
+                                </template>
                             </div>
-                            <!-- More placeholder resources -->
-                        </div>
+                        </template>
+                        
+                        <template x-if="!currentLesson.resources || currentLesson.resources.length === 0">
+                            <div class="text-center py-20">
+                                <div class="size-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="material-symbols-outlined text-slate-600 text-3xl">folder_open</span>
+                                </div>
+                                <p class="text-sm font-bold text-slate-500 uppercase tracking-widest">No Resources Available</p>
+                                <p class="text-xs text-slate-600 mt-2">Check back later for downloadable materials</p>
+                            </div>
+                        </template>
                     </div>
 
                 </div>
@@ -482,8 +513,13 @@
                     m.lessons.forEach(l => this.lessonsMap.push(l));
                 });
                 
-                // Start with first lesson
-                if(this.lessonsMap.length > 0) {
+                // Check if a specific lesson ID was passed
+                const activeLessonId = {{ $activeLessonId ?? 'null' }};
+                
+                // Start with specified lesson or first lesson
+                if(activeLessonId && this.lessonsMap.find(l => l.id === activeLessonId)) {
+                    this.switchLesson(activeLessonId);
+                } else if(this.lessonsMap.length > 0) {
                     this.switchLesson(this.lessonsMap[0].id);
                 }
             },

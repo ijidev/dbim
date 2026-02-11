@@ -111,7 +111,7 @@
                     
                     <div class="space-y-4">
                         @forelse($course->modules as $module)
-                        <div x-data="{ expanded: false }" class="border border-slate-200 rounded-xl overflow-hidden">
+                        <div x-data="{ expanded: {{ $loop->first ? 'true' : 'false' }} }" class="border border-slate-200 rounded-xl overflow-hidden mb-4">
                             <button @click="expanded = !expanded" class="w-full flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 transition-colors text-left">
                                 <div class="flex items-center gap-3">
                                     <span class="material-symbols-outlined text-slate-400 transition-transform duration-200" :class="{ 'rotate-90': expanded }">chevron_right</span>
@@ -120,9 +120,13 @@
                                 <span class="text-xs font-bold text-slate-400 uppercase">{{ $module->lessons->count() }} Lessons</span>
                             </button>
                             
-                            <div x-show="expanded" class="divide-y divide-slate-100 bg-white">
+                            <div x-show="expanded" x-collapse class="divide-y divide-slate-100 bg-white">
                                 @foreach($module->lessons as $lesson)
+                                @if($isEnrolled)
+                                <a href="{{ route('student.course.learn', ['course' => $course->id, 'lesson' => $lesson->id]) }}" class="p-4 pl-12 flex items-center justify-between group hover:bg-slate-50 transition-colors h-full">
+                                @else
                                 <div class="p-4 pl-12 flex items-center justify-between group hover:bg-slate-50 transition-colors cursor-default">
+                                @endif
                                     <div class="flex items-center gap-3">
                                         <div class="w-8 h-8 rounded bg-slate-100 flex items-center justify-center text-slate-500 group-hover:bg-blue-50 group-hover:text-primary transition-colors">
                                             <span class="material-symbols-outlined text-lg">
@@ -139,7 +143,11 @@
                                     @if(!$isEnrolled && !$course->is_free)
                                     <span class="material-symbols-outlined text-slate-300 text-sm">lock</span>
                                     @endif
+                                @if($isEnrolled)
+                                </a>
+                                @else
                                 </div>
+                                @endif
                                 @endforeach
                             </div>
                         </div>
@@ -227,7 +235,7 @@
                             <input type="hidden" name="course_id" value="{{ $course->id }}">
                             <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-xl text-center shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 mb-4 flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined">school</span>
-                                Enroll Now
+                                {{ $course->price > 0 ? 'Buy Course' : 'Enroll Now' }}
                             </button>
                         </form>
                         @endif
@@ -291,6 +299,7 @@
 @endsection
 
 @push('scripts')
-<!-- Alpine.js for interactivity -->
-<script src="//unpkg.com/alpinejs" defer></script>
+<script>
+    // Add any specific course landing page scripts here if needed
+</script>
 @endpush

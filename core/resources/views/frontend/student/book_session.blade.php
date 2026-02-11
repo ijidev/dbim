@@ -151,6 +151,31 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">Privacy & Access</label>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div @click="visibility = 'public'" 
+                                         class="p-4 rounded-xl border-2 transition-all cursor-pointer"
+                                         :class="visibility === 'public' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="material-symbols-outlined text-sm" :class="visibility === 'public' ? 'text-primary' : 'text-slate-400'">public</span>
+                                            <span class="text-sm font-black">Public</span>
+                                        </div>
+                                        <p class="text-[9px] text-slate-500 font-medium">Anyone with the link can request to join if seats are available.</p>
+                                    </div>
+                                    <div @click="visibility = 'private'" 
+                                         class="p-4 rounded-xl border-2 transition-all cursor-pointer"
+                                         :class="visibility === 'private' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="material-symbols-outlined text-sm" :class="visibility === 'private' ? 'text-primary' : 'text-slate-400'">lock</span>
+                                            <span class="text-sm font-black">Private</span>
+                                        </div>
+                                        <p class="text-[9px] text-slate-500 font-medium">Only people you explicitly invite can access this session.</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-2">Session Title</label>
                                 <input type="text" x-model="sessionTitle" class="w-full rounded-xl border-gray-200 p-4 focus:ring-primary focus:border-primary text-sm font-bold" placeholder="e.g., Spiritual Leadership Strategy">
@@ -188,6 +213,7 @@
                             <input type="hidden" name="scheduled_at" :value="selectedDate + ' ' + formatTime(selectedTime)">
                             <input type="hidden" name="type" :value="sessionType">
                             <input type="hidden" name="price" :value="price">
+                            <input type="hidden" name="visibility" :value="visibility">
 
                             <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col md:flex-row gap-8">
                                 <div class="flex-1 space-y-6">
@@ -225,7 +251,10 @@
                                     <div>
                                         <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Session</p>
                                         <p class="font-black text-lg text-primary mt-2" x-text="sessionTitle"></p>
-                                        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1" x-text="sessionType === 'mentorship' ? '1-on-1 Mentorship' : 'Group Masterclass'"></p>
+                                        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">
+                                            <span x-text="sessionType === 'mentorship' ? '1-on-1 Mentorship' : 'Group Masterclass'"></span>
+                                            • <span class="capitalize" x-text="visibility"></span>
+                                        </p>
                                     </div>
                                     <div>
                                         <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Total Due</p>
@@ -242,8 +271,8 @@
                                 <div class="flex items-center gap-4 w-full md:w-auto">
                                     <button type="button" @click="prevStep()" class="text-slate-500 font-bold hover:text-slate-900 px-4">Back</button>
                                     <button type="submit" class="flex-1 md:flex-none bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-xl font-black transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3">
-                                        Confirm & Book
-                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                        Proceed to Payment
+                                        <span class="material-symbols-outlined text-sm">payments</span>
                                     </button>
                                 </div>
                             </div>
@@ -310,6 +339,7 @@ function bookingFlow() {
         selectedDate: '',
         selectedTime: '',
         sessionType: 'mentorship',
+        visibility: 'public',
         sessionTitle: '',
         sessionAgenda: '',
         price: 75000,

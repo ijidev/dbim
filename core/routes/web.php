@@ -97,13 +97,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/academy/dashboard', [App\Http\Controllers\StudentController::class, 'index'])->name('student.dashboard');
     Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 'schedule'])->name('student.schedule');
     Route::get('/academy/catalog', [App\Http\Controllers\StudentController::class, 'catalog'])->name('student.catalog');
+    Route::get('/course/{course}/learn', [App\Http\Controllers\StudentController::class, 'learn'])->name('student.course.learn');
+    Route::get('/course/checkout/{id}', [App\Http\Controllers\StudentController::class, 'courseCheckout'])->name('student.course.checkout');
+    Route::post('/course/pay/{id}', [App\Http\Controllers\StudentController::class, 'processCoursePayment'])->name('student.course.pay');
     Route::get('/course/{course}/{slug?}', [App\Http\Controllers\StudentController::class, 'courseShow'])->name('course.show');
     Route::get('/my-learning', [App\Http\Controllers\StudentController::class, 'myLearning'])->name('student.learning');
     Route::get('/profile', [App\Http\Controllers\StudentController::class, 'profile'])->name('student.profile');
     Route::get('/settings', [App\Http\Controllers\StudentController::class, 'settings'])->name('student.settings');
     Route::put('/settings/update', [App\Http\Controllers\StudentController::class, 'updateSettings'])->name('student.settings.update');
     Route::put('/settings/password', [App\Http\Controllers\StudentController::class, 'updatePassword'])->name('student.settings.password');
-    Route::get('/course/{course}/learn', [App\Http\Controllers\StudentController::class, 'learn'])->name('student.course.learn');
     
     // Meeting Routes
     Route::get('/meetings', [App\Http\Controllers\MeetingController::class, 'index'])->name('meeting.index');
@@ -122,10 +124,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
     Route::get('/instructor/{id}/book', [App\Http\Controllers\StudentController::class, 'bookSession'])->name('instructor.book');
     Route::post('/meeting/book', [App\Http\Controllers\StudentController::class, 'bookMeeting'])->name('meeting.book');
+    Route::get('/meeting/checkout/{id}', [App\Http\Controllers\StudentController::class, 'checkout'])->name('meeting.checkout');
+    // Simplified POST route for payment
+    Route::post('/meeting/pay/{id}', [App\Http\Controllers\StudentController::class, 'processPayment'])->name('meeting.pay');
     Route::get('/meeting/booked/{id}', [App\Http\Controllers\StudentController::class, 'sessionBooked'])->name('meeting.booked');
+    
+    // Student Dashboard Bookings
+    Route::get('/my-bookings', [App\Http\Controllers\StudentController::class, 'myBookings'])->name('student.bookings');
     
     // Enrollment Routes
     Route::post('/enrollment/enroll', [App\Http\Controllers\StudentController::class, 'enroll'])->name('enrollment.enroll');
+    
     // Quiz Routes
     Route::post('/lesson/{lesson}/quiz-submit', [App\Http\Controllers\StudentController::class, 'submitQuiz'])->name('student.quiz.submit');
 });

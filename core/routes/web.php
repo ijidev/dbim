@@ -1,160 +1,110 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\InstructorStudentController;
+use App\Http\Controllers\QuizController;
 
-// Route::get('/', function () {
-//     return view('frontend.pages.index');
-// })->name('index');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Reconstructed based on Controller methods and previous functionality.
+|
+*/
 
-Auth::routes();
-
-// Social Auth Routes
-Route::get('auth/google', [App\Http\Controllers\Auth\SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('auth/google/callback', [App\Http\Controllers\Auth\SocialAuthController::class, 'handleGoogleCallback']);
-
-// Profile Route (Placeholder)
-Route::get('/profile', [HomeController::class, 'index'])->name('profile.show');
-
-Route::get('/', [FrontController::class, 'index'])->name('index');
-Route::get('/up-comming-events', [FrontController::class, 'events'])->name('event');
-Route::get('/event/{id}', [FrontController::class, 'eventSingle'])->name('event.single');
-Route::post('/event/{event}/register', [App\Http\Controllers\EventRegistrationController::class, 'store'])->name('event.register');
-Route::get('/contact-us', [FrontController::class, 'contact'])->name('contact');
-Route::get('/about', [FrontController::class, 'about'])->name('about');
-Route::get('/live', [FrontController::class, 'live'])->name('live');
-Route::get('/calendar', [FrontController::class, 'calendar'])->name('calendar');
-Route::get('/api/calendar-events', [FrontController::class, 'getEvents'])->name('calendar.events');
-
-// Route::get('/', [HomeController::class, 'index'])->name('home');
-
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard', [HomeController::class, 'admin'])->name('home');
-    Route::resource('events', App\Http\Controllers\Admin\EventController::class);
-    Route::get('events/{event}/registrations', [App\Http\Controllers\Admin\EventRegistrationController::class, 'index'])->name('admin.event.registrations');
-    Route::put('event-registrations/{registration}', [App\Http\Controllers\Admin\EventRegistrationController::class, 'updateStatus'])->name('admin.event.registrations.update');
-    Route::delete('event-registrations/{registration}', [App\Http\Controllers\Admin\EventRegistrationController::class, 'destroy'])->name('admin.event.registrations.destroy');
-    Route::resource('courses', App\Http\Controllers\Admin\CourseController::class);
-    Route::resource('modules', App\Http\Controllers\Admin\ModuleController::class);
-    Route::resource('lessons', App\Http\Controllers\Admin\LessonController::class);
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-    Route::get('courses/{course}/content', [App\Http\Controllers\Admin\CourseController::class, 'content'])->name('courses.content');
-    
-    Route::get('/livestream', [App\Http\Controllers\Admin\LiveStreamController::class, 'index'])->name('livestream.index');
-    Route::post('/livestream', [App\Http\Controllers\Admin\LiveStreamController::class, 'update'])->name('livestream.update');
-
-    Route::get('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('admin.settings.index');
-    Route::post('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.settings.update');
-    
-    // Finance & Donations
-    Route::get('/finance', [App\Http\Controllers\Admin\FinanceController::class, 'index'])->name('admin.finance.index');
-    Route::get('/donations', [App\Http\Controllers\Admin\DonationController::class, 'index'])->name('admin.donations.index');
-    Route::get('/donations/{donation}', [App\Http\Controllers\Admin\DonationController::class, 'show'])->name('admin.donations.show');
-    
-    // Digital Account Book (Ledger)
-    Route::get('/finance/ledger', [App\Http\Controllers\Admin\FinancialRecordController::class, 'index'])->name('admin.finance.ledger');
-    Route::get('/finance/ledger/create', [App\Http\Controllers\Admin\FinancialRecordController::class, 'create'])->name('admin.finance.ledger.create');
-    Route::post('/finance/ledger', [App\Http\Controllers\Admin\FinancialRecordController::class, 'store'])->name('admin.finance.ledger.store');
-    Route::delete('/finance/ledger/{record}', [App\Http\Controllers\Admin\FinancialRecordController::class, 'destroy'])->name('admin.finance.ledger.destroy');
-    
-    // Products & Books
-    Route::resource('products', App\Http\Controllers\Admin\ProductController::class)->names([
-        'index' => 'admin.products.index',
-        'create' => 'admin.products.create',
-        'store' => 'admin.products.store',
-        'edit' => 'admin.products.edit',
-        'update' => 'admin.products.update',
-        'destroy' => 'admin.products.destroy',
-    ]);
-    Route::resource('books', App\Http\Controllers\Admin\BookController::class)->names([
-        'index' => 'admin.books.index',
-        'create' => 'admin.books.create',
-        'store' => 'admin.books.store',
-        'edit' => 'admin.books.edit',
-        'update' => 'admin.books.update',
-        'destroy' => 'admin.books.destroy',
-    ]);
-
-    // Chapters Management
-    Route::post('books/{book}/chapters', [App\Http\Controllers\Admin\BookController::class, 'storeChapter'])->name('admin.books.chapters.store');
-    Route::get('chapters/{chapter}', [App\Http\Controllers\Admin\BookController::class, 'getChapter'])->name('admin.books.chapters.show');
-    Route::put('chapters/{chapter}', [App\Http\Controllers\Admin\BookController::class, 'updateChapter'])->name('admin.books.chapters.update');
-    Route::delete('chapters/{chapter}', [App\Http\Controllers\Admin\BookController::class, 'deleteChapter'])->name('admin.books.chapters.destroy');
-    Route::post('books/chapters/reorder', [App\Http\Controllers\Admin\BookController::class, 'reorderChapters'])->name('admin.books.chapters.reorder');
-
-    // Library Settings
-    Route::get('/library/settings', [App\Http\Controllers\Admin\BookController::class, 'settings'])->name('admin.library.settings');
-    Route::post('/library/settings', [App\Http\Controllers\Admin\BookController::class, 'updateSettings'])->name('admin.library.settings.update');
-
-    // Meeting Management
-    Route::get('/meetings-management', [App\Http\Controllers\Admin\MeetingController::class, 'index'])->name('admin.meetings.index');
-    Route::post('/meetings/{meeting}/end', [App\Http\Controllers\Admin\MeetingController::class, 'end'])->name('admin.meetings.end');
-    Route::delete('/meetings/{meeting}', [App\Http\Controllers\Admin\MeetingController::class, 'destroy'])->name('admin.meetings.destroy');
+// Public Routes
+Route::controller(FrontController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/events', 'events')->name('events.index');
+    Route::get('/events/{id}', 'eventSingle')->name('event.single');
+    Route::get('/contact', 'contact')->name('contact');
+    Route::get('/about', 'about')->name('about');
+    Route::get('/live', 'live')->name('live');
+    Route::get('/calendar', 'calendar')->name('calendar');
+    Route::get('/events/get', 'getEvents')->name('events.get');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/academy/dashboard', [App\Http\Controllers\StudentController::class, 'index'])->name('student.dashboard');
-    Route::get('/academy/schedule', [App\Http\Controllers\StudentController::class, 'schedule'])->name('student.schedule');
-    Route::get('/academy/catalog', [App\Http\Controllers\StudentController::class, 'catalog'])->name('student.catalog');
-    Route::get('/course/{course}/learn', [App\Http\Controllers\StudentController::class, 'learn'])->name('student.course.learn');
-    Route::get('/course/checkout/{id}', [App\Http\Controllers\StudentController::class, 'courseCheckout'])->name('student.course.checkout');
-    Route::post('/course/pay/{id}', [App\Http\Controllers\StudentController::class, 'processCoursePayment'])->name('student.course.pay');
-    Route::get('/course/{course}/{slug?}', [App\Http\Controllers\StudentController::class, 'courseShow'])->name('course.show');
-    Route::get('/my-learning', [App\Http\Controllers\StudentController::class, 'myLearning'])->name('student.learning');
-    Route::get('/profile', [App\Http\Controllers\StudentController::class, 'profile'])->name('student.profile');
-    Route::get('/settings', [App\Http\Controllers\StudentController::class, 'settings'])->name('student.settings');
-    Route::put('/settings/update', [App\Http\Controllers\StudentController::class, 'updateSettings'])->name('student.settings.update');
-    Route::put('/settings/password', [App\Http\Controllers\StudentController::class, 'updatePassword'])->name('student.settings.password');
+// Library Routes (Public for index, Auth for specific actions likely)
+Route::controller(LibraryController::class)->group(function () {
+    Route::get('/library', 'index')->name('library.index');
+    Route::get('/read/{slug}', 'read')->name('library.read');
+    Route::post('/library/progress/{book}', 'updateProgress')->name('library.progress');
+    Route::get('/chapter/{id}', 'getChapterContent')->name('library.chapter');
+});
+
+// Auth Middleware Group
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
     
-    // Meeting Routes
-    Route::get('/meetings', [App\Http\Controllers\MeetingController::class, 'index'])->name('meeting.index');
-    Route::get('/meeting/create', [App\Http\Controllers\MeetingController::class, 'create'])->name('meeting.create');
-    Route::post('/meeting', [App\Http\Controllers\MeetingController::class, 'store'])->name('meeting.store');
-    Route::get('/meeting/{code}', [App\Http\Controllers\MeetingController::class, 'room'])->name('meeting.room');
-    Route::post('/meeting/{meeting}/end', [App\Http\Controllers\MeetingController::class, 'end'])->name('meeting.end');
-    
-    // Instructor Routes
-    Route::middleware(['role:admin,instructor'])->group(function () {
-        Route::get('/instructor/dashboard', [App\Http\Controllers\InstructorController::class, 'index'])->name('instructor.dashboard');
+    Route::get('/dashboard', [StudentController::class, 'index'])->name('dashboard');
+
+    // Student Routes
+    Route::controller(StudentController::class)->group(function () {
+        Route::get('/schedule', 'schedule')->name('student.schedule');
+        Route::get('/learn/{id}', 'learn')->name('student.learn');
+        Route::get('/catalog', 'catalog')->name('student.catalog');
+        Route::get('/course/{id}/{slug?}', 'courseShow')->name('student.course.show');
+        Route::post('/course/{id}/enroll', 'enroll')->name('student.course.enroll');
+        Route::get('/course/{id}/checkout', 'courseCheckout')->name('student.course.checkout');
+        Route::post('/course/{id}/process-payment', 'processCoursePayment')->name('student.course.payment');
+        
+        Route::post('/book-meeting', 'bookMeeting')->name('student.book.meeting');
+        Route::get('/my-bookings', 'myBookings')->name('student.bookings');
+        Route::get('/session/booked/{id}', 'sessionBooked')->name('student.session.booked');
+        
+        Route::get('/my-learning', 'myLearning')->name('student.learning');
+        Route::get('/profile', 'profile')->name('student.profile');
+        
+        Route::get('/settings', 'settings')->name('student.settings');
+        Route::post('/settings/update', 'updateSettings')->name('student.settings.update');
+        Route::post('/password/update', 'updatePassword')->name('student.password.update');
+        
+        Route::get('/instructors', 'instructors')->name('student.instructors');
+        Route::get('/instructor/{id}', 'instructorProfile')->name('student.instructor.profile');
+        Route::get('/book-session/{id}', 'bookSession')->name('student.book.session');
+        
+        Route::post('/quiz/{id}/submit', 'submitQuiz')->name('student.quiz.submit');
     });
 
-    // Booking Routes
-    Route::get('/instructors', [App\Http\Controllers\StudentController::class, 'instructors'])->name('instructors');
-    Route::get('/instructor/{id}', [App\Http\Controllers\StudentController::class, 'instructorProfile'])->name('instructor.profile');
-    Route::get('/instructor/{id}/book', [App\Http\Controllers\StudentController::class, 'bookSession'])->name('instructor.book');
-    Route::post('/meeting/book', [App\Http\Controllers\StudentController::class, 'bookMeeting'])->name('meeting.book');
-    Route::get('/meeting/checkout/{id}', [App\Http\Controllers\StudentController::class, 'checkout'])->name('meeting.checkout');
-    // Simplified POST route for payment
-    Route::post('/meeting/pay/{id}', [App\Http\Controllers\StudentController::class, 'processPayment'])->name('meeting.pay');
-    Route::get('/meeting/booked/{id}', [App\Http\Controllers\StudentController::class, 'sessionBooked'])->name('meeting.booked');
-    
-    // Student Dashboard Bookings
-    Route::get('/my-bookings', [App\Http\Controllers\StudentController::class, 'myBookings'])->name('student.bookings');
-    
-    // Enrollment Routes
-    Route::post('/enrollment/enroll', [App\Http\Controllers\StudentController::class, 'enroll'])->name('enrollment.enroll');
-    
-    // Quiz Routes
-    Route::post('/lesson/{lesson}/quiz-submit', [App\Http\Controllers\StudentController::class, 'submitQuiz'])->name('student.quiz.submit');
+    // Meeting Routes
+    Route::controller(MeetingController::class)->prefix('meeting')->name('meeting.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/room/{code}', 'room')->name('room');
+        Route::post('/{meeting}/end', 'end')->name('end');
+        Route::post('/book', 'book')->name('book');
+    });
+
+    // Instructor Routes
+    Route::middleware(['role:instructor'])->prefix('instructor')->name('instructor.')->group(function () {
+        Route::get('/dashboard', [InstructorController::class, 'index'])->name('dashboard');
+        
+         // Students Management
+        Route::get('/students', [InstructorStudentController::class, 'index'])->name('students.index');
+        Route::get('/students/export', [InstructorStudentController::class, 'export'])->name('students.export');
+
+        // Quiz Management
+        Route::controller(QuizController::class)->prefix('quizzes')->name('quizzes.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::get('/builder', 'create')->name('create_step1'); // Builder view
+            Route::post('/', 'store')->name('store');
+            Route::get('/{quiz}/edit', 'edit')->name('edit');
+            Route::put('/{quiz}', 'update')->name('update');
+            Route::delete('/{quiz}', 'destroy')->name('destroy');
+        });
+        
+        // Course Management (Placeholder based on sidebar)
+        Route::get('/courses', function() { return 'Courses Index'; })->name('courses.index');
+    });
 });
-
-// Store Routes
-Route::get('/store', [App\Http\Controllers\StoreController::class, 'index'])->name('store.index');
-Route::get('/store/product/{slug}', [App\Http\Controllers\StoreController::class, 'show'])->name('store.show');
-Route::get('/cart', [App\Http\Controllers\StoreController::class, 'cart'])->name('cart.index');
-Route::post('/add-to-cart/{id}', [App\Http\Controllers\StoreController::class, 'addToCart'])->name('cart.add');
-Route::get('/checkout', [App\Http\Controllers\StoreController::class, 'checkout'])->name('checkout');
-Route::post('/checkout', [App\Http\Controllers\StoreController::class, 'processCheckout'])->name('checkout.process');
-
-// Library Routes
-Route::get('/library', [App\Http\Controllers\LibraryController::class, 'index'])->name('library.index');
-Route::get('/library/read/{slug}', [App\Http\Controllers\LibraryController::class, 'read'])->name('library.read');
-Route::get('/library/chapter/{id}', [App\Http\Controllers\LibraryController::class, 'getChapterContent'])->name('library.chapter.show');
-Route::post('/library/book/{book}/progress', [App\Http\Controllers\LibraryController::class, 'updateProgress'])->name('library.progress.update');
-
-// Donation Routes
-Route::get('/donate', [App\Http\Controllers\DonationController::class, 'index'])->name('donate');
-Route::post('/donate', [App\Http\Controllers\DonationController::class, 'store'])->name('donate.store');
-Route::get('/donate/thank-you', [App\Http\Controllers\DonationController::class, 'thankYou'])->name('donate.thank-you');
-

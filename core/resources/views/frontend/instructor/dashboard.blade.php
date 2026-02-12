@@ -70,13 +70,13 @@
                     <span class="material-symbols-outlined text-lg">book_2</span>
                     My Courses
                 </a>
+                <a href="{{ route('instructor.students.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
+                    <span class="material-symbols-outlined text-lg">groups</span>
+                    Students
+                </a>
                 <a href="{{ route('meeting.index') }}" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
                     <span class="material-symbols-outlined text-lg">video_call</span>
                     Meetings & Live
-                </a>
-                <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-xl text-sm font-bold transition-all">
-                    <span class="material-symbols-outlined text-lg">groups</span>
-                    Students
                 </a>
             </nav>
         </div>

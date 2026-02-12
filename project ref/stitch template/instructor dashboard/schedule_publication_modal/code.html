@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Schedule Publication Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#eccb13",
+                        "background-light": "#f8f8f6",
+                        "background-dark": "#221f10",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .backdrop-blur-custom {
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+<!-- Background Content Simulation (Blurred) -->
+<div class="fixed inset-0 z-0 flex flex-col p-10 opacity-50 pointer-events-none">
+<div class="max-w-4xl mx-auto w-full space-y-8">
+<div class="h-8 w-48 bg-gray-200 rounded"></div>
+<div class="grid grid-cols-3 gap-6">
+<div class="h-40 bg-gray-200 rounded-xl"></div>
+<div class="h-40 bg-gray-200 rounded-xl"></div>
+<div class="h-40 bg-gray-200 rounded-xl"></div>
+</div>
+<div class="h-96 bg-gray-200 rounded-xl"></div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-custom">
+<!-- Modal Container -->
+<div class="bg-white dark:bg-[#2d2a1d] w-full max-w-[520px] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-gray-100 dark:border-gray-800">
+<!-- Modal Header -->
+<div class="p-6 pb-0">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<h2 class="text-[#181711] dark:text-white text-2xl font-bold leading-tight">Schedule Course Publication</h2>
+<p class="text-[#898361] dark:text-gray-400 text-sm font-normal">Choose the exact date and time you want your members to access this course.</p>
+</div>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Modal Content (Scrollable if needed) -->
+<div class="p-6 space-y-6 overflow-y-auto max-h-[70vh]">
+<!-- Date Selection -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between px-1">
+<button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-gray-700 dark:text-gray-300">chevron_left</span>
+</button>
+<p class="text-[#181711] dark:text-white text-base font-bold">October 2023</p>
+<button class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-gray-700 dark:text-gray-300">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 text-center">
+<span class="text-[#898361] text-[13px] font-bold py-2">S</span>
+<span class="text-[#898361] text-[13px] font-bold py-2">M</span>
+<span class="text-[#898361] text-[13px] font-bold py-2">T</span>
+<span class="text-[#898361] text-[13px] font-bold py-2">W</span>
+<span class="text-[#898361] text-[13px] font-bold py-2">T</span>
+<span class="text-[#898361] text-[13px] font-bold py-2">F</span>
+<span class="text-[#898361] text-[13px] font-bold py-2">S</span>
+<!-- Empty cells for start of month -->
+<div class="h-10"></div><div class="h-10"></div><div class="h-10"></div>
+<!-- Days -->
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">1</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">2</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">3</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">4</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">5</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">6</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">7</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">8</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">9</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">10</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">11</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">12</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">13</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">14</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">15</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">16</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">17</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">18</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">19</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">20</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">21</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">22</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">23</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">24</button>
+<!-- Active Day -->
+<button class="h-10 flex items-center justify-center rounded-lg text-sm bg-primary text-[#181711] font-bold shadow-md">25</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">26</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">27</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">28</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">29</button>
+<button class="h-10 flex items-center justify-center rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">30</button>
+</div>
+</div>
+<!-- Time Selection -->
+<div class="space-y-3">
+<h3 class="text-[#181711] dark:text-white text-base font-bold leading-tight">Select Time</h3>
+<div class="flex gap-4">
+<div class="flex-1 space-y-1.5">
+<p class="text-[#181711] dark:text-gray-300 text-sm font-medium">Hour</p>
+<input class="w-full bg-background-light dark:bg-[#1a180d] border border-[#e6e4db] dark:border-gray-700 rounded-lg h-12 px-4 text-[#181711] dark:text-white focus:ring-primary focus:border-primary" type="text" value="09"/>
+</div>
+<div class="flex-1 space-y-1.5">
+<p class="text-[#181711] dark:text-gray-300 text-sm font-medium">Minute</p>
+<input class="w-full bg-background-light dark:bg-[#1a180d] border border-[#e6e4db] dark:border-gray-700 rounded-lg h-12 px-4 text-[#181711] dark:text-white focus:ring-primary focus:border-primary" type="text" value="00"/>
+</div>
+</div>
+<!-- AM/PM Toggle -->
+<div class="bg-background-light dark:bg-[#1a180d] p-1 rounded-lg flex h-11 border border-[#e6e4db] dark:border-gray-700">
+<label class="flex-1 flex items-center justify-center cursor-pointer rounded-md has-[:checked]:bg-white dark:has-[:checked]:bg-[#3a3625] has-[:checked]:shadow-sm transition-all group">
+<input checked="" class="hidden" name="ampm" type="radio" value="AM"/>
+<span class="text-sm font-medium text-[#898361] group-has-[:checked]:text-[#181711] dark:group-has-[:checked]:text-white">AM</span>
+</label>
+<label class="flex-1 flex items-center justify-center cursor-pointer rounded-md has-[:checked]:bg-white dark:has-[:checked]:bg-[#3a3625] has-[:checked]:shadow-sm transition-all group">
+<input class="hidden" name="ampm" type="radio" value="PM"/>
+<span class="text-sm font-medium text-[#898361] group-has-[:checked]:text-[#181711] dark:group-has-[:checked]:text-white">PM</span>
+</label>
+</div>
+</div>
+<!-- Summary Box -->
+<div class="bg-primary/10 dark:bg-primary/5 border border-primary/20 rounded-xl p-4 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary fill-current">info</span>
+<div class="space-y-1">
+<p class="text-[#181711] dark:text-white text-sm font-bold">Summary</p>
+<p class="text-[#898361] dark:text-gray-400 text-sm leading-relaxed">
+                            Your course will go live on <span class="text-[#181711] dark:text-white font-semibold">October 25, 2023</span> at <span class="text-[#181711] dark:text-white font-semibold">09:00 AM</span>.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 pt-2 flex gap-3 border-t border-gray-100 dark:border-gray-800">
+<button class="flex-1 px-4 py-3 rounded-lg text-[#181711] dark:text-white font-semibold text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    Cancel
+                </button>
+<button class="flex-[2] px-4 py-3 rounded-lg bg-primary hover:bg-[#d8b911] text-[#181711] font-bold text-sm shadow-lg shadow-primary/20 transition-all">
+                    Confirm Schedule
+                </button>
+</div>
+</div>
+</div>
+</body></html>

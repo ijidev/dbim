@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Instructor Q&amp;A Management Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1754cf",
+                        "accent-gold": "#d4af37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Lexend', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .fill-icon { font-variation-settings: 'FILL' 1; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #374151; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">church</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Church Admin Hub</h2>
+</div>
+<label class="flex flex-col min-w-40 h-10 w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-500 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 dark:bg-slate-800 focus:ring-0 h-full placeholder:text-slate-500 px-4 rounded-r-lg text-sm font-normal" placeholder="Search questions or students..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Instructor Portal</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Courses</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Resources</a>
+</nav>
+<div class="flex gap-2 border-l border-slate-200 dark:border-slate-800 pl-6">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Instructor profile photo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqr04DH4jDVAbV-hQVp_IPieQXplVnnfvjFK_iy79xlZrTzdpfj-EVU6muueyZC_jJycOwp1Bhzjxp609kMi7aFOKnTKHslQh9ZoUng_7MwuA1P09euxWzipj1DLpGeEWFjeU-49nfpD6XWiOscpxeg_WA6R6vF_Slsltcx0gEqk4OKvFHbHDcujqWDFAtN05-LrlnoVYR9T3XMSdaFPL_BjOZHMiH-onYapgNgbYt78FINZJ_1KaQ91g6URMlNF4NKK_a7Z4ywGDp");'></div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Sidebar: Discussion List -->
+<aside class="w-80 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-slate-900 shrink-0">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg">Discussions</h3>
+<button class="text-primary text-xs font-bold hover:underline">Mark all read</button>
+</div>
+<div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-lg">
+<button class="flex-1 py-1.5 text-xs font-bold rounded-md bg-white dark:bg-slate-700 shadow-sm text-primary">Unanswered</button>
+<button class="flex-1 py-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">All</button>
+<button class="flex-1 py-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">Recent</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<!-- Discussion Item 1: Active/Selected -->
+<div class="p-4 bg-primary/5 dark:bg-primary/10 border-l-4 border-primary cursor-pointer transition-colors">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover shrink-0" data-alt="Student John Doe profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCmnOBZ_S5ZhwDixhHnLiRYb4pKxDxKGinKifFG7a9txwteWoIc_E38FcgBIHN_EWtSIyC_wlAZk_IEXw_MAKSUYj0t2dnIA_FJv3no_ehwK0KWJKmfIbBIFWJAZ2AcrV8Se9TJ8HkYa32qva5GSnkWzYQ6TN38J5QRSoqebO9gccXgKyoFbqzadtFa1ExA3mQ5nRyv5z4F6qKkdEK33UqQPqaYUF5AMqpbqcybbX52_jlFpy1aPVG20HhjxqkVzdR5POLZJUxABlwf')"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-0.5">
+<p class="text-sm font-bold truncate">John Doe</p>
+<span class="text-[10px] text-slate-400 font-medium">2m ago</span>
+</div>
+<p class="text-[11px] text-primary font-bold uppercase tracking-wider mb-1">New Testament Basics</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 italic">"How do I interpret the specific cultural context of the Parables?"</p>
+</div>
+</div>
+</div>
+<!-- Discussion Item 2 -->
+<div class="p-4 border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover shrink-0" data-alt="Student Sarah Miller profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWcMp2Q_lhXgexSFtbbPE6VUO_ZTj7LFFIOsG_-5DND53M3ZiIURayLfnFvg1aeYXExxUEVxf2t7u6Sm8LcFqZvjtQnaSjGZbMIX1hyJeypVLL_nhF4CQoBi9yhFxMJVrG-PIg1kL9xDVhKYhcfB2Gkd48Z4tCBfe2duAKT29qiBZYLVAzbR-SBq-VxmvOhF-n8rdiPgEuxh5QKFfQl1Enl0yOLiB6xym4XrGiA-WgocRaUKbyv18JlvAXSAri9wUNgU7BO5iIZVR-')"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-0.5">
+<p class="text-sm font-bold truncate">Sarah Miller</p>
+<span class="text-[10px] text-slate-400 font-medium">1h ago</span>
+</div>
+<p class="text-[11px] text-accent-gold font-bold uppercase tracking-wider mb-1">Church Leadership 101</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">"I'm struggling with the Module 3 quiz questions regarding governance..."</p>
+</div>
+</div>
+</div>
+<!-- Discussion Item 3 -->
+<div class="p-4 border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover shrink-0" data-alt="Student Michael Chen profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZ7o_p8QK4XZq2ETVegrxmnlzg-L17i7P3liu9KmoTGtGFayFAS3WbpeFAfv_5ylxtCmi258S5T0ySh_KSZ8pl6gJCY81ilYU0bOlaVsm4sKECBLDkGtSgXpYHxxpj6FSMK3_7-zwHaOnXyPHDRNdLjCQUarWyZs1-zcTJAR3U4ojIqHUht_8ZqmqI8Mc0tlKh8yh8lZWIZ9sCxfTILQzHkUiqeNxXmvbwH7NvVMKEmfEkwp9UqfR6Y0OOc8BLcLUITYnKTT9dV4rR')"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-0.5">
+<p class="text-sm font-bold truncate">Michael Chen</p>
+<span class="text-[10px] text-slate-400 font-medium">4h ago</span>
+</div>
+<p class="text-[11px] text-emerald-600 font-bold uppercase tracking-wider mb-1">Intro to Theology</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">"Can you recommend more reading on the doctrine of grace?"</p>
+</div>
+</div>
+</div>
+<!-- Discussion Item 4 -->
+<div class="p-4 border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<div class="flex gap-3">
+<div class="size-10 rounded-full bg-slate-200 bg-cover shrink-0" data-alt="Student Rebecca Smith profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1yofRnYbQeZHzhPQq_EtNYdje8qsDlhVEJZk5V8SGuAtRaPC4-04nBxqFp20LoURYAINWQtwT_k6tEUD4aAe2wdelQCPO6umbmuMmwoLVuR9BcBDXCuDWbGTSe-ea6aDXRLPczfT3dt7LPqwcJ4w5Lk9U38nJb9Og9flOo5V3QxOIsT1uStR6FzOF1243utMQI8Z3_FmewUbygqeGdqilivSCcVjDwjmDnaxB-l0SalZsyQaH_7AS1prHQjMImw7ct4w3Tx1y5gsH')"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-0.5">
+<p class="text-sm font-bold truncate">Rebecca Smith</p>
+<span class="text-[10px] text-slate-400 font-medium">Yesterday</span>
+</div>
+<p class="text-[11px] text-primary font-bold uppercase tracking-wider mb-1">New Testament Basics</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2">"Is the assignment for week 4 due on Friday or Saturday?"</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center: Chat Interface -->
+<section class="flex-1 flex flex-col bg-slate-50 dark:bg-slate-950 relative">
+<!-- Chat Header -->
+<div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="size-11 rounded-full bg-slate-200 bg-cover border border-slate-100" data-alt="Student John Doe profile picture large" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuJkW6kOJDb9H-ax_mvHSARtGv2eGIwH00rTv6kgK5cEmym098xj7gK8TJ6PXOnmPx2xUwyMm1fbDCsdD1_b2nFtiosq5Vp0oOOb0ukMwCRPi0JOW2BWWKQiDLPM43ppW3wwWm5MIhfS1iMdgA_InSg-ZWcT7yi38VjF5YeBPzR-8cInOENZIclf46dhiQb-IroWFKvuGjyk241j5E76ZLQSuGd6CapwQu0Dut_HukATcAKygDyQAch11ec5kEB7tkBFEAv6W-SAzg')"></div>
+<div>
+<h2 class="font-bold text-lg leading-none">John Doe</h2>
+<p class="text-sm text-slate-500 mt-1">New Testament Basics • Module 2: The Parables</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[18px]">star</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-white text-sm font-bold hover:bg-blue-700">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                        Resolve
+                    </button>
+</div>
+</div>
+<!-- Message Thread -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<div class="flex justify-center">
+<span class="px-3 py-1 bg-slate-200 dark:bg-slate-800 rounded-full text-[10px] font-bold uppercase tracking-widest text-slate-500">October 24, 2023</span>
+</div>
+<!-- Student Message -->
+<div class="flex gap-4 max-w-2xl">
+<div class="size-8 rounded-full bg-slate-200 bg-cover shrink-0 mt-1" data-alt="John Doe avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuudxZNsktzyYicfdpd9u6hhlHb4MIpRSAr_IVef14AtJb5nYp7nF9rDse3xVnqdCTxbAbj54Zc0X_k_2zjEirOGn_gXfbLiFVQuiSIuuv3DUrk1zBDCo4ZyVCLkrdaykli45OsEsfmSCgAfiGXZDFwn_r8Kdr-skI3eZrntM9a7osIo11AWfGLrMrpkb9N72tMWG-qJffoUJ_ea9z1Jm8hmdDl6TH1E0CfezmcsNwbJsahB8OnaI-we9_FNrJ8LXz12aJ9yQKOrfc')"></div>
+<div class="flex flex-col gap-1">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-sm leading-relaxed">
+                                Good afternoon, Professor. I'm currently working through the reading on the Good Samaritan in Module 2. I'm finding it difficult to reconcile the immediate cultural shock for the original audience with our modern interpretation. How do I interpret the specific cultural context of the Parables without over-modernizing them?
+                            </p>
+</div>
+<span class="text-[10px] text-slate-400 ml-1">10:42 AM</span>
+</div>
+</div>
+<!-- Instructor Message -->
+<div class="flex gap-4 max-w-2xl ml-auto flex-row-reverse">
+<div class="size-8 rounded-full bg-primary flex items-center justify-center shrink-0 mt-1 text-white text-xs font-bold">
+<span class="material-symbols-outlined text-sm">school</span>
+</div>
+<div class="flex flex-col gap-1 items-end">
+<div class="bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-sm shadow-primary/20">
+<p class="text-sm leading-relaxed">
+                                That's an excellent question, John. One key is to look at the 'historical-grammatical' method. We must first ask what it meant to the priest and Levite who walked past, specifically in terms of ritual purity laws. 
+                            </p>
+</div>
+<span class="text-[10px] text-slate-400 mr-1">11:15 AM</span>
+</div>
+</div>
+<!-- Latest Student Message -->
+<div class="flex gap-4 max-w-2xl">
+<div class="size-8 rounded-full bg-slate-200 bg-cover shrink-0 mt-1" data-alt="John Doe avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB5ut04yWMaOmO8I6sIOo05WqVNjSQW5IWMc21F5m9W41-Mp4xT2QaOgucn0eJp3dhl0yMa_DAKxavrnTWg6VcxO1KLw-3D-H3er-TKkeXAQ9EIjv0OmAySAIbbWChEgI6K_6jDJUnpjimSm5wtgXUfCgClXrbLRLEgiVVyXrrmpAthunrJ5uk8MkXN6AZMARh-cWhMoZVM0uAH8EplAhjEWt_vwWyKCNZBSt1WRlYQ1mSYsHQgQrPMUQcwuMIk295OjzlCZ7JeAHSq')"></div>
+<div class="flex flex-col gap-1">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-800 shadow-sm border-l-4 border-l-accent-gold">
+<p class="text-sm leading-relaxed">
+                                That makes sense. I would love some extra resources on the purity laws of that period if you have them. Also, is there a specific verse that best summarizes the tension between law and love in this context?
+                            </p>
+</div>
+<span class="text-[10px] text-slate-400 ml-1">2m ago</span>
+</div>
+</div>
+</div>
+<!-- Composer -->
+<div class="p-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+<div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-primary/20 transition-all shadow-inner">
+<div class="flex items-center gap-1 p-2 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+<button class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300"><span class="material-symbols-outlined text-[18px]">format_italic</span></button>
+<button class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span></button>
+<div class="w-px h-4 bg-slate-300 dark:bg-slate-600 mx-1"></div>
+<button class="flex items-center gap-1.5 px-3 py-1 hover:bg-primary/10 rounded text-primary text-xs font-bold transition-colors">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+                            Attach Scripture
+                        </button>
+<button class="flex items-center gap-1.5 px-3 py-1 hover:bg-accent-gold/10 rounded text-accent-gold text-xs font-bold transition-colors">
+<span class="material-symbols-outlined text-[16px]">description</span>
+                            Attach Resource
+                        </button>
+</div>
+<textarea class="w-full border-none focus:ring-0 bg-transparent text-sm p-4 min-h-[100px] placeholder:text-slate-400" placeholder="Type your reply here... Use @ to tag resources."></textarea>
+<div class="p-3 flex justify-end bg-slate-50 dark:bg-slate-800">
+<button class="bg-primary text-white px-6 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-blue-700 shadow-md shadow-primary/20">
+                            Send Reply
+                            <span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Student Context -->
+<aside class="w-72 border-l border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-slate-900 shrink-0">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 text-center">
+<div class="relative inline-block mb-4">
+<svg class="size-24 transform -rotate-90">
+<circle class="text-slate-100 dark:text-slate-800" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-xl font-black text-slate-900 dark:text-white">75%</span>
+<span class="text-[9px] uppercase font-bold text-slate-400">Progress</span>
+</div>
+</div>
+<h4 class="font-bold text-base truncate">John Doe</h4>
+<p class="text-xs text-slate-500 mb-4">Member since Jan 2023</p>
+<button class="w-full py-2 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">View Full Profile</button>
+</div>
+<div class="p-6 flex-1 overflow-y-auto">
+<div class="mb-6">
+<h5 class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-4">Recent Quiz Scores</h5>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="min-w-0">
+<p class="text-xs font-bold truncate">Module 1: Intro</p>
+<p class="text-[10px] text-slate-400">Oct 12</p>
+</div>
+<span class="text-sm font-black text-emerald-600">92/100</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="min-w-0">
+<p class="text-xs font-bold truncate">Module 2: History</p>
+<p class="text-[10px] text-slate-400">Oct 20</p>
+</div>
+<span class="text-sm font-black text-primary">88/100</span>
+</div>
+</div>
+</div>
+<div>
+<h5 class="text-[11px] font-black uppercase tracking-widest text-slate-400 mb-4">Quick Stats</h5>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg text-center">
+<p class="text-lg font-bold text-primary">12</p>
+<p class="text-[9px] font-bold text-slate-400 uppercase">Lessons</p>
+</div>
+<div class="p-3 border border-slate-100 dark:border-slate-800 rounded-lg text-center">
+<p class="text-lg font-bold text-accent-gold">4</p>
+<p class="text-[9px] font-bold text-slate-400 uppercase">Resources</p>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-slate-100 dark:bg-slate-800 rounded-xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary">info</span>
+<p class="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase">Instructor Notes</p>
+</div>
+<p class="text-xs italic text-slate-500 dark:text-slate-400">
+                        "Enthusiastic student, participates well in weekend seminars. Strong focus on practical application."
+                    </p>
+</div>
+</div>
+</aside>
+</main>
+</body></html>

@@ -31,7 +31,7 @@
     <div class="flex flex-1 flex-col gap-6">
         <!-- Breadcrumbs -->
         <nav class="flex items-center gap-2 px-1 py-1 text-sm font-bold uppercase tracking-widest text-slate-400">
-            <a class="hover:text-primary transition-colors" href="{{ route('index') }}">Home</a>
+            <a class="hover:text-primary transition-colors" href="{{ route('home') }}">Home</a>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
             <span class="text-primary font-black">Live Stream</span>
         </nav>
@@ -82,7 +82,7 @@
                         </div>
                         <h2 class="text-white text-4xl font-black mb-4 tracking-tight">Broadcast Offline</h2>
                         <p class="text-slate-400 max-w-md font-medium text-lg leading-relaxed">We aren't broadcasting right now. Join us for our next scheduled service.</p>
-                        <a href="{{ route('event') }}" class="mt-10 bg-primary text-white px-10 h-14 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl shadow-primary/20">
+                        <a href="{{ route('events.index') }}" class="mt-10 bg-primary text-white px-10 h-14 rounded-2xl font-black flex items-center gap-3 transition-all hover:scale-105 shadow-xl shadow-primary/20">
                             <span class="material-symbols-outlined">history</span>
                             Explore Archives
                         </a>
@@ -231,7 +231,7 @@
                         Coming Soon
                     @endif
                 </p>
-                <a href="{{ isset($next_event) ? route('event.single', $next_event->id) : route('event') }}" class="mt-6 w-full rounded-xl bg-white/10 py-3 text-xs font-black text-white transition-all hover:bg-white hover:text-slate-900 uppercase tracking-widest flex items-center justify-center">Register Now</a>
+                <a href="{{ isset($next_event) ? route('event.single', $next_event->id) : route('events.index') }}" class="mt-6 w-full rounded-xl bg-white/10 py-3 text-xs font-black text-white transition-all hover:bg-white hover:text-slate-900 uppercase tracking-widest flex items-center justify-center">Register Now</a>
             </div>
             <div class="absolute -right-8 -top-8 size-40 rounded-full bg-primary/20 blur-3xl transition-all group-hover:bg-primary/40"></div>
         </div>

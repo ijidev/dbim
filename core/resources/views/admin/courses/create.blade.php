@@ -5,7 +5,7 @@
 @section('content')
     <div style="max-width: 800px;">
         <div style="margin-bottom: 2rem;">
-            <a href="{{ route('courses.index') }}" style="color: #64748b; text-decoration: none; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+            <a href="{{ route('instructor.courses.index') }}" style="color: #64748b; text-decoration: none; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.5rem;">
                 ← Back to Courses
             </a>
             <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0;">Create New Course</h2>
@@ -22,7 +22,7 @@
         @endif
 
         <div class="data-card" style="padding: 2rem;">
-            <form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('instructor.courses.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="form-group">
@@ -66,7 +66,7 @@
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary">Create Course</button>
-                    <a href="{{ route('courses.index') }}" class="btn btn-outline">Cancel</a>
+                    <a href="{{ route('instructor.courses.index') }}" class="btn btn-outline">Cancel</a>
                 </div>
             </form>
         </div>

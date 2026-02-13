@@ -19,7 +19,7 @@
                 </h1> --}}
 
                 <div class="hero-content__buttons">
-                    <a href="{{route('event')}}" class="btn btn--stroke">Upcoming Events</a>
+                    <a href="{{ route('events.index') }}" class="btn btn-primary">View All Events</a>
                     <a href="{{route('about')}}" class="btn btn--stroke">About Us</a>
                 </div>
             </div> <!-- end hero-content__text -->

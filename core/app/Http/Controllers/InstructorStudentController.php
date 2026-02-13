@@ -164,4 +164,18 @@ class InstructorStudentController extends Controller
         
         return response()->stream($callback, 200, $headers);
     }
+
+    public function show($id)
+    {
+        $user = Auth::user();
+        $instructorCourseIds = Course::where('instructor_id', $user->id)->pluck('id');
+        
+        // Find enrollment for this student in one of instructor's courses
+        $student = Enrollment::with(['user', 'course.modules.lessons'])
+            ->whereIn('course_id', $instructorCourseIds)
+            ->where('user_id', $id)
+            ->firstOrFail();
+            
+        return view('frontend.instructor.students.show', compact('student'));
+    }
 }

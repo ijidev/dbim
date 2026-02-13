@@ -1,102 +1,134 @@
-@extends('frontend.instructor.dashboard')
+@extends('layouts.instructor')
 
-@section('dashboard_content')
-<div class="p-8">
-    <div class="flex items-center justify-between mb-8">
+@section('title', 'Quiz Portfolio')
+@section('page_title', 'Assessment Management Hub')
+
+@section('instructor_content')
+<div class="space-y-12">
+    <!-- Header Actions -->
+    <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-slate-900">Quizzes</h1>
-            <p class="text-slate-500 mt-1">Manage course assessments and quizzes</p>
+            <h1 class="text-3xl font-black text-slate-900 leading-tight tracking-tight">Quiz Portfolio</h1>
+            <p class="text-slate-500 font-medium mt-1">Design, manage, and deploy course assessments with high precision.</p>
         </div>
-        <button onclick="document.getElementById('createQuizModal').classList.remove('hidden')" class="px-6 py-2.5 bg-primary text-white font-bold rounded-lg flex items-center gap-2 hover:bg-blue-700 transition-colors">
-            <span class="material-symbols-outlined">add</span>
-            Create New Quiz
+        <button onclick="document.getElementById('createQuizModal').classList.remove('hidden')" class="h-14 px-8 bg-primary text-white rounded-[1.25rem] text-sm font-black flex items-center gap-3 shadow-xl shadow-primary/20 hover:scale-105 transition-all">
+            <span class="material-symbols-outlined text-xl">add_box</span>
+            CREATE NEW QUIZ
         </button>
     </div>
 
-    <!-- Quiz List -->
-    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-        <table class="w-full text-left border-collapse">
-            <thead class="bg-slate-50 text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-200">
-                <tr>
-                    <th class="px-6 py-4">Title</th>
-                    <th class="px-6 py-4">Course</th>
-                    <th class="px-6 py-4">Questions</th>
-                    <th class="px-6 py-4">Time Limit</th>
-                    <th class="px-6 py-4">Status</th>
-                    <th class="px-6 py-4 text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200">
-                @forelse($quizzes as $quiz)
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="font-bold text-slate-900">{{ $quiz->title }}</div>
-                        <div class="text-xs text-slate-500">{{ $quiz->lesson ? 'Lesson: ' . $quiz->lesson->title : 'Standalone' }}</div>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-slate-600">{{ $quiz->course->title }}</td>
-                    <td class="px-6 py-4 text-sm text-slate-600">{{ $quiz->questions_count }} Questions</td>
-                    <td class="px-6 py-4 text-sm text-slate-600">{{ $quiz->time_limit ? $quiz->time_limit . ' mins' : 'Unlimited' }}</td>
-                    <td class="px-6 py-4">
-                        @if($quiz->is_published)
-                            <span class="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">Published</span>
-                        @else
-                            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full">Draft</span>
-                        @endif
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center justify-center gap-2">
-                            <a href="{{ route('instructor.quizzes.edit', $quiz->id) }}" class="p-2 text-slate-400 hover:text-primary hover:bg-slate-100 rounded-lg transition-colors">
-                                <span class="material-symbols-outlined text-[20px]">edit</span>
-                            </a>
-                            <form action="{{ route('instructor.quizzes.destroy', $quiz->id) }}" method="POST" onsubmit="return confirm('Are you sure? This cannot be undone.');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                    <span class="material-symbols-outlined text-[20px]">delete</span>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="px-6 py-12 text-center text-slate-500">
-                        <span class="material-symbols-outlined text-4xl mb-2 text-slate-300">quiz</span>
-                        <p>No quizzes created yet.</p>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <!-- Quiz Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @forelse($quizzes as $quiz)
+        <div class="bg-white rounded-[2.5rem] border border-[#dcdfe5] shadow-sm overflow-hidden group hover:shadow-2xl hover:shadow-primary/5 transition-all flex flex-col">
+            <!-- Header Section -->
+            <div class="p-8 pb-4">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="size-14 rounded-2xl bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                        <span class="material-symbols-outlined text-2xl font-bold">quiz</span>
+                    </div>
+                    @if($quiz->is_published)
+                        <span class="px-3 py-1.5 bg-emerald-50 text-emerald-600 text-[9px] font-black uppercase rounded-lg tracking-widest border border-emerald-100">
+                            PUBLISHED
+                        </span>
+                    @else
+                        <span class="px-3 py-1.5 bg-slate-50 text-slate-400 text-[9px] font-black uppercase rounded-lg tracking-widest border border-slate-100">
+                            DRAFT
+                        </span>
+                    @endif
+                </div>
+                
+                <h3 class="text-xl font-black text-slate-900 group-hover:text-primary transition-colors leading-tight mb-2">
+                    {{ $quiz->title }}
+                </h3>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    {{ $quiz->course->title }}
+                </p>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="px-8 py-6 bg-[#f8f9fb] border-y border-slate-50 grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Questions</p>
+                    <p class="text-sm font-black text-slate-700 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-lg">format_list_bulleted</span>
+                        {{ $quiz->questions_count }}
+                    </p>
+                </div>
+                <div class="space-y-1 text-right">
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Time Limit</p>
+                    <p class="text-sm font-black text-slate-700 flex items-center gap-2 justify-end">
+                        <span class="material-symbols-outlined text-amber-500 text-lg">timer</span>
+                        {{ $quiz->time_limit ? $quiz->time_limit . ' Min' : 'No Limit' }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="p-6 bg-white flex items-center gap-3">
+                <a href="{{ route('instructor.quizzes.edit', $quiz->id) }}" class="flex-1 h-12 bg-slate-50 rounded-xl text-[10px] font-black text-slate-600 hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-base font-bold">edit_note</span>
+                    OPEN BUILDER
+                </a>
+                <form action="{{ route('instructor.quizzes.destroy', $quiz->id) }}" method="POST" onsubmit="return confirm('Strict Warning: Delete this quiz assessment?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="size-12 bg-red-50 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">delete</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        @empty
+        <div class="col-span-full py-32 text-center">
+            <div class="size-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center text-slate-200 mx-auto mb-8 transition-transform hover:rotate-12">
+                <span class="material-symbols-outlined text-5xl font-light">edit_document</span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-900">Quiz bank is empty</h3>
+            <p class="text-slate-500 max-w-sm mx-auto mt-4 font-medium italic">"Test me, Lord, and try me, examine my heart and my mind." — Psalm 26:2</p>
+            <div class="mt-10">
+                <button onclick="document.getElementById('createQuizModal').classList.remove('hidden')" class="inline-flex h-14 px-10 bg-primary text-white rounded-[1.25rem] text-sm font-black items-center gap-3 shadow-xl shadow-primary/20 hover:scale-105 transition-all">
+                    START YOUR FIRST ASSESSMENT
+                </button>
+            </div>
+        </div>
+        @endforelse
     </div>
-    
-    <div class="mt-6">
+
+    <!-- Pagination -->
+    @if($quizzes->hasPages())
+    <div class="mt-12 flex justify-center">
         {{ $quizzes->links() }}
     </div>
+    @endif
 </div>
 
 <!-- Create Modal -->
-<div id="createQuizModal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden">
-        <div class="p-6 border-b border-slate-200 flex items-center justify-between">
-            <h3 class="text-lg font-bold">Create New Quiz</h3>
-            <button onclick="document.getElementById('createQuizModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
+<div id="createQuizModal" class="fixed inset-0 z-[100] hidden bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-300">
+        <div class="p-10 border-b border-slate-50 flex items-center justify-between bg-[#f8f9fb]">
+            <h3 class="text-2xl font-black text-slate-900 tracking-tight">New Assessment</h3>
+            <button onclick="document.getElementById('createQuizModal').classList.add('hidden')" class="size-10 bg-white rounded-xl text-slate-400 hover:text-slate-600 transition-all flex items-center justify-center shadow-sm">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form action="{{ route('instructor.quizzes.create_step1') }}" method="GET" class="p-6 space-y-4">
-            <div>
-                <label class="block text-sm font-bold text-slate-700 mb-2">Select Course</label>
-                <select name="course_id" class="w-full border-slate-200 rounded-lg focus:ring-primary focus:border-primary text-sm">
-                    @foreach(\App\Models\Course::where('instructor_id', Auth::id())->get() as $course)
-                        <option value="{{ $course->id }}">{{ $course->title }}</option>
-                    @endforeach
-                </select>
+        <form action="{{ route('instructor.quizzes.create_step1') }}" method="GET" class="p-10 space-y-8">
+            <div class="space-y-4">
+                <label class="block text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] px-2">Target Course Engagement</label>
+                <div class="relative group">
+                    <select name="course_id" class="w-full h-16 bg-[#f8f9fb] border-none rounded-2xl px-8 text-sm font-black focus:ring-4 focus:ring-primary/5 transition-all appearance-none cursor-pointer">
+                        @foreach(\App\Models\Course::where('instructor_id', Auth::id())->get() as $course)
+                            <option value="{{ $course->id }}">{{ $course->title }}</option>
+                        @endforeach
+                    </select>
+                    <span class="material-symbols-outlined absolute right-6 top-5 text-slate-300 pointer-events-none group-hover:text-primary transition-colors">expand_more</span>
+                </div>
+                <p class="text-[10px] font-bold text-slate-400 italic px-2">Select the course you wish to build an assessment for.</p>
             </div>
             
-            <div class="pt-4 flex justify-end">
-                <button type="submit" class="px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-blue-700">
-                    Start Building
+            <div class="flex gap-4">
+                <button type="submit" class="flex-1 h-16 bg-primary text-white font-black rounded-2xl text-xs tracking-widest flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    START BUILDER <span class="material-symbols-outlined text-lg">arrow_forward</span>
                 </button>
             </div>
         </form>

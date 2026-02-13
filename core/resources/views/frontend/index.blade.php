@@ -51,7 +51,7 @@
                     <span class="material-symbols-outlined">play_circle</span>
                     Watch Live Service
                 </a>
-                <a href="{{ route('event') }}" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 h-14 rounded-xl font-bold flex items-center justify-center gap-3 text-lg hover:bg-white/20 transition-all">
+                <a href="{{ route('events.index') }}" class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 h-14 rounded-xl font-bold flex items-center justify-center gap-3 text-lg hover:bg-white/20 transition-all">
                     Upcoming Events
                 </a>
             </div>
@@ -183,7 +183,7 @@
             <div class="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
                 <span class="material-symbols-outlined text-6xl text-slate-300 mb-4 font-light">calendar_today</span>
                 <p class="text-slate-500 font-medium">No upcoming events scheduled at the moment.</p>
-                <a href="{{ route('event') }}" class="text-primary font-bold mt-4 inline-block hover:underline">Check Full Calendar</a>
+                <a href="{{ route('events.index') }}" class="text-primary font-bold mt-4 inline-block hover:underline">Check Full Calendar</a>
             </div>
             @endforelse
         </div>

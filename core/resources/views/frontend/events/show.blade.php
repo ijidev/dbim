@@ -126,7 +126,7 @@
 </div>
 
 <div class="event-container">
-    <a href="{{ route('event') }}" class="flex items-center gap-2 text-slate-500 font-black text-xs uppercase tracking-widest hover:text-primary transition-colors mb-6">
+    <a href="{{ route('events.index') }}" class="flex items-center gap-2 text-slate-500 font-black text-xs uppercase tracking-widest hover:text-primary transition-colors mb-6">
         <span class="material-symbols-outlined text-lg">arrow_back</span>
         Back to Events
     </a>

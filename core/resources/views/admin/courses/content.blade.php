@@ -104,7 +104,7 @@
 
 @section('content')
     <div style="margin-bottom: 2rem;">
-        <a href="{{ route('courses.index') }}" style="color: #64748b; text-decoration: none; font-size: 0.875rem;">← Back to Courses</a>
+        <a href="{{ route('instructor.courses.index') }}" style="color: #64748b; text-decoration: none; font-size: 0.875rem;">← Back to Courses</a>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
             <div>
                 <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">{{ $course->title }}</h2>
@@ -130,7 +130,7 @@
                 </div>
                 <div style="display: flex; gap: 0.5rem;">
                     <button class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;" onclick="event.stopPropagation(); currentModuleId = {{ $module->id }}; openModal('lessonModal')">+ Lesson</button>
-                    <form action="{{ route('modules.destroy', $module->id) }}" method="POST" style="display: inline;" onclick="event.stopPropagation();">
+                    <form action="{{ route('instructor.modules.destroy', $module->id) }}" method="POST" style="display: inline;" onclick="event.stopPropagation();">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem; color: #ef4444; border-color: #fecaca;" onclick="return confirm('Delete this module and all its lessons?')">Delete</button>
@@ -162,7 +162,7 @@
                                 <span class="badge badge-success">Free Preview</span>
                             @endif
                         </div>
-                        <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST">
+                        <form action="{{ route('instructor.lessons.destroy', $lesson->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem; color: #ef4444; border-color: #fecaca;" onclick="return confirm('Delete this lesson?')">Delete</button>
@@ -189,7 +189,7 @@
                 <div class="modal-title">Create Module</div>
                 <button class="modal-close" onclick="closeModal('moduleModal')">&times;</button>
             </div>
-            <form action="{{ route('modules.store') }}" method="POST">
+            <form action="{{ route('instructor.modules.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="course_id" value="{{ $course->id }}">
                 <div class="modal-body">
@@ -213,7 +213,7 @@
                 <div class="modal-title">Create Lesson</div>
                 <button class="modal-close" onclick="closeModal('lessonModal')">&times;</button>
             </div>
-            <form action="{{ route('lessons.store') }}" method="POST">
+            <form action="{{ route('instructor.lessons.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="module_id" id="lessonModuleId">
                 <div class="modal-body">

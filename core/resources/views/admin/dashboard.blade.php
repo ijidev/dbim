@@ -149,7 +149,7 @@
             </a>
             @endif
             @if($isInstructor)
-            <a href="{{ route('courses.create') }}" class="h-14 px-8 bg-primary text-white rounded-2xl flex items-center justify-center gap-3 font-black text-sm hover:scale-105 transition-all shadow-lg shadow-primary/20">
+            <a href="{{ route('instructor.courses.create') }}" class="h-14 px-8 bg-primary text-white rounded-2xl flex items-center justify-center gap-3 font-black text-sm hover:scale-105 transition-all shadow-lg shadow-primary/20">
                 <span class="material-symbols-outlined">library_add</span> New Course
             </a>
             @endif

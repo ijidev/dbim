@@ -314,7 +314,7 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="container nav-container">
-                <a href="{{ route('index') }}" class="logo">
+                <a href="{{ route('home') }}" class="logo">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -326,9 +326,9 @@
                 <input type="checkbox" id="nav-check">
                 
                 <div class="nav-links">
-                    <a href="{{ route('index') }}" class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">Home</a>
+                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
                     <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a>
-                    <a href="{{ route('event') }}" class="nav-link {{ request()->routeIs('event') ? 'active' : '' }}">Events</a>
+                    <a href="{{ route('events.index') }}" class="nav-link {{ request()->routeIs('events.*') ? 'active' : '' }}">Events</a>
                     <a href="{{ route('live') }}" class="nav-link {{ request()->routeIs('live') ? 'active' : '' }}">
                         <div class="live-badge">
                             <span class="live-dot"></span>
@@ -390,7 +390,7 @@
                     </div>
                     <div class="footer-col">
                         <h4>Quick Links</h4>
-                        <a href="{{ route('event') }}" class="footer-link">Upcoming Events</a>
+                        <a href="{{ route('events.index') }}" class="footer-link">Upcoming Events</a>
                         <a href="{{ route('live') }}" class="footer-link">Live Stream</a>
                         <a href="{{ route('store.index') }}" class="footer-link">Store</a>
                         <a href="{{ route('contact') }}" class="footer-link">Contact Us</a>

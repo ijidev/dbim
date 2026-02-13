@@ -44,7 +44,7 @@ class QuizController extends Controller
         $user = Auth::user();
         $quiz->load('questions');
         $courses = Course::where('instructor_id', $user->id)->get();
-        $lessons = Lesson::where('course_id', $quiz->course_id)->get();
+        $lessons = $quiz->course->lessons;
 
         return view('frontend.instructor.quizzes.builder', [
             'quiz' => $quiz,
@@ -64,11 +64,12 @@ class QuizController extends Controller
             'passing_score' => 'required|integer|min:0|max:100',
             'time_limit' => 'nullable|integer|min:1',
             'questions' => 'required|array|min:1',
-            'questions.*.text' => 'required|string',
+            'questions.*.question_text' => 'required|string',
             'questions.*.type' => 'required|in:multiple_choice,open_ended',
             'questions.*.points' => 'required|integer|min:0',
             'questions.*.options' => 'nullable|array',
             'questions.*.correct_answer' => 'nullable',
+            'questions.*.is_required' => 'nullable|boolean',
         ]);
 
         $quiz = Quiz::create([
@@ -82,11 +83,12 @@ class QuizController extends Controller
 
         foreach ($validated['questions'] as $index => $qData) {
             $quiz->questions()->create([
-                'question_text' => $qData['text'],
+                'question_text' => $qData['question_text'],
                 'type' => $qData['type'],
                 'points' => $qData['points'] ?? 1,
                 'options' => $qData['options'] ?? null,
                 'correct_answer' => $qData['correct_answer'] ?? null,
+                'is_required' => $qData['is_required'] ?? true,
                 'order' => $index,
             ]);
         }
@@ -101,6 +103,12 @@ class QuizController extends Controller
             'passing_score' => 'required|integer|min:0|max:100',
             'time_limit' => 'nullable|integer|min:1',
             'questions' => 'required|array|min:1',
+            'questions.*.question_text' => 'required|string',
+            'questions.*.type' => 'required|in:multiple_choice,open_ended',
+            'questions.*.points' => 'required|integer|min:0',
+            'questions.*.options' => 'nullable|array',
+            'questions.*.correct_answer' => 'nullable',
+            'questions.*.is_required' => 'nullable|boolean',
         ]);
 
         $quiz->update([
@@ -110,17 +118,16 @@ class QuizController extends Controller
             'is_published' => $request->has('publish'),
         ]);
 
-        // Simple sync: delete old and recreate
-        // In a real app we might want to keep IDs, but for a builder syncing is easier
         $quiz->questions()->delete();
 
-        foreach ($request->input('questions') as $index => $qData) {
+        foreach ($validated['questions'] as $index => $qData) {
              $quiz->questions()->create([
-                'question_text' => $qData['text'],
+                'question_text' => $qData['question_text'],
                 'type' => $qData['type'],
                 'points' => $qData['points'] ?? 1,
                 'options' => $qData['options'] ?? null,
                 'correct_answer' => $qData['correct_answer'] ?? null,
+                'is_required' => $qData['is_required'] ?? true,
                 'order' => $index,
             ]);
         }

@@ -45,7 +45,7 @@
                 <span class="material-symbols-outlined text-[20px]">calendar_today</span>
                 <span>Today</span>
             </button>
-            <a href="{{ route('event') }}" class="flex items-center gap-2 rounded-xl h-12 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all">
+            <a href="{{ route('events.index') }}" class="flex items-center gap-2 rounded-xl h-12 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all">
                 <span class="material-symbols-outlined text-[20px]">list</span>
                 <span>List View</span>
             </a>

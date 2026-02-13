@@ -543,7 +543,7 @@
                 </a>
                 @endif
                 @if(in_array($role, ['admin', 'instructor']))
-                <a href="{{ route('courses.index') }}" class="nav-item {{ request()->routeIs('courses.*') ? 'active' : '' }}">
+                <a href="{{ route('instructor.courses.index') }}" class="nav-item {{ request()->routeIs('instructor.courses.*') ? 'active' : '' }}">
                     <span class="material-symbols-outlined nav-icon">school</span>
                     Courses (LMS)
                 </a>

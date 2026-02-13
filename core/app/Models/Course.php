@@ -11,10 +11,14 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
         'thumbnail',
         'price',
+        'is_free',
         'instructor_id',
+        'category',
+        'type',
         'is_published',
     ];
 
@@ -26,6 +30,11 @@ class Course extends Model
     public function modules()
     {
         return $this->hasMany(Module::class)->orderBy('order');
+    }
+
+    public function lessons()
+    {
+        return $this->hasManyThrough(Lesson::class, Module::class);
     }
 
     public function enrollments()

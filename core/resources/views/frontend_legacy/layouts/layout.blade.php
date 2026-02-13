@@ -49,7 +49,7 @@
     <header class="s-header">
 
         <div class="header-logo">
-            <a class="site-logo" href="{{ route('index') }}">
+            <a class="site-logo" href="{{ route('home') }}">
                 <h2 style="color: white; margin-top:0;">DBIM</h2>
                 {{-- <img src="{{ asset('assets/images/logo.svg') }}" alt="Homepage"> --}}
             </a>
@@ -57,9 +57,9 @@
 
         <nav class="header-nav-wrap">
             <ul class="header-nav">
-                <li class="current"><a href="{{ route('index') }}" title="Home">Home</a></li>
+                <li class="current"><a href="{{ route('home') }}" title="Home">Home</a></li>
                 <li><a href="{{ route('about') }}" title="About">About</a></li>
-                <li><a href="{{ route('event') }}" title="Services">Events</a></li>
+                <li><a href="{{ route('events.index') }}" title="Services">Events</a></li>
                 <li><a href="{{ route('calendar') }}" title="Calendar">Calendar</a></li>
                 <li><a href="{{ route('live') }}" title="Live Stream">Live</a></li>
                 <li><a href="{{ route('student.dashboard') }}" title="LMS">Courses</a></li>
@@ -93,7 +93,7 @@
         <div class="row footer-top">
             <div class="column large-4 medium-5 tab-full">
                 <div class="footer-logo">
-                    <a class="site-footer-logo" href="{{ route('index') }}">
+                    <a class="site-footer-logo" href="{{ route('home') }}">
                         <h2 style="color: white; margin-top:0;">DBIM</h2>
                     </a>
                 </div>  <!-- footer-logo -->
@@ -116,9 +116,9 @@
                     <div class="column large-5 medium-full">
                         <h4 class="h6">Quick Links</h4>
                         <ul class="footer-list">
-                            <li><a href="{{ route('index') }}">Home</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('about') }}">About</a></li>
-                            <li><a href="{{ route('event') }}">Upcoming Events</a></li>
+                            <li><a href="{{ route('events.index') }}">Upcoming Events</a></li>
                             <li><a href="{{ route('student.dashboard') }}">LMS/Courses</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                         </ul>

@@ -20,21 +20,23 @@ class InstructorController extends Controller
             ->latest()
             ->get();
             
-        $active_courses_count = $courses->count();
+        $activeCoursesCount = $courses->count();
         
         // Total Students (Unique)
-        $total_students_count = Enrollment::whereIn('course_id', $courses->pluck('id'))
+        $totalStudents = Enrollment::whereIn('course_id', $courses->pluck('id'))
             ->distinct('user_id')
             ->count();
             
         // Live Attendees / Upcoming Meetings
-        $upcoming_meetings = Meeting::where('host_id', $user->id)
+        $meetings = Meeting::where('host_id', $user->id)
             ->whereIn('status', ['active', 'pending'])
             ->latest()
             ->get();
+
+        $totalMeetings = $meetings->count();
             
         // Recent Enrollments
-        $recent_enrollments = Enrollment::whereIn('course_id', $courses->pluck('id'))
+        $recentEnrollments = Enrollment::whereIn('course_id', $courses->pluck('id'))
             ->with(['user', 'course'])
             ->latest()
             ->take(10)
@@ -42,10 +44,11 @@ class InstructorController extends Controller
 
         return view('frontend.instructor.dashboard', compact(
             'courses',
-            'active_courses_count',
-            'total_students_count',
-            'upcoming_meetings',
-            'recent_enrollments'
+            'activeCoursesCount',
+            'totalStudents',
+            'meetings',
+            'totalMeetings',
+            'recentEnrollments'
         ));
     }
 }

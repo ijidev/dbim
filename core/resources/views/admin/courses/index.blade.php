@@ -8,7 +8,7 @@
             <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0;">All Courses</h2>
             <p style="color: #64748b; margin: 0.25rem 0 0;">Manage LMS courses and content</p>
         </div>
-        <a href="{{ route('courses.create') }}" class="btn btn-primary">+ Create Course</a>
+        <a href="{{ route('instructor.courses.create') }}" class="btn btn-primary">+ Create Course</a>
     </div>
 
     @if(session('success'))
@@ -57,9 +57,9 @@
                         </td>
                         <td>
                             <div style="display: flex; gap: 0.5rem;">
-                                <a href="{{ route('courses.content', $course->id) }}" class="btn btn-primary" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;">Content</a>
-                                <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;">Edit</a>
-                                <form action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display: inline;">
+                                <a href="{{ route('instructor.courses.content', $course->id) }}" class="btn btn-primary" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;">Content</a>
+                                <a href="{{ route('instructor.courses.edit', $course->id) }}" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem;">Edit</a>
+                                <form action="{{ route('instructor.courses.destroy', $course->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline" style="padding: 0.375rem 0.75rem; font-size: 0.8125rem; color: #ef4444; border-color: #fecaca;" onclick="return confirm('Delete this course?')">Delete</button>
@@ -71,7 +71,7 @@
                     <tr>
                         <td colspan="7" style="text-align: center; padding: 3rem; color: #94a3b8;">
                             <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
-                            No courses found. <a href="{{ route('courses.create') }}" style="color: var(--primary-color); font-weight: 600;">Create your first course</a>
+                            No courses found. <a href="{{ route('instructor.courses.create') }}" style="color: var(--primary-color); font-weight: 600;">Create your first course</a>
                         </td>
                     </tr>
                     @endforelse

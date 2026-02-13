@@ -139,6 +139,7 @@ Route::middleware([
          // Students Management
         Route::get('/students', [InstructorStudentController::class, 'index'])->name('students.index');
         Route::get('/students/export', [InstructorStudentController::class, 'export'])->name('students.export');
+        Route::get('/students/{student}', [InstructorStudentController::class, 'show'])->name('students.show');
 
         // Quiz Management
         Route::controller(QuizController::class)->prefix('quizzes')->name('quizzes.')->group(function () {

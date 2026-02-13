@@ -183,7 +183,7 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-            height: 72px;
+            height: 64px;
             display: flex;
             align-items: center;
         }
@@ -264,7 +264,7 @@
         @media (max-width: 1024px) {
             .nav-links {
                 position: fixed;
-                top: 72px;
+                top: 64px;
                 left: 0;
                 width: 100%;
                 background: white;

@@ -56,7 +56,7 @@
     <!-- Main Content -->
     <main class="flex-1 overflow-x-hidden">
         <!-- Sub Header (Role Specific Title) -->
-        <header class="h-14 glass-header sticky top-[72px] z-[40] flex items-center justify-between px-8 lg:px-12">
+        <header class="h-12 glass-header sticky z-[40] flex items-center justify-between px-8 lg:px-12">
             <div class="flex items-center gap-4">
                 <h2 class="text-lg font-black text-primary tracking-tight">@yield('page_title', 'Instructor Panel')</h2>
             </div>
@@ -75,7 +75,7 @@
             </div>
         </header>
 
-        <div class="px-8 py-4 lg:px-12 lg:py-6 max-w-7xl mx-auto">
+        <div class="px-8 py-0 lg:px-12 lg:py-0 max-w-7xl mx-auto">
             @yield('instructor_content')
         </div>
     </main>

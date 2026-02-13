@@ -5,7 +5,7 @@
     $isStudent = $role === 'student';
 @endphp
 
-<aside class="w-72 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a202c] flex flex-col h-full sticky top-[72px] z-20">
+<aside class="w-72 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a202c] flex flex-col h-full sticky z-20">
     <div class="p-8 flex flex-col h-full custom-scrollbar overflow-y-auto">
         <!-- Dashboard Header Info (Optional, can be role specific) -->
         <div class="mb-10 lg:hidden">

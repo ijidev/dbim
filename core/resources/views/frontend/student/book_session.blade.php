@@ -25,9 +25,9 @@
     <!-- Breadcrumbs -->
     <div class="w-full bg-white border-b border-gray-200 px-8 py-4">
         <div class="max-w-7xl mx-auto flex items-center gap-2 text-sm text-gray-500">
-            <a class="hover:text-primary transition-colors" href="{{ route('instructors') }}">Instructors</a>
+            <a class="hover:text-primary transition-colors" href="{{ route('student.instructors') }}">Instructors</a>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
-            <a class="hover:text-primary transition-colors" href="{{ route('instructor.profile', $instructor->id) }}">{{ $instructor->name }}</a>
+            <a class="hover:text-primary transition-colors" href="{{ route('student.instructor.profile', $instructor->id) }}">{{ $instructor->name }}</a>
             <span class="material-symbols-outlined text-sm">chevron_right</span>
             <span class="text-primary font-bold">Book Session</span>
         </div>

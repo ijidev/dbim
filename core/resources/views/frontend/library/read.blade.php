@@ -4,72 +4,65 @@
 
 @push('styles')
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Metamorphous&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Metamorphous&display=swap');
 
     :root {
         --primary: #0f49bd;
+        --ivory: #FAF9F6;
     }
 
-    .font-manuscript { font-family: 'Crimson Pro', serif; }
     .font-serif-study { font-family: 'Lora', serif; }
+    .font-lexend { font-family: 'Lexend', sans-serif; }
 
-    .glass-nav {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-    }
+    .sepia-mode { background-color: #f4ecd8 !important; color: #5b4636 !important; }
+    .dark-mode-reader { background-color: #101622 !important; color: #e2e8f0 !important; }
 
-    .text-justify-custom { text-align: justify; text-justify: inter-word; }
-
-    /* Highlighting */
-    .hl-gold { background-color: rgba(255, 215, 0, 0.2); border-bottom: 2px solid #ffd700; color: #fff; }
-    .hl-blue { background-color: rgba(147, 197, 253, 0.2); border-bottom: 2px solid #93c5fd; color: #fff; }
-    .hl-green { background-color: rgba(134, 239, 172, 0.2); border-bottom: 2px solid #86efac; color: #fff; }
+    .hl-gold { background-color: rgba(255, 215, 0, 0.3); border-bottom: 2px solid #ffd700; }
+    .hl-blue { background-color: rgba(147, 197, 253, 0.3); border-bottom: 2px solid #93c5fd; }
+    .hl-green { background-color: rgba(134, 239, 172, 0.3); border-bottom: 2px solid #86efac; }
     
-    .current-word {
-        background-color: var(--primary);
-        color: white !important;
-        border-radius: 4px;
-        padding: 0 2px;
-    }
-
     .no-scrollbar::-webkit-scrollbar { display: none; }
     
-    /* Layout heights */
-    .content-height { height: calc(100vh - 65px - 90px); } /* Nav - Player */
+    .reader-shadow { box-shadow: 0 50px 100px -20px rgba(0,0,0,0.1), 0 30px 60px -30px rgba(0,0,0,0.15); }
 </style>
 @endpush
 
 @section('content')
 <div class="h-screen flex flex-col overflow-hidden bg-slate-50">
     <!-- Reader Navigation -->
-    <nav class="h-[65px] flex items-center glass-nav border-b border-slate-200/50 px-6 z-50">
-        <div class="w-full h-full flex items-center justify-between">
-            <div class="flex items-center gap-6">
-                <a href="{{ route('library.index') }}" class="group flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm font-bold uppercase tracking-widest">
-                    <span class="material-symbols-outlined text-xl transition-transform group-hover:-translate-x-1">arrow_back</span>
-                    <span class="hidden sm:inline">Back</span>
+    <nav class="h-[72px] flex items-center bg-white/80 backdrop-blur-md border-b border-slate-200/50 px-6 sm:px-12 z-[60] sticky top-0 font-lexend">
+        <div class="w-full flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <a href="{{ auth()->check() && auth()->user()->role == 'student' ? route('student.library.index') : route('library.index') }}" class="group flex items-center gap-3 text-slate-500 hover:text-primary transition-all text-xs font-black uppercase tracking-widest">
+                    <span class="material-symbols-outlined text-xl transition-transform group-hover:-translate-x-1">west</span>
+                    <span class="hidden sm:inline">Exit Reader</span>
                 </a>
-                <div class="h-6 w-px bg-slate-200"></div>
-                <div>
-                    <h2 class="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-0.5">{{ $book->title }}</h2>
-                    <h1 class="text-xs sm:text-sm font-black text-slate-900 leading-tight line-clamp-1 chapter-title-display">{{ $book->chapters->first()->title ?? $book->title }}</h1>
+                <div class="h-8 w-px bg-slate-100 hidden sm:block"></div>
+                <div class="hidden md:block">
+                    <h2 class="text-[9px] font-black text-primary uppercase tracking-[0.2em] mb-0.5 opacity-60">{{ $book->title }}</h2>
+                    <h1 class="text-sm font-black text-slate-900 leading-tight chapter-title-display">{{ $book->chapters->first()->title ?? 'Introduction' }}</h1>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
-                <button onclick="toggleChapters()" class="lg:hidden flex h-10 items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 text-[10px] font-black text-slate-600 hover:bg-primary/10 hover:text-primary transition-all shadow-sm uppercase tracking-widest">
-                    <span class="material-symbols-outlined text-[18px]">menu_book</span>
-                    <span>TOC</span>
-                </button>
-                <div class="hidden lg:flex items-center bg-white rounded-xl p-1 border border-slate-200 shadow-sm">
-                    <button onclick="changeMode('sepia')" class="p-2 rounded-lg hover:bg-slate-50 text-slate-400 transition-all"><span class="material-symbols-outlined text-lg text-amber-600">texture</span></button>
-                    <button onclick="changeMode('dark')" class="p-2 rounded-lg bg-slate-100 text-primary transition-all"><span class="material-symbols-outlined text-lg">dark_mode</span></button>
-                    <div class="w-px h-4 bg-slate-200 mx-1"></div>
-                    <button onclick="adjustFontSize(2)" class="p-2 rounded-lg hover:bg-slate-50 text-slate-400 transition-all"><span class="text-xs font-black">Aa+</span></button>
+                <div class="hidden sm:flex items-center bg-slate-50 rounded-2xl p-1 border border-slate-100 font-black">
+                    <button onclick="changeMode('sepia')" class="p-2.5 rounded-xl hover:bg-white text-amber-700 transition-all" title="Sepia Mode"><span class="material-symbols-outlined text-[20px]">texture</span></button>
+                    <button onclick="changeMode('dark')" class="p-2.5 rounded-xl hover:bg-white text-slate-400 transition-all font-black" title="Dark Mode"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button>
+                    <button onclick="changeMode('light')" class="p-2.5 rounded-xl hover:bg-white text-slate-400 transition-all font-black" title="Light Mode"><span class="material-symbols-outlined text-[20px]">light_mode</span></button>
+                    <div class="w-px h-5 bg-slate-200 mx-2"></div>
+                    <button onclick="adjustFontSize(2)" class="p-2.5 rounded-xl hover:bg-white text-slate-500 transition-all" title="Increase Font"><span class="text-[10px] font-black uppercase tracking-widest">Aa+</span></button>
                 </div>
-                <button onclick="toggleAnnotations()" class="lg:hidden flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:bg-primary/10 hover:text-primary transition-all shadow-sm">
-                    <span class="material-symbols-outlined text-[20px]">edit_note</span>
+                
+                @if(!$isOwner)
+                <div class="hidden lg:flex items-center gap-3 bg-amber-50 border border-amber-100 px-5 py-2.5 rounded-2xl">
+                    <span class="material-symbols-outlined text-amber-600 text-lg">lock</span>
+                    <p class="text-[10px] font-black text-amber-900 uppercase tracking-widest">PREVIEW ONLY</p>
+                    <button onclick="window.location.href='{{ route('library.index') }}'" class="text-[9px] font-black text-primary underline underline-offset-4 ml-2">UNLOCK FULL BOOK</button>
+                </div>
+                @endif
+
+                <button onclick="toggleAnnotations()" class="lg:hidden flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/5 text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-[22px]">edit_note</span>
                 </button>
             </div>
         </div>
@@ -83,21 +76,22 @@
     <!-- Main Reader Workspace -->
     <div id="reader-container" class="flex-1 flex overflow-hidden font-serif-study relative">
         <!-- Persistent Left Sidebar (Desktop) -->
-        <aside id="desktop-sidebar" class="hidden lg:flex w-64 bg-white border-r border-slate-100 flex-col shrink-0 overflow-y-auto no-scrollbar">
-            <div class="p-6">
-                <div class="flex items-center gap-2 text-primary mb-1">
-                    <span class="material-symbols-outlined text-lg">auto_stories</span>
-                    <span class="text-[10px] font-black uppercase tracking-widest">Table of Contents</span>
+        <aside id="desktop-sidebar" class="hidden lg:flex w-72 bg-white border-r border-slate-100 flex-col shrink-0 overflow-y-auto no-scrollbar font-lexend">
+            <div class="p-8">
+                <div class="flex items-center gap-3 text-primary mb-2">
+                    <span class="material-symbols-outlined text-xl">auto_stories</span>
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em]">Sacred Archive</span>
                 </div>
-                <h3 class="text-md font-bold text-slate-900 mb-6">{{ $book->title }}</h3>
-                <div class="space-y-1">
+                <h3 class="text-sm font-black text-slate-900 mb-8 leading-tight">{{ $book->title }}</h3>
+                <div class="space-y-1.5">
                     @foreach($book->chapters as $chap)
-                        <div onclick="switchChapter({{ $chap->id }}, '{{ addslashes($chap->title) }}', {{ $loop->index }})" class="chapter-nav-item p-3.5 rounded-xl hover:bg-slate-50 cursor-pointer border border-transparent transition-all group {{ $loop->first ? 'bg-primary/5 border-primary/20' : '' }}" data-id="{{ $chap->id }}" data-index="{{ $loop->index }}">
-                            <div class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary text-lg mt-0.5 {{ $loop->first ? 'active-icon' : '' }}">{{ $loop->first ? 'menu_book' : 'check_circle' }}</span>
+                        @php $isLocked = !$isOwner && $loop->index > 0; @endphp
+                        <div @if(!$isLocked) onclick="switchChapter({{ $chap->id }}, '{{ addslashes($chap->title) }}', {{ $loop->index }})" @else onclick="showPaywall()" @endif class="chapter-nav-item p-4 rounded-2xl hover:bg-slate-50 cursor-pointer border border-transparent transition-all group {{ $loop->first ? 'bg-primary/5 border-primary/20' : '' }} {{ $isLocked ? 'opacity-50 grayscale' : '' }}" data-id="{{ $chap->id }}" data-index="{{ $loop->index }}">
+                            <div class="flex items-start gap-4">
+                                <span class="material-symbols-outlined text-primary text-[20px] mt-0.5 {{ $loop->first ? 'active-icon' : '' }}">{{ $isLocked ? 'lock' : ($loop->first ? 'menu_book' : 'check_circle') }}</span>
                                 <div>
-                                    <p class="text-xs font-bold text-slate-700 group-hover:text-primary transition-colors line-clamp-2 leading-relaxed">{{ $chap->title }}</p>
-                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Section {{ $loop->iteration }}</p>
+                                    <p class="text-[13px] font-black text-slate-700 group-hover:text-primary transition-colors line-clamp-2 leading-tight">{{ $chap->title }}</p>
+                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1.5">Section {{ $loop->iteration }}</p>
                                 </div>
                             </div>
                         </div>
@@ -126,20 +120,20 @@
         </div>
 
         <!-- Book Content Area -->
-        <main id="scroll-container" class="flex-1 overflow-y-auto bg-slate-50 no-scrollbar relative scroll-smooth px-6">
+        <main id="scroll-container" class="flex-1 overflow-y-auto bg-ivory no-scrollbar relative scroll-smooth px-6">
             <div class="max-w-3xl mx-auto py-16 lg:py-24">
-                <article class="content-card bg-white rounded-[40px] shadow-2xl shadow-slate-200/50 border border-slate-100 p-8 md:p-12 lg:p-20 relative overflow-visible">
-                    <header class="mb-12 border-b border-slate-100 pb-10">
-                        <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-6 uppercase tracking-widest font-black">
+                <article class="content-card bg-white rounded-[40px] shadow-2xl shadow-slate-200/50 border border-slate-50 p-8 md:p-12 lg:p-20 relative overflow-visible reader-shadow">
+                    <header class="mb-12 border-b border-slate-100 pb-12">
+                        <div class="flex items-center gap-2 text-slate-400 text-[9px] mb-8 uppercase tracking-[0.2em] font-black">
                             <span>Library</span>
                             <span class="material-symbols-outlined text-[10px]">chevron_right</span>
                             <span>{{ $book->title }}</span>
                         </div>
-                        <h1 class="text-4xl sm:text-5xl font-bold text-slate-900 mb-6 leading-tight font-manuscript chapter-title-display">{{ $book->chapters->first()->title ?? $book->title }}</h1>
+                        <h1 class="text-4xl sm:text-5xl font-black text-slate-900 mb-8 leading-tight font-serif-study chapter-title-display">{{ $book->chapters->first()->title ?? 'Introduction' }}</h1>
                         <div class="flex items-center gap-6">
-                            <span class="text-[10px] font-black uppercase tracking-widest text-primary">Read: 12 mins</span>
-                            <div class="w-1.5 h-1.5 rounded-full bg-slate-200"></div>
-                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Audio: 15 mins</span>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-2"><span class="material-symbols-outlined text-sm">schedule</span> Read: 12 mins</span>
+                            <div class="w-1.5 h-1.5 rounded-full bg-slate-100"></div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2"><span class="material-symbols-outlined text-sm">mic</span> Audio: 15 mins</span>
                         </div>
                     </header>
 
@@ -200,15 +194,16 @@
     </div>
 
     <!-- Toolkit & Modals -->
-    <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[52] hidden transition-opacity duration-500 opacity-0" onclick="closeDrawers()"></div>
+    <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[52] hidden transition-opacity duration-500 opacity-0" onclick="closeDrawers()"></div>
 
+    @if($isOwner)
     <div id="highlight-toolkit" class="fixed z-[70] hidden flex items-center bg-slate-900 text-white rounded-2xl shadow-2xl p-1 animate-in fade-in zoom-in duration-200">
-        <div class="flex items-center gap-2 px-3 border-r border-slate-700">
+        <div class="flex items-center gap-2 px-3 border-r border-slate-700/50">
             <button onclick="applyHighlight('hl-gold')" class="w-7 h-7 rounded-full bg-[#ffd700] border-2 border-white/20 hover:scale-110 transition-transform shadow-sm" title="Insight"></button>
             <button onclick="applyHighlight('hl-blue')" class="w-7 h-7 rounded-full bg-[#93c5fd] border-2 border-white/20 hover:scale-110 transition-transform shadow-sm" title="Meditation"></button>
             <button onclick="applyHighlight('hl-green')" class="w-7 h-7 rounded-full bg-[#86efac] border-2 border-white/20 hover:scale-110 transition-transform shadow-sm" title="Promise"></button>
         </div>
-        <button onclick="showNoteModal()" class="flex items-center gap-2 px-4 py-2.5 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-slate-800 rounded-xl transition-colors">
+        <button onclick="showNoteModal()" class="flex items-center gap-2 px-5 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-slate-800 rounded-xl transition-colors">
             <span class="material-symbols-outlined text-sm">add_comment</span>
             <span>Add Note</span>
         </button>
@@ -218,21 +213,31 @@
     <!-- Note Modal -->
     <div id="note-modal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-6">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeNoteModal()"></div>
-        <div class="relative w-full max-w-lg bg-white rounded-[32px] shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
-            <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
+        <div class="relative w-full max-w-lg bg-white rounded-[40px] shadow-2xl p-10 animate-in fade-in zoom-in duration-300">
+            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-8 flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary">add_comment</span>
-                Add Personal Note
+                Add Personal Meditation
             </h3>
-            <textarea id="note-text" rows="4" class="w-full bg-slate-50 border border-slate-100 rounded-2xl p-5 text-sm focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none" placeholder="What truth are you meditating on in this passage?"></textarea>
-            <div class="mt-6 flex items-center justify-end gap-4">
-                <button onclick="closeNoteModal()" class="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600">Cancel</button>
-                <button onclick="saveNote()" class="px-8 py-3 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-all">Save Note</button>
+            <textarea id="note-text" rows="4" class="w-full bg-slate-50 border border-slate-100 rounded-3xl p-6 text-sm focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all outline-none resize-none font-medium" placeholder="What truth are you meditating on in this passage?"></textarea>
+            <div class="mt-8 flex items-center justify-end gap-6">
+                <button onclick="closeNoteModal()" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors">Cancel</button>
+                <button onclick="saveNote()" class="px-10 py-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Save Meditation</button>
             </div>
         </div>
     </div>
+    @endif
 
     <!-- TTS Player Footer -->
-    <div id="tts-player" class="h-[90px] bg-white border-t border-slate-100 z-[60] shadow-[0_-15px_30px_rgba(0,0,0,0.05)] px-6 relative transition-transform duration-500 {{ auth()->check() ? '' : 'hidden' }}">
+    <div id="tts-player" class="h-[90px] bg-white border-t border-slate-100 z-[60] shadow-[0_-15px_30px_rgba(0,0,0,0.05)] px-6 relative transition-transform duration-500 {{ $isOwner ? '' : 'lock-mode bg-slate-50 opacity-60' }} font-lexend">
+        @if(!$isOwner)
+            <div class="absolute inset-0 z-[65] flex items-center justify-center bg-white/40 backdrop-blur-[2px] cursor-not-allowed group">
+                <div class="flex items-center gap-4 px-6 py-3 bg-white shadow-xl rounded-2xl border border-slate-100 transform transition-transform group-hover:scale-105">
+                    <span class="material-symbols-outlined text-primary text-xl">lock</span>
+                    <p class="text-[10px] font-black text-slate-900 uppercase tracking-widest leading-none">Voice Assistant Locked • Unlock full book to listen</p>
+                </div>
+            </div>
+        @endif
+        
         <!-- Progress Bar at the very top of player bar -->
         <div class="absolute top-0 left-0 w-full h-[3px] bg-slate-100 cursor-pointer group" onclick="handleSeek(event)">
             <div id="voice-progress" class="bg-primary h-full transition-all duration-300 w-0"></div>
@@ -242,37 +247,35 @@
         <div class="max-w-7xl mx-auto h-full flex items-center justify-between gap-6">
             <!-- Left: Stats -->
             <div class="flex items-center gap-4 w-72">
-                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                     <span class="material-symbols-outlined text-3xl active-icon">graphic_eq</span>
                 </div>
                 <div class="hidden md:block">
-                    <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Now Listening</p>
-                    <p class="text-xs font-bold text-slate-900 leading-tight chapter-title-display-small line-clamp-1">{{ $book->chapters->first()->title ?? $book->title }}</p>
+                    <p class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 mb-0.5">Ecclesiastical Audio</p>
+                    <p class="text-xs font-black text-slate-900 leading-tight chapter-title-display-small line-clamp-1 truncate">{{ $book->chapters->first()->title ?? 'Introduction' }}</p>
                 </div>
             </div>
 
             <!-- Center: Transport -->
             <div class="flex flex-col items-center gap-1 flex-1">
                 <div class="flex items-center gap-10">
-                    <button onclick="seekVoice(-5)" class="text-slate-400 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">replay_5</span></button>
-                    <button id="main-play-btn" onclick="toggleVoice()" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
-                        <span class="material-symbols-outlined text-3xl active-icon" id="main-play-icon">play_arrow</span>
+                    <button onclick="seekVoice(-5)" class="text-slate-300 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">replay_5</span></button>
+                    <button id="main-play-btn" onclick="toggleVoice()" class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-2xl shadow-primary/30">
+                        <span class="material-symbols-outlined text-4xl active-icon" id="main-play-icon">play_arrow</span>
                     </button>
-                    <button onclick="seekVoice(5)" class="text-slate-400 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">forward_5</span></button>
-                </div>
-                <div class="flex items-center gap-4 text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">
-                    <span id="voice-current-time">00:00</span>
-                    <div class="w-1 h-1 rounded-full bg-slate-200"></div>
-                    <span id="voice-duration">00:00</span>
+                    <button onclick="seekVoice(5)" class="text-slate-300 hover:text-primary transition-all active:scale-90"><span class="material-symbols-outlined text-2xl">forward_5</span></button>
                 </div>
             </div>
 
             <!-- Right: Options -->
             <div class="flex items-center justify-end gap-6 w-72">
-                <div class="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1">
-                    <button onclick="setSpeed(1)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-primary bg-white shadow-sm transition-all">1.0x</button>
-                    <button onclick="setSpeed(1.5)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-slate-400 hover:text-primary transition-all">1.5x</button>
-                    <button onclick="setSpeed(2)" class="speed-btn px-4 py-1.5 text-[9px] font-black uppercase rounded-lg text-slate-400 hover:text-primary transition-all">2.0x</button>
+                <div class="flex flex-col items-end gap-1.5 mr-4 hidden xl:flex">
+                     <span id="voice-current-time" class="text-[10px] font-black text-slate-900 tracking-widest">00:00</span>
+                     <span id="voice-duration" class="text-[9px] font-black text-slate-300 tracking-[0.2em]">0:00</span>
+                </div>
+                <div class="flex items-center bg-slate-50 border border-slate-100 rounded-2xl p-1 shadow-sm">
+                    <button id="speed-1" onclick="setSpeed(1)" class="speed-btn px-4 py-2 text-[10px] font-black uppercase rounded-xl text-primary bg-white shadow-sm transition-all">1.0x</button>
+                    <button id="speed-1-5" onclick="setSpeed(1.5)" class="speed-btn px-4 py-2 text-[10px] font-black uppercase rounded-xl text-slate-400 hover:text-primary transition-all">1.5x</button>
                 </div>
             </div>
         </div>
@@ -293,6 +296,9 @@
     let activeChapterIndex = 0;
     let totalChapters = {{ $book->chapters->count() }};
     let lastSavedPercentage = 0;
+    
+    // Ownership Flag
+    const isOwner = {{ $isOwner ? 'true' : 'false' }};
 
     // --- Drawer Management ---
     function toggleChapters() {
@@ -335,8 +341,7 @@
         // Fetch Content
         try {
             // Robust base URL handling
-            const baseUrl = window.location.pathname.split('/library/')[0];
-            const response = await fetch(`${baseUrl}/library/chapter/${id}`);
+            const response = await fetch("{{ url('/chapter') }}/" + id);
             const chapter = await response.json();
             
             if (chapter.content) {
@@ -394,12 +399,13 @@
     let words = [];
 
     function prepareUtterance() {
+        if (!isOwner) return; // Locked for non-owners
         if (synth.speaking) synth.cancel();
         
         const text = readerBody.innerText;
         utterance = new SpeechSynthesisUtterance(text.substring(wordIndex));
         utterance.rate = currentRate;
-        utterance.pitch = currentRate > 1 ? 0.8 : (currentRate < 1 ? 1.2 : 1.0);
+        utterance.pitch = 1.0;
 
         utterance.onstart = () => {
             isSpeaking = true;
@@ -412,7 +418,6 @@
             if (event.name === 'word') {
                 const absoluteIndex = wordIndex + event.charIndex;
                 currentSpokenIndex = absoluteIndex; 
-                highlightCurrentWord(absoluteIndex, event.charLength);
                 updateTtsProgress(absoluteIndex, text.length);
             }
         };
@@ -423,6 +428,10 @@
     }
 
     function toggleVoice() {
+        if (!isOwner) {
+            showPaywall();
+            return;
+        }
         if (isSpeaking) {
             if (isPaused) resumeVoice();
             else pauseVoice();
@@ -778,11 +787,28 @@
         updateProgress(scrolled);
     };
 
+    function showPaywall() {
+        Swal.fire({
+            title: 'Premium Content',
+            text: 'Please add this book to your collection to unlock all chapters and the Voice Assistant.',
+            icon: 'lock',
+            showCancelButton: true,
+            confirmButtonColor: '#0f49bd',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'View Collection',
+            cancelButtonText: 'Maybe Later'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{ route('library.index') }}";
+            }
+        });
+    }
+
     // Initialize UI
     window.onload = () => {
         updateNavButtons();
         renderAnnotations();
-        prepareUtterance();
+        if(isOwner) prepareUtterance();
     };
 
 </script>

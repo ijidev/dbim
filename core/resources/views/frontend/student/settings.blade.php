@@ -183,9 +183,9 @@
                 
                 <!-- Security Tab -->
                 <div id="tab-security" class="settings-tab hidden">
-                    <form action="{{ route('student.settings.password') }}" method="POST" class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <form action="{{ route('student.password.update') }}" method="POST" class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
                         @csrf
-                        @method('PUT')
+                        @method('post')
                         
                         <div>
                             <h2 class="text-lg font-bold text-slate-900 mb-2">Change Password</h2>

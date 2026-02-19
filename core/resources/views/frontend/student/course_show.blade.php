@@ -56,7 +56,7 @@
                     @endif
                     <span>
                         <span class="block text-xs text-slate-400 uppercase tracking-wider">Instructor</span>
-                        <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="text-white hover:text-primary transition-colors">{{ $course->instructor->name }}</a>
+                        <a href="{{ route('student.instructor.profile', $course->instructor->id) }}" class="text-white hover:text-primary transition-colors">{{ $course->instructor->name }}</a>
                     </span>
                 </div>
                 @endif
@@ -168,7 +168,7 @@
                     </h2>
                     
                     <div class="flex flex-col sm:flex-row gap-6">
-                        <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="shrink-0 group relative">
+                        <a href="{{ route('student.instructor.profile', $course->instructor->id) }}" class="shrink-0 group relative">
                             @if($course->instructor->avatar)
                                 <img src="{{ asset('storage/'.$course->instructor->avatar) }}" alt="{{ $course->instructor->name }}" class="w-24 h-24 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform duration-300">
                             @else
@@ -178,7 +178,7 @@
                             @endif
                         </a>
                         <div class="flex-1">
-                             <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="text-lg font-bold text-slate-900 hover:text-primary transition-colors mb-1 inline-block">
+                             <a href="{{ route('student.instructor.profile', $course->instructor->id) }}" class="text-lg font-bold text-slate-900 hover:text-primary transition-colors mb-1 inline-block">
                                 {{ $course->instructor->name }}
                             </a>
                             <p class="text-slate-500 text-sm font-medium uppercase tracking-wider mb-4">{{ $course->instructor->role }} at DBIM</p>
@@ -277,7 +277,7 @@
                         <h3 class="font-bold text-slate-900 mb-4">Related Courses</h3>
                         <div class="space-y-4">
                             @foreach($relatedCourses as $related)
-                            <a href="{{ route('course.show', $related) }}" class="flex gap-4 group">
+                            <a href="{{ route('student.course.show', $related) }}" class="flex gap-4 group">
                                 <div class="w-20 h-16 rounded-lg bg-slate-100 overflow-hidden shrink-0">
                                     <img src="{{ asset($related->thumbnail ?? 'assets/images/courses/default.jpg') }}" alt="{{ $related->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 </div>

@@ -41,10 +41,39 @@ class LibraryController extends Controller
         return view('frontend.library.index', compact('books', 'wisdomText', 'wisdomAuthor', 'recentRead'));
     }
 
+    public function myCollection()
+    {
+        $collections = auth()->user()->bookCollections()->with('book')->latest()->get();
+        return view('frontend.student.library.index', compact('collections'));
+    }
+
+    public function addToCollection(Book $book)
+    {
+        if (!auth()->check()) {
+            return response()->json(['error' => 'Please login to add books to your collection.'], 401);
+        }
+
+        $exists = auth()->user()->bookCollections()->where('book_id', $book->id)->exists();
+        if ($exists) {
+            return response()->json(['message' => 'Book is already in your collection.'], 200);
+        }
+
+        auth()->user()->bookCollections()->create([
+            'book_id' => $book->id,
+            'purchased' => $book->is_free ? false : false, // Paid books handled by checkout
+        ]);
+
+        return response()->json(['success' => 'Book added to your collection!']);
+    }
+
     public function read($slug)
     {
         $book = Book::where('slug', $slug)->with('chapters')->firstOrFail();
-        return view('frontend.library.read', compact('book'));
+        
+        // Ownership check
+        $isOwner = $book->isOwnedBy(auth()->user());
+        
+        return view('frontend.library.read', compact('book', 'isOwner'));
     }
 
     public function updateProgress(Request $request, Book $book)

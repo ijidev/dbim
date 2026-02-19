@@ -196,14 +196,14 @@
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
                         <div class="absolute bottom-4 left-4 px-3 py-1 bg-black/60 backdrop-blur-md text-white text-[10px] font-black rounded-lg uppercase tracking-widest">{{ $course->modules->count() }} Modules</div>
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-14 bg-white rounded-full text-primary shadow-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100">
-                            <a href="{{ route('course.show', $course->id) }}" class="material-symbols-outlined text-3xl fill-1">play_arrow</a>
+                            <a href="{{ route('student.course.show', $course->id) }}" class="material-symbols-outlined text-3xl fill-1">play_arrow</a>
                         </div>
                     </div>
                     <h4 class="font-black text-lg text-slate-900 leading-tight group-hover:text-primary transition-colors mb-2">
-                        <a href="{{ route('course.show', $course->id) }}">{{ $course->title }}</a>
+                        <a href="{{ route('student.course.show', $course->id) }}">{{ $course->title }}</a>
                     </h4>
                     <div class="flex items-center gap-3">
-                        <a href="{{ $course->instructor ? route('instructor.profile', $course->instructor->id) : '#' }}" class="text-xs font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest hover:text-primary transition-colors {{ !$course->instructor ? 'pointer-events-none opacity-50' : '' }}">
+                        <a href="{{ $course->instructor ? route('student.instructor.profile', $course->instructor->id) : '#' }}" class="text-xs font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest hover:text-primary transition-colors {{ !$course->instructor ? 'pointer-events-none opacity-50' : '' }}">
                             <span class="material-symbols-outlined text-base">person</span> {{ $course->instructor->name ?? 'DBIM Faculty' }}
                         </a>
                         <span class="text-slate-300">•</span>

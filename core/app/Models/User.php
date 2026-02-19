@@ -58,6 +58,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'enrollments');
     }
 
+    public function bookCollections()
+    {
+        return $this->hasMany(UserBookCollection::class);
+    }
+
+    public function collectedBooks()
+    {
+        return $this->belongsToMany(Book::class, 'user_book_collections');
+    }
+
     public function getAvatarUrlAttribute()
     {
         if ($this->avatar && (str_starts_with($this->avatar, 'http') || file_exists(public_path($this->avatar)))) {

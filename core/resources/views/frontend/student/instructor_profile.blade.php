@@ -426,7 +426,7 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @foreach($courses as $course)
-                        <a href="{{ route('course.show', $course) }}" class="bg-white rounded-2xl p-5 border border-gray-200 hover:border-primary/30 transition-colors group">
+                        <a href="{{ route('student.course.show', $course->id) }}" class="bg-white rounded-2xl p-5 border border-gray-200 hover:border-primary/30 transition-colors group">
                             <div class="flex gap-4">
                                 <div class="w-20 h-20 rounded-xl bg-slate-100 flex-shrink-0 relative overflow-hidden">
                                     @if($course->thumbnail)
@@ -521,7 +521,7 @@
                     </div>
                     <h4 class="text-xl font-black mb-2">Need a Mentor?</h4>
                     <p class="text-sm text-white/70 mb-8 leading-relaxed">Book a 1-on-1 mentorship session with {{ explode(' ', $instructor->name)[0] }} to discuss your ministry path.</p>
-                    <a href="{{ route('instructor.book', $instructor->id) }}" 
+                    <a href="{{ route('student.instructor.book', $instructor->id) }}" 
                        class="block w-full bg-white text-primary text-sm font-black py-4 rounded-xl hover:bg-slate-50 transition-all shadow-xl shadow-black/10">
                         Request Session
                     </a>

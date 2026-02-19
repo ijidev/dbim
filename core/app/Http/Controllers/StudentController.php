@@ -287,7 +287,7 @@ class StudentController extends Controller
         return back()->with('success', 'Profile updated successfully.');
     }
 
-    public function updatePassword(\Illuminate\Http\Request $request)
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'current_password' => 'required',

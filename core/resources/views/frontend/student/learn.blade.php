@@ -342,7 +342,7 @@
                                     <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">Course Instructor</p>
                                 </div>
                             </div>
-                            <a href="{{ route('instructor.profile', $course->instructor->id) }}" class="px-5 py-2.5 rounded-xl border border-white/10 text-xs font-bold text-white hover:bg-white/5 transition-colors">
+                            <a href="{{ route('student.instructor.profile', $course->instructor->id) }}" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
                                 View Profile
                             </a>
                         </div>

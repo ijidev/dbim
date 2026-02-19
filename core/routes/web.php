@@ -6,7 +6,9 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\InstructorModuleController;
 use App\Http\Controllers\InstructorStudentController;
+use App\Http\Controllers\InstructorLessonController;
 use App\Http\Controllers\QuizController;
 
 /*
@@ -82,11 +84,10 @@ Route::controller(App\Http\Controllers\DonationController::class)->group(functio
 });
 
 
-// Library Routes (Public for index, Auth for specific actions likely)
+// Library Routes (Public for index)
 Route::controller(LibraryController::class)->group(function () {
     Route::get('/library', 'index')->name('library.index');
-    Route::get('/read/{slug}', 'read')->name('library.read');
-    Route::post('/library/progress/{book}', 'updateProgress')->name('library.progress');
+    Route::post('/library/progress/{book}', 'updateProgress')->name('library.progress.update');
     Route::get('/chapter/{id}', 'getChapterContent')->name('library.chapter');
 });
 
@@ -120,6 +121,11 @@ Route::middleware([
         Route::post('/password/update', 'updatePassword')->name('student.password.update');
         
         Route::post('/quiz/{id}/submit', 'submitQuiz')->name('student.quiz.submit');
+
+        // Student Library/Collection Routes
+        Route::get('/my-library', [LibraryController::class, 'myCollection'])->name('student.library.index');
+        Route::get('/my-library/read/{slug}', [LibraryController::class, 'read'])->name('student.library.read');
+        Route::post('/my-library/add/{book}', [LibraryController::class, 'addToCollection'])->name('student.library.add');
     });
 
     // Meeting Routes
@@ -169,7 +175,23 @@ Route::middleware([
 
         // Lesson Management
         Route::post('/lessons', [InstructorLessonController::class, 'store'])->name('lessons.store');
+        Route::post('/lessons', [InstructorLessonController::class, 'store'])->name('lessons.store');
         Route::delete('/lessons/{lesson}', [InstructorLessonController::class, 'destroy'])->name('lessons.destroy');
+
+        // Library Management
+        Route::controller(App\Http\Controllers\InstructorLibraryController::class)->prefix('library')->name('library.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{amount}/edit', 'edit')->name('edit');
+            Route::put('/{amount}', 'update')->name('update');
+            Route::delete('/{amount}', 'destroy')->name('destroy');
+            Route::post('/{amount}/publish', 'publish')->name('publish');
+            Route::get('/{amount}/chapters', 'chapters')->name('chapters');
+            Route::post('/{amount}/chapters', 'storeChapter')->name('chapters.store');
+            Route::put('/{amount}/chapters/{chapter}', 'updateChapter')->name('chapters.update');
+            Route::delete('/{amount}/chapters/{chapter}', 'destroyChapter')->name('chapters.destroy');
+        });
     });
 
     // Student Instructor View Routes (Moved down to avoid shadowing instructor/dashboard)

@@ -67,6 +67,13 @@
                     <span class="material-symbols-outlined {{ request()->routeIs('student.learning') ? 'filled-icon' : '' }}">school</span>
                     <span>My Academy</span>
                 </a>
+
+                <!-- My Library -->
+                <a href="{{ route('student.library.index') }}" 
+                   class="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all {{ request()->routeIs('student.library.*') ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-primary hover:bg-slate-50' }}">
+                    <span class="material-symbols-outlined {{ request()->routeIs('student.library.*') ? 'filled-icon' : '' }}">local_library</span>
+                    <span>My Library</span>
+                </a>
             @endif
 
             <!-- Live Sessions / Meetings -->
@@ -77,11 +84,20 @@
             </a>
 
             <!-- Library/Resources -->
-            <a href="{{ route('library.index') }}" 
-               class="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all {{ request()->routeIs('library.*') ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-primary hover:bg-slate-50' }}">
-                <span class="material-symbols-outlined {{ request()->routeIs('library.*') ? 'filled-icon' : '' }}">local_library</span>
-                <span>Resource Library</span>
-            </a>
+            <!-- Library/Resources -->
+            @if($isInstructor)
+                <a href="{{ route('instructor.library.index') }}" 
+                   class="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all {{ request()->routeIs('instructor.library.*') ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-primary hover:bg-slate-50' }}">
+                    <span class="material-symbols-outlined {{ request()->routeIs('instructor.library.*') ? 'filled-icon' : '' }}">local_library</span>
+                    <span>Resource Library</span>
+                </a>
+            @else
+                <a href="{{ route('library.index') }}" 
+                   class="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all {{ request()->routeIs('library.*') ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-primary hover:bg-slate-50' }}">
+                    <span class="material-symbols-outlined {{ request()->routeIs('library.*') ? 'filled-icon' : '' }}">local_library</span>
+                    <span>Resource Library</span>
+                </a>
+            @endif
         </nav>
 
         <div class="mt-auto pt-8 border-t border-slate-100">

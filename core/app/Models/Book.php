@@ -11,6 +11,7 @@ class Book extends Model
     use HasFactory;
 
     protected $fillable = [
+        'instructor_id',
         'title',
         'slug',
         'author',
@@ -22,7 +23,32 @@ class Book extends Model
         'category',
         'pages',
         'status',
+        'product_id',
     ];
+
+    public function collections()
+    {
+        return $this->hasMany(UserBookCollection::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function isOwnedBy($user)
+    {
+        if (!$user) return false;
+        if ($this->is_free) {
+            return $this->collections()->where('user_id', $user->id)->exists();
+        }
+        return $this->collections()->where('user_id', $user->id)->where('purchased', true)->exists();
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
+    }
 
     protected $casts = [
         'price' => 'decimal:2',

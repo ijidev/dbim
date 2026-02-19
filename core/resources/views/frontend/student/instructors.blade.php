@@ -64,7 +64,7 @@
                     </div>
                     
                     <div class="mt-8 flex gap-3">
-                        <a href="{{ route('instructor.profile', $instructor->id) }}" class="flex-1 bg-primary text-white text-center py-3 rounded-xl text-xs font-black shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                        <a href="{{ route('student.instructor.profile', $instructor->id) }}" class="flex items-center justify-center gap-2 py-4 bg-primary text-white text-xs font-black rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
                             View Profile
                         </a>
                         <a href="{{ route('instructor.book', $instructor->id) }}" class="inline-flex items-center justify-center size-10 bg-slate-50 border border-slate-200 text-slate-400 rounded-xl hover:bg-primary/5 hover:text-primary hover:border-primary/20 transition-all">

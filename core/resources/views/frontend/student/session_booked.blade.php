@@ -81,7 +81,7 @@
                 <span class="material-symbols-outlined">school</span>
                 My Learning
             </a>
-            <a href="{{ route('student.catalog') }}" class="nav-item">
+            <a href="{{ route('student.instructors') }}" class="nav-item">
                 <span class="material-symbols-outlined">groups</span>
                 Instructors
             </a>
@@ -229,7 +229,7 @@
 
             <div class="mt-12 text-center">
                 @if(isset($meeting->host))
-                <a class="text-primary font-bold text-sm hover:underline inline-flex items-center gap-2" href="{{ route('instructor.profile', $meeting->host->id) }}">
+                <a class="text-primary font-bold text-sm hover:underline inline-flex items-center gap-2" href="{{ route('student.instructor.profile', $meeting->host->id) }}">
                     <span class="material-symbols-outlined text-lg">arrow_back</span>
                     Back to Instructor Profile
                 </a>

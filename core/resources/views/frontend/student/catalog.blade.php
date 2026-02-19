@@ -363,7 +363,7 @@
                 
                 <div class="course-grid" id="course-grid">
                     @forelse($courses as $course)
-                    <a href="{{ route('course.show', $course) }}" class="course-card" data-type="{{ $course->type ?? 'video' }}">
+                    <a href="{{ route('student.course.show', $course->id) }}" class="course-card" data-type="{{ $course->type ?? 'video' }}">
                         <div class="course-thumbnail-container">
                             <img src="{{ $course->thumbnail_url }}" 
                                  alt="{{ $course->title }}" 

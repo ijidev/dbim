@@ -71,8 +71,10 @@ Route::controller(App\Http\Controllers\StoreController::class)->group(function (
     Route::get('/store', 'index')->name('store.index');
     Route::get('/store/cart', 'cart')->name('store.cart');
     Route::post('/store/cart/add/{id}', 'addToCart')->name('store.cart.add');
+    Route::get('/store/cart/add/{id}', 'addToCart')->name('store.cart.add.get');
     Route::get('/store/checkout', 'checkout')->name('store.checkout');
     Route::post('/store/checkout', 'processCheckout')->name('store.checkout.process');
+    Route::get('/store/success/{book?}', 'success')->name('store.success');
     Route::get('/store/{slug}', 'show')->name('store.show');
 });
 
@@ -126,6 +128,10 @@ Route::middleware([
         Route::get('/my-library', [LibraryController::class, 'myCollection'])->name('student.library.index');
         Route::get('/my-library/read/{slug}', [LibraryController::class, 'read'])->name('student.library.read');
         Route::post('/my-library/add/{book}', [LibraryController::class, 'addToCollection'])->name('student.library.add');
+
+        // Library API endpoints (used by reader JS)
+        Route::get('/chapter/{id}', [LibraryController::class, 'getChapterContent'])->name('library.chapter.content');
+        Route::post('/library/progress/{book}', [LibraryController::class, 'updateProgress'])->name('library.progress.update');
     });
 
     // Meeting Routes

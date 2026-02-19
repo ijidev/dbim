@@ -60,6 +60,14 @@ class InstructorLibraryController extends Controller
 
         $book->save();
 
+        // Phase 2: Auto-create predefined first chapter "Introduction"
+        $book->chapters()->create([
+            'title' => 'Introduction',
+            'slug' => 'introduction-' . Str::random(6),
+            'content' => '<p>Welcome to <strong>' . $book->title . '</strong>. Start your journey here...</p>',
+            'order' => 1,
+        ]);
+
         if ($request->action === 'next') {
             return redirect()->route('instructor.library.chapters', $book->id)->with('success', 'Book created! Now let\'s build chapters.');
         }
@@ -165,9 +173,19 @@ class InstructorLibraryController extends Controller
             'order' => 'required|integer',
         ]);
 
+        $chapterCount = $book->chapters()->count();
+        $chapterNumber = $chapterCount; // Since Introduction is Chapter 0 or just 1st in order
+        
+        // Enforce naming sequence: "Chapter {no}: {title}"
+        // If it's the first one after Introduction (which is order 1), it's Chapter One
+        $numberWords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+        $noLabel = ($chapterNumber <= 10) ? $numberWords[$chapterNumber - 1] : $chapterNumber;
+        
+        $finalTitle = "Chapter {$noLabel}: " . $request->title;
+
         $chapter = $book->chapters()->create([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title) . '-' . Str::random(6),
+            'title' => $finalTitle,
+            'slug' => Str::slug($finalTitle) . '-' . Str::random(6),
             'content' => $request->content,
             'order' => $request->order,
         ]);

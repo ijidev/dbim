@@ -57,8 +57,38 @@ class StoreController extends Controller
 
     public function processCheckout(Request $request)
     {
+        $cart = session()->get('cart', []);
+        if(empty($cart)) {
+            return redirect()->route('store.index')->with('error', 'Your cart is empty.');
+        }
+
+        // Logic to grant book access for purchased books
+        $purchasedBook = null;
+        if (auth()->check()) {
+            foreach ($cart as $id => $details) {
+                $product = Product::with('book')->find($id);
+                if ($product && $product->book) {
+                    \App\Models\UserBookCollection::updateOrCreate(
+                        ['user_id' => auth()->id(), 'book_id' => $product->book->id],
+                        ['purchased' => true]
+                    );
+                    $purchasedBook = $product->book;
+                }
+            }
+        }
+
         // Simulated checkout processing
         session()->forget('cart');
-        return redirect()->route('store.index')->with('success', 'Order placed successfully! (Simulated)');
+        
+        if ($purchasedBook) {
+            return redirect()->route('store.success', $purchasedBook->id);
+        }
+
+        return redirect()->route('store.index')->with('success', 'Order placed successfully!');
+    }
+
+    public function success(Book $book = null)
+    {
+        return view('frontend.store.success', compact('book'));
     }
 }

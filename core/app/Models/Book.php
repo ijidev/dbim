@@ -71,8 +71,29 @@ class Book extends Model
         return $this->hasMany(BookChapter::class)->orderBy('order');
     }
 
+    /**
+     * Get the cover image URL, handling both 'library' disk and legacy admin uploads.
+     */
+    public function getCoverUrlAttribute(): ?string
+    {
+        if (!$this->cover_image) return null;
+        // Admin BookController stores as "assets/images/books/file.jpg" (relative to public)
+        if (str_starts_with($this->cover_image, 'assets/')) {
+            return asset($this->cover_image);
+        }
+        // InstructorLibraryController stores via 'library' disk => /assets/books/covers/...
+        return asset('assets/' . ltrim($this->cover_image, '/'));
+    }
+
     public function progress()
     {
         return $this->hasMany(UserBookProgress::class);
+    }
+
+    public function getProgressPercentage($user): int
+    {
+        if (!$user) return 0;
+        $progress = $this->progress()->where('user_id', $user->id)->first();
+        return $progress ? $progress->percentage_complete : 0;
     }
 }

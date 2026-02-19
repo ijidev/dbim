@@ -58,9 +58,19 @@ class LibraryController extends Controller
             return response()->json(['message' => 'Book is already in your collection.'], 200);
         }
 
+        if (!$book->is_free) {
+            if ($book->product_id) {
+                return response()->json([
+                    'redirect' => true,
+                    'url' => route('store.cart.add.get', $book->product_id)
+                ]);
+            }
+            return response()->json(['error' => 'This paid book is currently not available for purchase.'], 400);
+        }
+
         auth()->user()->bookCollections()->create([
             'book_id' => $book->id,
-            'purchased' => $book->is_free ? false : false, // Paid books handled by checkout
+            'purchased' => false,
         ]);
 
         return response()->json(['success' => 'Book added to your collection!']);

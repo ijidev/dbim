@@ -18,24 +18,37 @@
     <meta property="og:description" content="Divine Business Impact Ministry (DBIM) - Empowering believers for spiritual and kingdom impact.">
     <meta property="og:image" content="{{ asset('assets/images/og-image.jpg') }}">
 
-    <!-- Fonts -->
     <!-- CDNs -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
+            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#1754cf",
+                        "primary": "#0f49bd",
                         "primary-dark": "#103c96",
                         "primary-light": "#e0e7ff",
                         "accent": "#f59e0b",
-                    }
+                        "accent-gold": "#D4AF37",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#05070a",
+                        "surface-dark": "#101622",
+                        "border-dark": "#1d2533",
+                        "highlight-gold": "#ffd700",
+                        "highlight-blue": "#93c5fd",
+                        "highlight-green": "#86efac",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "serif": ["Lora", "serif"],
+                    },
                 }
             }
         }
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 

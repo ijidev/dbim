@@ -252,12 +252,55 @@ class StudentController extends Controller
     {
         $user = auth()->user();
         $enrollments = $user->enrollments()->with('course')->get();
-        return view('frontend.student.profile', compact('user', 'enrollments'));
+        $annotationCount = $user->annotations()->count();
+        $annotations = $user->annotations()->with('book')->latest()->take(5)->get();
+        return view('frontend.student.profile', compact('user', 'enrollments', 'annotationCount', 'annotations'));
     }
 
     public function settings()
     {
         return view('frontend.student.settings');
+    }
+
+    public function settingsContent()
+    {
+        return view('frontend.student.settings_partial');
+    }
+
+    public function storeAnnotation(Request $request)
+    {
+        $request->validate([
+            'book_id' => 'required|exists:books,id',
+            'chapter_id' => 'required',
+            'annotation_id' => 'nullable|string',
+            'type' => 'required|in:highlight,note',
+            'text' => 'required|string',
+            'note' => 'nullable|string',
+            'color' => 'nullable|string',
+        ]);
+
+        $annotation = auth()->user()->annotations()->create($request->only(
+            'book_id', 'chapter_id', 'annotation_id', 'type', 'text', 'note', 'color'
+        ));
+
+        return response()->json(['success' => true, 'annotation' => $annotation]);
+    }
+
+    public function getAnnotations($chapterId)
+    {
+        $annotations = auth()->user()->annotations()
+            ->where('chapter_id', $chapterId)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return response()->json($annotations);
+    }
+
+    public function deleteAnnotation($id)
+    {
+        $annotation = auth()->user()->annotations()->findOrFail($id);
+        $annotation->delete();
+        return response()->json(['success' => true]);
     }
 
     public function updateSettings(\Illuminate\Http\Request $request)

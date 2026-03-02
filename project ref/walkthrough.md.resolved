@@ -1,0 +1,35 @@
+# Walkthrough: Student Profile — Real Data & Functional UI
+
+## Summary
+Replaced all dummy/placeholder content on the student profile page with live data. Created a server-side annotation persistence layer so book highlights and notes are available across the app.
+
+## Changes Made
+
+### New Files
+| File | Purpose |
+|------|---------|
+| [create_annotations_table.php](file:///c:/xampp/htdocs/dbim/core/database/migrations/2026_03_02_100000_create_annotations_table.php) | Migration for [annotations](file:///c:/xampp/htdocs/dbim/core/app/Models/User.php#71-75) table |
+| [Annotation.php](file:///c:/xampp/htdocs/dbim/core/app/Models/Annotation.php) | Annotation model (belongsTo User, Book, BookChapter) |
+| [settings_partial.blade.php](file:///c:/xampp/htdocs/dbim/core/resources/views/frontend/student/settings_partial.blade.php) | Settings form partial loaded via AJAX into profile Settings tab |
+
+### Modified Files
+| File | Changes |
+|------|---------|
+| [User.php](file:///c:/xampp/htdocs/dbim/core/app/Models/User.php) | Added [annotations()](file:///c:/xampp/htdocs/dbim/core/app/Models/User.php#71-75) hasMany relationship |
+| [StudentController.php](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php) | Updated [profile()](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php#251-259) to pass annotation data; added [storeAnnotation()](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php#270-288), [getAnnotations()](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php#289-298), [deleteAnnotation()](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php#299-305), [settingsContent()](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php#265-269) |
+| [web.php](file:///c:/xampp/htdocs/dbim/core/routes/web.php) | 4 new routes: annotation CRUD + settings AJAX |
+| [profile.blade.php](file:///c:/xampp/htdocs/dbim/core/resources/views/frontend/student/profile.blade.php) | Full rewrite — see detail below |
+| [read.blade.php](file:///c:/xampp/htdocs/dbim/core/resources/views/frontend/library/read.blade.php) | `saveAnnotation()` syncs to server; [deleteAnnotation()](file:///c:/xampp/htdocs/dbim/core/app/Http/Controllers/StudentController.php#299-305) deletes from server |
+
+### Profile View Fixes
+- **"Years Member" → "Member Since"**: Shows `Auth::user()->created_at->format('M Y')` (e.g. "Feb 2026")
+- **Reflections count**: Now shows `$annotationCount` from real DB data
+- **My Notes**: Real annotations with book title, timestamp, highlighted text, and anchor link to reader
+- **Tabs**: JavaScript tab switching between Spiritual Journey / My Notes / Settings
+- **Settings tab**: Loads via AJAX (`fetch('/settings/content')`) on first click
+- **Buttons**: "Edit Profile" → opens Settings tab, "View All" → opens Notes tab, "Update Preferences" → opens Settings tab, "Go to Library" → links to library
+
+## Validation
+- ✅ Migration ran: [annotations](file:///c:/xampp/htdocs/dbim/core/app/Models/User.php#71-75) table created
+- ✅ All 4 new routes verified via `php artisan route:list`
+- 🔲 Manual browser test recommended

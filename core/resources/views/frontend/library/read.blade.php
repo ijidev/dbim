@@ -6,31 +6,72 @@
 @push('styles')
 <style>
     /* Reader custom styles */
-    .active-icon {
-        font-variation-settings: 'FILL' 1;
-    }
-    .sepia-mode {
-        background-color: #f4ecd8 !important;
-        color: #5b4636 !important;
-    }
-    .sepia-mode article, .sepia-mode #reader-body {
-        color: #5b4636 !important;
-    }
-    .hl-gold { background-color: rgba(255, 215, 0, 0.4); }
-    .hl-blue { background-color: rgba(147, 197, 253, 0.5); }
-    .hl-green { background-color: rgba(134, 239, 172, 0.5); }
-    
-    .dark .hl-gold { background-color: rgba(255, 215, 0, 0.2); border-bottom: 2px solid rgba(255, 215, 0, 0.5); }
-    .dark .hl-blue { background-color: rgba(147, 197, 253, 0.2); border-bottom: 2px solid rgba(147, 197, 253, 0.5); }
-    .dark .hl-green { background-color: rgba(134, 239, 172, 0.2); border-bottom: 2px solid rgba(134, 239, 172, 0.5); }
+    .active-icon { font-variation-settings: 'FILL' 1; }
+
+    .sepia-mode { background-color: #f4ecd8 !important; color: #5b4636 !important; }
+    .sepia-mode article, .sepia-mode #reader-body { color: #5b4636 !important; }
+
+    /* Highlight colors — semi-transparent backgrounds so text stays readable */
+    .hl-gold   { background: rgba(251,191,36,0.35);  border-radius: 3px; }
+    .hl-blue   { background: rgba(96,165,250,0.35);   border-radius: 3px; }
+    .hl-green  { background: rgba(74,222,128,0.35);   border-radius: 3px; }
+    .hl-pink   { background: rgba(244,114,182,0.35);  border-radius: 3px; }
+    .hl-purple { background: rgba(167,139,250,0.35);  border-radius: 3px; }
+    .hl-orange { background: rgba(251,146,60,0.35);   border-radius: 3px; }
+
+    .dark .hl-gold   { background: rgba(251,191,36,0.20);  border-bottom: 2px solid rgba(251,191,36,0.5); }
+    .dark .hl-blue   { background: rgba(96,165,250,0.20);  border-bottom: 2px solid rgba(96,165,250,0.5); }
+    .dark .hl-green  { background: rgba(74,222,128,0.20);  border-bottom: 2px solid rgba(74,222,128,0.5); }
+    .dark .hl-pink   { background: rgba(244,114,182,0.20); border-bottom: 2px solid rgba(244,114,182,0.5); }
+    .dark .hl-purple { background: rgba(167,139,250,0.20); border-bottom: 2px solid rgba(167,139,250,0.5); }
+    .dark .hl-orange { background: rgba(251,146,60,0.20);  border-bottom: 2px solid rgba(251,146,60,0.5); }
+
     .custom-scrollbar::-webkit-scrollbar { width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
 
-    /* Reader body should be full-height, override layout defaults */
+    .sidebar-closed { 
+        display: none !important;
+        transform: translateX(-100%); 
+        opacity: 0;
+    }
+    #annotation-sidebar.sidebar-closed {
+        transform: translateX(100%);
+    }
+
+    @media (max-width: 1024px) {
+        .lg\:static { position: fixed !important; }
+        #chapter-sidebar:not(.sidebar-closed) {
+            transform: translateX(0);
+            opacity: 1;
+            display: flex !important;
+        }
+        #annotation-sidebar:not(.sidebar-closed) {
+            transform: translateX(0);
+            opacity: 1;
+            display: flex !important;
+        }
+    }
+
+    .sidebar-backdrop {
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        transition: opacity 0.3s ease;
+    }
+
     body.reader-page { overflow: hidden; height: 100vh; }
     #reader-layout { height: calc(100vh - 6px); }
+
+    /* Fix footer on mobile */
+    @media (max-width: 768px) {
+        footer .max-w-7xl { gap: 1rem; }
+        footer .w-1\/4 { display: none; }
+        footer .flex-1 { width: 100%; }
+        #main-play-btn { width: 40px; height: 40px; }
+        #main-play-icon { font-size: 24px; }
+        .speed-btn { padding: 2px 4px; font-size: 9px; }
+    }
 </style>
 @endpush
 
@@ -47,15 +88,25 @@
 <div class="flex flex-1 overflow-hidden">
 
     {{-- LEFT SIDEBAR: Chapter List --}}
-    <aside class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 hidden lg:flex">
-        <div class="p-6 border-b border-slate-200 dark:border-slate-800">
-            <div class="flex items-center gap-2 text-primary mb-1">
-                <span class="material-symbols-outlined text-xl">auto_stories</span>
-                <span class="text-xs font-bold uppercase tracking-wider">Church Library</span>
+    {{-- Mobile: fixed overlay from left. Desktop: static flex sidebar. --}}
+    <aside id="chapter-sidebar"
+        class="sidebar-closed fixed inset-y-0 left-0 z-[60] w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 transition-all duration-300 lg:static lg:z-auto shadow-2xl lg:shadow-none">
+
+        {{-- Header + Close --}}
+        <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2 text-primary mb-0.5">
+                    <span class="material-symbols-outlined text-lg">auto_stories</span>
+                    <span class="text-[10px] font-black uppercase tracking-wider">Church Library</span>
+                </div>
+                <h2 class="text-base font-bold dark:text-white leading-tight">{{ Str::limit($book->title, 28) }}</h2>
+                <p class="text-[11px] text-slate-400 mt-0.5">{{ $book->chapters->count() }} chapters</p>
             </div>
-            <h2 class="text-xl font-bold dark:text-white leading-tight">{{ Str::limit($book->title, 30) }}</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{{ $book->chapters->count() }} chapters</p>
+            <button onclick="toggleChapterSidebar()" class="ml-2 w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Close sidebar">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
         </div>
+
         <nav class="flex-1 overflow-y-auto p-4 space-y-1 custom-scrollbar">
             @foreach($book->chapters as $i => $chap)
             <div class="chapter-group">
@@ -83,6 +134,16 @@
                 </div>
             </div>
             @endforeach
+
+            @if($isOwner)
+            {{-- Finish Book CTA --}}
+            <div id="finish-book-wrap" class="px-3 py-4 mt-2">
+                <button id="finish-book-btn" onclick="markBookCompleted()" class="w-full py-2.5 flex items-center justify-center gap-2 rounded-xl border-2 border-emerald-500 text-emerald-500 text-[11px] font-black uppercase tracking-wider hover:bg-emerald-500 hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-sm">task_alt</span>
+                    <span id="finish-book-label">Mark as Finished</span>
+                </button>
+            </div>
+            @endif
 
             @if(!$isOwner)
             {{-- Locked chapters visual & Unlock CTA --}}
@@ -112,11 +173,14 @@
 
     {{-- MAIN CONTENT --}}
     <main id="main-scroll-area" class="flex-1 overflow-y-auto bg-white dark:bg-background-dark relative custom-scrollbar transition-colors duration-300">
+        
+        {{-- Sidebar Backdrop (Mobile only) --}}
+        <div id="sidebar-backdrop" onclick="closeAllSidebars()" class="fixed inset-0 z-[55] sidebar-backdrop hidden opacity-0"></div>
 
         {{-- Floating Toolbar (top-right) --}}
-        <div class="sticky top-6 right-6 z-40 flex justify-end px-8">
+        <div class="sticky top-4 lg:top-6 right-0 lg:right-6 z-40 flex justify-end px-4 lg:px-8">
             <div class="bg-white dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-700 rounded-xl p-1 flex items-center gap-1">
-                <button onclick="toggleMobileSidebar()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Toggle Sidebar">
+                <button onclick="toggleChapterSidebar()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Toggle Sidebar">
                     <span class="material-symbols-outlined">menu_open</span>
                 </button>
                 <div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
@@ -158,50 +222,69 @@
 
         {{-- Highlight Toolkit (shown on text selection) --}}
         @if($isOwner)
-        <div id="highlight-toolkit" class="fixed z-[70] hidden flex-col bg-slate-900 text-white rounded-xl shadow-2xl animate-in fade-in zoom-in duration-200 overflow-hidden w-64">
-            <div class="flex items-center p-1 border-b border-slate-800">
-                <div class="flex items-center gap-1 px-2 border-r border-slate-700">
-                    <button onclick="applyHighlight('hl-gold')" class="w-6 h-6 rounded-full bg-highlight-gold border border-white/20 hover:scale-110 transition-transform"></button>
-                    <button onclick="applyHighlight('hl-blue')" class="w-6 h-6 rounded-full bg-highlight-blue border border-white/20 hover:scale-110 transition-transform"></button>
-                    <button onclick="applyHighlight('hl-green')" class="w-6 h-6 rounded-full bg-highlight-green border border-white/20 hover:scale-110 transition-transform"></button>
+        <div id="highlight-toolkit" class="fixed z-[70]" style="display:none;">
+            <div class="flex flex-col bg-slate-900 text-white rounded-xl shadow-2xl overflow-hidden" style="width:240px">
+                {{-- Row 1: Colors + Close --}}
+                <div class="flex items-center justify-between p-2 border-b border-slate-800">
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="applyHighlight('hl-gold')"   title="Gold"   class="w-5 h-5 rounded-full bg-yellow-400  hover:scale-125 transition-transform"></button>
+                        <button onclick="applyHighlight('hl-blue')"   title="Blue"   class="w-5 h-5 rounded-full bg-blue-400    hover:scale-125 transition-transform"></button>
+                        <button onclick="applyHighlight('hl-green')"  title="Green"  class="w-5 h-5 rounded-full bg-green-400   hover:scale-125 transition-transform"></button>
+                        <button onclick="applyHighlight('hl-pink')"   title="Pink"   class="w-5 h-5 rounded-full bg-pink-400    hover:scale-125 transition-transform"></button>
+                        <button onclick="applyHighlight('hl-purple')" title="Purple" class="w-5 h-5 rounded-full bg-purple-400  hover:scale-125 transition-transform"></button>
+                        <button onclick="applyHighlight('hl-orange')" title="Orange" class="w-5 h-5 rounded-full bg-orange-400  hover:scale-125 transition-transform"></button>
+                    </div>
+                    <button onclick="closeToolkit()" class="ml-2 text-slate-400 hover:text-white transition-colors" title="Close">
+                        <span class="material-symbols-outlined text-base leading-none">close</span>
+                    </button>
                 </div>
-                <button onclick="showNoteModal()" class="flex-1 flex items-center justify-center gap-2 py-2 text-[11px] font-semibold hover:bg-slate-800 transition-colors">
-                    <span class="material-symbols-outlined text-sm">add_comment</span>
-                    Add Note
-                </button>
-            </div>
-            <div class="p-2 bg-slate-800/50">
-                <p class="text-[10px] uppercase font-bold text-slate-400 mb-1.5 px-1">Share to Group Feed</p>
-                <div class="relative">
-                    <select class="w-full bg-slate-900 border-slate-700 text-white text-xs rounded-lg py-1.5 pl-2 pr-8 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
-                        <option>Adult Bible Study</option>
-                        <option>Young Adults Group</option>
-                        <option>Prayer Warriors</option>
-                    </select>
-                    <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-sm pointer-events-none text-slate-400">expand_more</span>
+                {{-- Row 2: Actions --}}
+                <div class="flex border-b border-slate-800">
+                    <button onclick="showNoteModal()" class="flex-1 flex items-center justify-center gap-1 px-2 py-2 text-[11px] font-semibold hover:bg-slate-800 transition-colors" title="Add Note">
+                        <span class="material-symbols-outlined text-sm">add_comment</span>
+                        Note
+                    </button>
+                    <div class="w-px bg-slate-800"></div>
+                    <button onclick="pronounceSelection()" class="flex-1 flex items-center justify-center gap-1 px-2 py-2 text-[11px] font-semibold hover:bg-slate-800 transition-colors" title="Pronounce">
+                        <span class="material-symbols-outlined text-sm">volume_up</span>
+                        Pronounce
+                    </button>
+                    <div class="w-px bg-slate-800"></div>
+                    <button onclick="lookupDictionary()" class="flex-1 flex items-center justify-center gap-1 px-2 py-2 text-[11px] font-semibold hover:bg-slate-800 transition-colors" title="Dictionary">
+                        <span class="material-symbols-outlined text-sm">menu_book</span>
+                        Define
+                    </button>
                 </div>
-                <button onclick="cleanup()" class="w-full mt-2 bg-primary hover:bg-primary/90 text-white text-[11px] font-bold py-1.5 rounded-lg flex items-center justify-center gap-2 transition-colors">
-                    <span class="material-symbols-outlined text-sm">share</span>
-                    Publish Insight
-                </button>
+                {{-- Row 3: Dictionary result panel (hidden by default) --}}
+                <div id="dict-panel" class="hidden p-3 border-t border-slate-800 text-left max-h-36 overflow-y-auto custom-scrollbar">
+                    <div id="dict-loading" class="text-xs text-slate-400 text-center animate-pulse">Looking up...</div>
+                    <div id="dict-result" class="hidden">
+                        <p id="dict-word" class="text-xs font-black text-primary mb-0.5"></p>
+                        <p id="dict-part" class="text-[10px] italic text-slate-400 mb-1"></p>
+                        <p id="dict-def" class="text-[11px] text-slate-300 leading-relaxed"></p>
+                        <p id="dict-example" class="text-[10px] italic text-slate-500 mt-1"></p>
+                    </div>
+                    <div id="dict-error" class="hidden text-[11px] text-slate-400 text-center">No definition found.</div>
+                </div>
             </div>
-            <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45 border-r border-b border-slate-800"></div>
+            {{-- Caret --}}
+            <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900 rotate-45"></div>
         </div>
         @endif
 
         {{-- Article Content --}}
-        <article class="max-w-[800px] mx-auto px-12 py-12 pb-48">
+        <article class="max-w-[800px] mx-auto px-6 lg:px-12 py-8 lg:py-12 pb-48">
             <header class="mb-12">
                 <nav class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm mb-4">
                     <a href="{{ route('library.index') }}">Library</a>
                     <span class="material-symbols-outlined text-xs">chevron_right</span>
                     <span>{{ $book->title }}</span>
                 </nav>
-                <h1 id="chapter-title" class="font-serif text-5xl font-bold dark:text-white mb-4 leading-tight">{{ $book->chapters->first()->title ?? 'Introduction' }}</h1>
+                <h1 id="chapter-title" class="font-serif text-3xl lg:text-5xl font-bold dark:text-white mb-4 leading-tight">{{ $book->chapters->first()->title ?? 'Introduction' }}</h1>
                 <div class="flex items-center gap-4 py-2 border-y border-slate-100 dark:border-slate-800">
-                    <span class="text-xs font-medium uppercase tracking-widest text-primary">Read Time: 12 mins</span>
+                    <span id="read-time-display" class="text-xs font-medium uppercase tracking-widest text-primary">Read Time: — mins</span>
                     <span class="w-1 h-1 rounded-full bg-slate-300"></span>
-                    <span class="text-xs font-medium uppercase tracking-widest text-slate-500">Audio: 15 mins</span>
+                    <span id="audio-time-display" class="text-xs font-medium uppercase tracking-widest text-slate-500">Audio: — mins</span>
                 </div>
             </header>
 
@@ -225,13 +308,21 @@
 
     {{-- RIGHT SIDEBAR: Annotations --}}
     @if($isOwner)
-    <aside id="annotation-sidebar" class="w-80 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 hidden lg:flex">
-        <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+    <aside id="annotation-sidebar"
+        class="sidebar-closed fixed inset-y-0 right-0 z-[60] w-80 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 transition-all duration-300 lg:static lg:z-auto shadow-2xl lg:shadow-none">
+
+        {{-- Header + Close --}}
+        <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary">history_edu</span>
-                <h2 class="text-lg font-bold dark:text-white">My Annotations</h2>
+                <h2 class="text-base font-bold dark:text-white">My Annotations</h2>
             </div>
-            <span id="annotation-chapter-badge" class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Chapter 1</span>
+            <div class="flex items-center gap-2">
+                <span id="annotation-chapter-badge" class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Chapter 1</span>
+                <button onclick="toggleAnnotationsSidebar()" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Close">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
         </div>
         <div id="annotations-list" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
             <div id="annotations-empty" class="text-center py-10 opacity-30">
@@ -357,15 +448,28 @@
             </div>
         </div>
 
-        {{-- Right: Speed + Listen CTA --}}
-        <div class="flex items-center justify-end gap-4 w-1/4">
-            <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
-                <button id="speed-1" onclick="setSpeed(1)" class="speed-btn px-3 py-1 text-xs font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm">1x</button>
-                <button id="speed-1-5" onclick="setSpeed(1.5)" class="speed-btn px-3 py-1 text-xs font-bold rounded text-slate-400 hover:text-primary">1.5x</button>
-                <button id="speed-2" onclick="setSpeed(2)" class="speed-btn px-3 py-1 text-xs font-bold rounded text-slate-400 hover:text-primary">2x</button>
+        {{-- Right: Speed + Pitch + Listen CTA --}}
+        <div class="flex items-center justify-end gap-3 w-1/4">
+            {{-- Read Speed --}}
+            <div class="flex flex-col items-center gap-0.5">
+                <p class="text-[9px] uppercase font-bold text-slate-400">Speed</p>
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
+                    <button id="speed-0-5" onclick="setSpeed(0.5)" class="speed-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary">0.5x</button>
+                    <button id="speed-1"   onclick="setSpeed(1)"   class="speed-btn px-2 py-1 text-[11px] font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm">1x</button>
+                    <button id="speed-1-5" onclick="setSpeed(1.5)" class="speed-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary">1.5x</button>
+                </div>
             </div>
-            <button onclick="toggleVoice()" class="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
-                <span class="material-symbols-outlined text-xl">record_voice_over</span>
+            {{-- Pitch --}}
+            <div class="flex flex-col items-center gap-0.5">
+                <p class="text-[9px] uppercase font-bold text-slate-400">Pitch</p>
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
+                    <button id="pitch-0-5" onclick="setPitch(0.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary" title="Low pitch">▼</button>
+                    <button id="pitch-1"   onclick="setPitch(1)"   class="pitch-btn px-2 py-1 text-[11px] font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm" title="Normal pitch">●</button>
+                    <button id="pitch-1-5" onclick="setPitch(1.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary" title="High pitch">▲</button>
+                </div>
+            </div>
+            <button onclick="toggleVoice()" class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm">
+                <span class="material-symbols-outlined text-lg">record_voice_over</span>
                 Listen
             </button>
         </div>
@@ -374,14 +478,20 @@
 
 {{-- Note Modal --}}
 @if($isOwner)
-<div id="note-modal" class="fixed inset-0 z-[80] hidden items-center justify-center p-6">
-    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeNoteModal()"></div>
-    <div class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8">
-        <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">Add Personal Note</h3>
-        <textarea id="note-text" rows="4" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm focus:ring-2 focus:ring-primary/30 outline-none resize-none" placeholder="What truth are you reflecting on?"></textarea>
-        <div class="mt-6 flex items-center justify-end gap-4">
-            <button onclick="closeNoteModal()" class="text-sm font-bold text-slate-400 hover:text-slate-600">Cancel</button>
-            <button onclick="saveNote()" class="px-8 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:scale-105 transition-all shadow-lg shadow-primary/20">Save Note</button>
+<div id="note-modal" class="fixed inset-0 z-[80] hidden" style="display:none;">
+    <div class="absolute inset-0 flex items-center justify-center p-6">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeNoteModal()"></div>
+        <div class="relative z-10 w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8">
+            <button onclick="closeNoteModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-2">Add Personal Note</h3>
+            <p id="note-selection-preview" class="text-xs italic text-primary mb-4 line-clamp-2"></p>
+            <textarea id="note-text" rows="4" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm focus:ring-2 focus:ring-primary/30 outline-none resize-none" placeholder="What truth are you reflecting on?"></textarea>
+            <div class="mt-6 flex items-center justify-end gap-4">
+                <button onclick="closeNoteModal()" class="text-sm font-bold text-slate-400 hover:text-slate-600">Cancel</button>
+                <button onclick="saveNote()" class="px-8 py-3 bg-primary text-white text-sm font-bold rounded-xl hover:scale-105 transition-all shadow-lg shadow-primary/20">Save Note</button>
+            </div>
         </div>
     </div>
 </div>
@@ -430,8 +540,135 @@ let utterance = null;
 let isSpeaking = false;
 let isPaused = false;
 let currentRate = 1;
+let currentPitch = 1;
 let wordIndex = 0;
 let progressInterval = null;
+
+// Track which chapters the user has visited
+const readChapters = JSON.parse(localStorage.getItem('read_chapters_{{ $book->id }}') || '{}');
+
+function markChapterRead(chapterId) {
+    readChapters[chapterId] = true;
+    localStorage.setItem('read_chapters_{{ $book->id }}', JSON.stringify(readChapters));
+    // Show completed badge
+    const badge = document.querySelector(`.completed-badge-${chapterId}`);
+    if (badge) badge.classList.remove('hidden');
+}
+
+// =====================
+// DYNAMIC READ / AUDIO TIME
+// =====================
+function updateReadTime() {
+    const text = readerBody?.innerText || '';
+    const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
+    const readMins  = Math.max(1, Math.round(words / 200));  // avg adult: 200 wpm
+    const audioMins = Math.max(1, Math.round(words / 130));  // avg TTS speech: 130 wpm
+    const rt = document.getElementById('read-time-display');
+    const at = document.getElementById('audio-time-display');
+    if (rt) rt.textContent = `Read Time: ${readMins} min${readMins !== 1 ? 's' : ''}`;
+    if (at) at.textContent = `Audio: ${audioMins} min${audioMins !== 1 ? 's' : ''}`;
+}
+
+// =====================
+// PRONOUNCE SELECTION
+// =====================
+function pronounceSelection() {
+    if (!currentSelection?.text) return;
+    const u = new SpeechSynthesisUtterance(currentSelection.text);
+    u.rate  = 0.9;
+    u.pitch = 1.0;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+}
+
+// =====================
+// DICTIONARY LOOKUP
+// =====================
+async function lookupDictionary() {
+    if (!currentSelection?.text) return;
+    // Only look up the first word of the selection for dictionary
+    const query = currentSelection.text.trim().split(/\s+/)[0].replace(/[^a-zA-Z'-]/g, '');
+    if (!query) return;
+
+    const panel   = document.getElementById('dict-panel');
+    const loading = document.getElementById('dict-loading');
+    const result  = document.getElementById('dict-result');
+    const error   = document.getElementById('dict-error');
+
+    // Reset
+    panel.classList.remove('hidden');
+    loading.classList.remove('hidden');
+    result.classList.add('hidden');
+    error.classList.add('hidden');
+
+    try {
+        const res  = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(query)}`);
+        if (!res.ok) throw new Error('Not found');
+        const data = await res.json();
+        const entry    = data[0];
+        const meanings = entry?.meanings?.[0];
+        const def      = meanings?.definitions?.[0];
+
+        document.getElementById('dict-word').textContent = entry?.word || query;
+        document.getElementById('dict-part').textContent = meanings?.partOfSpeech || '';
+        document.getElementById('dict-def').textContent  = def?.definition || 'No definition found.';
+        const ex = def?.example;
+        const exEl = document.getElementById('dict-example');
+        exEl.textContent = ex ? `"${ex}"` : '';
+
+        loading.classList.add('hidden');
+        result.classList.remove('hidden');
+    } catch (e) {
+        loading.classList.add('hidden');
+        error.classList.remove('hidden');
+    }
+}
+
+// =====================
+// FINISH / COMPLETED BOOK
+// =====================
+const BOOK_ID = {{ $book->id }};
+
+function markBookCompleted() {
+    const isCompleted = localStorage.getItem(`book_completed_${BOOK_ID}`) === 'true';
+    if (isCompleted) {
+        // Unmark
+        localStorage.removeItem(`book_completed_${BOOK_ID}`);
+        updateFinishBtn(false);
+    } else {
+        // Mark complete
+        localStorage.setItem(`book_completed_${BOOK_ID}`, 'true');
+        updateFinishBtn(true);
+        // Optionally persist to server
+        @auth
+        fetch('/dbim/my-library/completed/' + BOOK_ID, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            body: JSON.stringify({ completed: true })
+        }).catch(() => {});
+        @endauth
+    }
+}
+
+function updateFinishBtn(done) {
+    const btn   = document.getElementById('finish-book-btn');
+    const label = document.getElementById('finish-book-label');
+    if (!btn) return;
+    if (done) {
+        btn.classList.remove('border-emerald-500', 'text-emerald-500', 'hover:bg-emerald-500', 'hover:text-white');
+        btn.classList.add('border-primary', 'bg-primary', 'text-white');
+        label.textContent = '✓ Book Completed';
+    } else {
+        btn.classList.add('border-emerald-500', 'text-emerald-500', 'hover:bg-emerald-500', 'hover:text-white');
+        btn.classList.remove('border-primary', 'bg-primary', 'text-white');
+        label.textContent = 'Mark as Finished';
+    }
+}
+
+// Restore book completion state on load
+if (localStorage.getItem(`book_completed_${BOOK_ID}`) === 'true') {
+    updateFinishBtn(true);
+}
 
 // =====================
 // READING PROGRESS
@@ -442,6 +679,12 @@ if (mainScroll) {
         const { scrollTop, scrollHeight, clientHeight } = mainScroll;
         const pct = (scrollTop / (scrollHeight - clientHeight)) * 100;
         readingProgress.style.width = pct + '%';
+        
+        // Mark chapter as read when scrolled past 80%
+        if (pct >= 80 && activeChapterId) {
+            markChapterRead(activeChapterId);
+        }
+        
         if (Math.abs(pct - (window.__lastSaved || 0)) > 5) {
             saveProgress(pct);
             window.__lastSaved = pct;
@@ -545,6 +788,8 @@ async function switchChapter(id, title, index) {
     prepareUtterance();
     updateNavButtons();
     loadAnnotations();
+    applySavedAnnotations();
+    updateReadTime(); // recalculate for new chapter content
 }
 
 function navigateChapter(dir) {
@@ -580,11 +825,20 @@ function prepareUtterance() {
     if (!isOwner) return;
     if (synth.speaking) synth.cancel();
     const text = readerBody.innerText;
-    utterance = new SpeechSynthesisUtterance(text.substring(wordIndex));
-    utterance.rate = currentRate;
+    const startOffset = wordIndex; // save position BEFORE substring
+    utterance = new SpeechSynthesisUtterance(text.substring(startOffset));
+    utterance.rate  = currentRate;
+    utterance.pitch = currentPitch;
     utterance.onstart = () => { isSpeaking = true; isPaused = false; updatePlayIcon(); startProgressTracking(); };
-    utterance.onend = () => stopVoice();
-    utterance.onboundary = (e) => { if (e.name === 'word') { wordIndex = Math.max(wordIndex, e.charIndex); updateTtsBar(wordIndex, text.length); } };
+    utterance.onend   = () => stopVoice();
+    // CRITICAL: e.charIndex is relative to the utterance text, not the full text.
+    // We must add startOffset back to get the correct absolute position.
+    utterance.onboundary = (e) => {
+        if (e.name === 'word') {
+            wordIndex = startOffset + e.charIndex;
+            updateTtsBar(wordIndex, text.length);
+        }
+    };
 }
 
 function toggleVoice() {
@@ -596,7 +850,10 @@ function toggleVoice() {
 function startVoice() { if (!utterance) prepareUtterance(); synth.speak(utterance); }
 function pauseVoice() { synth.pause(); isPaused = true; updatePlayIcon(); stopProgressTracking(); }
 function resumeVoice() { synth.resume(); isPaused = false; updatePlayIcon(); startProgressTracking(); }
+// Full stop: resets position to beginning
 function stopVoice() { synth.cancel(); isSpeaking = false; isPaused = false; wordIndex = 0; updatePlayIcon(); stopProgressTracking(); }
+// Internal stop used by speed/pitch/seek changes — preserves wordIndex
+function stopVoiceKeepPos() { synth.cancel(); isSpeaking = false; isPaused = false; updatePlayIcon(); stopProgressTracking(); }
 
 function startProgressTracking() {
     if (progressInterval) clearInterval(progressInterval);
@@ -627,21 +884,45 @@ function setSpeed(rate) {
         b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm');
         b.classList.add('text-slate-400');
     });
-    const btn = document.getElementById('speed-' + String(rate).replace('.', '-'));
+    const id = 'speed-' + String(rate).replace('.', '-');
+    const btn = document.getElementById(id);
     if (btn) { btn.classList.add('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm'); btn.classList.remove('text-slate-400'); }
-    if (isSpeaking) { const was = !isPaused; stopVoice(); prepareUtterance(); if (was) startVoice(); }
+    // Restart from current position with new rate
+    const wasPlaying = isSpeaking && !isPaused;
+    stopVoiceKeepPos();
+    prepareUtterance();
+    if (wasPlaying) startVoice();
 }
 
-function seekVoice(delta) {
+function setPitch(pitch) {
+    currentPitch = pitch;
+    document.querySelectorAll('.pitch-btn').forEach(b => {
+        b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm');
+        b.classList.add('text-slate-400');
+    });
+    const id = 'pitch-' + String(pitch).replace('.', '-');
+    const btn = document.getElementById(id);
+    if (btn) { btn.classList.add('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm'); btn.classList.remove('text-slate-400'); }
+    // Restart from current position with new pitch
+    const wasPlaying = isSpeaking && !isPaused;
+    stopVoiceKeepPos();
+    prepareUtterance();
+    if (wasPlaying) startVoice();
+}
+
+// Seek by seconds (approx 14 chars/sec at rate 1x)
+function seekVoice(deltaSeconds) {
     if (!isOwner) return;
+    const CHARS_PER_SEC = 14;
     const text = readerBody.innerText;
-    wordIndex = Math.max(0, Math.min(text.length - 1, wordIndex + delta * 12 * currentRate));
+    wordIndex = Math.max(0, Math.min(text.length - 1, wordIndex + deltaSeconds * CHARS_PER_SEC * currentRate));
+    // align to nearest word boundary
     const sp = text.indexOf(' ', wordIndex);
     if (sp !== -1) wordIndex = sp + 1;
-    const was = isSpeaking && !isPaused;
-    stopVoice();
+    const wasPlaying = isSpeaking && !isPaused;
+    stopVoiceKeepPos();
     prepareUtterance();
-    if (was) startVoice();
+    if (wasPlaying) startVoice();
 }
 
 function handleSeek(e) {
@@ -709,24 +990,80 @@ function renderAnnotations() {
     // Remove old rendered items (keep empty div)
     list.querySelectorAll('.ann-item').forEach(el => el.remove());
 
-    data.forEach(ann => {
+    data.forEach((ann, idx) => {
         const colorMap = { 'hl-gold': 'border-l-yellow-400', 'hl-blue': 'border-l-blue-300', 'hl-green': 'border-l-green-300' };
         const dotMap = { 'hl-gold': 'bg-yellow-400', 'hl-blue': 'bg-blue-300', 'hl-green': 'bg-green-300' };
         const div = document.createElement('div');
-        div.className = `ann-item group p-3 rounded-lg border-l-4 ${colorMap[ann.color] || 'border-l-primary'} bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 shadow-sm`;
+        div.className = `ann-item group p-3 rounded-lg border-l-4 ${colorMap[ann.color] || 'border-l-primary'} bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 shadow-sm relative transition-all hover:shadow-md`;
         div.innerHTML = `
             <div class="flex items-center justify-between mb-1">
                 <span class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     <span class="w-2 h-2 rounded-full ${dotMap[ann.color]}"></span>
                     ${ann.type}
                 </span>
-                <span class="text-[10px] text-slate-400">${ann.date}</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] text-slate-400">${ann.date}</span>
+                    <button onclick="deleteAnnotation(${idx})" class="opacity-0 group-hover:opacity-100 p-1 hover:text-red-500 transition-all">
+                        <span class="material-symbols-outlined text-sm">delete</span>
+                    </button>
+                </div>
             </div>
-            <p class="text-sm italic text-slate-600 dark:text-slate-400 line-clamp-2">"${ann.text}"</p>
-            ${ann.note ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${ann.note}</p>` : ''}
+            <div onclick="scrollToAnnotation('${ann.id}')" class="cursor-pointer">
+                <p class="text-sm italic text-slate-600 dark:text-slate-400 line-clamp-2">"${ann.text}"</p>
+                ${ann.note ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${ann.note}</p>` : ''}
+            </div>
         `;
         list.appendChild(div);
     });
+}
+
+function scrollToAnnotation(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('ring-4', 'ring-primary/20', 'transition-all');
+        setTimeout(() => el.classList.remove('ring-4', 'ring-primary/20'), 2000);
+    } else {
+        // If not found (maybe same-text wrapping issue), try to find by text content if we must
+        console.warn('Annotation element not found:', id);
+    }
+}
+
+function deleteAnnotation(index) {
+    if (!confirm('Are you sure you want to delete this annotation?')) return;
+    const ann = annotations[activeChapterId][index];
+    annotations[activeChapterId].splice(index, 1);
+    localStorage.setItem('ann_' + activeChapterId, JSON.stringify(annotations[activeChapterId]));
+
+    // Delete from server
+    if (ann && ann.serverId) {
+        fetch('/dbim/annotations/' + ann.serverId, {
+            method: 'DELETE',
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}', 'Accept': 'application/json' }
+        }).catch(() => {});
+    }
+
+    // Refresh UI
+    renderAnnotations();
+    window.location.reload();
+}
+
+function applySavedAnnotations() {
+    const data = annotations[activeChapterId] || [];
+    const content = readerBody.innerHTML;
+    let newContent = content;
+
+    data.forEach(ann => {
+        if (ann.type === 'highlight' || ann.type === 'note') {
+            const regex = new RegExp(ann.text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+            // Only wrap if not already wrapped
+            if (!newContent.includes(`id="${ann.id}"`)) {
+                newContent = newContent.replace(regex, `<span id="${ann.id}" class="${ann.color} px-0.5 rounded cursor-pointer">${ann.text}</span>`);
+            }
+        }
+    });
+
+    readerBody.innerHTML = newContent;
 }
 
 document.addEventListener('mouseup', (e) => {
@@ -738,79 +1075,212 @@ document.addEventListener('mouseup', (e) => {
     if (!toolkit) return;
     if (text && text.length > 3) {
         const range = sel.getRangeAt(0);
-        if (!readerBody.contains(range.commonAncestorContainer)) { toolkit.classList.add('hidden'); return; }
+        if (!readerBody.contains(range.commonAncestorContainer)) { closeToolkit(); return; }
         const r = range.getBoundingClientRect();
-        toolkit.style.top = `${r.top + window.scrollY - 72}px`;
-        toolkit.style.left = `${r.left + r.width / 2 - 130}px`;
-        toolkit.classList.remove('hidden');
-        toolkit.style.display = 'flex';
+        // Position above the selection, centered
+        const left = Math.max(10, r.left + r.width / 2 - 104); // 104 = half of w-52 (208px)
+        toolkit.style.left = left + 'px';
+        toolkit.style.top  = (r.top + window.scrollY - 90) + 'px';
+        toolkit.style.display = 'block';
         currentSelection = { text, range: range.cloneRange() };
     } else {
-        toolkit.classList.add('hidden');
+        closeToolkit();
     }
 });
 
-function applyHighlight(color) {
-    if (!currentSelection) return;
-    const span = document.createElement('span');
-    span.className = color + ' px-0.5 rounded cursor-pointer';
-    span.innerText = currentSelection.text;
-    try { currentSelection.range.deleteContents(); currentSelection.range.insertNode(span); } catch(e) {}
-    saveAnnotation({ type: 'highlight', text: currentSelection.text, color, date: new Date().toLocaleDateString() });
-    cleanup();
+function closeToolkit() {
+    const toolkit = document.getElementById('highlight-toolkit');
+    if (toolkit) toolkit.style.display = 'none';
+    currentSelection = null;
+    window.getSelection()?.removeAllRanges();
 }
 
-function showNoteModal() { document.getElementById('note-modal').classList.remove('hidden'); document.getElementById('note-modal').style.display = 'flex'; }
-function closeNoteModal() { document.getElementById('note-modal').classList.add('hidden'); document.getElementById('note-text').value = ''; }
+function applyHighlight(color) {
+    if (!currentSelection) return;
+    const annId = 'ann-' + Date.now();
+    const span = document.createElement('span');
+    span.id = annId;
+    span.className = color + ' rounded cursor-pointer';
+    span.appendChild(document.createTextNode(currentSelection.text));
+    try { 
+        currentSelection.range.deleteContents(); 
+        currentSelection.range.insertNode(span);
+    } catch(e) { console.error('Highlight error:', e); }
+    saveAnnotation({ id: annId, type: 'highlight', text: currentSelection.text, color, date: new Date().toLocaleDateString() });
+    closeToolkit();
+}
+
+function showNoteModal() { 
+    if (!currentSelection) return;
+    const modal = document.getElementById('note-modal');
+    const preview = document.getElementById('note-selection-preview');
+    if (preview) preview.textContent = '"' + currentSelection.text + '"';
+    modal.style.display = 'block';
+}
+function closeNoteModal() { 
+    const modal = document.getElementById('note-modal');
+    modal.style.display = 'none'; 
+    document.getElementById('note-text').value = ''; 
+}
 
 function saveNote() {
     const text = document.getElementById('note-text').value.trim();
     if (!text || !currentSelection) return;
-    saveAnnotation({ type: 'note', text: currentSelection.text, note: text, color: 'hl-blue', date: new Date().toLocaleDateString() });
+    const annId = 'ann-' + Date.now();
+    // Wrap the text so we can anchor to it later
+    const span = document.createElement('span');
+    span.id = annId;
+    span.className = 'hl-blue px-0.5 rounded cursor-pointer';
+    span.innerText = currentSelection.text;
+    try { 
+        currentSelection.range.deleteContents(); 
+        currentSelection.range.insertNode(span); 
+    } catch(e) {}
+    
+    saveAnnotation({ id: annId, type: 'note', text: currentSelection.text, note: text, color: 'hl-blue', date: new Date().toLocaleDateString() });
     closeNoteModal();
     cleanup();
 }
 
 function saveAnnotation(data) {
+    if (!data.id) data.id = 'ann-' + Date.now();
     if (!annotations[activeChapterId]) annotations[activeChapterId] = [];
     annotations[activeChapterId].push(data);
     localStorage.setItem('ann_' + activeChapterId, JSON.stringify(annotations[activeChapterId]));
     renderAnnotations();
+
+    // Sync to server
+    @auth
+    fetch("{{ route('student.annotations.store') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '{{ csrf_token() }}',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            book_id: BOOK_ID,
+            chapter_id: activeChapterId,
+            annotation_id: data.id,
+            type: data.type || 'highlight',
+            text: data.text,
+            note: data.note || null,
+            color: data.color || 'hl-gold'
+        })
+    }).then(res => res.json()).then(result => {
+        // Store server ID for future delete operations
+        if (result.annotation && result.annotation.id) {
+            const idx = annotations[activeChapterId].findIndex(a => a.id === data.id);
+            if (idx !== -1) {
+                annotations[activeChapterId][idx].serverId = result.annotation.id;
+                localStorage.setItem('ann_' + activeChapterId, JSON.stringify(annotations[activeChapterId]));
+            }
+        }
+    }).catch(() => {});
+    @endauth
 }
 
 function cleanup() {
-    window.getSelection()?.removeAllRanges();
-    currentSelection = null;
-    const tk = document.getElementById('highlight-toolkit');
-    if (tk) tk.classList.add('hidden');
+    closeToolkit();
 }
 
-function exportAnnotations() {
-    const all = annotations[activeChapterId] || [];
-    const text = all.map(a => `[${a.type}] "${a.text}"${a.note ? '\nNote: ' + a.note : ''}`).join('\n\n');
-    const blob = new Blob([text], { type: 'text/plain' });
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'annotations.txt'; a.click();
+function toggleChapterSidebar() {
+    const s = document.getElementById('chapter-sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (!s) return;
+    
+    // Close other sidebars if opening this one on mobile
+    if (window.innerWidth < 1024 && s.classList.contains('sidebar-closed')) {
+        document.getElementById('annotation-sidebar')?.classList.add('sidebar-closed');
+    }
+
+    s.classList.toggle('sidebar-closed');
+    
+    // Backdrop logic
+    updateBackdrop();
 }
 
-// =====================
-// SIDEBARS & MOBILE
-// =====================
 function toggleAnnotationsSidebar() {
     const s = document.getElementById('annotation-sidebar');
-    if (s) s.classList.toggle('hidden');
+    if (!s) return;
+
+    if (window.innerWidth < 1024 && s.classList.contains('sidebar-closed')) {
+        document.getElementById('chapter-sidebar')?.classList.add('sidebar-closed');
+    }
+
+    s.classList.toggle('sidebar-closed');
+    updateBackdrop();
 }
 
-function toggleMobileSidebar() {
-    document.getElementById('mobile-sidebar').classList.toggle('-translate-x-full');
-    document.getElementById('mobile-sidebar-overlay').classList.toggle('hidden');
+function closeAllSidebars() {
+    document.getElementById('chapter-sidebar')?.classList.add('sidebar-closed');
+    document.getElementById('annotation-sidebar')?.classList.add('sidebar-closed');
+    updateBackdrop();
 }
 
-function closeMobileSidebar() {
-    document.getElementById('mobile-sidebar').classList.add('-translate-x-full');
-    document.getElementById('mobile-sidebar-overlay').classList.add('hidden');
+function updateBackdrop() {
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const chapterOpen = !document.getElementById('chapter-sidebar')?.classList.contains('sidebar-closed');
+    const annOpen = !document.getElementById('annotation-sidebar')?.classList.contains('sidebar-closed');
+    const anyOpen = (chapterOpen || annOpen) && window.innerWidth < 1024;
+
+    if (backdrop) {
+        if (anyOpen) {
+            backdrop.classList.remove('hidden');
+            setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+            document.body.style.overflow = 'hidden';
+        } else {
+            backdrop.classList.add('opacity-0');
+            setTimeout(() => backdrop.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+        }
+    }
 }
 
+// =====================
+// READER SETTINGS PANEL
+// =====================
+function showReaderSettings() {
+    let panel = document.getElementById('reader-settings-panel');
+    if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'reader-settings-panel';
+        panel.className = 'fixed bottom-24 left-4 z-[80] w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4';
+        panel.innerHTML = `
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-xs font-black uppercase tracking-widest text-slate-400">Reader Settings</p>
+                <button onclick="document.getElementById('reader-settings-panel').remove()" class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined text-base">close</span>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 mb-2">Font Size</p>
+                    <div class="flex items-center gap-3">
+                        <button onclick="adjustFontSize(-2)" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200">
+                            <span class="material-symbols-outlined text-base">remove</span>
+                        </button>
+                        <span id="settings-font-label" class="text-sm font-bold text-slate-700 dark:text-slate-200 flex-1 text-center">${currentFontSize}px</span>
+                        <button onclick="adjustFontSize(2)" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200">
+                            <span class="material-symbols-outlined text-base">add</span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 mb-2">Theme</p>
+                    <div class="flex gap-2">
+                        <button onclick="changeMode('light')"  class="flex-1 py-1.5 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-slate-600 hover:border-primary">Light</button>
+                        <button onclick="changeMode('sepia')"  class="flex-1 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-[11px] font-bold text-amber-800 hover:border-primary">Sepia</button>
+                        <button onclick="changeMode('dark')"   class="flex-1 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-[11px] font-bold text-white hover:border-primary">Dark</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(panel);
+    } else {
+        panel.remove();
+    }
+}
 // =====================
 // COLLECTION ACCESS
 // =====================
@@ -824,7 +1294,7 @@ async function addToCollection(e, bookId) {
             b.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">progress_activity</span> Unlocking...';
         });
         
-        const res = await fetch(`/dbim/my-library/add/${bookId}`, {
+        const res = await fetch("{{ route('student.library.add', ':id') }}".replace(':id', bookId), {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -869,7 +1339,6 @@ async function addToCollection(e, bookId) {
     }
 }
 
-function showReaderSettings() {}
 
 // =====================
 // INIT
@@ -877,10 +1346,14 @@ function showReaderSettings() {}
 window.addEventListener('load', () => {
     updateNavButtons();
     loadAnnotations();
+    updateReadTime(); // calculate from initial chapter content
     
     // Load saved mode
     const savedMode = localStorage.getItem('reader-mode') || 'dark';
     changeMode(savedMode);
+    
+    // Apply highlights after initialization
+    setTimeout(applySavedAnnotations, 500);
     
     if (isOwner) prepareUtterance();
 });

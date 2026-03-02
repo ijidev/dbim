@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Book::class, 'user_book_collections');
     }
 
+    public function annotations()
+    {
+        return $this->hasMany(Annotation::class);
+    }
+
     public function getAvatarUrlAttribute()
     {
         if ($this->avatar && (str_starts_with($this->avatar, 'http') || file_exists(public_path($this->avatar)))) {

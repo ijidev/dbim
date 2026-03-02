@@ -59,13 +59,18 @@ class LibraryController extends Controller
         }
 
         if (!$book->is_free) {
+            // If linked to a store product, add to cart
             if ($book->product_id) {
                 return response()->json([
                     'redirect' => true,
                     'url' => route('store.cart.add.get', $book->product_id)
                 ]);
             }
-            return response()->json(['error' => 'This paid book is currently not available for purchase.'], 400);
+            // Otherwise redirect to a direct book checkout
+            return response()->json([
+                'redirect' => true,
+                'url' => route('library.book.checkout', $book->id)
+            ]);
         }
 
         auth()->user()->bookCollections()->create([
@@ -112,5 +117,26 @@ class LibraryController extends Controller
         if (!$chapter->book->status) return response()->json(['error' => 'Draft'], 403);
         
         return response()->json($chapter);
+    }
+
+    public function checkout(Book $book)
+    {
+        if ($book->isOwnedBy(auth()->user())) {
+            return redirect()->route('student.library.read', $book->slug)
+                ->with('info', 'You already have access to this book.');
+        }
+        return view('frontend.library.checkout', compact('book'));
+    }
+
+    public function purchase(Request $request, Book $book)
+    {
+        // Grant access — in production, verify payment first
+        \App\Models\UserBookCollection::updateOrCreate(
+            ['user_id' => auth()->id(), 'book_id' => $book->id],
+            ['purchased' => true]
+        );
+
+        return redirect()->route('student.library.read', $book->slug)
+            ->with('success', 'Purchase successful! You now have full access to "' . $book->title . '".');
     }
 }

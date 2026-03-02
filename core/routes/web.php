@@ -124,6 +124,14 @@ Route::middleware([
         
         Route::post('/quiz/{id}/submit', 'submitQuiz')->name('student.quiz.submit');
 
+        // Annotation API
+        Route::post('/annotations', 'storeAnnotation')->name('student.annotations.store');
+        Route::get('/annotations/{chapterId}', 'getAnnotations')->name('student.annotations.index');
+        Route::delete('/annotations/{id}', 'deleteAnnotation')->name('student.annotations.destroy');
+
+        // Settings AJAX partial
+        Route::get('/settings/content', 'settingsContent')->name('student.settings.content');
+
         // Student Library/Collection Routes
         Route::get('/my-library', [LibraryController::class, 'myCollection'])->name('student.library.index');
         Route::get('/my-library/read/{slug}', [LibraryController::class, 'read'])->name('student.library.read');
@@ -132,6 +140,10 @@ Route::middleware([
         // Library API endpoints (used by reader JS)
         Route::get('/chapter/{id}', [LibraryController::class, 'getChapterContent'])->name('library.chapter.content');
         Route::post('/library/progress/{book}', [LibraryController::class, 'updateProgress'])->name('library.progress.update');
+        
+        // Direct book checkout (for paid books without a store product)
+        Route::get('/my-library/checkout/{book}', [LibraryController::class, 'checkout'])->name('library.book.checkout');
+        Route::post('/my-library/checkout/{book}/purchase', [LibraryController::class, 'purchase'])->name('library.book.purchase');
     });
 
     // Meeting Routes

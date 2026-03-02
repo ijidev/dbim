@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Learning - Grace LMS')
+@section('title', 'My Learning - DBIM LMS')
 
 @push('styles')
 <style>

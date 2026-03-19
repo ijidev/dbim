@@ -6,17 +6,17 @@
 @section('instructor_content')
 <div class="space-y-12">
     <!-- Welcome Header -->
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-            <h1 class="text-3xl font-black text-slate-900 leading-tight">Welcome back, {{ Auth::user()->name }}!</h1>
-            <p class="text-slate-500 font-medium mt-1">Here's what's happening with your ministry and courses today.</p>
+            <h1 class="text-2xl md:text-3xl font-black text-slate-900 leading-tight">Welcome back, {{ Auth::user()->name }}!</h1>
+            <p class="text-slate-500 text-sm md:text-lg font-medium mt-1">Here's what's happening with your ministry and courses today.</p>
         </div>
-        <div class="flex gap-4">
-             <button class="h-12 px-6 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-600 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+        <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+             <button class="h-12 px-6 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-600 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto">
                 <span class="material-symbols-outlined text-lg">calendar_month</span>
                 Schedule Event
             </button>
-            <a href="{{ route('instructor.courses.create') }}" class="h-12 px-6 bg-primary text-white rounded-xl text-xs font-black flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 transition-all">
+            <a href="{{ route('instructor.courses.create') }}" class="h-12 px-6 bg-primary text-white rounded-xl text-xs font-black flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 transition-all w-full sm:w-auto">
                 <span class="material-symbols-outlined text-lg">add_box</span>
                 New Course
             </a>

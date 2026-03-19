@@ -146,7 +146,7 @@
                         {{ isset($latest_sermon) ? substr($latest_sermon->location ?? 'DBIM', 0, 2) : 'DB' }}
                     </div>
                     <div>
-                        <p class="font-black text-slate-900">Divine Business Impact Ministry</p>
+                        <p class="font-black text-slate-900">Destiny Blessings int'l Ministry</p>
                         <p class="text-sm font-bold text-slate-400">Transforming Lives Globally</p>
                     </div>
                 </div>

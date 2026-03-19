@@ -1,57 +1,37 @@
-# Project Reference & Instructions
+# DBIM Project Reference
 
-## User Preferences & Rules
-1. **Design First**: Always transform prompts into high-quality, premium designs. No basic MVP styling.
-2. **Stitch Integration**: Use `/core/stitch/` as the visual and code source of truth.
-3. **Real Data**: Avoid dummy text/placeholders. Use real functionality.
-4. **CSS & CDN**: Ensure all external resources (fonts, icons, Tailwind) are properly included.
-5. **Documentation**: Maintain `task.md`, `walkthrough.md`, and `implementation_plan.md` in `<appDataDir>/brain/<conversation-id>`.
-6. **Project Timeline**: Track progress in `task.md`.
+## Project Description
+DBIM (Destiny Blessings int'l Ministry) is a modern web application for ministry growth, learning, and community engagement. It features a digital library, course management (LMS), event scheduling, and a premium mobile-first user experience.
 
-## Project Timeline & To-Do List
+## Technical Preferences
+- **Core**: Laravel (PHP)
+- **Frontend**: Tailwind CSS, Vanilla JS
+- **UI Design**: Stitch-inspired, premium, dark mode support
+- **Experience**: Mobile-first (90% users on mobile)
 
-### Phase 1: Core Student Experience (High Priority)
-- [x] Course Catalog Page (Stitch: `church_lms_dashboard_3`)
-- [x] Course Single/Landing Page (Stitch: `church_lms_dashboard_4` - adapted)
-- [x] Instructor Profile Page (Stitch: `church_lms_dashboard_4`)
-- [ ] Session Booked Confirmation (Stitch: `church_lms_dashboard_12`)
-- [ ] Student Profile Page
-- [ ] Student Settings Page
+## Project Timeline & Work Log
 
-### Phase 2: Interactive Learning
-- [ ] Quiz System
-- [ ] Score/Results Display
-- [ ] Course Completion Certificate
+### Phase 1: Authentication & Core Architecture
+- [x] Login/Register Flow
+- [x] Role-based Dashboards (Student, Instructor, Admin)
 
-### Phase 3: Instructor Panel
-- [ ] Course Creation Flow
-- [ ] Student List
-- [ ] Instructor Settings
+### Phase 2: Student Profile & Annotations
+- [x] Profile page redesign
+- [x] Book Reader with real content loading
+- [x] Annotation system (Highlights & Notes)
+- [x] Server-side syncing for annotations
 
-### Phase 4: Book & Library (Completed)
-- [x] Paywall System logic
-- [x] Book Creation Flow
-- [x] Phase 5: Paid Book Checkout Flow (Store Integration, Success View)
-- [x] Phase 6: Stability & Theme (Redirect fixes, Default Dark Mode)
-- [x] Phase 2: Multimedia Redesign & Reader Enhancements
-    - [x] Multimedia Library UI (Strict Template Parity)
-    - [x] Advanced Reader (Font Scaling & Voice Assistant)
-    - [x] Chapter Auto-Initialization Logic
-    - [x] Cleaned up Storage URLs via model accessors
-- [x] Fullscreen Reader Layout (`layouts/reader.blade.php`)
-- [x] Phase 3: Collection Management & Reader Progress tracking
+### Phase 3: Mobile Experience & Route Stability (Current)
+- [x] Premium full-screen mobile navbar
+- [x] Universal sidebar toggle for dashboards
+- [x] Library responsive grid (2 cols mobile)
+- [x] Event registration system
+- [x] Calendar route fix
+- [x] Reader touch support for annotations
+- [x] Functional "Finish Reading" logic
 
-### Phase 5: Meeting System
-- [ ] Waiting Room UI
-
-### Phase 6: Community
-- [ ] Community Hub
-- [ ] Groups & Rooms
-
-## Key Directories
-- `core/stitch/`: Design references
-- `core/resources/views/`: Blade templates
-- `core/app/Http/Controllers/`: Backend logic
-- `core/routes/web.php`: Routing
-
-*This file acts as a central reference for the project state and user preferences.*
+## Current To-Do List
+- [ ] Implement actual payment gateway for course/book purchases
+- [ ] Add real audio content for podcasts tab
+- [ ] Live stream interactive chat features
+- [ ] Admin user management UI completion

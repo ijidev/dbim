@@ -64,6 +64,7 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/live', 'live')->name('live');
     Route::get('/calendar', 'calendar')->name('calendar');
     Route::get('/events/get', 'getEvents')->name('events.get');
+    Route::post('/events/{id}/register', 'registerEvent')->name('event.register');
 });
 
 // Store Routes

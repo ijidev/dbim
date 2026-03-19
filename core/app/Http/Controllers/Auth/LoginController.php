@@ -34,7 +34,7 @@ class LoginController extends Controller
         }
 
         if ($role === 'student') {
-            return '/my-courses';
+            return '/dashboard';
         }
         
         return '/';

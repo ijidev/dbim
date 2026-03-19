@@ -136,7 +136,7 @@
         center: 'title',
         right: ''
       },
-      events: '{{ route("calendar.events") }}',
+      events: '{{ route("events.get") }}',
       height: 'auto',
       navLinks: true,
       editable: false,

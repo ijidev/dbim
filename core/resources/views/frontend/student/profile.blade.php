@@ -138,7 +138,7 @@
             </div>
             
             <!-- Tabs -->
-            <div class="flex items-center gap-8 border-b border-slate-200 mt-6 lg:mt-8">
+            <div class="flex items-center gap-8 border-b border-slate-200 mt-6 lg:mt-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
                 <button data-tab="journey" onclick="switchProfileTab('journey', this)" class="profile-tab-btn active pb-3 flex items-center gap-2 text-sm font-bold">
                     <span class="material-symbols-outlined text-[18px]">explore</span> Spiritual Journey
                 </button>

@@ -58,6 +58,9 @@
         <!-- Sub Header (Role Specific Title) -->
         <header class="h-12 glass-header sticky z-[40] flex items-center justify-between px-8 lg:px-12">
             <div class="flex items-center gap-4">
+                <button onclick="openMobileSidebar()" class="lg:hidden size-10 rounded-xl bg-slate-50 text-slate-500 hover:text-primary flex items-center justify-center transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
                 <h2 class="text-lg font-black text-primary tracking-tight">@yield('page_title', 'Instructor Panel')</h2>
             </div>
             <div class="flex items-center gap-6">

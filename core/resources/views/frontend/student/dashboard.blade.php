@@ -26,10 +26,10 @@
         <!-- Welcome Heading -->
         <div class="flex flex-wrap justify-between items-end gap-6 mb-10">
             <div class="flex flex-col gap-1">
-                <h2 class="text-4xl font-black tracking-tight text-slate-900">Welcome back, {{ explode(' ', Auth::user()->name)[0] }}</h2>
-                <p class="text-slate-500 text-lg font-medium">You have <strong>{{ $enrollments->count() }}</strong> active courses in your growth track.</p>
+                <h2 class="text-2xl md:text-4xl font-black tracking-tight text-slate-900">Welcome back, {{ explode(' ', Auth::user()->name)[0] }}</h2>
+                <p class="text-slate-500 text-sm md:text-lg font-medium">You have <strong>{{ $enrollments->count() }}</strong> active courses in your growth track.</p>
             </div>
-            <a href="{{ route('student.schedule') }}" class="flex items-center gap-3 px-6 h-12 bg-white border border-slate-100 rounded-xl text-sm font-black shadow-sm hover:bg-slate-50 transition-all">
+            <a href="{{ route('student.schedule') }}" class="w-full md:w-auto flex items-center justify-center gap-3 px-6 h-12 bg-white border border-slate-100 rounded-xl text-sm font-black shadow-sm hover:bg-slate-50 transition-all">
                 <span class="material-symbols-outlined text-primary">calendar_month</span>
                 <span>View Schedule</span>
             </a>
@@ -224,7 +224,7 @@
 </div>
 
 <footer class="p-8 border-t border-slate-100 bg-white text-center">
-    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">© 2024 Divine Business Impact Ministry. Powered by DBIM LMS.</p>
+    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">© 2024 Destiny Blessings int'l Ministry. Powered by DBIM LMS.</p>
 </footer>
 @push('scripts')
 <script>

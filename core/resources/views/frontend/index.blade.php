@@ -6,12 +6,7 @@
 <style>
     .fill-1 { font-variation-settings: 'FILL' 1; }
     
-    .waveform-bar {
-        width: 3px;
-        background-color: var(--primary);
-        border-radius: 1px;
-        margin: 0 1px;
-    }
+
 </style>
 @endpush
 
@@ -34,7 +29,7 @@
             @else
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
                 <span class="size-2 rounded-full bg-amber-500"></span>
-                <span class="text-xs font-bold text-white uppercase tracking-widest">Divine Business Impact Ministry</span>
+                <span class="text-xs font-bold text-white uppercase tracking-widest">Destiny Blessings int'l Ministry</span>
             </div>
             @endif
 

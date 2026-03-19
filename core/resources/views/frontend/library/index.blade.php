@@ -5,13 +5,7 @@
 @push('styles')
 <style>
     /* Library page custom styles */
-    .waveform-bar {
-        width: 3px;
-        background-color: #3b4354;
-        border-radius: 1px;
-        transition: background-color 0.2s;
-    }
-    .waveform-bar.active { background-color: #0f49bd; }
+
 
     /* Tab switching */
     .tab-content { display: none; }
@@ -26,45 +20,41 @@
 @section('content')
 <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
 
-<main class="flex-1 flex flex-col">
+<main class="flex-1 flex flex-col overflow-x-hidden max-w-full">
     {{-- Featured Hero Section --}}
-    <section class="w-full px-6 py-6 md:px-12 md:py-8">
-        <div class="relative overflow-hidden rounded-2xl aspect-[21/9] min-h-[360px] flex items-end">
+    <section class="w-full px-4 py-4 md:px-12 md:py-8 overflow-hidden">
+        <div class="relative overflow-hidden rounded-2xl aspect-[16/9] md:aspect-[21/9] min-h-[300px] md:min-h-[360px] flex items-end max-w-full">
             {{-- Background --}}
             <div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=2070&q=80");'></div>
             {{-- Overlay --}}
             <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-background-dark/20 to-transparent"></div>
             {{-- Content --}}
-            <div class="relative z-10 p-8 md:p-12 w-full max-w-3xl">
-                <div class="flex items-center gap-2 mb-4">
+            <div class="relative z-10 p-6 md:p-12 w-full max-w-3xl">
+                <div class="flex items-center gap-2 mb-3">
                     <span class="bg-accent-gold text-background-dark text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded">Featured Resource</span>
-                    <span class="text-white/60 text-xs font-medium uppercase tracking-wider">• {{ $wisdomAuthor }}</span>
+                    <span class="text-white/60 text-[10px] md:text-xs font-medium uppercase tracking-wider">• {{ $wisdomAuthor }}</span>
                 </div>
-                <h1 class="text-white text-4xl md:text-5xl font-black leading-tight tracking-tight mb-4">
-                    {{ Str::limit($wisdomText, 80) }}
+                <h1 class="text-white text-lg md:text-5xl font-black leading-tight tracking-tight mb-4 break-words overflow-hidden">
+                    {{ Str::limit($wisdomText, 50) }}
                 </h1>
                 @if($recentRead)
-                <p class="text-white/80 text-base md:text-lg mb-8 max-w-xl">
-                    Continue reading: <strong class="text-accent-gold">"{{ $recentRead->book->title }}"</strong> — {{ round($recentRead->percentage_complete) }}% complete
+                <p class="text-white/80 text-sm md:text-lg mb-6 max-w-xl">
+                    Continue reading: <strong class="text-accent-gold">"{{ $recentRead->book->title }}"</strong> — {{ round($recentRead->percentage_complete) }}%
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="{{ route('student.library.read', $recentRead->book->slug) }}" class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:scale-105">
-                        <span class="material-symbols-outlined">play_arrow</span>
-                        Continue Reading
-                    </a>
-                    <a href="{{ route('library.index') }}" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-xl font-bold border border-white/20 transition-all">
-                        <span class="material-symbols-outlined">auto_stories</span>
-                        Browse Library
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('student.library.read', $recentRead->book->slug) }}" class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all">
+                        <span class="material-symbols-outlined text-lg">play_arrow</span>
+                        Continue
                     </a>
                 </div>
                 @else
-                <p class="text-white/80 text-base md:text-lg mb-8 max-w-xl">
-                    Explore our vast collection of spiritual wisdom through videos, audio, and literature.
+                <p class="text-white/80 text-sm md:text-lg mb-6 max-w-xl">
+                    Explore our vast collection of spiritual wisdom and literature.
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#books" class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:scale-105">
-                        <span class="material-symbols-outlined">auto_stories</span>
+                <div class="flex flex-wrap gap-3">
+                    <a href="#books" class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all">
+                        <span class="material-symbols-outlined text-lg">auto_stories</span>
                         Browse Books
                     </a>
                 </div>
@@ -74,7 +64,7 @@
     </section>
 
     {{-- Library Content Area --}}
-    <div class="flex flex-1 gap-8 px-6 pb-12 md:px-12">
+    <div class="flex flex-1 gap-8 px-6 pb-12 md:px-12 w-full max-w-full overflow-hidden">
 
         {{-- Sidebar Filters --}}
         <aside class="hidden lg:flex flex-col w-64 shrink-0 gap-8">
@@ -103,7 +93,7 @@
                 <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 px-2">Popular Tags</h3>
                 <div class="flex flex-wrap gap-2 px-2">
                     @foreach(['PRAYER','FAITH','RESTORATION','GENESIS','DEVOTION'] as $tag)
-                    <span class="px-3 py-1 bg-slate-100 dark:bg-surface-dark rounded-full text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-border-dark cursor-pointer hover:border-primary/50 transition-colors">{{ $tag }}</span>
+                    <a href="{{ route('library.index', ['search' => $tag]) }}" class="px-3 py-1 bg-slate-100 dark:bg-surface-dark rounded-full text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-border-dark cursor-pointer hover:border-primary/50 transition-colors">{{ $tag }}</a>
                     @endforeach
                 </div>
             </div>
@@ -115,31 +105,55 @@
         </aside>
 
         {{-- Content Grid --}}
-        <div class="flex-1 flex flex-col gap-6" id="books">
+        <div class="flex-1 flex flex-col gap-6 min-w-0 w-full" id="books">
 
             {{-- Tab Controls --}}
-            <div class="flex items-center justify-between border-b border-slate-200 dark:border-border-dark">
-                <div class="flex gap-8">
-                    <button onclick="switchTab('books')" id="tab-books" class="tab-btn active relative py-4 text-sm font-bold text-primary">
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-200 dark:border-border-dark gap-4 w-full min-w-0">
+                <div class="flex gap-6 md:gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide no-scrollbar w-full min-w-0">
+                    <button onclick="switchTab('books')" id="tab-books" class="tab-btn active relative py-4 text-sm font-bold text-primary shrink-0">
                         Book Collection
                         <div class="tab-underline absolute bottom-0 left-0 right-0 h-0.5 bg-primary"></div>
                     </button>
-                    <button onclick="switchTab('audio')" id="tab-audio" class="tab-btn relative py-4 text-sm font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
-                        Podcasts &amp; Audio
+                    <button onclick="switchTab('audio')" id="tab-audio" class="tab-btn relative py-4 text-sm font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors shrink-0">
+                        Audio Collection
+                    </button>
+                    <button onclick="switchTab('video')" id="tab-video" class="tab-btn relative py-4 text-sm font-bold text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors shrink-0">
+                        Video Collection
                     </button>
                 </div>
-                <div class="flex items-center gap-2 text-slate-400">
-                    <span class="text-xs font-medium">Sort by:</span>
-                    <a href="{{ route('library.index', array_merge(request()->query(), ['sort' => 'latest'])) }}" class="text-xs font-bold flex items-center gap-1 dark:text-white">
-                        Newest First
-                        <span class="material-symbols-outlined text-sm">expand_more</span>
-                    </a>
+                <div class="flex items-center gap-3 mb-4 md:mb-0">
+                    <span class="text-xs font-medium text-slate-400">Sort by:</span>
+                    <div class="relative group">
+                        <button class="text-xs font-bold flex items-center gap-1 dark:text-white bg-slate-100 dark:bg-surface-dark px-3 py-1.5 rounded-lg border border-slate-200 dark:border-border-dark">
+                            @php
+                                $currentSort = request('sort', 'latest');
+                                $sortLabels = [
+                                    'latest' => 'Newest First',
+                                    'oldest' => 'Oldest First',
+                                    'price_low' => 'Price: Low to High',
+                                    'price_high' => 'Price: High to Low',
+                                    'title' => 'Alphabetical (A-Z)'
+                                ];
+                            @endphp
+                            {{ $sortLabels[$currentSort] ?? 'Newest First' }}
+                            <span class="material-symbols-outlined text-sm transition-transform group-hover:rotate-180">expand_more</span>
+                        </button>
+                        
+                        <div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
+                            @foreach($sortLabels as $key => $label)
+                                <a href="{{ route('library.index', array_merge(request()->query(), ['sort' => $key])) }}" 
+                                   class="block px-4 py-2.5 text-xs font-bold {{ $currentSort == $key ? 'text-primary bg-primary/5' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-background-dark' }} transition-colors">
+                                    {{ $label }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {{-- Books Tab Content --}}
             <div id="tab-content-books" class="tab-content active">
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
                     @forelse($books as $book)
                     <div class="group relative bg-white dark:bg-surface-dark p-3 rounded-2xl border border-slate-200 dark:border-border-dark hover:shadow-xl transition-all duration-300">
                         <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-4">
@@ -217,14 +231,24 @@
 
                         <div class="px-1">
                             <div class="flex justify-between items-start mb-1">
-                                <h4 class="font-black text-sm group-hover:text-primary transition-colors leading-tight truncate flex-1">{{ $book->title }}</h4>
+                                <a href="{{ route('student.library.read', $book->slug) }}" class="flex-1 min-w-0">
+                                    <h4 class="font-black text-[9px] group-hover:text-primary transition-colors leading-tight line-clamp-2">{{ $book->title }}</h4>
+                                </a>
                                 @auth
                                     @if($book->isOwnedBy(auth()->user()))
-                                        <span class="text-[10px] font-black text-emerald-500">{{ $book->getProgressPercentage(auth()->user()) }}%</span>
+                                        <span class="text-[8px] font-black text-emerald-500 ml-2 shrink-0">{{ $book->getProgressPercentage(auth()->user()) }}%</span>
                                     @endif
                                 @endauth
                             </div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{{ $book->category }} • {{ $book->author }}</p>
+                            <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest line-clamp-2">{{ $book->category }} • {{ $book->author }}</p>
+                            
+                            {{-- Mobile Read Button --}}
+                            <div class="mt-3 md:hidden">
+                                <a href="{{ route('student.library.read', $book->slug) }}" class="w-full flex items-center justify-center gap-2 py-2.5 bg-slate-900 text-white text-[10px] font-black rounded-lg uppercase tracking-widest active:scale-95 transition-all">
+                                    <span class="material-symbols-outlined text-xs">auto_stories</span>
+                                    READ
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @empty
@@ -248,38 +272,23 @@
             </div>
 
             {{-- Audio Tab Content --}}
-            <div id="tab-content-audio" class="tab-content">
+            <div id="tab-content-audio" class="tab-content px-1">
                 <div class="mt-4">
-                    <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-primary">podcasts</span>
-                        Latest Audio Episodes
-                    </h3>
-                    <div class="space-y-4">
-                        {{-- Audio Item Placeholder --}}
-                        <div class="bg-slate-100 dark:bg-surface-dark p-4 rounded-2xl border border-slate-200 dark:border-border-dark flex items-center gap-6">
-                            <button class="size-12 rounded-full bg-primary text-white flex items-center justify-center shrink-0">
-                                <span class="material-symbols-outlined">play_arrow</span>
-                            </button>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex justify-between items-start mb-1">
-                                    <h5 class="font-bold text-sm truncate">EP. 01 - The Silence of Prayer</h5>
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter shrink-0">Coming Soon</span>
-                                </div>
-                                <div class="flex items-end gap-[2px] h-8 w-full mt-2">
-                                    @foreach([40,60,30,70,80,50,90,60,40,20,50,80,30,60,40,20,90,50,70,30,60,40,80,50,70,30,60,40] as $h)
-                                    <div class="waveform-bar h-[{{ $h }}%]"></div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <button class="size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center transition-colors">
-                                    <span class="material-symbols-outlined">download</span>
-                                </button>
-                                <button class="size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 flex items-center justify-center transition-colors">
-                                    <span class="material-symbols-outlined">share</span>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="text-center py-20 bg-white dark:bg-surface-dark rounded-3xl border-2 border-dashed border-slate-200 dark:border-border-dark">
+                        <span class="material-symbols-outlined text-5xl text-slate-200 dark:text-slate-600 mb-4 block">podcasts</span>
+                        <h3 class="text-xl font-black text-slate-700 dark:text-slate-200 mb-2">Audio Collection</h3>
+                        <p class="text-slate-400 text-sm max-w-md mx-auto">Audio content is coming soon. Stay tuned for sermons, teachings, and devotional audio from our ministry.</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Video Tab Content --}}
+            <div id="tab-content-video" class="tab-content px-1">
+                <div class="mt-4">
+                    <div class="text-center py-20 bg-white dark:bg-surface-dark rounded-3xl border-2 border-dashed border-slate-200 dark:border-border-dark">
+                        <span class="material-symbols-outlined text-5xl text-slate-200 dark:text-slate-600 mb-4 block">smart_display</span>
+                        <h3 class="text-xl font-black text-slate-700 dark:text-slate-200 mb-2">Video Collection</h3>
+                        <p class="text-slate-400 text-sm max-w-md mx-auto">Access our collection of video sermons and spiritual teachings. Coming soon!</p>
                     </div>
                 </div>
             </div>
@@ -288,49 +297,7 @@
     </div>{{-- end content area --}}
 </main>
 
-{{-- Sticky Bottom Mini Player --}}
-<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-w-4xl bg-white/90 dark:bg-surface-dark/95 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl rounded-2xl p-4 z-50 flex items-center gap-6">
-    <div class="flex items-center gap-4 min-w-[200px]">
-        <div class="size-10 rounded-lg bg-primary/20 shrink-0 flex items-center justify-center text-primary">
-            <span class="material-symbols-outlined">auto_stories</span>
-        </div>
-        <div class="min-w-0">
-            <h6 class="text-xs font-bold truncate">Digital Library</h6>
-            <p class="text-[10px] text-slate-400 font-medium">Voice Reader Available</p>
-        </div>
-    </div>
-    <div class="flex-1 flex flex-col gap-2">
-        <div class="flex items-center justify-center gap-6">
-            <button class="text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">skip_previous</span>
-            </button>
-            <button class="size-10 rounded-full bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20">
-                <span class="material-symbols-outlined">play_arrow</span>
-            </button>
-            <button class="text-slate-400 hover:text-primary transition-colors">
-                <span class="material-symbols-outlined">skip_next</span>
-            </button>
-        </div>
-        <div class="flex items-center gap-3">
-            <span class="text-[10px] font-bold text-primary">00:00</span>
-            <div class="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                <div class="h-full bg-primary w-0"></div>
-            </div>
-            <span class="text-[10px] font-bold text-slate-400">0:00</span>
-        </div>
-    </div>
-    <div class="hidden sm:flex items-center gap-4 shrink-0">
-        <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-slate-400 text-lg">volume_up</span>
-            <div class="w-20 h-1 bg-slate-200 dark:bg-slate-700 rounded-full">
-                <div class="h-full bg-slate-400 w-[60%] rounded-full"></div>
-            </div>
-        </div>
-        <button class="text-slate-400 hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">playlist_play</span>
-        </button>
-    </div>
-</div>
+{{-- Mini player removed — no audio content yet --}}
 
 </div>{{-- end outer wrapper --}}
 

@@ -148,4 +148,33 @@ class FrontController extends Controller
             ]
         ];
     }
+
+    public function registerEvent(Request $request, $id)
+    {
+        $event = Event::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:50',
+        ]);
+
+        $exists = \App\Models\EventRegistration::where('event_id', $id)
+            ->where('email', $request->email)
+            ->exists();
+
+        if ($exists) {
+            return back()->with('error', 'You are already registered for this event.');
+        }
+
+        \App\Models\EventRegistration::create([
+            'event_id' => $id,
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        return back()->with('success', 'You have been registered for "' . $event->title . '". We look forward to seeing you!');
+    }
 }

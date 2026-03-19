@@ -25,7 +25,27 @@ class LibraryController extends Controller
             $query->where('category', $request->category);
         }
 
-        $books = $query->latest()->paginate(12);
+        // Sorting Logic
+        switch ($request->get('sort')) {
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'price_low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'title':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'latest':
+            default:
+                $query->latest();
+                break;
+        }
+
+        $books = $query->paginate(12);
         
         $wisdomText = Setting::where('key', 'library_wisdom_text')->first()?->value ?? 'Thou hast made us for thyself, O Lord, and our heart is restless until it finds its rest in thee.';
         $wisdomAuthor = Setting::where('key', 'library_wisdom_author')->first()?->value ?? 'ST. AUGUSTINE';

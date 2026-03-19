@@ -5,19 +5,33 @@
     $isStudent = $role === 'student';
 @endphp
 
-<aside class="w-72 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a202c] flex flex-col h-full sticky z-20">
+{{-- Mobile Sidebar Toggle Button (FAB) --}}
+<button onclick="openMobileSidebar()" id="mobile-sidebar-toggle" class="lg:hidden fixed bottom-6 left-6 z-[60] size-14 bg-primary text-white rounded-2xl shadow-2xl shadow-primary/30 flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+    <span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+
+{{-- Sidebar Overlay --}}
+<div id="sidebar-overlay" onclick="closeMobileSidebar()" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[70] lg:hidden transition-opacity"></div>
+
+{{-- Sidebar --}}
+<aside id="mobile-sidebar" class="hidden lg:flex w-72 border-r border-[#dcdfe5] dark:border-gray-800 bg-white dark:bg-[#1a202c] flex-col h-full sticky z-[80] max-lg:fixed max-lg:top-0 max-lg:left-0 max-lg:h-full max-lg:shadow-2xl max-lg:-translate-x-full max-lg:transition-transform max-lg:duration-300">
     <div class="p-8 flex flex-col h-full custom-scrollbar overflow-y-auto">
-        <!-- Dashboard Header Info (Optional, can be role specific) -->
-        <div class="mb-10 lg:hidden">
-             <div class="flex items-center gap-3">
-                <div class="bg-primary size-10 rounded-xl flex items-center justify-center text-accent shadow-lg">
-                    <span class="material-symbols-outlined font-bold">church</span>
+        <!-- Mobile Close + Logo -->
+        <div class="mb-10">
+             <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary size-10 rounded-xl flex items-center justify-center text-accent shadow-lg">
+                        <span class="material-symbols-outlined font-bold">church</span>
+                    </div>
+                    <div>
+                        <h1 class="text-base font-black leading-tight text-primary dark:text-white">{{ config('app.name') }}</h1>
+                        <p class="text-[10px] font-bold text-[#636f88] uppercase tracking-widest">{{ ucfirst($role) }} Panel</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-base font-black leading-tight text-primary dark:text-white">{{ config('app.name') }}</h1>
-                    <p class="text-[10px] font-bold text-[#636f88] uppercase tracking-widest">{{ ucfirst($role) }} Panel</p>
-                </div>
-            </div>
+                <button onclick="closeMobileSidebar()" class="lg:hidden size-10 rounded-xl bg-slate-100 text-slate-400 flex items-center justify-center hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+             </div>
         </div>
 
         <nav class="flex-1 space-y-2">
@@ -84,7 +98,6 @@
             </a>
 
             <!-- Library/Resources -->
-            <!-- Library/Resources -->
             @if($isInstructor)
                 <a href="{{ route('instructor.library.index') }}" 
                    class="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all {{ request()->routeIs('instructor.library.*') ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-500 hover:text-primary hover:bg-slate-50' }}">
@@ -130,3 +143,38 @@
         </div>
     </div>
 </aside>
+
+<script>
+    function openMobileSidebar() {
+        const sidebar = document.getElementById('mobile-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const toggle = document.getElementById('mobile-sidebar-toggle');
+
+        sidebar.classList.remove('hidden');
+        overlay.classList.remove('hidden');
+        toggle.classList.add('hidden');
+
+        // Trigger animation after display
+        requestAnimationFrame(() => {
+            sidebar.classList.remove('max-lg:-translate-x-full');
+            sidebar.classList.add('max-lg:translate-x-0');
+            overlay.classList.add('opacity-100');
+        });
+    }
+
+    function closeMobileSidebar() {
+        const sidebar = document.getElementById('mobile-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const toggle = document.getElementById('mobile-sidebar-toggle');
+
+        sidebar.classList.remove('max-lg:translate-x-0');
+        sidebar.classList.add('max-lg:-translate-x-full');
+        overlay.classList.remove('opacity-100');
+
+        setTimeout(() => {
+            sidebar.classList.add('hidden');
+            overlay.classList.add('hidden');
+            toggle.classList.remove('hidden');
+        }, 300);
+    }
+</script>

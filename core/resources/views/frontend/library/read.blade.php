@@ -65,12 +65,24 @@
 
     /* Fix footer on mobile */
     @media (max-width: 768px) {
-        footer .max-w-7xl { gap: 1rem; }
-        footer .w-1\/4 { display: none; }
-        footer .flex-1 { width: 100%; }
-        #main-play-btn { width: 40px; height: 40px; }
-        #main-play-icon { font-size: 24px; }
-        .speed-btn { padding: 2px 4px; font-size: 9px; }
+        footer .max-w-7xl { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+        footer .w-1\/4 { width: auto; }
+        footer .flex-1 { width: 100%; order: -1; margin-bottom: 0.5rem; }
+        #main-play-btn { width: 44px; height: 44px; }
+        #main-play-icon { font-size: 28px; }
+        .speed-btn, .pitch-btn { padding: 4px 6px; font-size: 10px; }
+        .voice-controls-mobile { display: flex !important; }
+    }
+
+    #reader-body {
+        -webkit-user-select: text !important;
+        user-select: text !important;
+        -webkit-touch-callout: default !important;
+    }
+
+    .voice-active ::selection {
+        background-color: rgba(251,191,36,0.5) !important; 
+        color: inherit !important;
     }
 </style>
 @endpush
@@ -126,24 +138,17 @@
                 <div id="pages-{{ $chap->id }}" class="pages-list pl-10 pr-4 py-1 space-y-1 {{ $i === 0 ? '' : 'hidden' }}">
                     @php $pagesCount = $chap->page_count; @endphp
                     @for($p = 1; $p <= $pagesCount; $p++)
-                    <button class="w-full text-left py-1.5 text-[11px] font-bold text-slate-400 hover:text-primary transition-colors flex items-center justify-between group">
+                    <button onclick="scrollToPage({{ $chap->id }}, {{ $p }})" 
+                            class="w-full text-left py-1.5 text-[11px] font-bold text-slate-400 hover:text-primary transition-colors flex items-center justify-between group page-item-{{ $chap->id }}-{{ $p }}">
                         <span>Page {{ $p }}</span>
-                        <span class="material-symbols-outlined text-xs text-emerald-500 opacity-0 group-hover:opacity-100">check</span>
+                        <span class="material-symbols-outlined text-xs text-emerald-500 opacity-0 page-checkmark-{{ $chap->id }}-{{ $p }}">check_circle</span>
                     </button>
                     @endfor
                 </div>
             </div>
             @endforeach
 
-            @if($isOwner)
-            {{-- Finish Book CTA --}}
-            <div id="finish-book-wrap" class="px-3 py-4 mt-2">
-                <button id="finish-book-btn" onclick="markBookCompleted()" class="w-full py-2.5 flex items-center justify-center gap-2 rounded-xl border-2 border-emerald-500 text-emerald-500 text-[11px] font-black uppercase tracking-wider hover:bg-emerald-500 hover:text-white transition-all">
-                    <span class="material-symbols-outlined text-sm">task_alt</span>
-                    <span id="finish-book-label">Mark as Finished</span>
-                </button>
-            </div>
-            @endif
+
 
             @if(!$isOwner)
             {{-- Locked chapters visual & Unlock CTA --}}
@@ -303,6 +308,23 @@
                     <span class="material-symbols-outlined">east</span>
                 </button>
             </div>
+
+            @if($isOwner)
+            {{-- Finish Book CTA - Only shown on last page --}}
+            <div id="finish-book-container" class="mt-20 flex justify-center hidden">
+                <div class="max-w-md w-full bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/50 rounded-3xl p-8 text-center animate-fade-in-up">
+                    <div class="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-500/30">
+                        <span class="material-symbols-outlined text-3xl">auto_stories</span>
+                    </div>
+                    <h3 class="text-xl font-black dark:text-white mb-2 uppercase tracking-tight">You've reached the end!</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 font-medium mb-6">Congratulations on completing all chapters of this book. Mark it as finished to update your spiritual progress.</p>
+                    <button id="finish-book-btn" onclick="markBookCompleted()" class="w-full py-4 flex items-center justify-center gap-3 rounded-2xl bg-emerald-500 text-white font-black uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-xl shadow-emerald-500/20">
+                        <span class="material-symbols-outlined">task_alt</span>
+                        <span id="finish-book-label">Mark as Finished</span>
+                    </button>
+                </div>
+            </div>
+            @endif
         </article>
     </main>
 
@@ -448,8 +470,17 @@
             </div>
         </div>
 
-        {{-- Right: Speed + Pitch + Listen CTA --}}
-        <div class="flex items-center justify-end gap-3 w-1/4">
+        {{-- Right: Speed + Pitch + Volume --}}
+        <div class="flex items-center justify-end gap-3 w-1/4 voice-controls-mobile">
+            {{-- Volume Slider --}}
+            <div class="hidden md:flex flex-col items-center gap-0.5 mr-2">
+                <p class="text-[9px] uppercase font-bold text-slate-400">Volume</p>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm text-slate-400">volume_down</span>
+                    <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="w-16 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                    <span class="material-symbols-outlined text-sm text-slate-400">volume_up</span>
+                </div>
+            </div>
             {{-- Read Speed --}}
             <div class="flex flex-col items-center gap-0.5">
                 <p class="text-[9px] uppercase font-bold text-slate-400">Speed</p>
@@ -460,7 +491,7 @@
                 </div>
             </div>
             {{-- Pitch --}}
-            <div class="flex flex-col items-center gap-0.5">
+            <div class="hidden sm:flex flex-col items-center gap-0.5">
                 <p class="text-[9px] uppercase font-bold text-slate-400">Pitch</p>
                 <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
                     <button id="pitch-0-5" onclick="setPitch(0.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary" title="Low pitch">▼</button>
@@ -468,9 +499,9 @@
                     <button id="pitch-1-5" onclick="setPitch(1.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary" title="High pitch">▲</button>
                 </div>
             </div>
-            <button onclick="toggleVoice()" class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm">
+            <button onclick="toggleVoice()" class="flex h-10 w-10 md:h-auto md:w-auto items-center justify-center md:px-4 md:py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm">
                 <span class="material-symbols-outlined text-lg">record_voice_over</span>
-                Listen
+                <span class="hidden md:inline ml-2">Listen</span>
             </button>
         </div>
     </div>
@@ -541,8 +572,13 @@ let isSpeaking = false;
 let isPaused = false;
 let currentRate = 1;
 let currentPitch = 1;
+let currentVolume = 1;
 let wordIndex = 0;
 let progressInterval = null;
+
+// Page progress tracking
+const chapterPageCount = {{ $book->chapters->first()->page_count ?? 1 }};
+const readPages = JSON.parse(localStorage.getItem('read_pages_{{ $book->id }}') || '{}');
 
 // Track which chapters the user has visited
 const readChapters = JSON.parse(localStorage.getItem('read_chapters_{{ $book->id }}') || '{}');
@@ -553,6 +589,31 @@ function markChapterRead(chapterId) {
     // Show completed badge
     const badge = document.querySelector(`.completed-badge-${chapterId}`);
     if (badge) badge.classList.remove('hidden');
+}
+
+function markPageRead(chapterId, pageNum) {
+    if (!readPages[chapterId]) readPages[chapterId] = [];
+    if (!readPages[chapterId].includes(pageNum)) {
+        readPages[chapterId].push(pageNum);
+        localStorage.setItem('read_pages_{{ $book->id }}', JSON.stringify(readPages));
+        // Update UI
+        const check = document.querySelector(`.page-checkmark-${chapterId}-${pageNum}`);
+        if (check) check.classList.remove('opacity-0');
+    }
+}
+
+function scrollToPage(chapterId, pageNum) {
+    if (activeChapterId !== chapterId) {
+        // Need to switch chapter first then scroll
+        // For now just scroll if active
+        return;
+    }
+    const scrollArea = document.getElementById('main-scroll-area');
+    if (!scrollArea) return;
+    const totalHeight = scrollArea.scrollHeight - scrollArea.clientHeight;
+    const chapPageCount = document.querySelectorAll(`#pages-${chapterId} button`).length;
+    const targetScroll = (totalHeight / chapPageCount) * (pageNum - 1);
+    scrollArea.scrollTo({ top: targetScroll, behavior: 'smooth' });
 }
 
 // =====================
@@ -651,16 +712,16 @@ function markBookCompleted() {
 }
 
 function updateFinishBtn(done) {
-    const btn   = document.getElementById('finish-book-btn');
-    const label = document.getElementById('finish-book-label');
+    const btn   = document.querySelector('#finish-book-btn');
+    const label = document.querySelector('#finish-book-label');
     if (!btn) return;
     if (done) {
-        btn.classList.remove('border-emerald-500', 'text-emerald-500', 'hover:bg-emerald-500', 'hover:text-white');
-        btn.classList.add('border-primary', 'bg-primary', 'text-white');
+        btn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
+        btn.classList.add('bg-primary');
         label.textContent = '✓ Book Completed';
     } else {
-        btn.classList.add('border-emerald-500', 'text-emerald-500', 'hover:bg-emerald-500', 'hover:text-white');
-        btn.classList.remove('border-primary', 'bg-primary', 'text-white');
+        btn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+        btn.classList.remove('bg-primary');
         label.textContent = 'Mark as Finished';
     }
 }
@@ -683,6 +744,15 @@ if (mainScroll) {
         // Mark chapter as read when scrolled past 80%
         if (pct >= 80 && activeChapterId) {
             markChapterRead(activeChapterId);
+        }
+
+        // Mark individual pages as read
+        const chapPageCount = document.querySelectorAll(`#pages-${activeChapterId} button`).length;
+        if (chapPageCount > 1) {
+            const currentPage = Math.floor((pct / 100) * chapPageCount) + 1;
+            for (let p = 1; p <= currentPage; p++) {
+                markPageRead(activeChapterId, p);
+            }
         }
         
         if (Math.abs(pct - (window.__lastSaved || 0)) > 5) {
@@ -789,7 +859,26 @@ async function switchChapter(id, title, index) {
     updateNavButtons();
     loadAnnotations();
     applySavedAnnotations();
-    updateReadTime(); // recalculate for new chapter content
+    updateReadTime(); 
+
+    // Handle finish button visibility
+    const finishWrap = document.getElementById('finish-book-container');
+    if (finishWrap) {
+        // Only show on the last chapter
+        if (index === totalChapters - 1) {
+            finishWrap.classList.remove('hidden');
+        } else {
+            finishWrap.classList.add('hidden');
+        }
+    }
+
+    // Refresh page checkmarks for this chapter
+    if (readPages[id]) {
+        readPages[id].forEach(p => {
+            const check = document.querySelector(`.page-checkmark-${id}-${p}`);
+            if (check) check.classList.remove('opacity-0');
+        });
+    }
 }
 
 function navigateChapter(dir) {
@@ -813,7 +902,13 @@ function updateNavButtons() {
         if (!isOwner && activeChapterIndex === 0) {
             label.innerText = 'Unlock to Continue';
         } else {
-            label.innerText = activeChapterIndex === totalChapters - 1 ? 'Finish Reading' : 'Next Chapter';
+            if (activeChapterIndex === totalChapters - 1) {
+                label.innerText = 'Last Chapter';
+                next.disabled = true; // next button hidden/disabled on last chapter
+            } else {
+                label.innerText = 'Next Chapter';
+                next.onclick = () => navigateChapter(1);
+            }
         }
     }
 }
@@ -821,50 +916,122 @@ function updateNavButtons() {
 // =====================
 // VOICE READER
 // =====================
+let textChunks = [];
+let chunkStartOffsets = [];
+
 function prepareUtterance() {
     if (!isOwner) return;
     if (synth.speaking) synth.cancel();
     const text = readerBody.innerText;
-    const startOffset = wordIndex; // save position BEFORE substring
-    utterance = new SpeechSynthesisUtterance(text.substring(startOffset));
+    
+    // Chunk text safely to eliminate start delay
+    const rawChunks = text.match(/[^.!?\n]+[.!?\n]+/g) || [text];
+    textChunks = [];
+    chunkStartOffsets = [];
+    let currentOffset = 0;
+    
+    for (const chunk of rawChunks) {
+        textChunks.push(chunk);
+        chunkStartOffsets.push(currentOffset);
+        currentOffset += chunk.length;
+    }
+    
+    // Find target chunk based on wordIndex
+    let targetChunkIndex = 0;
+    for (let i = 0; i < chunkStartOffsets.length; i++) {
+        if (wordIndex >= chunkStartOffsets[i]) {
+            targetChunkIndex = i;
+        }
+    }
+    
+    playChunk(targetChunkIndex, wordIndex - chunkStartOffsets[targetChunkIndex]);
+}
+
+function playChunk(index, charOffset = 0) {
+    if (index >= textChunks.length) {
+        stopVoice();
+        return;
+    }
+    
+    const chunkText = textChunks[index].substring(charOffset);
+    if (!chunkText.trim()) {
+        playChunk(index + 1, 0);
+        return;
+    }
+
+    utterance = new SpeechSynthesisUtterance(chunkText);
     utterance.rate  = currentRate;
     utterance.pitch = currentPitch;
-    utterance.onstart = () => { isSpeaking = true; isPaused = false; updatePlayIcon(); startProgressTracking(); };
-    utterance.onend   = () => stopVoice();
-    // CRITICAL: e.charIndex is relative to the utterance text, not the full text.
-    // We must add startOffset back to get the correct absolute position.
-    utterance.onboundary = (e) => {
-        if (e.name === 'word') {
-            wordIndex = startOffset + e.charIndex;
-            updateTtsBar(wordIndex, text.length);
+    utterance.volume = currentVolume;
+    
+    utterance.onstart = () => { 
+        isSpeaking = true; 
+        isPaused = false; 
+        updatePlayIcon(); 
+        startProgressTracking(); 
+    };
+    
+    utterance.onend = () => {
+        if (isSpeaking && !isPaused) {
+            playChunk(index + 1, 0);
         }
     };
+    
+    const baseOffset = chunkStartOffsets[index] + charOffset;
+    
+    utterance.onboundary = (e) => {
+        if (e.name === 'word') {
+            wordIndex = baseOffset + e.charIndex;
+            updateTtsBar(wordIndex, readerBody.innerText.length);
+        }
+    };
+    
+    synth.speak(utterance);
 }
 
 function toggleVoice() {
     if (!isOwner) { alert('Add this book to your collection to unlock the voice assistant.'); return; }
-    if (isSpeaking) { isPaused ? resumeVoice() : pauseVoice(); }
-    else startVoice();
+    if (isSpeaking) { 
+        isPaused ? resumeVoice() : pauseVoice(); 
+    } else {
+        startVoice();
+    }
 }
 
-function startVoice() { if (!utterance) prepareUtterance(); synth.speak(utterance); }
+function startVoice() { prepareUtterance(); }
 function pauseVoice() { synth.pause(); isPaused = true; updatePlayIcon(); stopProgressTracking(); }
-function resumeVoice() { synth.resume(); isPaused = false; updatePlayIcon(); startProgressTracking(); }
-// Full stop: resets position to beginning
-function stopVoice() { synth.cancel(); isSpeaking = false; isPaused = false; wordIndex = 0; updatePlayIcon(); stopProgressTracking(); }
-// Internal stop used by speed/pitch/seek changes — preserves wordIndex
-function stopVoiceKeepPos() { synth.cancel(); isSpeaking = false; isPaused = false; updatePlayIcon(); stopProgressTracking(); }
+function resumeVoice() { 
+    synth.resume(); 
+    isPaused = false; 
+    updatePlayIcon(); 
+    startProgressTracking();
+}
+// Full stop
+function stopVoice() { 
+    isSpeaking = false; 
+    isPaused = false; 
+    synth.cancel(); 
+    wordIndex = 0; 
+    updateTtsBar(0, readerBody.innerText.length);
+    updatePlayIcon(); 
+    stopProgressTracking(); 
+}
+// Internal stop (preserves position)
+function stopVoiceKeepPos() { 
+    isSpeaking = false; 
+    isPaused = false; 
+    synth.cancel(); 
+    stopProgressTracking(); 
+}
 
 function startProgressTracking() {
     if (progressInterval) clearInterval(progressInterval);
-    const totalChars = readerBody.innerText.length;
+    // Keep Chrome engine alive (fixes 15s pause bug)
     progressInterval = setInterval(() => {
-        if (isSpeaking && !isPaused) {
-            wordIndex += (12 * currentRate / 20);
-            if (wordIndex >= totalChars) { wordIndex = totalChars; stopProgressTracking(); }
-            updateTtsBar(wordIndex, totalChars);
+        if (isSpeaking && !isPaused && synth.speaking && !synth.paused) {
+            synth.resume();
         }
-    }, 50);
+    }, 10000); 
 }
 function stopProgressTracking() { clearInterval(progressInterval); progressInterval = null; }
 
@@ -908,6 +1075,18 @@ function setPitch(pitch) {
     stopVoiceKeepPos();
     prepareUtterance();
     if (wasPlaying) startVoice();
+}
+
+function setVolume(vol) {
+    currentVolume = parseFloat(vol);
+    if (utterance) utterance.volume = currentVolume;
+    // Restart if playing to apply volume immediately
+    const wasPlaying = isSpeaking && !isPaused;
+    if (wasPlaying) {
+        stopVoiceKeepPos();
+        prepareUtterance();
+        startVoice();
+    }
 }
 
 // Seek by seconds (approx 14 chars/sec at rate 1x)
@@ -1066,27 +1245,53 @@ function applySavedAnnotations() {
     readerBody.innerHTML = newContent;
 }
 
-document.addEventListener('mouseup', (e) => {
+const handleSelectionChange = (e) => {
     if (!isOwner) return;
     if (e.target.closest('#highlight-toolkit') || e.target.closest('#note-modal')) return;
-    const sel = window.getSelection();
-    const text = sel?.toString().trim();
-    const toolkit = document.getElementById('highlight-toolkit');
-    if (!toolkit) return;
-    if (text && text.length > 3) {
-        const range = sel.getRangeAt(0);
-        if (!readerBody.contains(range.commonAncestorContainer)) { closeToolkit(); return; }
-        const r = range.getBoundingClientRect();
-        // Position above the selection, centered
-        const left = Math.max(10, r.left + r.width / 2 - 104); // 104 = half of w-52 (208px)
-        toolkit.style.left = left + 'px';
-        toolkit.style.top  = (r.top + window.scrollY - 90) + 'px';
-        toolkit.style.display = 'block';
-        currentSelection = { text, range: range.cloneRange() };
-    } else {
-        closeToolkit();
-    }
-});
+    
+    // Small delay to ensure selection is processed by browser
+    setTimeout(() => {
+        const sel = window.getSelection();
+        const text = sel?.toString().trim();
+        const toolkit = document.getElementById('highlight-toolkit');
+        if (!toolkit) return;
+        
+        if (text && text.length > 2) {
+            const range = sel.getRangeAt(0);
+            if (!readerBody.contains(range.commonAncestorContainer)) { closeToolkit(); return; }
+            const r = range.getBoundingClientRect();
+            
+            // Positioning logic improved for mobile
+            const toolkitWidth = 208; // w-52
+            let left = r.left + r.width / 2 - toolkitWidth / 2;
+            
+            // Keep within horizontal bounds
+            if (left < 10) left = 10;
+            if (left + toolkitWidth > window.innerWidth - 10) {
+                left = window.innerWidth - toolkitWidth - 10;
+            }
+            
+            // Position above or below depending on space
+            let top = r.top + window.scrollY - 90;
+            if (top < 10) {
+                top = r.bottom + window.scrollY + 20; // Show below if no space above
+            }
+            
+            toolkit.style.left = left + 'px';
+            toolkit.style.top  = top + 'px';
+            toolkit.style.display = 'block';
+            currentSelection = { text, range: range.cloneRange() };
+        } else {
+            // Only close if we didn't just click the toolkit itself
+            if (!e.target.closest('#highlight-toolkit')) {
+                closeToolkit();
+            }
+        }
+    }, 50);
+};
+
+document.addEventListener('mouseup', handleSelectionChange);
+document.addEventListener('touchend', handleSelectionChange);
 
 function closeToolkit() {
     const toolkit = document.getElementById('highlight-toolkit');

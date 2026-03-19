@@ -165,7 +165,7 @@
                         <div>
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ $student->created_at->format('M d, Y') }}</p>
                             <p class="text-base font-black text-slate-900 leading-tight">Ministry Enrollment Confirmed</p>
-                            <p class="text-sm text-slate-500 font-medium mt-1">Granted access to "{{ $student->course->title }}" by Divine Business Impact Ministry.</p>
+                            <p class="text-sm text-slate-500 font-medium mt-1">Granted access to "{{ $student->course->title }}" by Destiny Blessings int'l Ministry.</p>
                         </div>
                     </div>
                 </div>

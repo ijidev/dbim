@@ -31,7 +31,8 @@ I have completed the enhancement of the student dashboard and integrated a robus
 
 ### 6. Book Reader Voice Assistant Fixes
 - Eliminated the 3+ second TTS start delay by intelligently chunking chapter text for instant playback.
-- Fixed progress bar desync by removing artificial timers and tying the UI directly to precise speech synthesis boundaries.
+- Fixed progress bar desync and tracking stops by precisely mapping TTS character indices directly to DOM Text Nodes (`TreeWalker` API).
+- Implemented real-time dynamic word highlighting (`Selection API`) as the Voice Assistant speaks, including intelligent auto-scrolling to keep the current sentence in view.
 
 ---
 

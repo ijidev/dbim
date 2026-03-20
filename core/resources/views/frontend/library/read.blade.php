@@ -916,122 +916,149 @@ function updateNavButtons() {
 // =====================
 // VOICE READER
 // =====================
-let textChunks = [];
-let chunkStartOffsets = [];
+let ttsNodes = [];
+let ttsTotalChars = 0;
+let ttsCurrentNodeIndex = 0;
+
+function parseTtsNodes() {
+    ttsNodes = [];
+    ttsTotalChars = 0;
+    const walker = document.createTreeWalker(readerBody, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while ((node = walker.nextNode())) {
+        const text = node.nodeValue;
+        if (text.trim().length > 0) {
+            ttsNodes.push({ node: node, text: text, charOffset: ttsTotalChars });
+            ttsTotalChars += text.length;
+        }
+    }
+}
 
 function prepareUtterance() {
     if (!isOwner) return;
     if (synth.speaking) synth.cancel();
-    const text = readerBody.innerText;
     
-    // Chunk text safely to eliminate start delay
-    const rawChunks = text.match(/[^.!?\n]+[.!?\n]+/g) || [text];
-    textChunks = [];
-    chunkStartOffsets = [];
-    let currentOffset = 0;
+    parseTtsNodes();
+    if (ttsNodes.length === 0) return;
     
-    for (const chunk of rawChunks) {
-        textChunks.push(chunk);
-        chunkStartOffsets.push(currentOffset);
-        currentOffset += chunk.length;
+    ttsCurrentNodeIndex = 0;
+    for (let i = 0; i < ttsNodes.length; i++) {
+        if (wordIndex >= ttsNodes[i].charOffset) ttsCurrentNodeIndex = i;
     }
     
-    // Find target chunk based on wordIndex
-    let targetChunkIndex = 0;
-    for (let i = 0; i < chunkStartOffsets.length; i++) {
-        if (wordIndex >= chunkStartOffsets[i]) {
-            targetChunkIndex = i;
-        }
-    }
-    
-    playChunk(targetChunkIndex, wordIndex - chunkStartOffsets[targetChunkIndex]);
+    readerBody.classList.add('voice-active');
+    playTtsNode(ttsCurrentNodeIndex, Math.max(0, wordIndex - ttsNodes[ttsCurrentNodeIndex].charOffset));
 }
 
-function playChunk(index, charOffset = 0) {
-    if (index >= textChunks.length) {
-        stopVoice();
-        return;
+function playTtsNode(index, offset = 0) {
+    if (index >= ttsNodes.length) { stopVoice(); return; }
+    
+    const nodeObj = ttsNodes[index];
+    const remainingText = nodeObj.text.substring(offset);
+    
+    if (!remainingText.trim()) { playTtsNode(index + 1, 0); return; }
+
+    // Safely extract just the FIRST chunk to fix Chrome SpeechSynthesis bugs on long strings
+    let chunkLength = remainingText.length;
+    const match = remainingText.match(/^[^.!?\n]+[.!?\n]+/);
+    if (match && match[0].length < 300) {
+        chunkLength = match[0].length;
+    } else if (remainingText.length > 200) {
+        let sp = remainingText.lastIndexOf(' ', 200);
+        if (sp > 0) chunkLength = sp + 1;
+        else chunkLength = 200;
     }
     
-    const chunkText = textChunks[index].substring(charOffset);
-    if (!chunkText.trim()) {
-        playChunk(index + 1, 0);
-        return;
-    }
+    const chunkText = remainingText.substring(0, chunkLength);
 
     utterance = new SpeechSynthesisUtterance(chunkText);
     utterance.rate  = currentRate;
     utterance.pitch = currentPitch;
     utterance.volume = currentVolume;
     
-    utterance.onstart = () => { 
-        isSpeaking = true; 
-        isPaused = false; 
-        updatePlayIcon(); 
-        startProgressTracking(); 
-    };
-    
-    utterance.onend = () => {
+    utterance.onstart = () => { isSpeaking = true; isPaused = false; updatePlayIcon(); startProgressTracking(); };
+    utterance.onend = () => { 
         if (isSpeaking && !isPaused) {
-            playChunk(index + 1, 0);
+            if (offset + chunkLength < nodeObj.text.length) {
+                playTtsNode(index, offset + chunkLength);
+            } else {
+                playTtsNode(index + 1, 0);
+            }
         }
     };
-    
-    const baseOffset = chunkStartOffsets[index] + charOffset;
     
     utterance.onboundary = (e) => {
-        if (e.name === 'word') {
-            wordIndex = baseOffset + e.charIndex;
-            updateTtsBar(wordIndex, readerBody.innerText.length);
-        }
+        // Removed e.name === 'word' to support Windows TTS which often drops the name
+        wordIndex = nodeObj.charOffset + offset + e.charIndex;
+        updateTtsBar(wordIndex, ttsTotalChars);
+        
+        try {
+            const range = document.createRange();
+            let endOffset = offset + e.charIndex + (e.charLength || 0);
+            if (!e.charLength || e.charLength === 0) {
+                const remainingChunk = chunkText.substring(e.charIndex);
+                const wmatch = remainingChunk.match(/^[\w\u00C0-\u017F]+/);
+                endOffset = wmatch ? offset + e.charIndex + wmatch[0].length : offset + e.charIndex + 5;
+            }
+            if (endOffset > nodeObj.text.length) endOffset = nodeObj.text.length;
+            
+            range.setStart(nodeObj.node, offset + e.charIndex);
+            range.setEnd(nodeObj.node, endOffset);
+            
+            const rect = range.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                let hl = document.getElementById('tts-hl-box');
+                if (!hl) {
+                    hl = document.createElement('div');
+                    hl.id = 'tts-hl-box';
+                    hl.style.position = 'absolute';
+                    hl.style.backgroundColor = 'rgba(251, 191, 36, 0.4)';
+                    hl.style.borderRadius = '4px';
+                    hl.style.pointerEvents = 'none';
+                    hl.style.transition = 'all 0.1s ease-out';
+                    hl.style.zIndex = '40';
+                    document.body.appendChild(hl);
+                }
+                hl.style.top = (window.scrollY + rect.top - 2) + 'px';
+                hl.style.left = (window.scrollX + rect.left - 2) + 'px';
+                hl.style.width = (rect.width + 4) + 'px';
+                hl.style.height = (rect.height + 4) + 'px';
+                hl.style.display = 'block';
+                
+                if (rect.top < 150 || rect.bottom > window.innerHeight - 150) {
+                    window.scrollBy({top: rect.top - window.innerHeight/3, left:0, behavior: 'smooth'});
+                }
+            }
+        } catch(err) {}
     };
-    
     synth.speak(utterance);
 }
 
 function toggleVoice() {
     if (!isOwner) { alert('Add this book to your collection to unlock the voice assistant.'); return; }
-    if (isSpeaking) { 
-        isPaused ? resumeVoice() : pauseVoice(); 
-    } else {
-        startVoice();
-    }
+    if (isSpeaking) { isPaused ? resumeVoice() : pauseVoice(); } else { startVoice(); }
 }
 
 function startVoice() { prepareUtterance(); }
 function pauseVoice() { synth.pause(); isPaused = true; updatePlayIcon(); stopProgressTracking(); }
 function resumeVoice() { 
-    synth.resume(); 
-    isPaused = false; 
-    updatePlayIcon(); 
-    startProgressTracking();
+    synth.resume(); isPaused = false; updatePlayIcon(); 
+    if (!synth.speaking && isSpeaking) prepareUtterance(); else startProgressTracking();
 }
-// Full stop
+
 function stopVoice() { 
-    isSpeaking = false; 
-    isPaused = false; 
-    synth.cancel(); 
-    wordIndex = 0; 
-    updateTtsBar(0, readerBody.innerText.length);
-    updatePlayIcon(); 
-    stopProgressTracking(); 
+    isSpeaking = false; isPaused = false; synth.cancel(); wordIndex = 0; 
+    parseTtsNodes(); updateTtsBar(0, ttsTotalChars || 1); updatePlayIcon(); stopProgressTracking(); 
+    const hl = document.getElementById('tts-hl-box'); if (hl) hl.style.display = 'none';
 }
-// Internal stop (preserves position)
 function stopVoiceKeepPos() { 
-    isSpeaking = false; 
-    isPaused = false; 
-    synth.cancel(); 
-    stopProgressTracking(); 
+    isSpeaking = false; isPaused = false; synth.cancel(); stopProgressTracking(); 
+    const hl = document.getElementById('tts-hl-box'); if (hl) hl.style.display = 'none';
 }
 
 function startProgressTracking() {
     if (progressInterval) clearInterval(progressInterval);
-    // Keep Chrome engine alive (fixes 15s pause bug)
-    progressInterval = setInterval(() => {
-        if (isSpeaking && !isPaused && synth.speaking && !synth.paused) {
-            synth.resume();
-        }
-    }, 10000); 
+    progressInterval = setInterval(() => { if (isSpeaking && !isPaused && synth.speaking && !synth.paused) synth.resume(); }, 10000); 
 }
 function stopProgressTracking() { clearInterval(progressInterval); progressInterval = null; }
 
@@ -1047,68 +1074,42 @@ function updatePlayIcon() {
 
 function setSpeed(rate) {
     currentRate = rate;
-    document.querySelectorAll('.speed-btn').forEach(b => {
-        b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm');
-        b.classList.add('text-slate-400');
-    });
-    const id = 'speed-' + String(rate).replace('.', '-');
-    const btn = document.getElementById(id);
+    document.querySelectorAll('.speed-btn').forEach(b => { b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm'); b.classList.add('text-slate-400'); });
+    const btn = document.getElementById('speed-' + String(rate).replace('.', '-'));
     if (btn) { btn.classList.add('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm'); btn.classList.remove('text-slate-400'); }
-    // Restart from current position with new rate
-    const wasPlaying = isSpeaking && !isPaused;
-    stopVoiceKeepPos();
-    prepareUtterance();
-    if (wasPlaying) startVoice();
+    const wasPlaying = isSpeaking && !isPaused; stopVoiceKeepPos(); prepareUtterance(); if (wasPlaying) startVoice();
 }
 
 function setPitch(pitch) {
     currentPitch = pitch;
-    document.querySelectorAll('.pitch-btn').forEach(b => {
-        b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm');
-        b.classList.add('text-slate-400');
-    });
-    const id = 'pitch-' + String(pitch).replace('.', '-');
-    const btn = document.getElementById(id);
+    document.querySelectorAll('.pitch-btn').forEach(b => { b.classList.remove('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm'); b.classList.add('text-slate-400'); });
+    const btn = document.getElementById('pitch-' + String(pitch).replace('.', '-'));
     if (btn) { btn.classList.add('bg-white', 'dark:bg-slate-700', 'text-primary', 'shadow-sm'); btn.classList.remove('text-slate-400'); }
-    // Restart from current position with new pitch
-    const wasPlaying = isSpeaking && !isPaused;
-    stopVoiceKeepPos();
-    prepareUtterance();
-    if (wasPlaying) startVoice();
+    const wasPlaying = isSpeaking && !isPaused; stopVoiceKeepPos(); prepareUtterance(); if (wasPlaying) startVoice();
 }
 
 function setVolume(vol) {
     currentVolume = parseFloat(vol);
     if (utterance) utterance.volume = currentVolume;
-    // Restart if playing to apply volume immediately
     const wasPlaying = isSpeaking && !isPaused;
-    if (wasPlaying) {
-        stopVoiceKeepPos();
-        prepareUtterance();
-        startVoice();
-    }
+    if (wasPlaying) { stopVoiceKeepPos(); prepareUtterance(); startVoice(); }
 }
 
-// Seek by seconds (approx 14 chars/sec at rate 1x)
 function seekVoice(deltaSeconds) {
     if (!isOwner) return;
+    parseTtsNodes();
     const CHARS_PER_SEC = 14;
-    const text = readerBody.innerText;
-    wordIndex = Math.max(0, Math.min(text.length - 1, wordIndex + deltaSeconds * CHARS_PER_SEC * currentRate));
-    // align to nearest word boundary
-    const sp = text.indexOf(' ', wordIndex);
-    if (sp !== -1) wordIndex = sp + 1;
-    const wasPlaying = isSpeaking && !isPaused;
-    stopVoiceKeepPos();
-    prepareUtterance();
-    if (wasPlaying) startVoice();
+    wordIndex = Math.max(0, Math.min(ttsTotalChars - 1, wordIndex + deltaSeconds * CHARS_PER_SEC * currentRate));
+    const wasPlaying = isSpeaking && !isPaused; stopVoiceKeepPos(); prepareUtterance(); if (wasPlaying) startVoice();
 }
 
 function handleSeek(e) {
+    if (!ttsTotalChars) parseTtsNodes();
     const rect = e.currentTarget.getBoundingClientRect();
     const pct = (e.clientX - rect.left) / rect.width;
-    wordIndex = Math.floor(pct * readerBody.innerText.length);
-    updateTtsBar(wordIndex, readerBody.innerText.length);
+    wordIndex = Math.floor(pct * ttsTotalChars);
+    updateTtsBar(wordIndex, ttsTotalChars);
+    const wasPlaying = isSpeaking && !isPaused; stopVoiceKeepPos(); prepareUtterance(); if (wasPlaying) startVoice();
 }
 
 // =====================

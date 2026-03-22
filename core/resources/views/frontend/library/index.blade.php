@@ -169,7 +169,7 @@
                             @endif
 
                             {{-- Hover overlay with actions --}}
-                            <div class="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center p-4 gap-3">
+                            <div class="absolute inset-0 bg-slate-900/60 opacity-0 lg:group-hover:opacity-100 transition-all duration-300 hidden lg:flex flex-col items-center justify-center p-4 gap-3">
                                 @auth
                                     @php 
                                         $isOwned = $book->isOwnedBy(auth()->user()); 

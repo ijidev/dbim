@@ -470,35 +470,78 @@
             </div>
         </div>
 
-        {{-- Right: Speed + Pitch + Volume --}}
-        <div class="flex items-center justify-end gap-3 w-1/4 voice-controls-mobile">
-            {{-- Volume Slider --}}
-            <div class="hidden md:flex flex-col items-center gap-0.5 mr-2">
-                <p class="text-[9px] uppercase font-bold text-slate-400">Volume</p>
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-sm text-slate-400">volume_down</span>
-                    <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="w-16 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
-                    <span class="material-symbols-outlined text-sm text-slate-400">volume_up</span>
+        {{-- Right: Settings & Listen --}}
+        <div class="flex items-center justify-end gap-3 w-auto md:w-1/4">
+            
+            {{-- Desktop Controls --}}
+            <div class="hidden xl:flex items-center gap-4">
+                {{-- Volume --}}
+                <div class="flex flex-col items-center gap-0.5">
+                    <p class="text-[9px] uppercase font-bold text-slate-400">Volume</p>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm text-slate-400">volume_down</span>
+                        <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="w-16 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                        <span class="material-symbols-outlined text-sm text-slate-400">volume_up</span>
+                    </div>
+                </div>
+                {{-- Read Speed --}}
+                <div class="flex flex-col items-center gap-0.5">
+                    <p class="text-[9px] uppercase font-bold text-slate-400">Speed</p>
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
+                        <button id="speed-0-5" onclick="setSpeed(0.5)" class="speed-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary transition-colors">0.5x</button>
+                        <button id="speed-1"   onclick="setSpeed(1)"   class="speed-btn px-2 py-1 text-[11px] font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm transition-colors">1x</button>
+                        <button id="speed-1-5" onclick="setSpeed(1.5)" class="speed-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary transition-colors">1.5x</button>
+                    </div>
+                </div>
+                {{-- Pitch --}}
+                <div class="flex flex-col items-center gap-0.5">
+                    <p class="text-[9px] uppercase font-bold text-slate-400">Pitch</p>
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
+                        <button id="pitch-0-5" onclick="setPitch(0.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary transition-colors" title="Low">▼</button>
+                        <button id="pitch-1"   onclick="setPitch(1)"   class="pitch-btn px-2 py-1 text-[11px] font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm transition-colors" title="Normal">●</button>
+                        <button id="pitch-1-5" onclick="setPitch(1.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary transition-colors" title="High">▲</button>
+                    </div>
                 </div>
             </div>
-            {{-- Read Speed --}}
-            <div class="flex flex-col items-center gap-0.5">
-                <p class="text-[9px] uppercase font-bold text-slate-400">Speed</p>
-                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
-                    <button id="speed-0-5" onclick="setSpeed(0.5)" class="speed-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary">0.5x</button>
-                    <button id="speed-1"   onclick="setSpeed(1)"   class="speed-btn px-2 py-1 text-[11px] font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm">1x</button>
-                    <button id="speed-1-5" onclick="setSpeed(1.5)" class="speed-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary">1.5x</button>
+
+            {{-- Mobile Settings Dropdown --}}
+            <div class="relative group block xl:hidden">
+                <button type="button" class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary/30">
+                    <span class="material-symbols-outlined text-xl">settings</span>
+                </button>
+                <div class="absolute bottom-full right-0 mb-3 w-64 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.2)] p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all origin-bottom-right scale-95 group-hover:scale-100 z-[100]">
+                    <div class="flex flex-col gap-4">
+                        {{-- Dropdown Volume --}}
+                        <div class="flex flex-col gap-1.5">
+                            <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Volume</p>
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400">volume_down</span>
+                                <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="flex-1 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                                <span class="material-symbols-outlined text-[16px] text-slate-400">volume_up</span>
+                            </div>
+                        </div>
+                        {{-- Dropdown Speed --}}
+                        <div class="flex flex-col gap-1.5">
+                            <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Read Speed</p>
+                            <div class="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+                                <button onclick="setSpeed(0.5); document.querySelectorAll('.mobile-speed-btn').forEach(b => {b.classList.remove('bg-white','dark:bg-slate-600','text-primary','shadow'); b.classList.add('text-slate-400')}); this.classList.remove('text-slate-400'); this.classList.add('bg-white','dark:bg-slate-600','text-primary','shadow');" class="mobile-speed-btn px-2 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-primary transition-all">0.5x</button>
+                                <button onclick="setSpeed(1); document.querySelectorAll('.mobile-speed-btn').forEach(b => {b.classList.remove('bg-white','dark:bg-slate-600','text-primary','shadow'); b.classList.add('text-slate-400')}); this.classList.remove('text-slate-400'); this.classList.add('bg-white','dark:bg-slate-600','text-primary','shadow');" class="mobile-speed-btn px-2 py-1.5 text-xs font-bold rounded bg-white dark:bg-slate-600 text-primary shadow transition-all">1x</button>
+                                <button onclick="setSpeed(1.5); document.querySelectorAll('.mobile-speed-btn').forEach(b => {b.classList.remove('bg-white','dark:bg-slate-600','text-primary','shadow'); b.classList.add('text-slate-400')}); this.classList.remove('text-slate-400'); this.classList.add('bg-white','dark:bg-slate-600','text-primary','shadow');" class="mobile-speed-btn px-2 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-primary transition-all">1.5x</button>
+                            </div>
+                        </div>
+                        {{-- Dropdown Pitch --}}
+                        <div class="flex flex-col gap-1.5">
+                            <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Voice Pitch</p>
+                            <div class="grid grid-cols-3 gap-1 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+                                <button onclick="setPitch(0.5); document.querySelectorAll('.mobile-pitch-btn').forEach(b => {b.classList.remove('bg-white','dark:bg-slate-600','text-primary','shadow'); b.classList.add('text-slate-400')}); this.classList.remove('text-slate-400'); this.classList.add('bg-white','dark:bg-slate-600','text-primary','shadow');" class="mobile-pitch-btn px-2 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-primary transition-all" title="Low">▼</button>
+                                <button onclick="setPitch(1); document.querySelectorAll('.mobile-pitch-btn').forEach(b => {b.classList.remove('bg-white','dark:bg-slate-600','text-primary','shadow'); b.classList.add('text-slate-400')}); this.classList.remove('text-slate-400'); this.classList.add('bg-white','dark:bg-slate-600','text-primary','shadow');" class="mobile-pitch-btn px-2 py-1.5 text-xs font-bold rounded bg-white dark:bg-slate-600 text-primary shadow transition-all" title="Normal">●</button>
+                                <button onclick="setPitch(1.5); document.querySelectorAll('.mobile-pitch-btn').forEach(b => {b.classList.remove('bg-white','dark:bg-slate-600','text-primary','shadow'); b.classList.add('text-slate-400')}); this.classList.remove('text-slate-400'); this.classList.add('bg-white','dark:bg-slate-600','text-primary','shadow');" class="mobile-pitch-btn px-2 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-primary transition-all" title="High">▲</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {{-- Pitch --}}
-            <div class="hidden sm:flex flex-col items-center gap-0.5">
-                <p class="text-[9px] uppercase font-bold text-slate-400">Pitch</p>
-                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-0.5">
-                    <button id="pitch-0-5" onclick="setPitch(0.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary" title="Low pitch">▼</button>
-                    <button id="pitch-1"   onclick="setPitch(1)"   class="pitch-btn px-2 py-1 text-[11px] font-bold rounded bg-white dark:bg-slate-700 text-primary shadow-sm" title="Normal pitch">●</button>
-                    <button id="pitch-1-5" onclick="setPitch(1.5)" class="pitch-btn px-2 py-1 text-[11px] font-bold rounded text-slate-400 hover:text-primary" title="High pitch">▲</button>
-                </div>
-            </div>
+
             <button onclick="toggleVoice()" class="flex h-10 w-10 md:h-auto md:w-auto items-center justify-center md:px-4 md:py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm">
                 <span class="material-symbols-outlined text-lg">record_voice_over</span>
                 <span class="hidden md:inline ml-2">Listen</span>
@@ -1005,7 +1048,10 @@ function playTtsNode(index, offset = 0) {
             range.setStart(nodeObj.node, offset + e.charIndex);
             range.setEnd(nodeObj.node, endOffset);
             
+            const scrollArea = document.getElementById('main-scroll-area');
+            const mainRect = scrollArea.getBoundingClientRect();
             const rect = range.getBoundingClientRect();
+            
             if (rect.width > 0 && rect.height > 0) {
                 let hl = document.getElementById('tts-hl-box');
                 if (!hl) {
@@ -1017,16 +1063,16 @@ function playTtsNode(index, offset = 0) {
                     hl.style.pointerEvents = 'none';
                     hl.style.transition = 'all 0.1s ease-out';
                     hl.style.zIndex = '40';
-                    document.body.appendChild(hl);
+                    scrollArea.appendChild(hl);
                 }
-                hl.style.top = (window.scrollY + rect.top - 2) + 'px';
-                hl.style.left = (window.scrollX + rect.left - 2) + 'px';
+                hl.style.top = (scrollArea.scrollTop + (rect.top - mainRect.top) - 2) + 'px';
+                hl.style.left = (scrollArea.scrollLeft + (rect.left - mainRect.left) - 2) + 'px';
                 hl.style.width = (rect.width + 4) + 'px';
                 hl.style.height = (rect.height + 4) + 'px';
                 hl.style.display = 'block';
                 
-                if (rect.top < 150 || rect.bottom > window.innerHeight - 150) {
-                    window.scrollBy({top: rect.top - window.innerHeight/3, left:0, behavior: 'smooth'});
+                if (rect.top < mainRect.top + 100 || rect.bottom > mainRect.bottom - 100) {
+                    scrollArea.scrollBy({top: rect.top - (mainRect.top + scrollArea.clientHeight/3), left:0, behavior: 'smooth'});
                 }
             }
         } catch(err) {}
@@ -1561,7 +1607,7 @@ window.addEventListener('load', () => {
     // Apply highlights after initialization
     setTimeout(applySavedAnnotations, 500);
     
-    if (isOwner) prepareUtterance();
+    if (isOwner) parseTtsNodes();
 });
 </script>
 @endpush

@@ -60,8 +60,8 @@
         transition: opacity 0.3s ease;
     }
 
-    body.reader-page { overflow: hidden; height: 100vh; }
-    #reader-layout { height: calc(100vh - 6px); }
+    body.reader-page { overflow: hidden; height: 100vh; height: 100dvh; }
+    #reader-layout { height: calc(100vh - 6px); height: calc(100dvh - 6px); }
 
     /* Fix footer on mobile */
     @media (max-width: 768px) {
@@ -89,7 +89,7 @@
 
 
 @section('content')
-<div class="flex flex-col overflow-hidden h-screen">
+<div class="flex flex-col overflow-hidden h-screen" style="height: 100vh; height: 100dvh;">
 
 
 {{-- Reading Progress Bar --}}
@@ -1294,7 +1294,7 @@ function applySavedAnnotations() {
 
 const handleSelectionChange = (e) => {
     if (!isOwner) return;
-    if (e.target.closest('#highlight-toolkit') || e.target.closest('#note-modal')) return;
+    if (e && e.target && e.target.closest && (e.target.closest('#highlight-toolkit') || e.target.closest('#note-modal'))) return;
     
     // Small delay to ensure selection is processed by browser
     setTimeout(() => {
@@ -1308,37 +1308,51 @@ const handleSelectionChange = (e) => {
             if (!readerBody.contains(range.commonAncestorContainer)) { closeToolkit(); return; }
             const r = range.getBoundingClientRect();
             
-            // Positioning logic improved for mobile
+            // Positioning logic improved for mobile scroll area
+            const scrollArea = document.getElementById('main-scroll-area');
+            const mainRect = scrollArea.getBoundingClientRect();
+            
             const toolkitWidth = 208; // w-52
-            let left = r.left + r.width / 2 - toolkitWidth / 2;
+            // left relative to scrollArea
+            let left = scrollArea.scrollLeft + (r.left - mainRect.left) + r.width / 2 - toolkitWidth / 2;
             
             // Keep within horizontal bounds
             if (left < 10) left = 10;
-            if (left + toolkitWidth > window.innerWidth - 10) {
-                left = window.innerWidth - toolkitWidth - 10;
+            if (left + toolkitWidth > scrollArea.clientWidth - 10) {
+                left = scrollArea.clientWidth - toolkitWidth - 10;
             }
             
             // Position above or below depending on space
-            let top = r.top + window.scrollY - 90;
-            if (top < 10) {
-                top = r.bottom + window.scrollY + 20; // Show below if no space above
+            let top = scrollArea.scrollTop + (r.top - mainRect.top) - 90;
+            if (r.top - mainRect.top < 90) {
+                top = scrollArea.scrollTop + (r.bottom - mainRect.top) + 20; // Show below if no space above
             }
             
+            // Append toolkit directly to scrollArea if it's not already
+            if (toolkit.parentElement !== scrollArea) {
+                scrollArea.appendChild(toolkit);
+            }
+            
+            toolkit.style.position = 'absolute';
             toolkit.style.left = left + 'px';
             toolkit.style.top  = top + 'px';
             toolkit.style.display = 'block';
             currentSelection = { text, range: range.cloneRange() };
         } else {
             // Only close if we didn't just click the toolkit itself
-            if (!e.target.closest('#highlight-toolkit')) {
+            if (e && e.target && e.target.closest && !e.target.closest('#highlight-toolkit')) {
                 closeToolkit();
             }
         }
-    }, 50);
+    }, 100);
 };
 
 document.addEventListener('mouseup', handleSelectionChange);
 document.addEventListener('touchend', handleSelectionChange);
+document.addEventListener('selectionchange', () => {
+    if (window.selectionTimeout) clearTimeout(window.selectionTimeout);
+    window.selectionTimeout = setTimeout(() => handleSelectionChange({ target: document.activeElement }), 500);
+});
 
 function closeToolkit() {
     const toolkit = document.getElementById('highlight-toolkit');

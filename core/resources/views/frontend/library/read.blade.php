@@ -441,10 +441,18 @@
     @endif
 
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-8">
-        {{-- Left: Track Info --}}
+        {{-- Left: Track Info & Volume --}}
         <div class="flex items-center gap-4 w-1/4">
-            <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
-                <span class="material-symbols-outlined text-3xl">graphic_eq</span>
+            <div class="relative group">
+                <button type="button" class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center hover:bg-primary/20 transition-colors focus:outline-none">
+                    <span class="material-symbols-outlined text-2xl">volume_up</span>
+                </button>
+                <div class="absolute bottom-full left-0 mb-3 w-[120px] bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.2)] p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all origin-bottom-left scale-95 group-hover:scale-100 z-[100]">
+                    <div class="flex flex-col gap-2">
+                        <p class="text-[9px] uppercase tracking-widest font-bold text-slate-400 text-center">Volume</p>
+                        <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                    </div>
+                </div>
             </div>
             <div class="hidden lg:block min-w-0">
                 <p id="player-chapter-title" class="text-sm font-bold dark:text-white truncate">{{ $book->chapters->first()->title ?? 'Introduction' }}</p>
@@ -475,15 +483,6 @@
             
             {{-- Desktop Controls --}}
             <div class="hidden xl:flex items-center gap-4">
-                {{-- Volume --}}
-                <div class="flex flex-col items-center gap-0.5">
-                    <p class="text-[9px] uppercase font-bold text-slate-400">Volume</p>
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm text-slate-400">volume_down</span>
-                        <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="w-16 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
-                        <span class="material-symbols-outlined text-sm text-slate-400">volume_up</span>
-                    </div>
-                </div>
                 {{-- Read Speed --}}
                 <div class="flex flex-col items-center gap-0.5">
                     <p class="text-[9px] uppercase font-bold text-slate-400">Speed</p>
@@ -511,15 +510,6 @@
                 </button>
                 <div class="absolute bottom-full right-0 mb-3 w-64 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.2)] p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible focus-within:opacity-100 focus-within:visible transition-all origin-bottom-right scale-95 group-hover:scale-100 z-[100]">
                     <div class="flex flex-col gap-4">
-                        {{-- Dropdown Volume --}}
-                        <div class="flex flex-col gap-1.5">
-                            <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Volume</p>
-                            <div class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-[16px] text-slate-400">volume_down</span>
-                                <input type="range" min="0" max="1" step="0.1" value="1" oninput="setVolume(this.value)" class="flex-1 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary">
-                                <span class="material-symbols-outlined text-[16px] text-slate-400">volume_up</span>
-                            </div>
-                        </div>
                         {{-- Dropdown Speed --}}
                         <div class="flex flex-col gap-1.5">
                             <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Read Speed</p>
@@ -542,10 +532,6 @@
                 </div>
             </div>
 
-            <button onclick="toggleVoice()" class="flex h-10 w-10 md:h-auto md:w-auto items-center justify-center md:px-4 md:py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 text-sm">
-                <span class="material-symbols-outlined text-lg">record_voice_over</span>
-                <span class="hidden md:inline ml-2">Listen</span>
-            </button>
         </div>
     </div>
 </footer>

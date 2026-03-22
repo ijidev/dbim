@@ -273,7 +273,7 @@
                 </div>
             </div>
             {{-- Caret --}}
-            <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900 rotate-45"></div>
+            <div class="hidden md:block absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900 rotate-45"></div>
         </div>
         @endif
 
@@ -1308,38 +1308,51 @@ const handleSelectionChange = (e) => {
             if (!readerBody.contains(range.commonAncestorContainer)) { closeToolkit(); return; }
             const r = range.getBoundingClientRect();
             
-            // Positioning logic improved for mobile scroll area
             const scrollArea = document.getElementById('main-scroll-area');
             const mainRect = scrollArea.getBoundingClientRect();
             
-            const toolkitWidth = 208; // w-52
-            // left relative to scrollArea
-            let left = scrollArea.scrollLeft + (r.left - mainRect.left) + r.width / 2 - toolkitWidth / 2;
-            
-            // Keep within horizontal bounds
-            if (left < 10) left = 10;
-            if (left + toolkitWidth > scrollArea.clientWidth - 10) {
-                left = scrollArea.clientWidth - toolkitWidth - 10;
+            if (window.innerWidth < 768) {
+                // MOBILE: Dock to bottom of viewport to avoid native Copy/Share modal overlap!
+                toolkit.style.position = 'fixed';
+                toolkit.style.top = 'auto';
+                toolkit.style.bottom = '24px';
+                toolkit.style.left = '50%';
+                toolkit.style.transform = 'translateX(-50%)';
+                
+                // Append directly to body to ensure fixed positioning works perfectly
+                if (toolkit.parentElement !== document.body) {
+                    document.body.appendChild(toolkit);
+                }
+            } else {
+                // DESKTOP: Float directly above the text text
+                toolkit.style.transform = 'none';
+                toolkit.style.bottom = 'auto';
+                
+                const toolkitWidth = 208; // w-52
+                let left = scrollArea.scrollLeft + (r.left - mainRect.left) + r.width / 2 - toolkitWidth / 2;
+                
+                if (left < 10) left = 10;
+                if (left + toolkitWidth > scrollArea.clientWidth - 10) {
+                    left = scrollArea.clientWidth - toolkitWidth - 10;
+                }
+                
+                let top = scrollArea.scrollTop + (r.top - mainRect.top) - 90;
+                if (r.top - mainRect.top < 90) {
+                    top = scrollArea.scrollTop + (r.bottom - mainRect.top) + 20;
+                }
+                
+                if (toolkit.parentElement !== scrollArea) {
+                    scrollArea.appendChild(toolkit);
+                }
+                
+                toolkit.style.position = 'absolute';
+                toolkit.style.left = left + 'px';
+                toolkit.style.top  = top + 'px';
             }
             
-            // Position above or below depending on space
-            let top = scrollArea.scrollTop + (r.top - mainRect.top) - 90;
-            if (r.top - mainRect.top < 90) {
-                top = scrollArea.scrollTop + (r.bottom - mainRect.top) + 20; // Show below if no space above
-            }
-            
-            // Append toolkit directly to scrollArea if it's not already
-            if (toolkit.parentElement !== scrollArea) {
-                scrollArea.appendChild(toolkit);
-            }
-            
-            toolkit.style.position = 'absolute';
-            toolkit.style.left = left + 'px';
-            toolkit.style.top  = top + 'px';
             toolkit.style.display = 'block';
             currentSelection = { text, range: range.cloneRange() };
         } else {
-            // Only close if we didn't just click the toolkit itself
             if (e && e.target && e.target.closest && !e.target.closest('#highlight-toolkit')) {
                 closeToolkit();
             }

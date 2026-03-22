@@ -474,7 +474,7 @@
                 </button>
             </div>
             <div class="w-full max-w-md bg-slate-200 dark:bg-slate-800 h-1 rounded-full overflow-hidden cursor-pointer" onclick="handleSeek(event)">
-                <div id="voice-progress" class="bg-primary h-full" style="width: 0%;"></div>
+                <div id="voice-progress" class="bg-primary h-full transition-all duration-[300ms] ease-linear" style="width: 0%;"></div>
             </div>
         </div>
 
@@ -983,6 +983,11 @@ function playTtsNode(index, offset = 0) {
     if (index >= ttsNodes.length) { stopVoice(); return; }
     
     const nodeObj = ttsNodes[index];
+    
+    // Fallback: update bar at start of each chunk in case TTS engine drops onboundary events
+    wordIndex = nodeObj.charOffset + offset;
+    updateTtsBar(wordIndex, Math.max(1, ttsTotalChars));
+    
     const remainingText = nodeObj.text.substring(offset);
     
     if (!remainingText.trim()) { playTtsNode(index + 1, 0); return; }
@@ -1123,8 +1128,7 @@ function setPitch(pitch) {
 function setVolume(vol) {
     currentVolume = parseFloat(vol);
     if (utterance) utterance.volume = currentVolume;
-    const wasPlaying = isSpeaking && !isPaused;
-    if (wasPlaying) { stopVoiceKeepPos(); prepareUtterance(); startVoice(); }
+    // Removed restart logic to prevent stuttering while dragging the volume slider!
 }
 
 function seekVoice(deltaSeconds) {

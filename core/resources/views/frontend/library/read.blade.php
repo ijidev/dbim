@@ -1310,46 +1310,50 @@ const handleSelectionChange = (e) => {
             
             const scrollArea = document.getElementById('main-scroll-area');
             const mainRect = scrollArea.getBoundingClientRect();
+            const toolkitWidth = 208; // w-52
+            
+            if (toolkit.parentElement !== scrollArea) {
+                scrollArea.appendChild(toolkit);
+            }
+            
+            toolkit.style.position = 'absolute';
+            toolkit.style.transform = 'none';
+            toolkit.style.bottom = 'auto';
+            
+            let left = scrollArea.scrollLeft + (r.left - mainRect.left) + r.width / 2 - toolkitWidth / 2;
+            if (left < 10) left = 10;
+            if (left + toolkitWidth > scrollArea.clientWidth - 10) {
+                left = scrollArea.clientWidth - toolkitWidth - 10;
+            }
             
             if (window.innerWidth < 768) {
-                // MOBILE: Dock to bottom of viewport to avoid native Copy/Share modal overlap!
-                toolkit.style.position = 'fixed';
-                toolkit.style.top = 'auto';
-                toolkit.style.bottom = '24px';
-                toolkit.style.left = '50%';
-                toolkit.style.transform = 'translateX(-50%)';
+                // MOBILE: Force the toolkit strictly BELOW the text. Native iOS/Android "Copy" menus 
+                // heavily prefer floating ABOVE the text. This prevents them from overlapping!
+                let top = scrollArea.scrollTop + (r.bottom - mainRect.top) + 24; 
+                toolkit.style.top = top + 'px';
                 
-                // Append directly to body to ensure fixed positioning works perfectly
-                if (toolkit.parentElement !== document.body) {
-                    document.body.appendChild(toolkit);
+                // Show caret but point it upwards
+                const caret = toolkit.querySelector('.rotated-caret');
+                if(caret) {
+                    caret.classList.remove('-bottom-1.5');
+                    caret.classList.add('-top-1.5');
+                    caret.style.display = 'block';
                 }
             } else {
                 // DESKTOP: Float directly above the text text
-                toolkit.style.transform = 'none';
-                toolkit.style.bottom = 'auto';
-                
-                const toolkitWidth = 208; // w-52
-                let left = scrollArea.scrollLeft + (r.left - mainRect.left) + r.width / 2 - toolkitWidth / 2;
-                
-                if (left < 10) left = 10;
-                if (left + toolkitWidth > scrollArea.clientWidth - 10) {
-                    left = scrollArea.clientWidth - toolkitWidth - 10;
-                }
-                
                 let top = scrollArea.scrollTop + (r.top - mainRect.top) - 90;
                 if (r.top - mainRect.top < 90) {
                     top = scrollArea.scrollTop + (r.bottom - mainRect.top) + 20;
+                    const caret = toolkit.querySelector('.rotated-caret');
+                    if(caret) { caret.classList.remove('-bottom-1.5'); caret.classList.add('-top-1.5'); }
+                } else {
+                    const caret = toolkit.querySelector('.rotated-caret');
+                    if(caret) { caret.classList.remove('-top-1.5'); caret.classList.add('-bottom-1.5'); }
                 }
-                
-                if (toolkit.parentElement !== scrollArea) {
-                    scrollArea.appendChild(toolkit);
-                }
-                
-                toolkit.style.position = 'absolute';
-                toolkit.style.left = left + 'px';
                 toolkit.style.top  = top + 'px';
             }
             
+            toolkit.style.left = left + 'px';
             toolkit.style.display = 'block';
             currentSelection = { text, range: range.cloneRange() };
         } else {
@@ -1365,6 +1369,14 @@ document.addEventListener('touchend', handleSelectionChange);
 document.addEventListener('selectionchange', () => {
     if (window.selectionTimeout) clearTimeout(window.selectionTimeout);
     window.selectionTimeout = setTimeout(() => handleSelectionChange({ target: document.activeElement }), 500);
+});
+
+// Attempt to block native Android/PC context menus from overlapping
+document.getElementById('reader-body').addEventListener('contextmenu', (e) => {
+    const sel = window.getSelection();
+    if (sel && sel.toString().trim().length > 0) {
+        e.preventDefault();
+    }
 });
 
 function closeToolkit() {
